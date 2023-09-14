@@ -1,0 +1,8 @@
+SetEnv TZ Asia/Colombo	
+
+RewriteEngine On
+Options -Indexes
+RewriteBase /aka-hub/
+
+RewriteRule ^$ public/ [L]
+RewriteRule  (.*) public/$1 [L]

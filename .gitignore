@@ -1,0 +1,22 @@
+.git
+backup
+data-log/*
+.vscode
+gtihub_private
+gtihub_private.pub
+*.mp4
+*.pdf
+*.rar
+*.sql
+*.zip
+
+# *.php
+/public/assets/user_uploads/img/*
+/public/assets/user_uploads/pdf/*
+/hidden
+/vendor
+
+/PHPMailer-master
+
+!/public/assets/user_uploads/img/.gitkeep
+!/public/assets/user_uploads/pdf/.gitkeep
