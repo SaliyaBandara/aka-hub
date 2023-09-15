@@ -11,4 +11,8 @@ class Auth extends Controller
 
         $this->view->render('auth/index', $data);
     }
+
+    public function login(){
+        
+    }
 }

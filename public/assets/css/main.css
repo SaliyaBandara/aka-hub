@@ -14,6 +14,8 @@
 :root {
   --header-height: 68px;
   --primary-color: #ff9b2d;
+  --sidebar-width: 275px;
+  --sidebar-width-actual: calc(var(--sidebar-width) + 2rem);
 
   /* 1rem responsive value */
   --rv-1: clamp(10px, 0.9vw, 1rem);
@@ -193,6 +195,10 @@
 
 .pb-0 {
   padding-bottom: 0 !important;
+}
+
+.pb-0-5{
+  padding-bottom: 0.5rem;
 }
 
 /* text */

@@ -9,3 +9,4 @@ require_once '../app/core/Model.php';
 require_once '../public/components/common/HTMLHead.php';
 require_once '../public/components/common/HTMLFooter.php';
 require_once '../public/components/common/header.php';
+require_once '../public/components/common/sidebar.php';
