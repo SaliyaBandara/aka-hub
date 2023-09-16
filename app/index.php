@@ -10,3 +10,8 @@ require_once '../public/components/common/HTMLHead.php';
 require_once '../public/components/common/HTMLFooter.php';
 require_once '../public/components/common/header.php';
 require_once '../public/components/common/sidebar.php';
+require_once '../public/components/common/adminPanelChartOne.php';
+require_once '../public/components/common/adminPanelChartTwo.php';
+require_once '../public/components/common/adminPanelChartThree.php';
+require_once '../public/components/common/adminPanelChartFour.php';
+require_once '../public/components/common/adminPanelChartFive.php';
