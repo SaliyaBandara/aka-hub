@@ -7,6 +7,7 @@ $chartTwo = new AdminPanelChartTwo();
 $chartThree = new AdminPanelChartThree();
 $chartFour = new AdminPanelChartFour();
 $chartFive = new AdminPanelChartFive();
+$calendar = new Calendar();
 ?>
 
 <div id="sidebar-active">
@@ -138,7 +139,9 @@ $chartFive = new AdminPanelChartFive();
             </div>
         </div>
         <div class="right">
-
+            <div class="calendarContainor">
+                <?php echo $calendar->render(); ?>
+            </div>
         </div>
     </div>
 
@@ -150,7 +153,6 @@ $chartFive = new AdminPanelChartFive();
 
         .main-grid .right {
             flex-grow: 1;
-            background-color: yellowgreen;
             height: 150vh;
         }
 
@@ -223,6 +225,7 @@ $chartFive = new AdminPanelChartFive();
             align-items: center;
             text-align: center;
         }
+
         .graphLineContainor {
             height: 100%;
             width: 100%;
@@ -239,7 +242,8 @@ $chartFive = new AdminPanelChartFive();
             justify-content: center;
             align-items: center;
         }
-        .graphContainorFive{
+
+        .graphContainorFive {
             width: 50%;
             height: 100%;
             display: flex;
