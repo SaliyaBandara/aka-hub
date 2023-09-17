@@ -111,7 +111,7 @@ class Sidebar
             #sidebar .sidebar__list ul li a:hover {
                 color: #fff;
                 background-color: yellowgreen;
-                background-color: #C381FF;
+                background-color: #2684FF;
 
                 /* shadow bottom right */
                 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
