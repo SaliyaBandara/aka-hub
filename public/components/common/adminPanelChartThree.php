@@ -40,7 +40,7 @@ class AdminPanelChartThree
             </script>
         </head>
         <body>
-            <div id="chartContainer3" style="height: 350px; width: 100%;box-shadow: 0 0 10px rgba(0, 0, 0, 0.23);"></div>
+            <div id="chartContainer3" style="height: 220px; width: 100%;"></div>
         </body>
         </html>
         <?php

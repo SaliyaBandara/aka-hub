@@ -26,7 +26,7 @@ class AdminPanelChartOne
         ob_start(); // Start output buffering
 ?>
 
-        <div id="chartContainer1" style="height: 350px; width: 100%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.23); padding:20px"></div>
+        <div id="chartContainer1" style="height: 220px; width: 100%; padding:20px"></div>
 
         <script>
             // Initialize chart1 when the document is ready
