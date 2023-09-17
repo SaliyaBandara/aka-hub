@@ -6,7 +6,7 @@ class AdminPanelChartFour
         ob_start(); // Start output buffering
 ?>
 
-        <div id="chartContainer4" style="height: 350px; width: 90%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.23); "></div>
+        <div id="chartContainer4" style="height: 220px; width: 90%;"></div>
 
         <script>
             // Initialize chart1 when the document is ready
@@ -22,8 +22,6 @@ class AdminPanelChartFour
                     // },
                     axisY: {
                         title: "Post Sharing For Months",
-                        titleFontSize: 24,
-                        prefix: "$"
                     },
                     data: [{
                         type: "line",

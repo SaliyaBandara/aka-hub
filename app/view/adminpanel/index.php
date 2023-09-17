@@ -143,8 +143,6 @@ $chartFive = new AdminPanelChartFive();
     </div>
 
     <style>
-        .main-grid {}
-
         .main-grid .left {
             width: 70%;
             height: 200vh;
@@ -225,10 +223,6 @@ $chartFive = new AdminPanelChartFive();
             align-items: center;
             text-align: center;
         }
-
-        .fourGraphsContainor {
-        }
-
         .graphLineContainor {
             height: 100%;
             width: 100%;
