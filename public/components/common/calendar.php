@@ -50,7 +50,7 @@ class Calendar
 
             .wrapper {
                 margin-top: 25px;
-                width: 340px;
+                width: 275px;
                 background: #fff;
                 border-radius: 10px;
                 -webkit-box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
@@ -106,7 +106,7 @@ class Calendar
             }
 
             header .current-date {
-                font-size: 1.45rem;
+                font-size: 15px;
                 font-weight: 500;
             }
 
@@ -131,7 +131,7 @@ class Calendar
             .calendar li {
                 color: #333;
                 width: calc(100% / 7);
-                font-size: 1.07rem;
+                font-size: 12px;
             }
 
             .calendar .weeks li {

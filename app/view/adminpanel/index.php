@@ -151,8 +151,9 @@ $notifications = new Notifications();
 
     <style>
         .main-grid .left {
-            width: 70%;
+            width: 75%;
             height: 150vh;
+            
         }
 
         .main-grid .right {
