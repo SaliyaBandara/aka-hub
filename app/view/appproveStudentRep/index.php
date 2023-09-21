@@ -2,6 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
+$approveArea = new ApproveArea();
 ?>
 
 <div id="sidebar-active">
@@ -10,7 +11,7 @@ $sidebar = new Sidebar();
         <div class="flex flex_container">
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">
@@ -22,7 +23,7 @@ $sidebar = new Sidebar();
             </div>
             <div class="flex_item">
                 <div class="title">Notifications</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
         </div>
     </div>
@@ -89,11 +90,22 @@ $sidebar = new Sidebar();
 
 
     <div class="main-grid flex">
-        <div class="left"></div>
-        <div class="right"></div>
+        <div class="left">
+            <div class="approveDivContainor">
+                <h3> Student Representatives Approve Area</h3>
+                <?php echo $approveArea->render(); ?>
+            </div>
+        </div>
+        <div class="right">
+            
+        </div>
     </div>
 
     <style>
+        .approveDivContainor{
+            width: 100%;
+            height: 500px;
+        }
         .main-grid{
 
         }
