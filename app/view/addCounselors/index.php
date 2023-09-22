@@ -123,23 +123,25 @@ $sidebar = new Sidebar();
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
+                                        <label>Enter Counselor Type : </label>
                                         <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-name" id="radio1">
+                                            <input type="radio" name="radio-counselor-type" id="radio1">
                                             <label for="radio1">Professional Counselor</label>
                                         </div>
                                         <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-name" id="radio2">
+                                            <input type="radio" name="radio-counselor-type" id="radio2">
                                             <label for="radio2">Student Counselor</label>
                                         </div>
                                     </div>
                                     <div class="mwb-form-group">
+                                        <label>Enter Gender : </label>
                                         <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-name" id="radio1">
-                                            <label for="radio1">Male</label>
+                                            <input type="radio" name="radio-gender" id="radio3">
+                                            <label for="radio3">Male</label>
                                         </div>
                                         <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-name" id="radio2">
-                                            <label for="radio2">Female</label>
+                                            <input type="radio" name="radio-gender" id="radio4">
+                                            <label for="radio4">Female</label>
                                         </div>
                                     </div>
                                     <div class="mwb-form-group">
@@ -283,7 +285,7 @@ $sidebar = new Sidebar();
         }
 
         .mwb-form-radio input[type="radio"]+label::after {
-            background-color: #26A69A;
+            background-color: #2684FF;
             border-radius: 50%;
             content: "";
             height: 10px;
