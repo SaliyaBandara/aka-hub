@@ -17,10 +17,10 @@ class ApproveCards
                     21001987
                 </div>
                 <div class="repAccept">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4315/4315445.png" alt="">
+                    <img src="https://cdn0.iconfinder.com/data/icons/play-music-line-blue/128/check_blue-512.png" alt="">
                 </div>
                 <div class="repDecline">
-                    <img src="https://static.thenounproject.com/png/741825-200.png" alt="">
+                    <img src="https://cdn-icons-png.flaticon.com/512/5508/5508714.png" alt="">
                 </div>
             </div>
         </div>
@@ -47,34 +47,35 @@ class ApproveCards
             
             .repDecline{
                 width: 12%;
-                height:65px;
+                height:38px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-            .regAccept img{
-                width: 30px;
-                height: 30px;
+            .repAccept img{
+                width: 65px;
+                height: 65px;
+            }   
+            .repDecline img{
+                width: 38px;
+                height: 38px;
             }
-            .regDecline img{
-                width: 30px;
-                height: 30px;
-            }
-            .regAccept img :hover{
-                width: 32px;
-                height: 32px;
+            .repAccept img:hover{
+                width: 68px;
+                height: 68px;
                 cursor: pointer;
+                overflow: hidden;
             }
-            .regDecline img :hover{
-                width: 32px;
-                height: 32px;
+            .repDecline img:hover{
+                width: 40px;
+                height: 40px;
                 cursor: pointer;
+                overflow: hidden;
             }
-            
             .approve-card {
                 background-color: white;
                 width: 90%;
-                height: 65px;
+                height: 75px;
                 border-radius: 5px;
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
                 justify-content: space-between;

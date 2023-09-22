@@ -3,7 +3,7 @@ class ApproveClubRep extends Controller{
     public function index()
     {
         $data = [
-            'title' => 'Student Rep Approvement',
+            'title' => 'Club Rep Approvement',
             'message' => 'Welcome to Aka Hub!'
         ];
 
