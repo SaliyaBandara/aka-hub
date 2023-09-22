@@ -9,7 +9,7 @@ class CandidateCard
 ?>
 
     <div id = "candidateCard">
-        <div id = "candidateImage"><img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt=""></div>
+        <div id = "candidateImage"><img src="<?= BASE_URL ?>/public/assets/img/common/candidateImage.jpg" alt=""></div>
         <div id = "candidateName"><h5>Binura Hasarindu</h5></div>
         <div id = "candidateIndex"><h5>21001548</h5></div>
         <div id = "candidateDetails"><a href="http://" target="_blank" rel="noopener noreferrer">View Details</a></div>
@@ -35,7 +35,6 @@ class CandidateCard
                 height : 120px;
                 margin-left : 20px;
                 margin-bottom : 20px;
-                border : 1px solid black;
             }
 
             h5 {
