@@ -136,6 +136,8 @@ $sidebar = new Sidebar();
             display: flex;
             justify-content: center;
             align-items: center;
+            border-radius: 10px; 
+            transition: all 0.3s ease-in-out;
         }
         .divTile:hover{
             width: 30%;
