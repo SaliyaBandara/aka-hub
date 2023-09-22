@@ -20,7 +20,8 @@ class ApproveCards
                     <img src="https://cdn0.iconfinder.com/data/icons/play-music-line-blue/128/check_blue-512.png" alt="">
                 </div>
                 <div class="repDecline">
-                    <img src="https://cdn-icons-png.flaticon.com/512/5508/5508714.png" alt="">
+                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
+                    <!-- <img src="https://cdn-icons-png.flaticon.com/512/5508/5508714.png" alt=""> -->
                 </div>
             </div>
         </div>
@@ -57,20 +58,18 @@ class ApproveCards
                 height: 65px;
             }   
             .repDecline img{
-                width: 38px;
-                height: 38px;
+                width: 35px;
+                height: 35px;
             }
             .repAccept img:hover{
-                width: 68px;
-                height: 68px;
+                width: 67px;
+                height: 67px;
                 cursor: pointer;
-                overflow: hidden;
             }
             .repDecline img:hover{
-                width: 40px;
-                height: 40px;
+                width: 37px;
+                height: 37px;
                 cursor: pointer;
-                overflow: hidden;
             }
             .approve-card {
                 background-color: white;
