@@ -13,6 +13,7 @@ require_once '../public/components/common/sidebar.php';
 require_once '../public/components/common/calendar.php';
 require_once '../public/components/common/notificationCard.php';
 require_once '../public/components/common/notifications.php';
+require_once '../public/components/common/elections/electionCard/electionCard.php';
 
 // Charts for admin panel and Super admin panel
 require_once '../public/components/common/charts/adminPanelChartOne.php';
