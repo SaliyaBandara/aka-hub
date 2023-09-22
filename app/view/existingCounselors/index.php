@@ -97,7 +97,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Proffessional Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>A.H.T.N Thushanthika</h5>
                             <h5>a.h.t.n.thushanthika@gmail.com</h5>
@@ -114,7 +114,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Student Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>Dr. Lasanthi De Silva</h5>
                             <h5>lnc@ucsc.cmb.ac.lk</h5>
@@ -131,7 +131,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Student Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>Dr. Kasun Karunanayake</h5>
                             <h5>ktk@ucsc.cmb.ac.lk</h5>
@@ -184,10 +184,9 @@ $sidebar = new Sidebar();
         }
 
         .iconContainor {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             margin: 5px;
-            border: 1px solid red;
         }
 
         .edit-delete-containor {
@@ -196,11 +195,12 @@ $sidebar = new Sidebar();
             display: flex;
             justify-content: right;
             align-items: center;
+            padding-right : 20px;
         }
 
         .iconContainor img {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
         }
 
         .iconContainor img:hover {
@@ -221,7 +221,7 @@ $sidebar = new Sidebar();
             align-items: center;
         }
 
-        .counselorCard img {
+        #counselorPhoto {
             width: 150px;
             height: 150px;
         }
