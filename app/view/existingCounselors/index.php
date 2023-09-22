@@ -148,7 +148,7 @@ $sidebar = new Sidebar();
                     </div>
                     <div class="buttonDivToAddCounselors">
                         <div class="gotoAddCounselor">
-                            <a href="<?= BASE_URL ?>/existingCounselors/addCounselor" class="btn btn--secondary">Log In</a>
+                            <a href="<?= BASE_URL ?>/existingCounselors/addCounselor" class="btn btn--secondary">Add Counselor</a>
                             </a>
                         </div>
                     </div>
