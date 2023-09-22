@@ -148,8 +148,7 @@ $sidebar = new Sidebar();
                     </div>
                     <div class="buttonDivToAddCounselors">
                         <div class="gotoAddCounselor">
-                            <a href="<?= BASE_URL ?>/existingCounselors/addCounselor">
-                                <div class="buttonAddCounselor">Add Counselor</div>
+                            <a href="<?= BASE_URL ?>/existingCounselors/addCounselor" class="btn btn--secondary">Log In</a>
                             </a>
                         </div>
                     </div>
@@ -179,16 +178,14 @@ $sidebar = new Sidebar();
             display: flex;
             justify-content: right;
             align-items: flex-end;
-            border: 1px solid black;
         }
 
         .gotoAddCounselor {
             width: 150px;
-            height: 50px;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid red;
         }
 
         .gotoAddCounselor a {
@@ -211,8 +208,8 @@ $sidebar = new Sidebar();
         }
 
         .iconContainor img {
-            width: 100%;
-            height: 100%;
+            width: 50px;
+            height: 50px;
         }
 
         .iconContainor img:hover {
