@@ -1,6 +1,6 @@
 <?php
 
-class ElectionCard
+class PrevElectionCard
 {
 
     public function render($active_page = null)
@@ -8,16 +8,16 @@ class ElectionCard
 
 ?>
 
-    <div id = "electionCard">
-        <div id = "electionCardTitle">The Election for the Union Selection 2024 is happening now....</div>
-        <div id = "electionCardTime" class="text-muted" >Election ends in : 1hr 30min 4sec</div>
-        <div id = "electionButton"><input type = "button" value = "VOTE NOW!"></div>
+    <div id = "prevElectionCard">
+        <div id = "prevElectionCardTitle">IEEE Day date confirmation - Poll</div>
+        <div id = "prevElectionCardTime" class="text-muted" >Poll ended : 5th July 2023</div>
+        <div id = "prevEelectionButton"><input type = "button" value = "View Results"></div>
     </div>
 
 
         <style>
             
-            #electionCard {
+            #prevElectionCard {
                 display : flex;
                 flex-direction : column;
                 
@@ -31,7 +31,7 @@ class ElectionCard
                 
             }
 
-            #electionCardTitle{
+            #prevElectionCardTitle{
                 padding : 10px 10px 5px;
                 color: #2684FF;
                 font-family: Inter;
@@ -39,18 +39,18 @@ class ElectionCard
                 font-weight: 500;
             }
 
-            #electionCardTime{
+            #prevElectionCardTime{
                 font-size : 12px;
                 padding-left : 10px;
             }
 
-            #electionButton{
+            #prevEelectionButton{
                 align-self: flex-end;
                 padding-right : 10px;
                 padding-bottom : 10px;
             }
 
-            #electionButton input{
+            #prevEelectionButton input{
                 padding-right : 10px;
                 border-radius: 10px;
                 background: #2684FF;
@@ -60,7 +60,7 @@ class ElectionCard
                 padding : 8px;
             }
 
-            #electionButton input:hover{
+            #prevEelectionButton input:hover{
                 cursor: pointer;
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
                 

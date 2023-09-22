@@ -16,6 +16,7 @@ require_once '../public/components/common/notifications/notifications.php';
 require_once '../public/components/common/approveByAdmin/approvecards.php';
 require_once '../public/components/common/approveByAdmin/approveArea.php';
 require_once '../public/components/common/elections/electionCard/electionCard.php';
+require_once '../public/components/common/elections/electionCard/prevElectionCard.php';
 
 // Charts for admin panel and Super admin panel
 require_once '../public/components/common/charts/adminPanelChartOne.php';
