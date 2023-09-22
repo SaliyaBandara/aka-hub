@@ -27,3 +27,6 @@ require_once '../public/components/common/charts/adminPanelChartTwo.php';
 require_once '../public/components/common/charts/adminPanelChartThree.php';
 require_once '../public/components/common/charts/adminPanelChartFour.php';
 require_once '../public/components/common/charts/adminPanelChartFive.php';
+
+// Components for Counselor
+require_once '../public/components/common/counselor/counselorSidebar.php';
