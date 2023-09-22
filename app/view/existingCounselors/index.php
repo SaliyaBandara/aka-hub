@@ -2,7 +2,6 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
-$approveArea = new ApproveArea();
 ?>
 
 <div id="sidebar-active">
@@ -91,7 +90,72 @@ $approveArea = new ApproveArea();
 
     <div class="main-grid flex">
         <div class="left">
-            
+            <div class="divExistingCounselors">
+                <h3>Existing Counselors</h3>
+                <div class="divCounselorCards">
+                    <div class="conunselorCardLine">
+                        <div class="counselorCard">
+                            <h4>Proffessional Counselor</h4>
+                            <div class="counselor-image-containor">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                            </div>
+                            <h5>A.H.T.N Thushanthika</h5>
+                            <h5>a.h.t.n.thushanthika@gmail.com</h5>
+                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
+                            <div class="edit-delete-containor">
+                                <div class="iconContainor">
+                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
+                                </div>
+                                <div class="iconContainor">
+                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="counselorCard">
+                            <h4>Student Counselor</h4>
+                            <div class="counselor-image-containor">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                            </div>
+                            <h5>Dr. Lasanthi De Silva</h5>
+                            <h5>lnc@ucsc.cmb.ac.lk</h5>
+                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
+                            <div class="edit-delete-containor">
+                                <div class="iconContainor">
+                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
+                                </div>
+                                <div class="iconContainor">
+                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="counselorCard">
+                            <h4>Student Counselor</h4>
+                            <div class="counselor-image-containor">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                            </div>
+                            <h5>Dr. Kasun Karunanayake</h5>
+                            <h5>ktk@ucsc.cmb.ac.lk</h5>
+                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
+                            <div class="edit-delete-containor">
+                                <div class="iconContainor">
+                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
+                                </div>
+                                <div class="iconContainor">
+                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonDivToAddCounselors">
+                        <div class="gotoAddCounselor">
+                            <a href="<?= BASE_URL ?>/existingCounselors/addCounselor">
+                                <div class="buttonAddCounselor">Add Counselor</div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <!-- <div class="right">
             
@@ -99,15 +163,121 @@ $approveArea = new ApproveArea();
     </div>
 
     <style>
-        
-        .main-grid{
+        .main-grid {}
 
+        .buttonAddCounselor {
+            background-color: black;
+            width: 150px;
+            height: 50px;
+            color:white;
+            text-align: center;
         }
 
-        .main-grid .left{
+        .buttonDivToAddCounselors {
             width: 100%;
-            height: 1000px;
+            height: 500px;
+            display: flex;
+            justify-content: right;
+            align-items: flex-end;
+            border: 1px solid black;
         }
+
+        .gotoAddCounselor {
+            width: 150px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid red;
+        }
+
+        .gotoAddCounselor a {
+            text-decoration: none;
+        }
+
+        .iconContainor {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            border: 1px solid red;
+        }
+
+        .edit-delete-containor {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+        }
+
+        .iconContainor img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .iconContainor img:hover {
+            cursor: pointer;
+        }
+
+        .counselorCard {
+            width: 30%;
+            height: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 15px;
+        }
+
+        .counselor-image-containor {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .counselorCard img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .counselorCard h4 {
+            text-align: center;
+        }
+
+        .counselorCard h5 {
+            text-align: center;
+        }
+
+        .counselorCard p {
+            text-align: justify;
+            padding: 30px;
+        }
+
+        .conunselorCardLine {
+            width: 100%;
+            height: 47%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .divCounselorCards {
+            width: 100%;
+            height: 100%;
+        }
+
+        .divExistingCounselors h3 {
+            text-align: center;
+        }
+
+        .divExistingCounselors {
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-grid .left {
+            width: 100%;
+            height: 1200px;
+        }
+
         /* .main-grid .right{
             flex-grow: 1;
             height: 1000px;
