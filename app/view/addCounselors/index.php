@@ -240,7 +240,17 @@ $sidebar = new Sidebar();
             min-width: 200px;
             padding: 16px 10px;
         }
-
+        .mwb-form-submit-btn :hover{
+            background-color: white;
+            border-radius: 4px;
+            border: none;
+            color: black;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            min-width: 200px;
+            padding: 16px 10px;
+        }
         .mwb-form-radio {
             display: inline-block;
             margin-right: 15px;
