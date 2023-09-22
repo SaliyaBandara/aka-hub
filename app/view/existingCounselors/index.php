@@ -163,15 +163,6 @@ $sidebar = new Sidebar();
 
     <style>
         .main-grid {}
-
-        .buttonAddCounselor {
-            background-color: black;
-            width: 150px;
-            height: 50px;
-            color:white;
-            text-align: center;
-        }
-
         .buttonDivToAddCounselors {
             width: 100%;
             height: 500px;
