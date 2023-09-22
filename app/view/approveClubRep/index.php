@@ -2,6 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
+$approveArea = new ApproveArea();
 ?>
 
 <div id="sidebar-active">
@@ -89,25 +90,37 @@ $sidebar = new Sidebar();
 
 
     <div class="main-grid flex">
-        <div class="left"></div>
-        <div class="right"></div>
+        <div class="left">
+            <div class="approveDivContainor">
+                <h3>Club Representatives Approve Area</h3>
+                <?php echo $approveArea->render(); ?>
+            </div>
+        </div>
+        <!-- <div class="right">
+            
+        </div> -->
     </div>
 
     <style>
+        .approveDivContainor{
+            width: 100%;
+            height: 500px;
+        }
+        .approveDivContainor h3{
+            text-align: center;
+        }
         .main-grid{
 
         }
 
         .main-grid .left{
-            width: 70%;
-            background-color: yellowgreen;
-            height: 50vh;
+            width: 100%;
+            height: 1000px;
         }
-        .main-grid .right{
+        /* .main-grid .right{
             flex-grow: 1;
-            background-color: red;
-            height: 50vh;
-        }
+            height: 1000px;
+        } */
     </style>
 
 </div>

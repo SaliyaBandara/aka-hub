@@ -1,13 +1,13 @@
 <?php
-class ApproveByAdmin extends Controller{
+class ApproveClubRep extends Controller{
     public function index()
     {
         $data = [
-            'title' => 'Student Rep Approvement',
+            'title' => 'Club Rep Approvement',
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('approveByAdmin/studentreps', $data);
+        $this->view->render('approveClubRep/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class ApproveByAdmin extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('approveByAdmin/clubreps', $data);
+        $this->view->render('approveClubRep/test', $data);
     }
 
 }

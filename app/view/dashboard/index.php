@@ -99,7 +99,7 @@ $sidebar = new Sidebar();
         }
 
         .main-grid .left{
-            width: 70%;
+            width: 75%;
             background-color: yellowgreen;
             height: 50vh;
         }
