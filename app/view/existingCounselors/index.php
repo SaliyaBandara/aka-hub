@@ -97,7 +97,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Proffessional Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>A.H.T.N Thushanthika</h5>
                             <h5>a.h.t.n.thushanthika@gmail.com</h5>
@@ -114,7 +114,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Student Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>Dr. Lasanthi De Silva</h5>
                             <h5>lnc@ucsc.cmb.ac.lk</h5>
@@ -131,7 +131,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Student Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>Dr. Kasun Karunanayake</h5>
                             <h5>ktk@ucsc.cmb.ac.lk</h5>
@@ -148,8 +148,9 @@ $sidebar = new Sidebar();
                     </div>
                     <div class="buttonDivToAddCounselors">
                         <div class="gotoAddCounselor">
-                            <a href="<?= BASE_URL ?>/addCounselor/index" class="btn btn--secondary">Add Counselor</a>
-                            </a>
+                            <div>
+                                <a href="<?= BASE_URL ?>/addCounselors/index"  class="mwb-form-submit-btn">Add Counselor</a>
+                            </div>
                         </div>
                     </div>
 
@@ -163,20 +164,44 @@ $sidebar = new Sidebar();
 
     <style>
         .main-grid {}
+
+        .mwb-form-submit-btn {
+            background-color: #2684FF;
+            border-radius: 4px;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            min-width: 200px;
+            padding: 16px 10px;
+        }
+        .mwb-form-submit-btn :hover{
+            background-color: white;
+            border-radius: 4px;
+            border: none;
+            color: black;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            min-width: 200px;
+            padding: 16px 10px;
+        }
         .buttonDivToAddCounselors {
             width: 100%;
             height: 500px;
             display: flex;
-            justify-content: right;
-            align-items: flex-end;
+            justify-content: center;
+            margin-top: 50px;
         }
 
         .gotoAddCounselor {
-            width: 150px;
+            width: 120px;
             height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .gotoAddCounselor a {
@@ -184,10 +209,9 @@ $sidebar = new Sidebar();
         }
 
         .iconContainor {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             margin: 5px;
-            border: 1px solid red;
         }
 
         .edit-delete-containor {
@@ -196,11 +220,12 @@ $sidebar = new Sidebar();
             display: flex;
             justify-content: right;
             align-items: center;
+            padding-right : 20px;
         }
 
         .iconContainor img {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
         }
 
         .iconContainor img:hover {
@@ -208,10 +233,10 @@ $sidebar = new Sidebar();
         }
 
         .counselorCard {
-            width: 30%;
+            width: 25%;
             height: 100%;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin: 15px;
+            margin: 25px;
         }
 
         .counselor-image-containor {
@@ -221,7 +246,7 @@ $sidebar = new Sidebar();
             align-items: center;
         }
 
-        .counselorCard img {
+        #counselorPhoto {
             width: 150px;
             height: 150px;
         }
@@ -241,7 +266,7 @@ $sidebar = new Sidebar();
 
         .conunselorCardLine {
             width: 100%;
-            height: 47%;
+            height: 600px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -263,7 +288,7 @@ $sidebar = new Sidebar();
 
         .main-grid .left {
             width: 100%;
-            height: 1200px;
+            height: 800px;
         }
 
         /* .main-grid .right{
