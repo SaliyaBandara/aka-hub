@@ -11,7 +11,7 @@ $approveArea = new ApproveArea();
         <div class="flex flex_container">
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Kasun Udara</div>
+                <div class="text-muted">Hi Saliya Bandara</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">
@@ -23,7 +23,7 @@ $approveArea = new ApproveArea();
             </div>
             <div class="flex_item">
                 <div class="title">Notifications</div>
-                <div class="text-muted">Hi Kasun Udara</div>
+                <div class="text-muted">Hi Saliya Bandara</div>
             </div>
         </div>
     </div>
@@ -92,13 +92,13 @@ $approveArea = new ApproveArea();
     <div class="main-grid flex">
         <div class="left">
             <div class="approveDivContainor">
-                <h3> Student Representatives Approve Area</h3>
+                <h3>Student Representatives Approve Area</h3>
                 <?php echo $approveArea->render(); ?>
             </div>
         </div>
-        <div class="right">
+        <!-- <div class="right">
             
-        </div>
+        </div> -->
     </div>
 
     <style>
@@ -106,20 +106,21 @@ $approveArea = new ApproveArea();
             width: 100%;
             height: 500px;
         }
+        .approveDivContainor h3{
+            text-align: center;
+        }
         .main-grid{
 
         }
 
         .main-grid .left{
-            width: 75%;
-            background-color: yellowgreen;
-            height: 50vh;
+            width: 100%;
+            height: 1000px;
         }
-        .main-grid .right{
+        /* .main-grid .right{
             flex-grow: 1;
-            background-color: red;
-            height: 50vh;
-        }
+            height: 1000px;
+        } */
     </style>
 
 </div>
