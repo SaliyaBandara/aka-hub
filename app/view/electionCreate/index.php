@@ -11,7 +11,7 @@ $candidateCard = new CandidateCard();
         <div class="flex flex_container">
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Samudi Perera</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">

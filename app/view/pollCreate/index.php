@@ -90,39 +90,59 @@ $sidebar = new Sidebar();
 
     <div class="main-grid flex">
         <div class="left">
-            <div class="divAddCounselors">
-                <h3>Add Counselors</h3>
-                <div class="divCounselorDetails">
+            <div class="divCreatePolls">
+                <h3>Create Polls</h3>
+                <div class="divPollDetails">
                     <div class="divFormContainor">
                         <div class="mwb-form-main-wrapper">
                             <div class="mwb-form-main-container">
                                 <form action="#">
                                     <div class="mwb-form-group">
                                         <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Enter name*</label>
+                                        <label for="name" class="mwb-form-text-label">Title*</label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
                                         <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Enter email*</label>
+                                        <label for="email" class="mwb-form-text-label">Deadline Date*</label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
                                         <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Enter Password*</label>
+                                        <label for="name" class="mwb-form-text-label">Deadline Time*</label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
                                         <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Re Enter Password*</label>
+                                        <label for="email" class="mwb-form-text-label">Eligible Voter Group*</label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
                                         <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Enter Alternative Email</label>
+                                        <label for="name" class="mwb-form-text-label">Created Date and Time*</label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
+                                        <input type="email" class="mwb-form-control" id="email">
+                                        <label for="email" class="mwb-form-text-label">Question 1 *</label>
+                                        <div class="mwb-form-error">This Field Required*</div>
+                                    </div>
+                                    <div class="mwb-form-group">
+                                        <input type="email" class="mwb-form-control" id="email">
+                                        <label for="email" class="mwb-form-text-label">Question 2 *</label>
+                                        <div class="mwb-form-error">This Field Required*</div>
+                                    </div>
+                                    <div class="mwb-form-group">
+                                        <input type="email" class="mwb-form-control" id="email">
+                                        <label for="email" class="mwb-form-text-label">Question 3 *</label>
+                                        <div class="mwb-form-error">This Field Required*</div>
+                                    </div>
+                                    <div class="mwb-form-group">
+                                        <input type="email" class="mwb-form-control" id="email">
+                                        <label for="email" class="mwb-form-text-label">Question 4 *</label>
+                                        <div class="mwb-form-error">This Field Required*</div>
+                                    </div>
+                                    <!-- <div class="mwb-form-group">
                                         <label>Enter Counselor Type : </label>
                                         <div class="mwb-form-radio">
                                             <input type="radio" name="radio-counselor-type" id="radio1">
@@ -132,30 +152,14 @@ $sidebar = new Sidebar();
                                             <input type="radio" name="radio-counselor-type" id="radio2">
                                             <label for="radio2">Student Counselor</label>
                                         </div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <label>Enter Gender : </label>
-                                        <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-gender" id="radio3">
-                                            <label for="radio3">Male</label>
-                                        </div>
-                                        <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-gender" id="radio4">
-                                            <label for="radio4">Female</label>
-                                        </div>
-                                    </div>
+                                    </div> -->
                                     <div class="mwb-form-group">
                                         <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Enter Contact Number*</label>
+                                        <label for="email" class="mwb-form-text-label">Question 5 *</label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Enter More Details*</label>
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="Submit" class="mwb-form-submit-btn" value="Create Account">
+                                        <input type="Submit" class="mwb-form-submit-btn" value="Publish Poll">
                                     </div>
                                 </form>
                             </div>
@@ -320,7 +324,7 @@ $sidebar = new Sidebar();
             display: flex;
             justify-content: center;
         }
-        .divCounselorDetails {
+        .divPollDetails {
             width: 100%;
             height: 80%;
             display: flex;
@@ -328,18 +332,18 @@ $sidebar = new Sidebar();
             align-items: center;
         }
 
-        .divAddCounselors h3 {
+        .divCreatePolls h3 {
             text-align: center;
         }
 
-        .divAddCounselors {
+        .divCreatePolls {
             width: 100%;
             height: 100%;
         }
 
         .main-grid .left {
             width: 100%;
-            height: 900px;
+            height: 1200px;
         }
 
         /* .main-grid .right{
