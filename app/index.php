@@ -13,8 +13,14 @@ require_once '../public/components/common/sidebar.php';
 require_once '../public/components/common/calendar.php';
 require_once '../public/components/common/notifications/notificationCard.php';
 require_once '../public/components/common/notifications/notifications.php';
+
+//components for admin and superadmin to approve studentrepps and clubreps
 require_once '../public/components/common/approveByAdmin/approvecards.php';
 require_once '../public/components/common/approveByAdmin/approveArea.php';
+
+//components for feeds
+require_once '../public/components/common/feeds/feedPost.php';
+require_once '../public/components/common/feeds/feedArea.php';
 
 // Components for elections
 require_once '../public/components/common/elections/electionCard/electionCard.php';
