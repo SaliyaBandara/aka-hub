@@ -11,7 +11,7 @@ $approveArea = new ApproveArea();
         <div class="flex flex_container">
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">
@@ -23,7 +23,7 @@ $approveArea = new ApproveArea();
             </div>
             <div class="flex_item">
                 <div class="title">Notifications</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
         </div>
     </div>
