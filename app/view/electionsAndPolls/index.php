@@ -92,7 +92,7 @@ $sidebar = new Sidebar();
         <div class="left">
             <div class="divTileRow">
                 <div class="divTile">
-                    Create Elections
+                    <a href="<?= BASE_URL ?>/electionCreate/index" class="mwb-form-submit-btn">Create Elections</a>
                 </div>
                 <div class="divTile">
                     Generate Election Reports
@@ -103,7 +103,7 @@ $sidebar = new Sidebar();
             </div>
             <div class="divTileRow">
                 <div class="divTile">
-                    Create Polls
+                    <a href="<?= BASE_URL ?>/pollCreate/index" class="mwb-form-submit-btn">Create Polls</a>
                 </div>
                 <div class="divTile">
                     Generate Poll Reports
@@ -116,10 +116,14 @@ $sidebar = new Sidebar();
     </div>
 
     <style>
-        .main-grid{
+        .main-grid {}
 
+        .divTile a {
+            text-decoration: none;
+            color: black;
         }
-        .divTileRow{
+
+        .divTileRow {
             width: 100%;
             height: 200px;
             display: flex;
@@ -128,7 +132,8 @@ $sidebar = new Sidebar();
             align-items: center;
             margin-bottom: 30px;
         }
-        .divTile{
+
+        .divTile {
             width: 30%;
             height: 200px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -136,10 +141,11 @@ $sidebar = new Sidebar();
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px; 
+            border-radius: 10px;
             transition: all 0.3s ease-in-out;
         }
-        .divTile:hover{
+
+        .divTile:hover {
             width: 30%;
             height: 200px;
             box-shadow: 0 0 20px #2684FF;
@@ -150,13 +156,15 @@ $sidebar = new Sidebar();
             cursor: pointer;
             background-color: #2684FF;
             color: white;
-            
+
             font-size: 20px;
         }
-        .main-grid .left{
+
+        .main-grid .left {
             width: 100%;
             height: 100vh;
         }
+
         /* .main-grid .right{
             flex-grow: 1;
             background-color: red;

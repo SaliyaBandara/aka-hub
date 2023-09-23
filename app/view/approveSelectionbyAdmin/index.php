@@ -92,10 +92,10 @@ $sidebar = new Sidebar();
         <div class="left">
             <div class="divTileRow">
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
+                    <a href="<?= BASE_URL ?>/approveStudentRep/index" class="mwb-form-submit-btn">Student Rep Approvement</a>
                 </div>
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
+                    <a href="<?= BASE_URL ?>/approveClubRep/index" class="mwb-form-submit-btn">Club Rep Approvement</a>
                 </div>
 
             </div>
