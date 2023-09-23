@@ -61,6 +61,10 @@
   justify-content: space-between;
 }
 
+.justify-even { 
+  justify-content: space-evenly;
+}
+
 .justify-end {
   justify-content: flex-end !important;
 }
