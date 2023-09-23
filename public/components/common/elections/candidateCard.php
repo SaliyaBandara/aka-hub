@@ -41,10 +41,10 @@ class CandidateCard
                 display : inline;
                 margin : 0;
                 padding : 0;
+                font-weight : 500;
             }
 
             #candidateName , #candidateIndex  {
-                font-weight : 700px;
                 text-align : center;
                 font-size : 18px;
             }

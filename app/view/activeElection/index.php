@@ -93,6 +93,7 @@ $candidateCard = new CandidateCard();
                                             2024
                 </div>
                 <div id = "electionTime" class = "text-muted text-center">Election ends in : 1hr 30min 4sec</div>
+                <div class = "text-left" id = "question">Candidates</div>
                 <div class = "justify-between flex flex-wrap">
                     <?php   echo $candidateCard->render();
                             echo $candidateCard->render();
@@ -101,9 +102,10 @@ $candidateCard = new CandidateCard();
                             echo $candidateCard->render();
                             echo $candidateCard->render();
                             echo $candidateCard->render();
-                            
+                            echo $candidateCard->render();
                     ?>
                 </div>
+                <div class = "text-left" id = "question">Positional Votes</div>
             </div>
         </div>
     </div>
@@ -124,13 +126,18 @@ $candidateCard = new CandidateCard();
         }
 
         #activeElection {
-            padding-top : 20px;
+            padding : 20px;
         }
 
         #electionTime {
             margin-top : 5px;
             font-size : 14px;
             font-style : italic;
+        }
+
+        #question{
+            font-weight : 600;
+            margin-top : 20px;
         }
 
     </style>
