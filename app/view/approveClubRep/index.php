@@ -3,6 +3,8 @@ $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
 $approveArea = new ApproveArea();
+
+
 ?>
 
 <div id="sidebar-active">
@@ -99,24 +101,34 @@ $approveArea = new ApproveArea();
         <!-- <div class="right">
             
         </div> -->
+
+        <?php
+
+        // $data['clubReps']
+        foreach ($data['clubReps'] as $clubRep) {
+            $clubRep->render();
+        }
+
+        ?>
     </div>
 
     <style>
-        .approveDivContainor{
+        .approveDivContainor {
             width: 100%;
             height: 500px;
         }
-        .approveDivContainor h3{
+
+        .approveDivContainor h3 {
             text-align: center;
         }
-        .main-grid{
 
-        }
+        .main-grid {}
 
-        .main-grid .left{
+        .main-grid .left {
             width: 100%;
             height: 1000px;
         }
+
         /* .main-grid .right{
             flex-grow: 1;
             height: 1000px;
