@@ -11,8 +11,6 @@ require_once '../public/components/common/HTMLFooter.php';
 require_once '../public/components/common/header.php';
 require_once '../public/components/common/sidebar.php';
 require_once '../public/components/common/calendar.php';
-require_once '../public/components/common/notifications/notificationCard.php';
-require_once '../public/components/common/notifications/notifications.php';
 
 //components for admin and superadmin to approve studentrepps and clubreps
 require_once '../public/components/common/approveByAdmin/approvecards.php';

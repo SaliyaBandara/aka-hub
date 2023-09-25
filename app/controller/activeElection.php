@@ -9,6 +9,6 @@ class activeElection extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('elections/activeElections', $data);
+        $this->view->render('election/elections/activeElections', $data);
     }
 }

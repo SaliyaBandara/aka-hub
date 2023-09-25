@@ -7,7 +7,7 @@ class ClubEventFeed extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('clubEventFeed/index', $data);
+        $this->view->render('clubRep/clubEventFeed/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class ClubEventFeed extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('clubEventFeed/index', $data);
+        $this->view->render('clubRep/clubEventFeed/index', $data);
     }
 
 }

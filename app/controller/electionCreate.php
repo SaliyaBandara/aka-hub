@@ -9,7 +9,7 @@ class ElectionCreate extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('electionCreate/index', $data);
+        $this->view->render('election/electionCreate/index', $data);
     }
 
 }

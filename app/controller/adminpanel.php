@@ -7,7 +7,7 @@ class AdminPanel extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('adminpanel/index', $data);
+        $this->view->render('admin/adminpanel/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class AdminPanel extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('adminpanel/test', $data);
+        $this->view->render('admin/adminpanel/test', $data);
     }
 
 }

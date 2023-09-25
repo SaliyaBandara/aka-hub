@@ -7,7 +7,7 @@ class AddCounselors extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('addCounselors/index', $data);
+        $this->view->render('admin/addCounselors/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class AddCounselors extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('addCounselors/test', $data);
+        $this->view->render('admin/addCounselors/test', $data);
     }
 
 }

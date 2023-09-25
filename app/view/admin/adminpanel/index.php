@@ -8,7 +8,6 @@ $chartThree = new AdminPanelChartThree();
 $chartFour = new AdminPanelChartFour();
 $chartFive = new AdminPanelChartFive();
 $calendar = new Calendar();
-$notifications = new Notifications();
 ?>
 
 <div id="sidebar-active">
@@ -143,9 +142,6 @@ $notifications = new Notifications();
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
             </div>
-            <div class="notificationSection">
-                <?php echo $notifications->render(); ?>
-            </div>
         </div>
     </div>
 
@@ -153,6 +149,7 @@ $notifications = new Notifications();
         .main-grid .left {
             width: 75%;
             height: 150vh;
+            
         }
 
         .main-grid .right {

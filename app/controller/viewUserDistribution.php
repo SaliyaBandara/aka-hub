@@ -7,7 +7,7 @@ class ViewUserDistribution extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('viewUserDistribution/index', $data);
+        $this->view->render('admin/viewUserDistribution/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class ViewUserDistribution extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('viewUserDistribution/test', $data);
+        $this->view->render('admin/viewUserDistribution/test', $data);
     }
 
 }
