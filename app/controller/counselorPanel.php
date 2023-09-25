@@ -9,6 +9,6 @@ class CounselorPanel extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('counselorpanel/index', $data);
+        $this->view->render('counselor/counselorpanel/index', $data);
     }
 }

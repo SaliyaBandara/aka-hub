@@ -7,7 +7,7 @@ class ApproveSelectionbyAdmin extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('approveSelectionbyAdmin/index', $data);
+        $this->view->render('admin/approveSelectionbyAdmin/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class ApproveSelectionbyAdmin extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('approveSelectionbyAdmin/test', $data);
+        $this->view->render('admin/approveSelectionbyAdmin/test', $data);
     }
 
 }

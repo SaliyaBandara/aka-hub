@@ -7,7 +7,7 @@ class SuperAdminPanel extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('superadminpanel/index', $data);
+        $this->view->render('superadmin/superadminpanel/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class SuperAdminPanel extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('superadminpanel/test', $data);
+        $this->view->render('superadmin/superadminpanel/test', $data);
     }
 
 }

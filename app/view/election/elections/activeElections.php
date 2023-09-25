@@ -2,6 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
+$candidateCard = new CandidateCard();
 ?>
 
 <div id="sidebar-active">
@@ -10,7 +11,7 @@ $sidebar = new Sidebar();
         <div class="flex flex_container">
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Kasun Udara</div>
+                <div class="text-muted">Hi Samudi Perera</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">
@@ -19,10 +20,6 @@ $sidebar = new Sidebar();
                     </button>
                     <input class="form-group" type="text" name="q" id="" placeholder="Search" />
                 </form>
-            </div>
-            <div class="flex_item">
-                <div class="title">Notifications</div>
-                <div class="text-muted">Hi Kasun Udara</div>
             </div>
         </div>
     </div>
@@ -90,71 +87,127 @@ $sidebar = new Sidebar();
 
     <div class="main-grid flex">
         <div class="left">
-            <div class="divTileRow">
-                <div class="divTile">
-                    <a href="<?= BASE_URL ?>/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
+            <div id="activeElection">
+                <div id="electionDetails" class="text-center">University of Colombo School of Computing <br />
+                    Student Union Selection <br />
+                    2024
                 </div>
-                <div class="divTile">
-                    <a href="<?= BASE_URL ?>/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
+                <div id="electionTime" class="text-muted text-center">Election ends in : 1hr 30min 4sec</div>
+                <div class="text-left" id="question">Candidates</div>
+                <div class="justify-between flex flex-wrap">
+                    <?php echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    echo $candidateCard->render();
+                    ?>
                 </div>
-
+                <div class="text-left" id="question">Positional Votes</div>
             </div>
         </div>
     </div>
 
     <style>
-        .main-grid {}
-        .divTile a{
-            text-decoration: none;
-            color: black;
-        }
-        .divTileRow {
-            width: 100%;
-            height: 200px;
-            display: flex;
-            padding: 15px;
-            justify-content: left;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .divTile {
-            width: 30%;
-            height: 200px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .candidateCard {
+            height: 300px;
             border-radius: 10px;
-            transition: all 0.3s ease-in-out;
+            background: white;
+            padding: 20px;
+            margin: 20px;
+            width: calc(25% - 2 * 20px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
         }
 
-        .divTile:hover {
-            width: 30%;
-            height: 200px;
-            box-shadow: 0 0 20px #2684FF;
-            margin: 15px;
+        .candidateImage img {
+            border-radius: 100px;
+            width: 120px;
+            height: 120px;
+            /* margin-left: 20px; */
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        h5 {
+            display: inline;
+            margin: 0;
+            padding: 0;
+            font-weight: 500;
+        }
+
+        .candidateName,
+        .candidateIndex {
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .candidateDetails a {
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.75);
+            font-size: 10px;
+            font-style: italic;
+            text-decoration-line: underline;
+        }
+
+        .candidateDetails {
+            text-align: center;
+        }
+
+        .candidateVote {
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            background-color: #2684FF;
-            color: white;
-
-            font-size: 20px;
         }
+
+        .candidateVote input {
+            border-radius: 20px;
+            background: .2684FF;
+            color: white;
+            border: none;
+            font-size: 12px;
+            height: 20px;
+            
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .candidateVote input:hover {
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+        }
+    </style>
+
+    <style>
+        .main-grid {}
 
         .main-grid .left {
             width: 100%;
-            height: 100vh;
+            height: 300vh;
+            margin: 20px;
         }
 
-        /* .main-grid .right{
-            flex-grow: 1;
-            background-color: red;
-            height: 50vh;
-        } */
+        #electionDetails {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #activeElection {
+            padding: 20px;
+        }
+
+        #electionTime {
+            margin-top: 5px;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        #question {
+            font-weight: 600;
+            margin-top: 20px;
+        }
     </style>
 
 </div>

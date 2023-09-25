@@ -7,7 +7,7 @@ class FeedsSelection extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('feedsSelection/index', $data);
+        $this->view->render('admin/feedsSelection/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class FeedsSelection extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('feedsSelection/test', $data);
+        $this->view->render('admin/feedsSelection/test', $data);
     }
 
 }

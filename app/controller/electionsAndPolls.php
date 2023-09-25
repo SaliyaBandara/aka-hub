@@ -7,7 +7,7 @@ class ElectionsAndPolls extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('electionsAndPolls/index', $data);
+        $this->view->render('admin/electionsAndPolls/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class ElectionsAndPolls extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('electionsAndPolls/test', $data);
+        $this->view->render('admin/electionsAndPolls/test', $data);
     }
 
 }

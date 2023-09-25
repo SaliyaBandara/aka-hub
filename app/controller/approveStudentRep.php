@@ -7,7 +7,7 @@ class ApproveStudentRep extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('approveStudentRep/index', $data);
+        $this->view->render('admin/approveStudentRep/index', $data);
     }
 
     public function test(){
@@ -16,7 +16,7 @@ class ApproveStudentRep extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('approveStudentRep/test', $data);
+        $this->view->render('admin/approveStudentRep/test', $data);
     }
 
 }

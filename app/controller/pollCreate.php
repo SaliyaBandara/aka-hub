@@ -9,7 +9,7 @@ class PollCreate extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('pollCreate/index', $data);
+        $this->view->render('poll/pollCreate/index', $data);
     }
 
 }

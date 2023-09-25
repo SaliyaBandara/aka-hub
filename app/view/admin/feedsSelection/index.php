@@ -92,43 +92,28 @@ $sidebar = new Sidebar();
         <div class="left">
             <div class="divTileRow">
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/electionCreate/index" class="mwb-form-submit-btn">Create Elections</a>
+                    <a href="<?= BASE_URL ?>/clubRep/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
                 </div>
                 <div class="divTile">
-                    Generate Election Reports
+                    <a href="<?= BASE_URL ?>/counselor/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
                 </div>
-                <div class="divTile">
-                    Election Results
-                </div>
-            </div>
-            <div class="divTileRow">
-                <div class="divTile">
-                    <a href="<?= BASE_URL ?>/pollCreate/index" class="mwb-form-submit-btn">Create Polls</a>
-                </div>
-                <div class="divTile">
-                    Generate Poll Reports
-                </div>
-                <div class="divTile">
-                    Poll Results
-                </div>
+
             </div>
         </div>
     </div>
 
     <style>
         .main-grid {}
-
-        .divTile a {
+        .divTile a{
             text-decoration: none;
             color: black;
         }
-
         .divTileRow {
             width: 100%;
             height: 200px;
             display: flex;
             padding: 15px;
-            justify-content: space-between;
+            justify-content: left;
             align-items: center;
             margin-bottom: 30px;
         }
