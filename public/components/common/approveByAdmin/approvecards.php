@@ -16,6 +16,9 @@ class ApproveCards
                 <div id= "repIndex">
                     21001987
                 </div>
+                <div id= "repType">
+                    Student Rep
+                </div>
                 <div class="repAccept">
                     <img src="https://cdn0.iconfinder.com/data/icons/play-music-line-blue/128/check_blue-512.png" alt="">
                 </div>
@@ -27,19 +30,23 @@ class ApproveCards
         </div>
         <style>
             #repName {
-                width: 25%;
+                width: 20%;
                 height: 20%;
             }
             #repMail {
-                width: 25%;
+                width: 20%;
                 height: 20%;
             }
             #repIndex {
-                width: 25%;
+                width: 20%;
+                height: 20%;
+            }
+            #repType {
+                width: 20%;
                 height: 20%;
             }
             .repAccept{
-                width: 12%;
+                width: 10%;
                 height: 65px;
                 display: flex;
                 justify-content: center;
@@ -47,7 +54,7 @@ class ApproveCards
             }
             
             .repDecline{
-                width: 12%;
+                width: 10%;
                 height:38px;
                 display: flex;
                 justify-content: center;
@@ -74,13 +81,10 @@ class ApproveCards
             .approve-card {
                 background-color: white;
                 width: 90%;
-                height: 75px;
-                border-radius: 5px;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+                height: 65px;
                 justify-content: space-between;
                 align-items: center;
-                
-                margin: 10px 0 10px 3px;
+                margin: 0px 0 0 3px;
                 display: flex;
             }
 

@@ -92,7 +92,7 @@ $approveArea = new ApproveArea();
     <div class="main-grid flex">
         <div class="left">
             <div class="approveDivContainor">
-                <h3>Student Representatives Approve Area</h3>
+                <h3>Representatives Approving Area</h3>
                 <?php echo $approveArea->render(); ?>
             </div>
         </div>
@@ -115,7 +115,7 @@ $approveArea = new ApproveArea();
 
         .main-grid .left{
             width: 100%;
-            height: 1000px;
+            height: 1150px;
         }
         /* .main-grid .right{
             flex-grow: 1;
