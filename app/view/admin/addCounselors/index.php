@@ -98,32 +98,27 @@ $sidebar = new Sidebar();
                             <div class="mwb-form-main-container">
                                 <form action="#">
                                     <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Enter name*</label>
+                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder="Name*">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Enter email*</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder="Email*">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Enter Password*</label>
+                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder="Password*">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Re Enter Password*</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder="Re Enter Password*">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Enter Alternative Email</label>
+                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder="Alternative Email">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <label>Enter Counselor Type : </label>
+                                        <label>Counselor Type : </label>
                                         <div class="mwb-form-radio">
                                             <input type="radio" name="radio-counselor-type" id="radio1">
                                             <label for="radio1">Professional Counselor</label>
@@ -134,7 +129,7 @@ $sidebar = new Sidebar();
                                         </div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <label>Enter Gender : </label>
+                                        <label>Gender : </label>
                                         <div class="mwb-form-radio">
                                             <input type="radio" name="radio-gender" id="radio3">
                                             <label for="radio3">Male</label>
@@ -145,13 +140,11 @@ $sidebar = new Sidebar();
                                         </div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Enter Contact Number*</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder="Contact Number">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Enter More Details*</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder="Enter More Details">
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
@@ -182,10 +175,9 @@ $sidebar = new Sidebar();
 
         .mwb-form-main-container {
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             color: #7b7878;
             margin: 0 auto;
-            max-width: 600px;
+            max-width: 85%;
         }
 
         .mwb-form-main-container form {
