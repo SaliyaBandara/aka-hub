@@ -16,20 +16,20 @@ class ApproveArea
                         </div>
                     </div>
                     <div class="div-tableHeader">
-                        <div class="tableHeaderItem">
+                        <div id="nameHeader" class="tableHeaderItem">
                             Student Name
                         </div>
-                        <div class="tableHeaderItem">
+                        <div id="mailHeader" class="tableHeaderItem">
                             University Email
                         </div>
-                        <div class="tableHeaderItem">
+                        <div id="indexNumberHeader" class="tableHeaderItem">
                             Index Number
                         </div>
-                        <div class="tableHeaderItem">
+                        <div id="repTypeHeader" class="tableHeaderItem">
                             Rep Type
                         </div>
-                        <div class="tableHeaderItem">
-                            Action
+                        <div id="actionHeader" class="tableHeaderItem">
+                            Action to Perform
                         </div>
                     </div>
                     <?php echo $approveCard->render(); ?>
@@ -48,7 +48,52 @@ class ApproveArea
         </div>
 
         <style>
-            .tableContainor{
+            #nameHeader {
+                width: 15%;
+                height: 65px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #mailHeader {
+                width: 25%;
+                height: 65px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #indexNumberHeader {
+                width: 15%;
+                height: 65px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #repTypeHeader {
+                width: 15%;
+                height: 65px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #actionHeader {
+                width: 30%;
+                height: 65px;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .tableContainor {
                 width: 90%;
                 height: 90%;
                 display: flex;
@@ -57,15 +102,20 @@ class ApproveArea
                 box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
                 margin-top: 50px;
             }
+
             .searchText {
                 width: 100%;
                 height: 100%;
                 border: none;
                 outline: none;
+                border-radius: 10px;
+                padding: 1rem 1.25rem;
+                font-size: 0.6rem;
+                font-weight: 500;
+                background-color: #f1f1f1;
             }
 
             .searchBar {
-                border: 1px solid #2684FF;
                 height: 30px;
                 margin-left: 5px;
             }
@@ -80,20 +130,11 @@ class ApproveArea
                 padding-right: 95px;
             }
 
-            .tableHeaderItem {
-                width: 20%;
-                height: 65px;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
             .div-tableHeader {
                 width: 90.5%;
                 height: 65px;
                 background-color: #2684FF;
-                opacity: 0.5;
+                opacity: 1;
                 display: flex;
             }
 
