@@ -20,33 +20,67 @@ class ApproveCards
                     Student Rep
                 </div>
                 <div class="repAccept">
-                    <img src="https://cdn0.iconfinder.com/data/icons/play-music-line-blue/128/check_blue-512.png" alt="">
+                    <!-- <img class="acceptIcon" src="https://cdn0.iconfinder.com/data/icons/play-music-line-blue/128/check_blue-512.png" alt=""> -->
+                    <div class="acceptButton">Accept</div>
                 </div>
                 <div class="repDecline">
-                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
+                    <div class="declineButton">Decline</div>
+                    <!-- <img class="declineIcon" src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt=""> -->
                     <!-- <img src="https://cdn-icons-png.flaticon.com/512/5508/5508714.png" alt=""> -->
                 </div>
             </div>
         </div>
         <style>
+            .acceptButton{
+                border: 2px solid #2684FF;
+                width: 75%;
+                height: 55%;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0px 0px 5px 0px #2684FF;
+            }
+            .declineButton{
+                border: 2px solid #ff9b2d;
+                width: 75%;
+                height: 100%;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0px 0px 5px 0px #ff9b2d;
+            }
+            .acceptButton:hover{
+                background-color: #2684FF;
+                opacity:1;
+                cursor: pointer;
+                color: white;
+                font-size: 17.5px;
+            }
+            .declineButton:hover{
+                background-color: #ff9b2d;
+                opacity:1;
+                cursor: pointer;
+                color: white;
+                font-size: 17.5px;
+            }
             #repName {
-                width: 20%;
+                width: 15%;
                 height: 20%;
             }
             #repMail {
-                width: 20%;
+                width: 25%;
                 height: 20%;
             }
             #repIndex {
-                width: 20%;
+                width: 15%;
                 height: 20%;
             }
             #repType {
-                width: 20%;
+                width: 15%;
                 height: 20%;
             }
             .repAccept{
-                width: 10%;
+                width: 15%;
                 height: 65px;
                 display: flex;
                 justify-content: center;
@@ -54,26 +88,26 @@ class ApproveCards
             }
             
             .repDecline{
-                width: 10%;
+                width: 15%;
                 height:38px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-            .repAccept img{
+            .acceptIcon{
                 width: 65px;
                 height: 65px;
             }   
-            .repDecline img{
+            .declineIcon{
                 width: 35px;
                 height: 35px;
             }
-            .repAccept img:hover{
+            .acceptIcon:hover{
                 width: 67px;
                 height: 67px;
                 cursor: pointer;
             }
-            .repDecline img:hover{
+            .declineIcon:hover{
                 width: 37px;
                 height: 37px;
                 cursor: pointer;
