@@ -78,7 +78,7 @@ class FeedPost
 
             .eventPost {
                 width: 100%;
-                height: 600px;
+                height: 570px;
             }
 
             .feed-post {
@@ -89,7 +89,6 @@ class FeedPost
                 justify-content: center;
                 display: flex;
                 margin: 0 0 100px 0;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             }
 
             .feed-text-div {

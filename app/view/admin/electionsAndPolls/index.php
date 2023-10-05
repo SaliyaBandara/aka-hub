@@ -120,7 +120,7 @@ $sidebar = new Sidebar();
 
         .divTile a {
             text-decoration: none;
-            color: black;
+            color: white;
         }
 
         .divTileRow {
@@ -128,36 +128,40 @@ $sidebar = new Sidebar();
             height: 200px;
             display: flex;
             padding: 15px;
-            justify-content: space-between;
+            justify-content: left;
             align-items: center;
             margin-bottom: 30px;
         }
 
         .divTile {
-            width: 30%;
-            height: 200px;
+            width: 25%;
+            height: 175px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin: 15px;
+            margin: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
+            color: white;
+            background-image: linear-gradient(45deg, #ff9b2d, #ff5755);
+            opacity: 0.7;
+            /* background-image: url('http://127.0.0.1/aka-hub/public/assets/img/common/elections.jpg');
+            background-size: cover; */
         }
 
         .divTile:hover {
-            width: 30%;
-            height: 200px;
-            box-shadow: 0 0 20px #2684FF;
-            margin: 15px;
+            width: 25%;
+            height: 175px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            margin: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            background-color: #2684FF;
-            color: white;
-
             font-size: 20px;
+            text-decoration: none;
+            color: white;
         }
 
         .main-grid .left {

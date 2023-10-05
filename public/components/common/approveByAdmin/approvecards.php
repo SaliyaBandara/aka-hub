@@ -32,7 +32,7 @@ class ApproveCards
         </div>
         <style>
             .acceptButton{
-                border: 2px solid #2684FF;
+                border: 1px solid #2684FF;
                 width: 75%;
                 height: 55%;
                 display:flex;
@@ -41,7 +41,7 @@ class ApproveCards
                 box-shadow: 0px 0px 5px 0px #2684FF;
             }
             .declineButton{
-                border: 2px solid #ff9b2d;
+                border: 1px solid #ff9b2d;
                 width: 75%;
                 height: 100%;
                 display:flex;

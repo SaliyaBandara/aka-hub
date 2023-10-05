@@ -92,10 +92,10 @@ $sidebar = new Sidebar();
         <div class="left">
             <div class="divTileRow">
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/clubRep/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
+                    <a href="<?= BASE_URL ?>/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
                 </div>
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/counselor/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
+                    <a href="<?= BASE_URL ?>/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
                 </div>
 
             </div>
@@ -106,7 +106,7 @@ $sidebar = new Sidebar();
         .main-grid {}
         .divTile a{
             text-decoration: none;
-            color: black;
+            color: white;
         }
         .divTileRow {
             width: 100%;
@@ -119,30 +119,32 @@ $sidebar = new Sidebar();
         }
 
         .divTile {
-            width: 30%;
-            height: 200px;
+            width: 25%;
+            height: 175px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin: 15px;
+            margin: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
+            color: white;
+            background-image: linear-gradient(45deg, #ff9b2d, #ff5755);
+            opacity: 0.7;
         }
 
         .divTile:hover {
-            width: 30%;
-            height: 200px;
-            box-shadow: 0 0 20px #2684FF;
-            margin: 15px;
+            width: 25%;
+            height: 175px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            margin: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            background-color: #2684FF;
-            color: white;
-
             font-size: 20px;
+            text-decoration: none;
+            color: white;
         }
 
         .main-grid .left {
