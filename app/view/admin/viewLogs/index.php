@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
-$approveArea = new ApproveArea();
+$logDetailsArea = new LogDetailsArea();
 ?>
 
 <div id="sidebar-active">
@@ -92,7 +92,7 @@ $approveArea = new ApproveArea();
     <div class="main-grid flex">
         <div class="left">
             <div class="approveDivContainor">
-                <?php echo $approveArea->render(); ?>
+                <?php echo $logDetailsArea->render(); ?>
             </div>
         </div>
         <!-- <div class="right">

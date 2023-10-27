@@ -1,15 +1,15 @@
 <?php
 
-class ApproveArea
+class UserDetailsArea
 {
 
     public function render()
     {
-        $approveCard = new ApproveCards();
+        $userDetailsCard = new UserDetailsCards();
 ?> <div class="containorForcardArea">
             <div class="tableContainor">
                 <div class="cardContainor">
-                <h3 class="h3-RepApprove">Representatives Approving Area</h3>
+                <h3 class="h3-RepApprove">User Distribution in the System</h3>
                     <div class="searchBarContainor">
                         <label>Search</label>
                         <div class="searchBar">
@@ -26,23 +26,20 @@ class ApproveArea
                         <div id="indexNumberHeader" class="tableHeaderItem">
                             Index Number
                         </div>
-                        <div id="repTypeHeader" class="tableHeaderItem">
-                            Rep Type
-                        </div>
-                        <div id="actionHeader" class="tableHeaderItem">
-                            Action to Perform
+                        <div id="roleHeader" class="tableHeaderItem">
+                            Role
                         </div>
                     </div>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
+                    <?php echo $userDetailsCard->render(); ?>
                 </div>
             </div>
 
@@ -56,7 +53,7 @@ class ApproveArea
                 width: 90%;
             }
             #nameHeader {
-                width: 15%;
+                width: 25%;
                 height: 65px;
                 color: white;
                 display: flex;
@@ -74,7 +71,7 @@ class ApproveArea
             }
 
             #indexNumberHeader {
-                width: 15%;
+                width: 25%;
                 height: 65px;
                 color: white;
                 display: flex;
@@ -82,24 +79,14 @@ class ApproveArea
                 justify-content: center;
             }
 
-            #repTypeHeader {
-                width: 15%;
+            #roleHeader {
+                width: 25%;
                 height: 65px;
                 color: white;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-
-            #actionHeader {
-                width: 30%;
-                height: 65px;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
             .tableContainor {
                 width: 90%;
                 height: 90%;
