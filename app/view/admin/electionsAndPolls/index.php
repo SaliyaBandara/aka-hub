@@ -128,7 +128,7 @@ $sidebar = new Sidebar();
             height: 200px;
             display: flex;
             padding: 15px;
-            justify-content: left;
+            justify-content: center;
             align-items: center;
             margin-bottom: 30px;
         }
@@ -136,7 +136,7 @@ $sidebar = new Sidebar();
         .divTile {
             width: 25%;
             height: 175px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             margin: 30px;
             display: flex;
             justify-content: center;
@@ -153,7 +153,7 @@ $sidebar = new Sidebar();
         .divTile:hover {
             width: 25%;
             height: 175px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
             margin: 30px;
             display: flex;
             justify-content: center;

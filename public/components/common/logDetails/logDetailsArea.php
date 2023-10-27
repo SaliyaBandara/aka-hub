@@ -1,15 +1,15 @@
 <?php
 
-class ApproveArea
+class LogDetailsArea
 {
 
     public function render()
     {
-        $approveCard = new ApproveCards();
+        $logDetailsCard = new LogDetailsCards();
 ?> <div class="containorForcardArea">
             <div class="tableContainor">
                 <div class="cardContainor">
-                <h3 class="h3-RepApprove">Representatives Approving Area</h3>
+                <h3 class="h3-RepApprove">Log Entries</h3>
                     <div class="searchBarContainor">
                         <label>Search</label>
                         <div class="searchBar">
@@ -18,31 +18,34 @@ class ApproveArea
                     </div>
                     <div class="div-tableHeader">
                         <div id="nameHeader" class="tableHeaderItem">
-                            Student Name
+                            LogID
                         </div>
                         <div id="mailHeader" class="tableHeaderItem">
-                            University Email
+                            UserID
                         </div>
                         <div id="indexNumberHeader" class="tableHeaderItem">
-                            Index Number
+                            IP address
                         </div>
-                        <div id="repTypeHeader" class="tableHeaderItem">
-                            Rep Type
+                        <div id="roleHeader" class="tableHeaderItem">
+                            Details
                         </div>
-                        <div id="actionHeader" class="tableHeaderItem">
-                            Action to Perform
+                        <div id="roleHeader" class="tableHeaderItem">
+                            Date
+                        </div>
+                        <div id="roleHeader" class="tableHeaderItem">
+                            Time
                         </div>
                     </div>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
+                    <?php echo $logDetailsCard->render(); ?>
                 </div>
             </div>
 
@@ -55,51 +58,15 @@ class ApproveArea
                 margin-bottom: 20px;
                 width: 90%;
             }
-            #nameHeader {
-                width: 15%;
+            .tableHeaderItem{
+                width: 16.67%;
                 height: 65px;
                 color: white;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-
-            #mailHeader {
-                width: 25%;
-                height: 65px;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            #indexNumberHeader {
-                width: 15%;
-                height: 65px;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            #repTypeHeader {
-                width: 15%;
-                height: 65px;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            #actionHeader {
-                width: 30%;
-                height: 65px;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
+            
             .tableContainor {
                 width: 90%;
                 height: 90%;

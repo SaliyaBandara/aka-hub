@@ -191,8 +191,9 @@ $sidebar = new Sidebar();
             width: 100%;
             height: 500px;
             display: flex;
-            justify-content: center;
+            justify-content: right;
             margin-top: 50px;
+            padding: 0 100px 20px 0;
         }
 
         .gotoAddCounselor {
@@ -233,9 +234,9 @@ $sidebar = new Sidebar();
         }
 
         .counselorCard {
-            width: 25%;
+            width: 28%;
             height: 100%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
             margin: 25px;
         }
 
@@ -261,12 +262,13 @@ $sidebar = new Sidebar();
 
         .counselorCard p {
             text-align: justify;
-            padding: 30px;
+            padding-left: 30px;
+            padding-right: 30px;
         }
 
         .conunselorCardLine {
             width: 100%;
-            height: 600px;
+            height: 500px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -288,7 +290,7 @@ $sidebar = new Sidebar();
 
         .main-grid .left {
             width: 100%;
-            height: 800px;
+            height: 700px;
         }
 
         /* .main-grid .right{
