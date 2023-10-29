@@ -105,6 +105,15 @@ $candidateCard = new CandidateCard();
                     echo $candidateCard->render();
                     ?>
                 </div>
+                
+                <div class="overlay" onclick="closePopup()"></div>
+
+                <div class="popup" id="popup">
+                    <p>Candidate Details:</p>
+                    <p>Details of the selected candidate go here.</p>
+                    <button onclick="closePopup()">Close</button>
+                </div>
+
                 <div class="text-left" id="question">Positional Votes</div>
             </div>
         </div>
@@ -163,7 +172,7 @@ $candidateCard = new CandidateCard();
 
         .candidateVote input {
             border-radius: 20px;
-            background: .2684FF;
+            background: #2684FF;
             color: white;
             border: none;
             font-size: 12px;
@@ -171,6 +180,7 @@ $candidateCard = new CandidateCard();
             
             width: 60%;
             margin: 0 auto;
+            margin-top: 10px;
         }
 
         .candidateVote input:hover {
@@ -178,6 +188,33 @@ $candidateCard = new CandidateCard();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 
         }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #000;
+            background: #fff;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        /* Overlay to cover the entire page behind the pop-up */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            backdrop-filter: blur(5px); /* Apply background blur */
+        }
+
+
     </style>
 
     <style>
@@ -211,6 +248,19 @@ $candidateCard = new CandidateCard();
     </style>
 
 </div>
+
+<script>
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+            document.querySelector('.overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.querySelector('.overlay').style.display = 'none';
+        }
+</script>
+
 
 <style>
     #sidebar-active {
