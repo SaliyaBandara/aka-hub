@@ -5,7 +5,6 @@ $sidebar = new Sidebar("electionDashboard");
 $electionCard = new ElectionCard();
 $prevElectionCard = new PrevElectionCard();
 $calendar = new Calendar();
-$notifications = new Notifications();
 
 ?>
 
@@ -116,9 +115,6 @@ $notifications = new Notifications();
         <div class="right">
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
-            </div>
-            <div class="notificationSection">
-                <?php echo $notifications->render(); ?>
             </div>
         </div>
     </div>
