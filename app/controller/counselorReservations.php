@@ -1,14 +1,14 @@
 <?php
 
-class CounselorPanel extends Controller
+class CounselorReservations extends Controller
 {
     public function index()
     {
         $data = [
-            'title' => 'CounselorPanel',
+            'title' => 'CounselorReservations',
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('counselor', $data);
+        $this->view->render('counselor/counselorReservations/index', $data);
     }
 }
