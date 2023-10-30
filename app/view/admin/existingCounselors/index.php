@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+$sidebar = new Sidebar(null,2);
 ?>
 
 <div id="sidebar-active">
@@ -97,7 +97,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Proffessional Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>A.H.T.N Thushanthika</h5>
                             <h5>a.h.t.n.thushanthika@gmail.com</h5>
@@ -114,7 +114,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Student Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>Dr. Lasanthi De Silva</h5>
                             <h5>lnc@ucsc.cmb.ac.lk</h5>
@@ -131,7 +131,7 @@ $sidebar = new Sidebar();
                         <div class="counselorCard">
                             <h4>Student Counselor</h4>
                             <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "counselorPhoto">
+                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
                             </div>
                             <h5>Dr. Kasun Karunanayake</h5>
                             <h5>ktk@ucsc.cmb.ac.lk</h5>

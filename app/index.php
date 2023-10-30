@@ -32,6 +32,10 @@ require_once '../public/components/common/charts/adminPanelChartThree.php';
 require_once '../public/components/common/charts/adminPanelChartFour.php';
 require_once '../public/components/common/charts/adminPanelChartFive.php';
 
+//charts for live results
+require_once '../public/components/common/charts/liveResultsOne.php';
+require_once '../public/components/common/charts/liveResultsTwo.php';
+
 // Components for Counselor
 // require_once '../public/components/common/counselor/counselorSidebar.php';
 require_once '../public/components/common/counselorReservations/reservationTable.php';
@@ -44,3 +48,7 @@ require_once '../public/components/common/userDetails/userDetailsCards.php';
 //components for log details card
 require_once '../public/components/common/logDetails/logDetailsArea.php';
 require_once '../public/components/common/logDetails/logDetailsCards.php';
+
+//components for studentrep to approve teaching students
+require_once '../public/components/common/approveByStudentRep/approveTeachingStudentsArea.php';
+require_once '../public/components/common/approveByStudentRep/approveTeachingStudentsCards.php';

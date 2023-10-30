@@ -1,8 +1,8 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar(null,2);
-$approveArea = new ApproveArea();
+$sidebar = new Sidebar();
+$approveArea = new TeachingStudentApproveArea();
 ?>
 
 <div id="sidebar-active">
