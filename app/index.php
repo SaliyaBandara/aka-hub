@@ -46,3 +46,7 @@ require_once '../public/components/common/userDetails/userDetailsCards.php';
 //components for log details card
 require_once '../public/components/common/logDetails/logDetailsArea.php';
 require_once '../public/components/common/logDetails/logDetailsCards.php';
+
+//components for studentrep to approve teaching students
+require_once '../public/components/common/approveByStudentRep/approveTeachingStudentsArea.php';
+require_once '../public/components/common/approveByStudentRep/approveTeachingStudentsCards.php';

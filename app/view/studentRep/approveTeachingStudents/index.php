@@ -1,11 +1,8 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("electionDashboard");
-$electionCard = new ElectionCard();
-$prevElectionCard = new PrevElectionCard();
-$calendar = new Calendar();
-
+$sidebar = new Sidebar();
+$approveArea = new TeachingStudentApproveArea();
 ?>
 
 <div id="sidebar-active">
@@ -14,7 +11,7 @@ $calendar = new Calendar();
         <div class="flex flex_container">
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Samudi Perera</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">
@@ -26,7 +23,7 @@ $calendar = new Calendar();
             </div>
             <div class="flex_item">
                 <div class="title">Notifications</div>
-                <div class="text-muted">Hi Samudi Perera</div>
+                <div class="text-muted">Hi Kasun Udara</div>
             </div>
         </div>
     </div>
@@ -94,62 +91,35 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-            <div id = "ongoingElections">
-                <div id = "ongoingTitle">Ongoing Elections</div>
-                <?php echo $electionCard->render();
-                    echo $electionCard->render();
-                    echo $electionCard->render();
-                    echo $electionCard->render();
-                ?>
-            </div>
-
-            <div id = "previousElections">
-                <div id = "previousTitle">Previous Elections</div>
-                <?php echo $prevElectionCard->render();
-                    echo $prevElectionCard->render();
-                    echo $prevElectionCard->render();
-                    echo $prevElectionCard->render();
-                ?>
+            <div class="approveDivContainor">
+                <?php echo $approveArea->render(); ?>
             </div>
         </div>
-        <div class="right">
-            <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div>
-        </div>
+        <!-- <div class="right">
+            
+        </div> -->
     </div>
 
     <style>
+        .approveDivContainor{
+            width: 100%;
+            height: 500px;
+        }
+        .approveDivContainor h3{
+            text-align: center;
+        }
         .main-grid{
-            
+
         }
 
         .main-grid .left{
-            width: 70%;
-            background-color: white;
-            height: 150vh;
+            width: 100%;
+            height: 1150px;
         }
-        .main-grid .right{
+        /* .main-grid .right{
             flex-grow: 1;
-            height: 50vh;
-            margin-left : 20px;
-        }
-
-        .main-grid .right .calendarContainor{
-            margin-left : 30px;
-        }
-
-
-        #ongoingTitle , #previousTitle{
-            margin-left : 20px;
-            font-weight : bold;
-        }
-
-        #previousElections {
-            margin-top : 50px;
-        }
-
-
+            height: 1000px;
+        } */
     </style>
 
 </div>
