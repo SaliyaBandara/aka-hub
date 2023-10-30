@@ -198,8 +198,8 @@ $sidebar = new Sidebar("home");
                                     Active
                                 </div>
                                 <div class="tableItem">
-                                    <div class="acceptButton">Accept</div>
-                                    <div class="declineButton">Decline</div>
+                                    <div class="acceptButton">Edit</div>
+                                    <div class="declineButton">Delete</div>
                                 </div>
                             </div>
                             <div class="materialCard">
@@ -222,8 +222,8 @@ $sidebar = new Sidebar("home");
                                     Active
                                 </div>
                                 <div class="tableItem">
-                                    <div class="acceptButton">Accept</div>
-                                    <div class="declineButton">Decline</div>
+                                    <div class="acceptButton">Edit</div>
+                                    <div class="declineButton">Delete</div>
                                 </div>
                             </div>
                             <div class="materialCard">
@@ -246,8 +246,8 @@ $sidebar = new Sidebar("home");
                                     Active
                                 </div>
                                 <div class="tableItem">
-                                    <div class="acceptButton">Accept</div>
-                                    <div class="declineButton">Decline</div>
+                                    <div class="acceptButton">Edit</div>
+                                    <div class="declineButton">Delete</div>
                                 </div>
                             </div>
                             <div class="materialCard">
@@ -270,8 +270,8 @@ $sidebar = new Sidebar("home");
                                     Active
                                 </div>
                                 <div class="tableItem">
-                                    <div class="acceptButton">Accept</div>
-                                    <div class="declineButton">Decline</div>
+                                    <div class="acceptButton">Edit</div>
+                                    <div class="declineButton">Delete</div>
                                 </div>
                             </div>
                             <div class="materialCard">
@@ -294,8 +294,8 @@ $sidebar = new Sidebar("home");
                                     Active
                                 </div>
                                 <div class="tableItem">
-                                    <div class="acceptButton">Accept</div>
-                                    <div class="declineButton">Decline</div>
+                                    <div class="acceptButton">Edit</div>
+                                    <div class="declineButton">Delete</div>
                                 </div>
                             </div>
                             <!--<div class="materialCard">
