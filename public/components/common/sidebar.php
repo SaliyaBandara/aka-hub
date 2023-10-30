@@ -5,9 +5,8 @@ class Sidebar
 
     public function __construct($active_page = null, $role = 1)
     {
-        if ($role == 1) {
+        if ($role == 1) { //student
             $pages = [
-                'home' => ['Home', 'bxs-home'],
                 'dashboard' => ['Dashboard', 'bxs-dashboard'],
                 'courses' => ['Courses', 'bxs-book'],
                 'chat' => ['Chat', 'bxs-chat'],
@@ -15,10 +14,35 @@ class Sidebar
                 'settings' => ['Settings', 'bxs-cog'],
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
             ];
-        } else if ($role == 2) {
+        } else if ($role == 2) { //admin
+            $pages = [
+                'adminpanel' => ['Dashboard', 'bxs-dashboard'],
+                'approveRepresentatives' => ['Approvals', 'bxs-home'],
+                'existingCounselors' => ['Counselor Acc', 'bxs-dashboard'],
+                'viewlogs' => ['User Logs', 'bxs-dashboard'],
+                'manageStudyMaterials' => ['Materials', 'bxs-book'],
+                'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
+                'feedSelection' => ['Feeds', 'bxs-cog'],
+                'forum' => ['Forum', 'bxs-cog'],
+                'viewUserDistribution' => ['User Distribution', 'bxs-cog'],
+            ];
+        } else if ($role == 3) { //superadmin
+            $pages = [
+                'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                'adminAccount' => ['Admin Account', 'bxs-home'],
+            ];
+        } else if ($role == 5) { //student-rep
             $pages = [
                 'home' => ['Home', 'bxs-home'],
                 'about' => ['About', 'bxs-home'],
+            ];
+        } else if ($role == 6) { //counselor
+            $pages = [
+                'dashboard' => ['Dashboard', 'bxs-dashboard'],
+                'upcomingReservations' => ['Upcoming Reservation', 'bxs-home'],
+                'reservationRequests' => ['Reservation Requests', 'bxs-dashboard'],
+                'manageTimeSlots' => ['Time Slots', 'bxs-dashboard'],
+                'posts' => ['Posts', 'bxs-dashboard'],
             ];
         }
 
