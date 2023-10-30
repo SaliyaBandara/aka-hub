@@ -1,16 +1,9 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+// $sidebar = new Sidebar();
 $calendar = new Calendar();
-$sidebar = new CounselorSidebar();
-// $chartOne = new AdminPanelChartOne();
-// $chartTwo = new AdminPanelChartTwo();
-// $chartThree = new AdminPanelChartThree();
-// $chartFour = new AdminPanelChartFour();
-// $chartFive = new AdminPanelChartFive();
-// $calendar = new Calendar();
-// $notifications = new Notifications();
+$reservationTable = new reservationTable();
 ?>
 
 <div id="sidebar-active">
@@ -20,7 +13,6 @@ $sidebar = new CounselorSidebar();
             <div class="flex_item">
                 <div class="title pb-0-5">Welcome back</div>
                 <div class="text-muted">Dr. Kasun Karunanayake</div>
-          <div class="text-muted">Hi Kasun Udara</div>
             </div>
             <div class="flex_item search_flex">
                 <form class="flex w-100" action="" method="get">
@@ -33,7 +25,6 @@ $sidebar = new CounselorSidebar();
             <div class="flex_item">
                 <div class="title">Notifications</div>
                 <!-- <div class="text-muted">Hi Kasun Udara</div> -->
-                <div class="text-muted">Hi Kasun Udara</div>
             </div>
         </div>
     </div>
@@ -97,73 +88,40 @@ $sidebar = new CounselorSidebar();
             font-weight: 600;
         }
     </style>
+
     <div class="main-grid flex">
         <div class="left">
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-    <!-- <div class="main-grid flex">
-        <div class="left">
-
-            <div class="threeCardDiv">
-                <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        1200 Total Users
-                    </div>
+                        2 Available reservations for today
+                    </div> 
                 </div>
                 <div class="cardActiveUsers">
                     <div class="divUsersContainor">
                         2 Free Time Slots in this week
-                        1000 Active Users
                     </div>
                 </div>
                 <div class="cardNewUsers">
                     <div class="divUsersContainor">
-                        8 Total Requests in this week
+                        4 Reservations in this week
                     </div>
                 </div>
+            </div>
+            <div class="main-grid flex">
+                <div class="left">
+                    <div class="approveDivContainor">
+                        <?php echo $reservationTable->render(); ?>
+                    </div>
+                </div>
+                <!-- <div class="right">
+                    
+                </div> -->
             </div>
             
-                        200 New Users
-                    </div>
-                </div>
-            </div>
-            <div class="fourGraphsContainor">
-                <div class="graphLineContainor">
-                    <div class="graphContainor">
-                        <?php echo $chartFive->render(); ?>
-                    </div>
-                    <div class="graphContainor">
-                        <?php echo $chartTwo->render(); ?>
-                    </div>
-                </div>
-                <div class="graphLineContainor">
-                    <div class="graphContainor">
-                        <?php echo $chartThree->render(); ?>
-                    </div>
-                    <div class="graphContainor">
-                        <?php echo $chartFour->render(); ?>
-                    </div>
-                </div>
-                <div class="graphLineContainor">
-                    <div class="graphContainorFive">
-                        <?php echo $chartOne->render(); ?>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div class="right">
-            <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div>
-        </div>
+    
     </div>
-            <div class="notificationSection">
-                <?php echo $notifications->render(); ?>
-            </div>
-        </div>
-    </div> -->
 
     <style>
         .main-grid .left {
@@ -246,31 +204,26 @@ $sidebar = new CounselorSidebar();
             align-items: center;
             text-align: center;
         }
-
-        .graphLineContainor {
-            height: 100%;
+        
+        .approveDivContainor{
             width: 100%;
-            display: flex;
-            margin-top: 50px;
-            justify-content: center;
-            align-items: center;
+            height: 500px;
+        }
+        .approveDivContainor h3{
+            text-align: center;
+        }
+        .main-grid{
+
         }
 
-        .graphContainor {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .main-grid .left{
+            width: 100%;
+            height: 1150px;
         }
-
-        .graphContainorFive {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        /* .main-grid .right{
+            flex-grow: 1;
+            height: 1000px;
+        } */
     </style>
 
 </div>

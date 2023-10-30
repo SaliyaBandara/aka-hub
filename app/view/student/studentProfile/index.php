@@ -112,6 +112,7 @@ $candidateCard = new CandidateCard();
                     <div class ="notificationHeader">Send New Club Event Post Notifications</div>
                     <div class ="notificationHeader">Send New Material update Notifications</div>
                 </div>
+                <div class = "notificationInputs"></div>
                 <div class = "notificationInputs">
                     <form>
                         <div class = "notificationInputRow">
@@ -231,6 +232,28 @@ $candidateCard = new CandidateCard();
         }
 
         .profileDetailArea{
+            width : 65%;
+            padding-top: 70px;
+            
+        }
+
+        .profileImageArea{
+            width : 35%;
+            margin : 1%;
+            padding : 4%;
+
+        }
+
+        .profileButton{
+            border-radius: 20px;
+            background: #2684FF;
+            color: white;
+            border: none;
+            font-size: 12px;
+            width: 120px;
+            height: 21px;
+            margin: 0 auto;
+            margin-left : 30%;
             width : 50%;
             padding-top: 70px;
             padding-left : 30px;
@@ -255,6 +278,7 @@ $candidateCard = new CandidateCard();
             justify-content: center;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             border : none;
+
         }
 
         .profileButton:hover {
@@ -279,6 +303,10 @@ $candidateCard = new CandidateCard();
         }
 
         .profileDetailHeader{
+            width:25%;
+        }
+
+        .notificationHeaders{
             width:30%;
         }
 
@@ -289,6 +317,7 @@ $candidateCard = new CandidateCard();
         }
 
         .notificationHeader{
+            margin: 2%;
             margin: 3%;
         }
 
