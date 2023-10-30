@@ -17,7 +17,7 @@ class CandidateCard
                 <h5>21001548</h5>
             </div>
             <div class="candidateDetails"><a href="#" onclick="openPopup()">View Details</a></div>
-            <div class="candidateVote"><input type="button" value="VOTE!!"></div>
+            <div class="candidateVote"><input type="button" value="VOTE!!" class="candidateButton"></div>
 
         </div>
 

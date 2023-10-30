@@ -109,12 +109,13 @@ $candidateCard = new CandidateCard();
                 <div class="overlay" onclick="closePopup()"></div>
 
                 <div class="popup" id="popup">
-                    <p>Candidate Details:</p>
-                    <p>Details of the selected candidate go here.</p>
-                    <button onclick="closePopup()">Close</button>
+                    <div><p class="popupDetails"><b>Candidate's Name :</b> Binura Hasarindu</p></div>
+                    <div><p class="popupDetails"><b>Candidate's Degree :</b> Computer Science</p></div>
+                    <div><p class="popupDetails"><b>Candidate's Extra Curricular :</b> Athletics</p></div>
+                    <button onclick="closePopup()" class="candidateButton" id="popupButton">Close</button>
                 </div>
 
-                <div class="text-left" id="question">Positional Votes</div>
+                <!-- <div class="text-left" id="question">Positional Votes</div>-->
             </div>
         </div>
     </div>
@@ -170,7 +171,7 @@ $candidateCard = new CandidateCard();
             display: flex;
         }
 
-        .candidateVote input {
+        .candidateButton {
             border-radius: 20px;
             background: #2684FF;
             color: white;
@@ -183,7 +184,12 @@ $candidateCard = new CandidateCard();
             margin-top: 10px;
         }
 
-        .candidateVote input:hover {
+        #popupButton{
+            width: 80px;
+            margin-left:120px;
+        }
+
+        .candidateButton:hover {
             cursor: pointer;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 
@@ -195,10 +201,15 @@ $candidateCard = new CandidateCard();
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 1px solid #000;
             background: #fff;
+            border-radius: 10px;
             padding: 20px;
             z-index: 9999;
+            box-shadow: 0 0 15px rgba(38, 132, 255, 0.2);
+        }
+
+        .popupDetails{
+            color: black;
         }
 
         /* Overlay to cover the entire page behind the pop-up */
@@ -222,7 +233,7 @@ $candidateCard = new CandidateCard();
 
         .main-grid .left {
             width: 100%;
-            height: 300vh;
+            height: 130vh;
             margin: 20px;
         }
 
