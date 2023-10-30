@@ -1,13 +1,13 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new CounselorSidebar();
+$sidebar = new Sidebar();
 // $chartOne = new AdminPanelChartOne();
 // $chartTwo = new AdminPanelChartTwo();
 // $chartThree = new AdminPanelChartThree();
 // $chartFour = new AdminPanelChartFour();
 // $chartFive = new AdminPanelChartFive();
-// $calendar = new Calendar();
+$calendar = new Calendar();
 // $notifications = new Notifications();
 ?>
 
