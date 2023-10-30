@@ -34,6 +34,8 @@ require_once '../public/components/common/charts/adminPanelChartFive.php';
 
 // Components for Counselor
 // require_once '../public/components/common/counselor/counselorSidebar.php';
+require_once '../public/components/common/counselorReservations/reservationTable.php';
+require_once '../public/components/common/counselorReservations/reservationCards.php';
 
 //components for user details card
 require_once '../public/components/common/userDetails/userDetailsArea.php';

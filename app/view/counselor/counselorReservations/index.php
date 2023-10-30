@@ -3,6 +3,7 @@ $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
 $calendar = new Calendar();
+$reservationTable = new reservationTable();
 ?>
 
 <div id="sidebar-active">
@@ -88,14 +89,13 @@ $calendar = new Calendar();
         }
     </style>
 
-
     <div class="main-grid flex">
         <div class="left">
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
+                        2 Available reservations for today
+                    </div> 
                 </div>
                 <div class="cardActiveUsers">
                     <div class="divUsersContainor">
@@ -104,17 +104,23 @@ $calendar = new Calendar();
                 </div>
                 <div class="cardNewUsers">
                     <div class="divUsersContainor">
-                        8 Total Requests in this week
+                        4 Reservations in this week
                     </div>
                 </div>
             </div>
+            <div class="main-grid flex">
+                <div class="left">
+                    <div class="approveDivContainor">
+                        <?php echo $reservationTable->render(); ?>
+                    </div>
+                </div>
+                <!-- <div class="right">
+                    
+                </div> -->
+            </div>
             
         </div>
-        <div class="right">
-            <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div>
-        </div>
+    
     </div>
 
     <style>
@@ -198,6 +204,26 @@ $calendar = new Calendar();
             align-items: center;
             text-align: center;
         }
+        
+        .approveDivContainor{
+            width: 100%;
+            height: 500px;
+        }
+        .approveDivContainor h3{
+            text-align: center;
+        }
+        .main-grid{
+
+        }
+
+        .main-grid .left{
+            width: 100%;
+            height: 1150px;
+        }
+        /* .main-grid .right{
+            flex-grow: 1;
+            height: 1000px;
+        } */
     </style>
 
 </div>
