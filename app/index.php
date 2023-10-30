@@ -32,6 +32,10 @@ require_once '../public/components/common/charts/adminPanelChartThree.php';
 require_once '../public/components/common/charts/adminPanelChartFour.php';
 require_once '../public/components/common/charts/adminPanelChartFive.php';
 
+//charts for live results
+require_once '../public/components/common/charts/liveResultsOne.php';
+require_once '../public/components/common/charts/liveResultsTwo.php';
+
 // Components for Counselor
 require_once '../public/components/common/counselor/counselorSidebar.php';
 

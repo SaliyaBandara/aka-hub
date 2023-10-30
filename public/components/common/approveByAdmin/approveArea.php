@@ -9,7 +9,7 @@ class ApproveArea
 ?> <div class="containorForcardArea">
             <div class="tableContainor">
                 <div class="cardContainor">
-                <h3 class="h3-RepApprove">Representatives Approving Area</h3>
+                    <h3 class="h3-RepApprove">Representatives Approving Area</h3>
                     <div class="searchBarContainor">
                         <label>Search</label>
                         <div class="searchBar">
@@ -49,12 +49,12 @@ class ApproveArea
         </div>
 
         <style>
-
-            .h3-RepApprove{
+            .h3-RepApprove {
                 text-align: center;
                 margin-bottom: 20px;
                 width: 90%;
             }
+
             #nameHeader {
                 width: 15%;
                 height: 65px;
