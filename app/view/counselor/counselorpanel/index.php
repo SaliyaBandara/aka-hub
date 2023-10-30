@@ -3,14 +3,8 @@ $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
 $calendar = new Calendar();
-$sidebar = new CounselorSidebar();
-// $chartOne = new AdminPanelChartOne();
-// $chartTwo = new AdminPanelChartTwo();
-// $chartThree = new AdminPanelChartThree();
-// $chartFour = new AdminPanelChartFour();
-// $chartFive = new AdminPanelChartFive();
-// $calendar = new Calendar();
-// $notifications = new Notifications();
+
+
 ?>
 
 <div id="sidebar-active">
@@ -97,19 +91,20 @@ $sidebar = new CounselorSidebar();
             font-weight: 600;
         }
     </style>
+
+    <div class="main-grid flex">
     <div class="main-grid flex">
         <div class="left">
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
                         5 Accepted Reservations in this week
-    <!-- <div class="main-grid flex">
+    <div class="main-grid flex">
         <div class="left">
-
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
-                        1200 Total Users
+                        5 Accepted Reservations in this week
                     </div>
                 </div>
                 <div class="cardActiveUsers">
@@ -152,6 +147,7 @@ $sidebar = new CounselorSidebar();
                     </div>
                 </div>
             </div>
+            
         </div>
         <div class="right">
             <div class="calendarContainor">
@@ -163,7 +159,7 @@ $sidebar = new CounselorSidebar();
                 <?php echo $notifications->render(); ?>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <style>
         .main-grid .left {
@@ -245,31 +241,6 @@ $sidebar = new CounselorSidebar();
             justify-content: center;
             align-items: center;
             text-align: center;
-        }
-
-        .graphLineContainor {
-            height: 100%;
-            width: 100%;
-            display: flex;
-            margin-top: 50px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .graphContainor {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .graphContainorFive {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
     </style>
 
