@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+$sidebar = new Sidebar(null,2);
 $userDetailsArea = new UserDetailsArea();
 ?>
 

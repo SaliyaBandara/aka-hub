@@ -22,7 +22,7 @@ class Sidebar
                 'viewlogs' => ['User Logs', 'bxs-dashboard'],
                 'manageStudyMaterials' => ['Materials', 'bxs-book'],
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
-                'feedSelection' => ['Feeds', 'bxs-cog'],
+                'feedsSelection' => ['Feeds', 'bxs-cog'],
                 'forum' => ['Forum', 'bxs-cog'],
                 'viewUserDistribution' => ['User Distribution', 'bxs-cog'],
             ];
@@ -31,12 +31,12 @@ class Sidebar
                 'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
                 'adminAccount' => ['Admin Account', 'bxs-home'],
             ];
-        } else if ($role == 5) { //student-rep
+        } else if ($role == 4) { //student-rep
             $pages = [
                 'home' => ['Home', 'bxs-home'],
                 'about' => ['About', 'bxs-home'],
             ];
-        } else if ($role == 6) { //counselor
+        } else if ($role == 5) { //counselor
             $pages = [
                 'dashboard' => ['Dashboard', 'bxs-dashboard'],
                 'upcomingReservations' => ['Upcoming Reservation', 'bxs-home'],
