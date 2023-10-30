@@ -112,7 +112,85 @@ $candidateCard = new CandidateCard();
                     <div class ="notificationHeader">Send New Club Event Post Notifications</div>
                     <div class ="notificationHeader">Send New Material update Notifications</div>
                 </div>
-                <div class = "notificationInputs"></div>
+                <div class = "notificationInputs">
+                    <form>
+                        <div class = "notificationInputRow">
+                            <select id="emailAddress" name="emailAddress">
+                                <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
+                                <option value="samudi@gmail.com" selected>samudi@gmail.com</option>
+                            </select>
+                        </div>
+                        <div class = "notificationInputRow">
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type1" name="onsite" value="onsite">
+                                <label for="type1">Onsite Notifications</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type2" name="email" value="email" checked>
+                                <label for="type2">Emails</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type3" name="none" value="none">
+                                <label for="type3">None</label>
+                            </div>
+                        </div>
+                        <div class = "notificationInputRow">
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type1" name="onsite" value="onsite" checked>
+                                <label for="type1">Onsite Notifications</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type2" name="email" value="email">
+                                <label for="type2">Emails</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type3" name="none" value="none">
+                                <label for="type3">None</label>
+                            </div>
+                        </div>
+                        <div class = "notificationInputRow">
+                            <select id="daycount" name="daycount">
+                                <option value="2weeks" selected>Before 2 weeks</option>
+                                <option value="1week">Before 1 week</option>
+                                <option value="1day">Before 1 day</option>
+
+                            </select>
+                        </div>
+                        <div class = "notificationInputRow">
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type1" name="onsite" value="onsite" checked>
+                                <label for="type1">Onsite Notifications</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type2" name="email" value="email">
+                                <label for="type2">Emails</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type3" name="none" value="none">
+                                <label for="type3">None</label>
+                            </div>
+                        </div>
+                        <div class = "notificationInputRow">
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type1" name="onsite" value="onsite">
+                                <label for="type1">Onsite Notifications</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type2" name="email" value="email">
+                                <label for="type2">Emails</label>
+                            </div>
+                            <div class = "notificationInputCell">
+                                <input type="checkbox" id="type3" name="none" value="none" checked>
+                                <label for="type3">None</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class ="profileButtons">
+                        <div class = "saveButton"><input type = "button" class = "profileButton" value = "Save Changes"/></div>
+                        <div class = "editDetailButton"><input type = "button" class = "profileButton" value = "Edit Profile"/></div>
+                        <div class = "changePasswordButton"><input type = "button" class = "profileButton" value = "Change Password"/></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -153,36 +231,43 @@ $candidateCard = new CandidateCard();
         }
 
         .profileDetailArea{
-            width : 65%;
+            width : 50%;
             padding-top: 70px;
-            
+            padding-left : 30px;
         }
 
         .profileImageArea{
-            width : 35%;
-            margin : 1%;
+            width : 50%;
+            margin : 10px;
             padding : 4%;
-
+            margin-top : 0px;
         }
 
         .profileButton{
-            border-radius: 20px;
-            background: #2684FF;
+            width: 150px;
+            height: 30px;
+            background-color: #2684FF;
+            border-radius: 5px;
             color: white;
-            border: none;
-            font-size: 12px;
-            width: 120px;
-            height: 21px;
-            margin: 0 auto;
-            margin-left : 30%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            border : none;
         }
 
         .profileButton:hover {
             cursor: pointer;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-
         }
 
+        .editImageButton{
+            display : flex;
+            align-items : center;
+            justify-content : center;
+        }
+        
         .profileDetailRow{
             display : flex;
             margin-top : 2%;
@@ -194,17 +279,42 @@ $candidateCard = new CandidateCard();
         }
 
         .profileDetailHeader{
-            width:25%;
+            width:30%;
         }
 
-        .notificationHeaders{
+        .notificationHeaders, .notificationInputs{
             padding-left : 30px;
             margin-top : 30px;
             width: 50%
         }
 
         .notificationHeader{
-            margin: 2%;
+            margin: 3%;
+        }
+
+        .notificationInputRow{
+            display : flex;
+            margin : 2.7%
+        }
+
+        .notificationInputCell{
+            margin-right : 10px;
+        }
+
+        .profileButtons{
+            display :flex;
+            justify-content : flex-end;
+            margin-top : 30px;
+        }
+
+        .saveButton input{
+            margin-right : 20px;
+            
+        }
+
+        .changePasswordButton input{
+            width : 200px;
+            margin-left: 20px;
         }
 
     </style>

@@ -126,7 +126,6 @@ $sidebar = new Sidebar("home");
         }
     </style>
 
-
     <div class="main-grid flex">
         <div class="left">
             <div class="buttonAddMaterials">
