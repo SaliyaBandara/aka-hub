@@ -14,6 +14,11 @@
 :root {
   --header-height: 68px;
   --primary-color: #ff9b2d;
+  --secondary-color: #1264aba9;
+
+  --off-white-alt: #f7fafc;
+  --off-white: #f9f9f9;
+
   --sidebar-width: 275px;
   --sidebar-width-actual: calc(var(--sidebar-width) + 2rem);
 
@@ -44,6 +49,18 @@
 }
 
 /* utility classes */
+
+.fixed {
+  position: fixed;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
 
 .block {
   display: block;
@@ -183,6 +200,10 @@
   margin-top: 4rem;
 }
 
+.me-0-5 {
+  margin-right: 0.5rem;
+}
+
 .me-1 {
   margin-right: 1rem;
 }
@@ -197,7 +218,7 @@
   padding-bottom: 0 !important;
 }
 
-.pb-0-5{
+.pb-0-5 {
   padding-bottom: 0.5rem;
 }
 
@@ -221,6 +242,44 @@
 
 .text--grey {
   color: #8e8e8e !important;
+}
+
+/* font weights */
+
+.font-thin {
+  font-weight: 100;
+}
+
+.font-extralight {
+  font-weight: 200;
+}
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
+}
+
+.font-black {
+  font-weight: 900;
 }
 
 /* button styles */
