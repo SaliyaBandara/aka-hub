@@ -16,6 +16,7 @@ gtihub_private.pub
 /hidden
 /vendor
 
+secret.php
 /PHPMailer-master
 
 !/public/assets/user_uploads/img/.gitkeep

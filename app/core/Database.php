@@ -1,16 +1,24 @@
 <?php
+// include_once "config.php";
 
 class Database
 {
     private $host = DB_HOST;
     private $user = DB_USER;
-    private $password = DB_PASS;
-    private $database = DB_DATABASE;
+    private $password;
+    private $database;
 
     private $conn;
 
-    function __construct()
+    // function __construct()
+    // {
+    //     $this->conn = $this->connectDB();
+    // }
+
+    function __construct($database = DB_DATABASE, $password = DB_PASS)
     {
+        $this->database = $database;
+        $this->password = $password;
         $this->conn = $this->connectDB();
     }
 
@@ -28,15 +36,15 @@ class Database
 
     function getLastInsertedID()
     {
-        return $this->conn->insert_id;
+        return mysqli_insert_id($this->conn);
     }
 
     function runBaseQuery($query)
     {
         $result = mysqli_query($this->conn, $query);
-        while ($row = mysqli_fetch_assoc($result))
+        while ($row = mysqli_fetch_assoc($result)) {
             $resultset[] = $row;
-
+        }
         if (!empty($resultset))
             return $resultset;
     }
@@ -49,23 +57,26 @@ class Database
         $sql->execute();
         $result = $sql->get_result();
 
-        if ($result->num_rows > 0)
-            while ($row = $result->fetch_assoc())
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $resultset[] = $row;
-
+            }
+        }
+        
         if ($result->num_rows == 0)
             return array();
 
-        if (!empty($resultset))
+        if (!empty($resultset)) {
             return $resultset;
+        }
     }
 
     function bindQueryParams($sql, $param_type, $param_value_array)
     {
         $param_value_reference[] = &$param_type;
-        for ($i = 0; $i < count($param_value_array); $i++)
+        for ($i = 0; $i < count($param_value_array); $i++) {
             $param_value_reference[] = &$param_value_array[$i];
-
+        }
         call_user_func_array(array(
             $sql,
             'bind_param'

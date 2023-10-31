@@ -88,7 +88,11 @@ $calendar = new Calendar();
         }
     </style>
 
+<<<<<<< HEAD
 
+=======
+    <div class="main-grid flex">
+>>>>>>> d1e5f415237ccf864d475218e2eb6c8b6b9083ce
     <div class="main-grid flex">
         <div class="left">
             <div class="threeCardDiv">

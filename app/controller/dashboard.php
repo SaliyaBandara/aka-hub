@@ -1,7 +1,11 @@
 <?php
-class Dashboard extends Controller{
+
+class Dashboard extends Controller
+{
     public function index()
     {
+        $this->requireLogin();
+
         $data = [
             'title' => 'Dashboard',
             'message' => 'Welcome to Aka Hub!'
@@ -10,7 +14,8 @@ class Dashboard extends Controller{
         $this->view->render('dashboard/index', $data);
     }
 
-    public function test(){
+    public function test()
+    {
         $data = [
             'title' => 'Login',
             'message' => 'Welcome to Aka Hub!'
@@ -18,5 +23,4 @@ class Dashboard extends Controller{
 
         $this->view->render('dashboard/index', $data);
     }
-
 }

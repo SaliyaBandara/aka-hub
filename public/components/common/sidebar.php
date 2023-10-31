@@ -3,9 +3,13 @@
 class Sidebar
 {
 
-    public function __construct($active_page = null, $role = 1)
+    public function __construct($active_page = null, $role = 0)
     {
-        if ($role == 1) { //student
+
+        if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true)
+            $role = $_SESSION["user_role"];
+
+        if ($role == 0) { //student
             $pages = [
                 'dashboard' => ['Dashboard', 'bxs-dashboard'],
                 'courses' => ['Courses', 'bxs-book'],
@@ -14,7 +18,7 @@ class Sidebar
                 'settings' => ['Settings', 'bxs-cog'],
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
             ];
-        } else if ($role == 2) { //admin
+        } else if ($role == 1) { //admin
             $pages = [
                 'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                 'approveRepresentatives' => ['Approvals', 'bxs-home'],
@@ -90,105 +94,6 @@ class Sidebar
             </div>
 
         </div>
-
-        <style>
-            #sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: var(--sidebar-width);
-                height: 100vh;
-                background-color: #fff;
-                background-color: var(--off-white);
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-                padding: 2rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                margin: 1rem;
-                height: calc(100vh - 2rem);
-                border-radius: 10px;
-            }
-
-            #sidebar .sidebar__logo {
-                padding: 0 1rem;
-                /* margin-top: 60px; */
-                margin-bottom: 1.5rem;
-            }
-
-            #sidebar .sidebar__logo img {
-                width: 100%;
-            }
-
-            #sidebar .sidebar__list ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-
-            #sidebar .sidebar__list ul li {
-                margin-bottom: 10px;
-            }
-
-            #sidebar .sidebar__list ul li a {
-                display: block;
-                color: #727e8e;
-                text-decoration: none;
-                font-size: var(--rv-1-125);
-                font-weight: 500;
-                padding: 0.75rem 1.25rem;
-
-
-                border-radius: 10px;
-                transition: all 0.3s ease-in-out;
-
-                /* display: flex;
-                align-items: center; */
-
-            }
-
-            #sidebar .sidebar__list ul li i {
-                margin-right: 0.5rem;
-
-            }
-
-            #sidebar .sidebar__list ul li.active a,
-            #sidebar .sidebar__list ul li a:hover {
-                color: #fff;
-                background-color: yellowgreen;
-                background-color: #C381FF;
-
-                /* shadow bottom right */
-                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-            }
-
-
-            #sidebar .fixed__bottom {
-                font-size: 0.8rem;
-                color: #000;
-                text-align: center;
-            }
-
-            #sidebar .fixed__bottom a {
-                color: #000;
-                text-decoration: underline;
-            }
-
-            #sidebar .fixed__bottom a:hover {
-                color: #000;
-            }
-
-            #sidebar .spacer {
-                flex-grow: 1;
-            }
-        </style>
-
-
-
-
-
 
 <?php
 
