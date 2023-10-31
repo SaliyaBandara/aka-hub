@@ -90,7 +90,7 @@ $calendar = new Calendar();
     
     <div class="main-grid flex">
         <div class="left">
-            <div class="threeCardDiv">
+            <!-- <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
                         5 Accepted Reservations in this week
@@ -106,13 +106,15 @@ $calendar = new Calendar();
                         8 Total Requests in this week
                     </div>
                 </div>
-            </div>
-            
-        </div>
-        <div class="right">
+            </div> -->
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
             </div>
+        </div>
+        <div class="right">
+            <!-- <div class="calendarContainor">
+                <?php echo $calendar->render(); ?>
+            </div> -->
         </div>
     </div>
 
