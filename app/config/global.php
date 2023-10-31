@@ -9,3 +9,4 @@ define("DB_DATABASE", "akahub");
 define("DB_CHARSET", "utf8");
 
 define("BASE_URL", "http://" . $_SERVER['SERVER_NAME'] . "/aka-hub");
+define("USER_IMG_PATH", BASE_URL . "/public/assets/user_uploads/img/");

@@ -10,11 +10,15 @@ class Courses extends Controller
 
     public function index()
     {
+        $this->requireLogin();
+        
         $data = [
             'title' => 'Courses',
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["courses"] = $this->model('readModel')->getAll("courses");
         $this->view->render('student/courses/index', $data);
     }
 
@@ -62,5 +66,22 @@ class Courses extends Controller
         // print_r($action);
 
         $this->view->render('student/courses/add_edit', $data);
+    }
+
+    public function delete($id = 0)
+    {
+        
+        $this->requireLogin();
+        if ($_SESSION["teaching_student"] != 1)
+            $this->redirect();
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Please provide a valid course id")));
+
+        $result = $this->model('deleteModel')->deleteOne("courses", $id);
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 }

@@ -17,12 +17,15 @@ class createModel extends Model
         $params = [];
 
         foreach ($data as $key => $value) {
-            if($value == "" || $value == null)
+            if ($value == "" || $value == null)
                 continue;
             $columns .= $key . ",";
             $values .= "?,";
             // $types .= $value[1];
             $types .= $template[$key]["type"] == "number" ? "i" : "s";
+
+            if (is_array($value))
+                $value = implode(",", $value);
             array_push($params, $value);
         }
 
@@ -37,5 +40,4 @@ class createModel extends Model
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
         return $this->db_handle->insert($query, $types, $params);
     }
-
 }

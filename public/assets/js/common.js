@@ -177,6 +177,12 @@ $(document).ready(function () {
         $('#check').click();
     });
 
+    $(document).on("click", ".image-preview-table .delete-preview-btn", function () {
+        if (--$(this).closest(".image-preview-table tbody").find('tr').length == 0)
+            $(this).closest(".image-preview-table").hide();
+        $(this).closest("tr").remove();
+    });
+
     // on click sidebar-toggle-btn
     $(document).on("click", ".sidebar-toggle-btn", function () {
         // transform: translateX(0%);
