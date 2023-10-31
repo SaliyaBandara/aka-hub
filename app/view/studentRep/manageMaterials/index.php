@@ -125,8 +125,6 @@ $sidebar = new Sidebar("home");
             font-weight: 600;
         }
     </style>
-
-
     <div class="main-grid flex">
         <div class="left">
             <div class="buttonAddMaterials">
