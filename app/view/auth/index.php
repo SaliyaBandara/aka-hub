@@ -64,6 +64,12 @@ $header = new header();
 
                     <div class="form-group">
                         <label>
+                            <input type="text" name="student_id" placeholder=" ">
+                            <p>Registration Number <span class="text-gold">*</span></p>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
                             <input type="email" name="email" placeholder=" ">
                             <p>Email address <span class="text-gold">*</span></p>
                         </label>
@@ -283,11 +289,13 @@ $HTMLFooter = new HTMLFooter();
             else if (formId == "reset-password")
                 action = "reset-password";
 
+            var url = getBaseURL() + "/" + action;
+            // console.log(baseURL);
             console.log(values);
             // return;
 
             $.ajax({
-                // url: './includes/ajax.php',
+                url: url,
                 type: 'post',
                 data: {
                     action: action,

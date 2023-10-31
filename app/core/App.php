@@ -8,6 +8,7 @@ class App
 
     public function __construct()
     {
+        session_start();
         $this->parseUrl();
         $this->loadController();
         $this->callAction();
@@ -24,6 +25,8 @@ class App
         $this->action = isset($url[1]) ? $url[1] : 'index';
         $this->params = array_slice($url, 2);
 
+        // print_r($this->params);
+
         // print_r($url);
     }
 
@@ -35,6 +38,8 @@ class App
             $this->controller = new $this->controller();
         } else {
             // handle error
+            // TODO : create 404 page
+            echo "Controller Not Found";
 
         }
     }
