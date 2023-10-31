@@ -5,86 +5,8 @@ $sidebar = new Sidebar();
 $candidateCard = new CandidateCard();
 ?>
 
-<div id="sidebar-active">
-
-    <div class="welcome-back">
-        <div class="flex flex_container">
-            <div class="flex_item">
-                <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Samudi Perera</div>
-            </div>
-            <div class="flex_item search_flex">
-                <form class="flex w-100" action="" method="get">
-                    <button class="btn" type="submit">
-                        <i class='bx bx-search'></i>
-                    </button>
-                    <input class="form-group" type="text" name="q" id="" placeholder="Search" />
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        .welcome-back {
-            width: 100%;
-            padding: 0.5rem 1rem;
-        }
-
-        .welcome-back .flex_container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .welcome-back .flex_item {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .welcome-back .flex_item.search_flex {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            width: 50%;
-        }
-
-        .welcome-back .flex_item.search_flex button {
-            /* width: 20%; */
-            padding: 1rem 1.25rem;
-            padding-right: 0;
-            margin: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f5f5f5;
-            border-radius: 10px 0 0 10px;
-        }
-
-        .welcome-back .flex_item.search_flex .form-group {
-            width: 80%;
-            /* margin-left: 1rem; */
-            border: none;
-            border-radius: 0 10px 10px 0;
-            padding: 1rem 1.25rem;
-            font-size: 1rem;
-            font-weight: 500;
-            background-color: #f5f5f5;
-
-            outline: none;
-        }
-
-        .welcome-back .flex_item .title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-    </style>
-
-
+<div id="sidebar-active" class="hideScrollbar">
+    <?php $welcomeSearch = new WelcomeSearch("Samudi", "Perera"); ?>
     <div class="main-grid flex">
         <div class="left">
             <div class ="profileHeading">Your Profile</div>
@@ -112,7 +34,6 @@ $candidateCard = new CandidateCard();
                     <div class ="notificationHeader">Send New Club Event Post Notifications</div>
                     <div class ="notificationHeader">Send New Material update Notifications</div>
                 </div>
-                <div class = "notificationInputs"></div>
                 <div class = "notificationInputs">
                     <form>
                         <div class = "notificationInputRow">
@@ -244,21 +165,6 @@ $candidateCard = new CandidateCard();
 
         }
 
-        .profileButton{
-            border-radius: 20px;
-            background: #2684FF;
-            color: white;
-            border: none;
-            font-size: 12px;
-            width: 120px;
-            height: 21px;
-            margin: 0 auto;
-            margin-left : 30%;
-            width : 50%;
-            padding-top: 70px;
-            padding-left : 30px;
-        }
-
         .profileImageArea{
             width : 50%;
             margin : 10px;
@@ -349,20 +255,3 @@ $candidateCard = new CandidateCard();
     </style>
 
 </div>
-
-<style>
-    #sidebar-active {
-
-        margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
-        /* background-color: yellowgreen; */
-        width: (100vw - var(--sidebar-width-actual));
-        /* height: 50vh; */
-
-        /* border: 2px solid red; */
-
-
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        overflow: hidden;
-    }
-</style>
