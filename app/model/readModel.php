@@ -80,7 +80,13 @@ class readModel extends Model
                 "label" => "Semester",
                 "type" => "number",
                 "validation" => "required"
-            ]
+            ],
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
         ];
 
         return [

@@ -15,6 +15,8 @@ $sidebar = new Sidebar("courses");
             <?php
 
             foreach ($data["course_template"] as $key => $value) {
+                if (isset($value["skip"]) && $value["skip"] == true)
+                    continue;
             ?>
                 <div class="mb-1 form-group">
                     <label for="name" class="form-label"><?= $value["label"] ?></label>
@@ -23,6 +25,52 @@ $sidebar = new Sidebar("courses");
             <?php
             }
             ?>
+
+            <div class="mb-1">
+                <label class="form-label">Course Image</label>
+                <p class="text-muted font-14">
+                    Upload course cover image (Maximum 1 image)
+                </p>
+                <div action="/uploadFiles/img/course_cover" data-name="cover_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
+            </div>
+
+            <div class="mb-1">
+                <div class="table-responsive">
+                    <table <?= ($data['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="cover_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
+                        <thead class="cent">
+                            <tr>
+                                <th class="text-center py-1">Image</th>
+                                <th class="text-center py-1">Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot class="cent">
+                            <tr>
+                                <th class="text-center py-1">Image</th>
+                                <th class="text-center py-1">Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="ui-sortable">
+                            <?php
+                            if ($data['id'] != 0 && !empty($data['course']['cover_img'])) {
+                                $img = USER_IMG_PATH . $data['course']['cover_img'];
+                            ?>
+                                <tr class='ui-sortable-handle'>
+                                    <td>
+                                        <div class='preview-img preview-img-small' data-filename='<?= $data['course']['cover_img'] ?>' data-fancybox='group' href='<?= $img ?>'>
+                                            <img src='<?= $img ?>' class='' alt='..'>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div title='Delete Image' target='_blank' class='action-icon custom-action-btn delete-preview-btn text-danger font-14'> <i class='mdi mdi-delete'></i> Delete</div>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <div class="mt-1-5 form-group">
                 <a href="<?= BASE_URL ?>/courses" class="btn btn-info">Back</a>
@@ -35,9 +83,58 @@ $sidebar = new Sidebar("courses");
 </div>
 
 <?php $HTMLFooter = new HTMLFooter(); ?>
-
 <script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    "use strict";
+    Dropzone.autoDiscover = false;
     $(document).ready(function() {
+
+        let imgCount = 0;
+        let dropZoneImgsArr = [];
+        $('.dropzone.imgDropZone').each(function() {
+            let dropZonePath = $(this).attr('action')
+            let maxFiles = $(this).attr('data-maxFiles')
+            let name = $(this).attr('data-name')
+            let table = $(`.table-responsive .image-preview-table[data-name='${name}']`)
+
+            dropZoneImgsArr[name] = [];
+            dropZonePath = `${BASE_URL}${dropZonePath}`
+
+            let myDropzone = new Dropzone(this, {
+                url: dropZonePath,
+                parallelUploads: 1,
+                thumbnailHeight: 120,
+                thumbnailWidth: 120,
+                maxFilesize: 3,
+                // maxFiles: 3,
+                filesizeBase: 1000,
+                addRemoveLinks: true,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (++table.find("tbody tr").length > maxFiles) {
+                            alertUser("danger", `Only ${maxFiles} file(s) are allowed`)
+                            this.removeFile(this.files[0]);
+                        }
+
+                    });
+                },
+                success: function(file, response) {
+                    myDropzone.removeFile(file);
+                    if (++table.find("tbody tr").length > maxFiles)
+                        return (alertUser("danger", `Maximum number of files reached`));
+
+                    imgCount++;
+                    // dropzoneImgs.push([response['filename'], file.name])
+                    dropZoneImgsArr[name].push([response['filename'], file.name])
+                    let imgPath = `${BASE_URL}/public/assets/user_uploads/img/${response['filename']}`
+
+                    append_preview_table(table, imgPath, response['filename'])
+                }
+            });
+        })
+
         $('form').submit(function(event) {
             event.preventDefault();
             var input = $(this);
@@ -77,6 +174,22 @@ $sidebar = new Sidebar("courses");
                 $("#year").addClass("border-danger");
                 return alertUser("warning", `Year should be 1, 2, 3 or 4`);
             }
+
+            let completed = 0;
+            let tables = ["cover_img"];
+            $.each(tables, function(i, name) {
+                let table = $(`.table-responsive .image-preview-table[data-name='${name}'] tbody`)
+                let images = get_preview_imgs(table)
+                if (images.length <= 0) {
+                    alertUser("warning", `Please upload at least one image for ${name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}`)
+                    return false
+                }
+                values[`${name}`] = images;
+                completed++;
+            });
+
+            if (completed < tables.length)
+                return;
 
             $.ajax({
                 // url: url,
