@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar(null, 2);
+$sidebar = new Sidebar("viewlogs");
 $logDetailsArea = new LogDetailsArea();
 ?>
 
@@ -44,20 +44,3 @@ $logDetailsArea = new LogDetailsArea();
     </style>
 
 </div>
-
-<style>
-    #sidebar-active {
-
-        margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
-        /* background-color: yellowgreen; */
-        width: (100vw - var(--sidebar-width-actual));
-        /* height: 50vh; */
-
-        /* border: 2px solid red; */
-
-
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        overflow: hidden;
-    }
-</style>
