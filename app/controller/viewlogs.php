@@ -2,6 +2,7 @@
 class ViewLogs extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'ViewLogs',
             'message' => 'Welcome to Aka Hub!'
@@ -11,6 +12,7 @@ class ViewLogs extends Controller{
     }
 
     public function test(){
+        $this->requireLogin();
         $data = [
             'title' => 'ViewLogs',
             'message' => 'Welcome to Aka Hub!'

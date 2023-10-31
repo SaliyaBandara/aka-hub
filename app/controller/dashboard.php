@@ -16,6 +16,7 @@ class Dashboard extends Controller
 
     public function test()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Login',
             'message' => 'Welcome to Aka Hub!'

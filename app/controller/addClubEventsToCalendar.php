@@ -2,6 +2,7 @@
 class AddClubEventsToCalendar extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Add Club Events To Calendar',
             'message' => 'Welcome to Aka Hub!'

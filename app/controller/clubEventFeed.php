@@ -2,6 +2,7 @@
 class ClubEventFeed extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Club Event Feed',
             'message' => 'Welcome to Aka Hub!'
@@ -11,6 +12,7 @@ class ClubEventFeed extends Controller{
     }
 
     public function test(){
+        $this->requireLogin();
         $data = [
             'title' => 'Club Event Feed',
             'message' => 'Welcome to Aka Hub!'

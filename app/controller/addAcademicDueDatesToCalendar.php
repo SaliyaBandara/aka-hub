@@ -1,7 +1,8 @@
 <?php
 class AddAcademicDueDatesToCalendar extends Controller{
     public function index()
-    {
+    {   
+        $this->requireLogin();
         $data = [
             'title' => 'Add Aceademic Due Dates To Calendar',
             'message' => 'Welcome to Aka Hub!'

@@ -4,6 +4,7 @@ class CounselorPanel extends Controller
 {
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'CounselorPanel',
             'message' => 'Welcome to Aka Hub!'
