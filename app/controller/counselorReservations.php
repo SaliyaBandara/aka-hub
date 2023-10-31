@@ -11,4 +11,14 @@ class CounselorReservations extends Controller
 
         $this->view->render('counselor/counselorReservations/index', $data);
     }
+
+    public function reservationdetails()
+    {
+        $data = [
+            'title' => 'Reservation Details',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $this->view->render('counselor/counselorReservations/reservationDetails', $data);
+    }
 }

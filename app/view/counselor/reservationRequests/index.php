@@ -3,7 +3,7 @@ $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
 $calendar = new Calendar();
-$reservationTable = new reservationTable();
+// $reservationTable = new reservationTable();
 ?>
 
 <div id="sidebar-active">
@@ -94,31 +94,20 @@ $reservationTable = new reservationTable();
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
-                        2 Available reservations for today
+                        6 Received Requests in this Week
                     </div> 
                 </div>
                 <div class="cardActiveUsers">
                     <div class="divUsersContainor">
-                        2 Free Time Slots in this week
+                        2 Free Time  Slots in this week
                     </div>
                 </div>
                 <div class="cardNewUsers">
                     <div class="divUsersContainor">
-                        4 Reservations in this week
+                        2 Accepted Reservations in this Week
                     </div>
                 </div>
             </div>
-            <div class="main-grid flex">
-                <div class="left">
-                    <div class="approveDivContainor">
-                        <?php echo $reservationTable->render(); ?>
-                    </div>
-                </div>
-                <!-- <div class="right">
-                    
-                </div> -->
-            </div>
-            
         </div>
     
     </div>
