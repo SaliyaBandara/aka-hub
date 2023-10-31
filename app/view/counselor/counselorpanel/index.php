@@ -3,7 +3,11 @@ $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar();
 $calendar = new Calendar();
-
+$chartOne = new AdminPanelChartOne();
+$chartTwo = new AdminPanelChartTwo();
+$chartThree = new AdminPanelChartThree();
+$chartFour = new AdminPanelChartFour();
+$chartFive = new AdminPanelChartFive();
 
 ?>
 
