@@ -15,8 +15,7 @@ class Sidebar
                 'courses' => ['Courses', 'bxs-book'],
                 'chat' => ['Chat', 'bxs-chat'],
                 'electionDashboard' => ['Elections', 'bxs-chat'],
-                'settings' => ['Settings', 'bxs-cog'],
-                'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
+                'commonProfile' => ['Settings', 'bxs-cog'],
             ];
         } else if ($role == 1) { //admin
             $pages = [
@@ -24,7 +23,7 @@ class Sidebar
                 'approveRepresentatives' => ['Approvals', 'bxs-home'],
                 'existingCounselors' => ['Counselor Acc', 'bxs-dashboard'],
                 'viewlogs' => ['User Logs', 'bxs-dashboard'],
-                'manageStudyMaterials' => ['Materials', 'bxs-book'],
+                'manageMaterials' => ['Materials', 'bxs-book'],
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
                 'feedsSelection' => ['Feeds', 'bxs-cog'],
                 'forum' => ['Forum', 'bxs-cog'],
@@ -34,19 +33,36 @@ class Sidebar
             $pages = [
                 'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
                 'adminAccount' => ['Admin Account', 'bxs-home'],
+                'commonProfile' => ['Admin Profile', 'bxs-home'],
             ];
         } else if ($role == 4) { //student-rep
             $pages = [
-                'home' => ['Home', 'bxs-home'],
-                'about' => ['About', 'bxs-home'],
+                'dashboard' => ['Dashboard', 'bxs-dashboard'],
+                'courses' => ['Courses', 'bxs-book'],
+                'chat' => ['Chat', 'bxs-chat'],
+                'electionsAndPolls' => ['Elections & Polls', 'bxs-chat'],
+                'commonProfile' => ['Settings', 'bxs-cog'],
+                'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
+                'manageMaterials' => ['Materials', 'bxs-book'],
+
             ];
         } else if ($role == 5) { //counselor
             $pages = [
-                'dashboard' => ['Dashboard', 'bxs-dashboard'],
+                'counselorPanel' => ['Counselor Panel', 'bxs-dashboard'],
                 'upcomingReservations' => ['Upcoming Reservation', 'bxs-home'],
                 'reservationRequests' => ['Reservation Requests', 'bxs-dashboard'],
                 'manageTimeSlots' => ['Time Slots', 'bxs-dashboard'],
                 'posts' => ['Posts', 'bxs-dashboard'],
+                'counselorFeed' => ['Counselor Feed', 'bxs-dashboard'],
+            ];
+        }else if ($role == 6) { //ClubRep
+            $pages = [
+                'dashboard' => ['Dashboard', 'bxs-dashboard'],
+                'courses' => ['Courses', 'bxs-book'],
+                'chat' => ['Chat', 'bxs-chat'],
+                'electionsAndPolls' => ['Elections & Polls', 'bxs-chat'],
+                'commonProfile' => ['Settings', 'bxs-cog'],
+                'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
             ];
         }
 
