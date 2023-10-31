@@ -2,6 +2,7 @@
 class AdminAccount extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Admin Account Details',
             'message' => 'Welcome to Aka Hub!'
@@ -11,6 +12,7 @@ class AdminAccount extends Controller{
     }
 
     public function test(){
+        $this->requireLogin();
         $data = [
             'title' => 'Admin Account Details',
             'message' => 'Welcome to Aka Hub!'

@@ -2,6 +2,7 @@
 class ExistingCounselors extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Existing Counselors',
             'message' => 'Welcome to Aka Hub!'
@@ -11,6 +12,7 @@ class ExistingCounselors extends Controller{
     }
 
     public function test(){
+        $this->requireLogin();
         $data = [
             'title' => 'Existing Counselors',
             'message' => 'Welcome to Aka Hub!'

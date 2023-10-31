@@ -4,6 +4,7 @@ class LiveResults extends Controller
 {
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'LiveResults',
             'message' => 'Welcome to Aka Hub!'

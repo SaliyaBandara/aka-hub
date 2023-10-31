@@ -2,6 +2,7 @@
 class ApproveRepresentatives extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Rep Approvement',
             'message' => 'Welcome to Aka Hub!'
@@ -11,6 +12,7 @@ class ApproveRepresentatives extends Controller{
     }
 
     public function test(){
+        $this->requireLogin();
         $data = [
             'title' => 'Rep Approvement',
             'message' => 'Welcome to Aka Hub!'
