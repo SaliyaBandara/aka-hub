@@ -37,13 +37,9 @@ require_once '../public/components/common/charts/liveResultsOne.php';
 require_once '../public/components/common/charts/liveResultsTwo.php';
 
 // Components for Counselor
-<<<<<<< HEAD
-// require_once '../public/components/common/counselor/counselorSidebar.php';
 require_once '../public/components/common/counselorReservations/reservationTable.php';
 require_once '../public/components/common/counselorReservations/reservationCards.php';
-=======
-require_once '../public/components/common/counselor/counselorSidebar.php';
->>>>>>> af981609d8952a5f77fe6283438c8a0df5a561ad
+
 
 //components for user details card
 require_once '../public/components/common/userDetails/userDetailsArea.php';
