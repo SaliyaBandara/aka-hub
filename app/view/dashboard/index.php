@@ -9,7 +9,7 @@ $sidebar = new Sidebar("dashboard");
 
     <div class="main-grid flex">
         <div class="left">
-            <a href="" class="onsite_alert alert-success flex align-center">
+            <a href="<?= BASE_URL ?>/activeElection/index" class="onsite_alert alert-success flex align-center">
                 <div>The union election is ongoing......</div>
                 <div class="close_btn">
                     <i class='bx bx-x'></i>

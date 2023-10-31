@@ -48,6 +48,10 @@ class HTMLHead
             <!-- <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/libs/flickity/dist/flickity.min.css">
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/libs/flickity-fade/flickity-fade.css"> -->
 
+            <!-- dropzone -->
+            <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+            <link href="<?= BASE_URL ?>/public/assets/libs/@fancyapps/fancybox/dist/jquery.fancybox.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/normalize.css">
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/common.css">
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/main.css?ver=3.0">
