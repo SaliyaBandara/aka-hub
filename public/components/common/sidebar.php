@@ -3,7 +3,7 @@
 class Sidebar
 {
 
-    public function __construct($active_page = null, $role = 0)
+    public function __construct($active_page = null)
     {
 
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true)
@@ -15,7 +15,7 @@ class Sidebar
                 'courses' => ['Courses', 'bxs-book'],
                 'chat' => ['Chat', 'bxs-chat'],
                 'electionDashboard' => ['Elections', 'bxs-chat'],
-                'commonProfile' => ['Settings', 'bxs-cog'],
+                'studentProfile' => ['Settings', 'bxs-cog'],
             ];
         } else if ($role == 1) { //admin
             $pages = [
@@ -63,6 +63,7 @@ class Sidebar
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-chat'],
                 'commonProfile' => ['Settings', 'bxs-cog'],
                 'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
+                'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
             ];
         }
 

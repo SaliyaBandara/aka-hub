@@ -1,130 +1,12 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("home");
+$sidebar = new Sidebar("courses");
 ?>
 
+
 <div id="sidebar-active" class="hideScrollbar">
-    <div class="welcome-back fixed">
-        <div class="flex flex_container">
-            <div class="flex_item">
-                <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
-            </div>
-            <div class="flex_item search_flex">
-                <form class="flex w-100" action="" method="get">
-                    <button class="btn" type="submit">
-                        <i class='bx bx-search'></i>
-                    </button>
-                    <input class="form-group" type="text" name="q" id="" placeholder="Search" />
-                </form>
-            </div>
-            <div class="flex_item">
-                <div class="title">Notifications</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
-            </div>
-        </div>
-    </div>
-    <div class="welcome-back opacity-0 pointer-events-none	">
-        <div class="flex flex_container">
-            <div class="flex_item">
-                <div class="title pb-0-5">Welcome back</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
-            </div>
-            <div class="flex_item search_flex">
-                <form class="flex w-100" action="" method="get">
-                    <button class="btn" type="submit">
-                        <i class='bx bx-search'></i>
-                    </button>
-                    <input class="form-group" type="text" name="q" id="" placeholder="Search" />
-                </form>
-            </div>
-            <div class="flex_item">
-                <div class="title">Notifications</div>
-                <div class="text-muted">Hi Saliya Bandara</div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        .welcome-back {
-            width: calc(100vw - (var(--sidebar-width-actual) + 1.75rem));
-            padding: 0.5rem 1rem;
-            background-color: var(--off-white);
-            border-radius: 10px 10px 0 0;
-
-            /* border bottom */
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .welcome-back:not(.opacity-0) {
-            /* box shadow to bottom */
-            z-index: 10;
-            /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
-        }
-
-        .welcome-back .flex_container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .welcome-back .flex_item {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .welcome-back .flex_item.search_flex {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            width: 50%;
-            border: 1px solid #e5e5e5;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .welcome-back .flex_item.search_flex button.btn {
-            /* width: 20%; */
-            padding: 1rem 1.25rem;
-            /* padding-right: 0; */
-            margin: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f5f5f5;
-            border-radius: 10px 0 0 10px;
-        }
-
-        .welcome-back .flex_item.search_flex button.btn:hover {
-            background-color: #e5e5e5;
-            color: var(--primary-color);
-        }
-
-        .welcome-back .flex_item.search_flex .form-group {
-            width: 100%;
-            /* margin-left: 1rem; */
-            border: none;
-            border-radius: 0 10px 10px 0;
-            padding: 1rem 1.25rem;
-            padding-left: 0.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            background-color: #f5f5f5;
-
-            outline: none;
-        }
-
-        .welcome-back .flex_item .title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-    </style>
+    <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
 
 
     <div class="main-grid flex">
@@ -134,20 +16,20 @@ $sidebar = new Sidebar("home");
                 <div class="divActiveCoursesHeader">
                     <select id="status" name="status">
                         <option value="active" selected>Active Courses</option>
-                        <option value="archieved" >Archived Courses</option>
+                        <option value="archieved">Archived Courses</option>
                     </select>
                     <select id="year" name="year">
                         <option value="year 1">Year 1</option>
                         <option value="year 2" selected>Year 2</option>
-                        <option value="year 3" >Year 3</option>
-                        <option value="year 4" >Year 4</option>
+                        <option value="year 3">Year 3</option>
+                        <option value="year 4">Year 4</option>
 
                     </select>
                     <select id="semester" name="semester">
-                        <option value="sem1"selected>Semester 1</option>
-                        <option value="sem2" >Semester 2</option>
+                        <option value="sem1" selected>Semester 1</option>
+                        <option value="sem2">Semester 2</option>
                     </select>
-                    <input type = "button" name = "saveFilters" value = "Filter" class = "profileButton"/>
+                    <input type="button" name="saveFilters" value="Filter" class="profileButton" />
                 </div>
 
                 <!-- todo flex wrap -->
@@ -220,11 +102,12 @@ $sidebar = new Sidebar("home");
                 </div>
 
                 <style>
-                    .iconModule{
+                    .iconModule {
                         width: 50px;
                         height: 50px;
                         background-color: #bdd2f1;
                     }
+
                     .divActiveCoursesHeaderPart {
                         width: 30%;
                         display: flex;
@@ -236,14 +119,15 @@ $sidebar = new Sidebar("home");
                         width: 100%;
                         height: 50px;
                         display: flex;
-                        justify-content : space-evenly;
+                        justify-content: space-evenly;
                         padding-top: 15px;
                     }
 
-                    .divActiveCoursesHeader select{
-                        height : 20px;;
-                        font-size : 14px;
-                        border : none;
+                    .divActiveCoursesHeader select {
+                        height: 20px;
+                        ;
+                        font-size: 14px;
+                        border: none;
                         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
                     }
@@ -297,7 +181,7 @@ $sidebar = new Sidebar("home");
                         margin-bottom: 0.25rem;
                     }
 
-                    .profileButton{
+                    .profileButton {
                         width: 100px;
                         height: 20px;
                         background-color: #2684FF;
@@ -308,8 +192,8 @@ $sidebar = new Sidebar("home");
                         align-items: center;
                         justify-content: center;
                         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                        border : none;
-                        font-size : 14px;
+                        border: none;
+                        font-size: 14px;
 
                     }
 
@@ -317,8 +201,6 @@ $sidebar = new Sidebar("home");
                         cursor: pointer;
                         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
                     }
-
-
                 </style>
 
 
@@ -373,32 +255,6 @@ $sidebar = new Sidebar("home");
     </style>
 
 </div>
-
-<style>
-    #sidebar-active {
-        color: #0e1111;
-
-        margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
-        /* background-color: yellowgreen; */
-        width: (100vw - var(--sidebar-width-actual));
-        /* height: 50vh; */
-
-        /* border: 2px solid red; */
-
-
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        overflow: hidden;
-
-        max-height: calc(100vh - 2rem);
-        overflow: auto;
-        /* overflow-y: auto; */
-
-        background-color: var(--off-white);
-
-    }
-</style>
-
 <?php $HTMLFooter = new HTMLFooter(); ?>
 
 <script>
