@@ -11,7 +11,8 @@ class PrevElectionCard
     <div id = "prevElectionCard">
         <div id = "prevElectionCardTitle">IEEE Day date confirmation - Poll</div>
         <div id = "prevElectionCardTime" class="text-muted" >Poll ended : 5th July 2023</div>
-        <div id = "prevEelectionButton"><input type = "button" value = "View Results"></div>
+        <!-- <div id = "prevEelectionButton"><input type = "button" value = "View Results"></div> -->
+        <div id = "prevEelectionButton"><a href="<?= BASE_URL ?>/liveResults/index" class="mwb-form-submit-btn">View Results</a></div>
     </div>
 
 
@@ -50,7 +51,7 @@ class PrevElectionCard
                 padding-bottom : 10px;
             }
 
-            #prevEelectionButton input{
+            #prevEelectionButton a{
                 padding-right : 10px;
                 border-radius: 10px;
                 background: #2684FF;
@@ -58,9 +59,10 @@ class PrevElectionCard
                 border : none;
                 font-size : 14px;
                 padding : 8px;
+                text-decoration: none;
             }
 
-            #prevEelectionButton input:hover{
+            #prevEelectionButton a:hover{
                 cursor: pointer;
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
                 
