@@ -3,15 +3,11 @@ class ExistingCounselors extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
 
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
-=======
-        $this->requireLogin();
->>>>>>> 8b281836935fd6cfa559f6c17eca18c58a6f7644
         $data = [
             'title' => 'Existing Counselors',
             'message' => 'Welcome to Aka Hub!'
@@ -21,21 +17,12 @@ class ExistingCounselors extends Controller
         $this->view->render('admin/existingCounselors/index', $data);
     }
 
-<<<<<<< HEAD
     // delete
     public function delete($id = 0)
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1)
             $this->redirect();
-=======
-    public function test(){
-        $this->requireLogin();
-        $data = [
-            'title' => 'Existing Counselors',
-            'message' => 'Welcome to Aka Hub!'
-        ];
->>>>>>> 8b281836935fd6cfa559f6c17eca18c58a6f7644
 
         if ($id == 0)
             $this->redirect();
