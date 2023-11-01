@@ -60,15 +60,15 @@ $candidateCard = new CandidateCard();
                         </div>
                         <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type1" name="onsite" value="onsite" checked>
+                                <input type="checkbox" id="type4" name="onsite" value="onsite" checked>
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type2" name="email" value="email">
+                                <input type="checkbox" id="type5" name="email" value="email">
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type3" name="none" value="none">
+                                <input type="checkbox" id="type6" name="none" value="none">
                                 <label for="type3">None</label>
                             </div>
                         </div>
@@ -82,29 +82,29 @@ $candidateCard = new CandidateCard();
                         </div>
                         <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type1" name="onsite" value="onsite" checked>
+                                <input type="checkbox" id="type7" name="onsite" value="onsite" checked>
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type2" name="email" value="email">
+                                <input type="checkbox" id="type8" name="email" value="email">
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type3" name="none" value="none">
+                                <input type="checkbox" id="type9" name="none" value="none">
                                 <label for="type3">None</label>
                             </div>
                         </div>
                         <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type1" name="onsite" value="onsite">
+                                <input type="checkbox" id="type10" name="onsite" value="onsite">
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type2" name="email" value="email">
+                                <input type="checkbox" id="type11" name="email" value="email">
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type3" name="none" value="none" checked>
+                                <input type="checkbox" id="type12" name="none" value="none" checked>
                                 <label for="type3">None</label>
                             </div>
                         </div>

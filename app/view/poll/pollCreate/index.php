@@ -16,48 +16,48 @@ $sidebar = new Sidebar("electionsAndPolls");
                             <div class="mwb-form-main-container">
                                 <form action="#">
                                     <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Title*</label>
+                                        <input type="text" class="mwb-form-control" value="" id="name"  placeholder = "Title" Required>
+                                        <label for="name" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Deadline Date*</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Deadline Date" Required>
+                                        <label for="email" class="mwb-form-text-label" ></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Deadline Time*</label>
+                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder = "Deadline Time" Required>
+                                        <label for="name" class="mwb-form-text-label" placeholder = "Deadline Time"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Eligible Voter Group*</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Eligible Voter Group" Required>
+                                        <label for="email" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name">
-                                        <label for="name" class="mwb-form-text-label">Created Date and Time*</label>
+                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder = "Created Date and Time" Required>
+                                        <label for="name" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Question 1 *</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Deadline Time" Required>
+                                        <label for="email" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Question 2 *</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Question 2" Required>
+                                        <label for="email" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Question 3 *</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Question 3" Required>
+                                        <label for="email" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Question 4 *</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Question 4" Required>
+                                        <label for="email" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <!-- <div class="mwb-form-group">
@@ -72,12 +72,12 @@ $sidebar = new Sidebar("electionsAndPolls");
                                         </div>
                                     </div> -->
                                     <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email">
-                                        <label for="email" class="mwb-form-text-label">Question 5 *</label>
+                                        <input type="email" class="mwb-form-control" id="email" placeholder = "Question 5" Required>
+                                        <label for="email" class="mwb-form-text-label"></label>
                                         <div class="mwb-form-error">This Field Required*</div>
                                     </div>
                                     <div class="mwb-form-group">
-                                        <input type="Submit" class="mwb-form-submit-btn" value="Publish Poll">
+                                        <input type="Submit" class="mwb-form-submit-btn" value="Publish Poll" Required>
                                     </div>
                                 </form>
                             </div>
