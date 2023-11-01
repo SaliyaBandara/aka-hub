@@ -3,14 +3,7 @@ $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("counselorPanel");
 $calendar = new Calendar();
-$chartOne = new AdminPanelChartOne();
-$chartTwo = new AdminPanelChartTwo();
-$chartThree = new AdminPanelChartThree();
-$chartFour = new AdminPanelChartFour();
-$chartFive = new AdminPanelChartFive();
-
 ?>
-
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
 
@@ -32,7 +25,6 @@ $chartFive = new AdminPanelChartFive();
                 <div class="cardActiveUsers">
                     <div class="divUsersContainor">
                         2 Free Time Slots in this week
-                        1000 Active Users
                     </div>
                 </div>
                 <div class="cardNewUsers">
@@ -42,43 +34,10 @@ $chartFive = new AdminPanelChartFive();
                 </div>
             </div>
             
-                        200 New Users
-                    </div>
-                </div>
-            </div>
-            <div class="fourGraphsContainor">
-                <div class="graphLineContainor">
-                    <div class="graphContainor">
-                        <?php echo $chartFive->render(); ?>
-                    </div>
-                    <div class="graphContainor">
-                        <?php echo $chartTwo->render(); ?>
-                    </div>
-                </div>
-                <div class="graphLineContainor">
-                    <div class="graphContainor">
-                        <?php echo $chartThree->render(); ?>
-                    </div>
-                    <div class="graphContainor">
-                        <?php echo $chartFour->render(); ?>
-                    </div>
-                </div>
-                <div class="graphLineContainor">
-                    <div class="graphContainorFive">
-                        <?php echo $chartOne->render(); ?>
-                    </div>
-                </div>
-            </div>
-            
         </div>
         <div class="right">
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
-            </div>
-        </div>
-    </div>
-            <div class="notificationSection">
-                <?php echo $notifications->render(); ?>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ class AddCounselors extends Controller
 
     public function redirect($redirect = "")
     {
+<<<<<<< HEAD
         header("Location: " . BASE_URL . "/existingCounselors");
         die();
     }
@@ -15,6 +16,9 @@ class AddCounselors extends Controller
         if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
+=======
+        $this->requireLogin();
+>>>>>>> 8b281836935fd6cfa559f6c17eca18c58a6f7644
         $data = [
             'title' => 'Counselors Adding',
             'message' => 'Welcome to Aka Hub!'
@@ -64,4 +68,19 @@ class AddCounselors extends Controller
 
         $this->view->render('admin/addCounselors/index', $data);
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function test(){
+        $this->requireLogin();
+        $data = [
+            'title' => 'Counselors Adding',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $this->view->render('admin/addCounselors/test', $data);
+    }
+
+}
+>>>>>>> 8b281836935fd6cfa559f6c17eca18c58a6f7644

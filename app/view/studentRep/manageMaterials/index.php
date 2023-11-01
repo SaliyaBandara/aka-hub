@@ -7,6 +7,7 @@ $sidebar = new Sidebar("manageMaterials");
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch("Kasun", "Udara"); ?>
+    
     <div class="main-grid flex">
         <div class="left">
             <div class="buttonAddMaterials">

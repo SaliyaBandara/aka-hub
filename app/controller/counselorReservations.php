@@ -4,6 +4,7 @@ class CounselorReservations extends Controller
 {
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'CounselorReservations',
             'message' => 'Welcome to Aka Hub!'
@@ -14,6 +15,7 @@ class CounselorReservations extends Controller
 
     public function reservationdetails()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Reservation Details',
             'message' => 'Welcome to Aka Hub!'

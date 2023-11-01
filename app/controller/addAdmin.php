@@ -2,6 +2,7 @@
 class AddAdmin extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Admin Account Creation',
             'message' => 'Welcome to Aka Hub!'

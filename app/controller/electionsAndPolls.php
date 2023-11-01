@@ -2,6 +2,7 @@
 class ElectionsAndPolls extends Controller{
     public function index()
     {
+        $this->requireLogin();
         $data = [
             'title' => 'Elections and Polls',
             'message' => 'Welcome to Aka Hub!'
@@ -11,6 +12,7 @@ class ElectionsAndPolls extends Controller{
     }
 
     public function test(){
+        $this->requireLogin();
         $data = [
             'title' => 'Elections and Polls',
             'message' => 'Welcome to Aka Hub!'
