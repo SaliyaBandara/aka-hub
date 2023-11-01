@@ -45,6 +45,16 @@ class readModel extends Model
         return false;
     }
 
+    // get all the posts of the counselor
+    public function getCounselorPosts()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM counselor_posts ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     /**
      * Courses Model
      */
@@ -297,4 +307,56 @@ class readModel extends Model
             "template" => $template
         ];
     }
+
+    /**
+     * Counselor Feed Model
+     */
+
+    //  CREATE TABLE `counselor_posts` (
+    //     `id` int(11) NOT NULL AUTO_INCREMENT,
+    //     `user_id` int(11) NOT NULL,
+    //     `title` varchar(255) NULL,
+    //     `description` varchar(255) DEFAULT NULL,
+    //     `image` varchar(255) DEFAULT NULL,
+    //     `created_at` DATETIME default current_timestamp,
+    //     `updated_at` DATETIME default current_timestamp,
+    //     PRIMARY KEY (`id`),
+    //     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE
+    //   );
+
+    public function getEmptyCounselorPost()
+    {
+
+        $empty = [
+            "description" => "",
+            "image" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "image" => [
+                "label" => "Image",
+                "type" => "array",
+                "validation" => "",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
 }

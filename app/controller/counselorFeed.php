@@ -1,5 +1,13 @@
 <?php
-class CounselorFeed extends Controller{
+class CounselorFeed extends Controller
+{
+
+    public function redirect($redirect = "")
+    {
+        header("Location: " . BASE_URL . "/counselorFeed");
+        die();
+    }
+
     public function index()
     {
         $this->requireLogin();
@@ -8,17 +16,77 @@ class CounselorFeed extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["posts"] = $this->model('readModel')->getAll("counselor_posts");
+        // print_r($data["posts"]);
+
         $this->view->render('counselor/counselorFeed/index', $data);
     }
 
-    public function test(){
+    public function add_edit($id = 0)
+    {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 5)
+            $this->redirect();
+
         $data = [
-            'title' => 'Counselor Feed',
+            'title' => ($id == 0) ? 'Create Post' : 'Edit Post',
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $this->view->render('counselor/counselorFeed/index', $data);
+        $data["post_template"] = $this->model('readModel')->getEmptyCounselorPost();
+        $data["post"] = $data["post_template"]["empty"];
+        $data["post_template"] = $data["post_template"]["template"];
+
+        if (isset($_POST['add_edit'])) {
+            $values = $_POST["add_edit"];
+
+            $values["user_id"] = $_SESSION["user_id"];
+            $values["image"] = $values["cover_img"];
+
+            $this->validate_template($values, $data["post_template"]);
+
+            if ($id == 0)
+                $result = $this->model('createModel')->insert_db("counselor_posts", $values, $data["post_template"]);
+            else
+                $result = $this->model('updateModel')->update_one("counselor_posts", $values, $data["post_template"], "id", $id, "i");
+
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+            die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
+        }
+
+        $data["id"] = $id;
+        // $data["action"] = $action;
+
+        if ($id != 0) {
+            $data["post"] = $this->model('readModel')->getOne("counselor_posts", $id);
+            if (!$data["post"])
+                $this->redirect();
+        }
+
+        $this->view->render('counselor/counselorFeed/add_edit', $data);
+
+
+        // getEmptyCounselorPost
     }
 
+    public function delete($id = 0)
+    {
+
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 5)
+            $this->redirect();
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
+
+        // $result = $this->model('deleteModel')->deleteOne("courses", $id);
+        $result = $this->model('deleteModel')->deleteOne("counselor_posts", $id);
+
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting post")));
+    }
 }
