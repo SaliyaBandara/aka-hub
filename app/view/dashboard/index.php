@@ -63,6 +63,9 @@ $calendar = new Calendar();
                 </div>
 
                 <style>
+                    a{
+                        text-decoration: none;
+                    }
                     .todo_flex_wrap {
                         /* display: flex;
                         flex-wrap: wrap;

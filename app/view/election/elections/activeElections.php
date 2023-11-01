@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("activeElection");
+$sidebar = new Sidebar("electionDashboard");
 $candidateCard = new CandidateCard();
 ?>
 

@@ -11,7 +11,9 @@ class ElectionCard
     <div id = "electionCard">
         <div id = "electionCardTitle">The Election for the Union Selection 2024 is happening now....</div>
         <div id = "electionCardTime" class="text-muted" >Election ends in : 1hr 30min 4sec</div>
-        <div id = "electionButton"><input type = "button" value = "VOTE NOW!"></div>
+        <div id = "electionButton"><a href="<?= BASE_URL ?>/activeElection/index" class="mwb-form-submit-btn">Vote Now</a></div>
+        <!-- <div id = "electionButton"><input type = "button" value = "VOTE NOW!"><a href=""></a></div> -->
+        
     </div>
 
 
@@ -50,7 +52,7 @@ class ElectionCard
                 padding-bottom : 10px;
             }
 
-            #electionButton input{
+            #electionButton a{
                 padding-right : 10px;
                 border-radius: 10px;
                 background: #2684FF;
@@ -58,9 +60,10 @@ class ElectionCard
                 border : none;
                 font-size : 14px;
                 padding : 8px;
+                text-decoration: none;
             }
 
-            #electionButton input:hover{
+            #electionButton a:hover{
                 cursor: pointer;
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
                 
