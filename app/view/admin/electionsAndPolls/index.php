@@ -12,7 +12,7 @@ $sidebar = new Sidebar("electionsAndPolls");
         <div class="left">
             <div class="divTileRow">
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/electionCreate/index" class="mwb-form-submit-btn">Create Elections</a>
+                    <a href="#" class="mwb-form-submit-btn">Create Elections</a>
                 </div>
                 <div class="divTile">
                     Generate Election Reports
