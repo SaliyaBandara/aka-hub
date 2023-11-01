@@ -16,6 +16,10 @@ class updateModel extends Model
         foreach ($data as $key => $value) {
             if ($value == "" || $value == null)
                 continue;
+
+            if (!isset($template[$key]) || !isset($template[$key]["type"]))
+                continue;
+
             $columns[] = "$key = ?";
             if (is_array($value))
                 $value = implode(",", $value);

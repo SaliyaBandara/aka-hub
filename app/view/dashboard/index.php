@@ -2,6 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("dashboard");
+$calendar = new Calendar();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -115,52 +116,12 @@ $sidebar = new Sidebar("dashboard");
             </section>
 
         </div>
-        <div class="right"></div>
+        <div class="right">
+            <div class="calendarContainor">
+                <?php echo $calendar->render(); ?>
+            </div>
+        </div>
     </div>
-
-    <style>
-        .main-grid {}
-
-        .main-grid .left {
-            width: 70%;
-            /* background-color: yellowgreen; */
-            height: 50vh;
-            padding: 2rem;
-        }
-
-        .main-grid .right {
-            flex-grow: 1;
-            background-color: yellowgreen;
-            height: 150vh;
-        }
-
-        .onsite_alert {
-            text-decoration: none;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            padding-right: 0;
-            background-color: #e5f9e5;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .onsite_alert .close_btn {
-            margin-left: auto;
-            cursor: pointer;
-            font-size: var(--rv-1-25);
-            padding: 0 1rem;
-        }
-
-        .onsite_alert .close_btn:hover {
-            color: red;
-        }
-
-        .onsite_alert.alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-    </style>
 
 </div>
 
@@ -168,22 +129,22 @@ $sidebar = new Sidebar("dashboard");
 <?php $HTMLFooter = new HTMLFooter(); ?>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-        $(document).on("click", ".forget-password", function (event) {
+        $(document).on("click", ".forget-password", function(event) {
             event.preventDefault();
             $('.fixed-model').fadeIn();
             $('body').css('overflow', 'hidden');
         });
 
         // on click onsite_alert close_btn
-        $(document).on("click", ".onsite_alert .close_btn", function (event) {
+        $(document).on("click", ".onsite_alert .close_btn", function(event) {
             event.preventDefault();
 
             $(this).parent().animate({
                 opacity: 0
-            }, 300, function () {
-                $(this).slideUp(250, function () {
+            }, 300, function() {
+                $(this).slideUp(250, function() {
                     $(this).remove();
                 });
             });

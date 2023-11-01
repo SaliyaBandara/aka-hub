@@ -45,9 +45,9 @@ class AdminPanelChartFour
             });
         </script>
 
-
+<!-- 
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-        <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+        <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script> -->
 
 <?php
         return ob_get_clean(); // Return the buffered HTML content

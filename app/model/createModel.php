@@ -19,6 +19,10 @@ class createModel extends Model
         foreach ($data as $key => $value) {
             if ($value == "" || $value == null)
                 continue;
+
+            if(!isset($template[$key]) || !isset($template[$key]["type"]))
+                continue;
+
             $columns .= $key . ",";
             $values .= "?,";
             // $types .= $value[1];

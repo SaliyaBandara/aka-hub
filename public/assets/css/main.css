@@ -152,6 +152,15 @@
 }
 
 /* margins */
+.mx-0-5 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.mx-0-25 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
 
 .mx-1 {
   margin-left: 1rem;
@@ -221,12 +230,21 @@
   margin-top: 4rem;
 }
 
+
 .me-0-5 {
   margin-right: 0.5rem;
 }
 
 .me-1 {
   margin-right: 1rem;
+}
+
+.ms-1{
+  margin-left: 1rem;
+}
+
+.ms-0-5{
+  margin-left: 0.5rem;
 }
 
 .ms-0-25 {
@@ -251,6 +269,10 @@
 
 .text--primary {
   color: var(--primary-color) !important;
+}
+
+.text--secondary {
+  color: var(--secondary-color) !important;
 }
 
 .text--danger {
@@ -450,6 +472,10 @@ form.form {
   border-color: #80bdff;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.js-link {
+  cursor: pointer;
 }
 
 body.open {
@@ -1230,7 +1256,7 @@ section.default__section.auth__section {
 #sidebar .sidebar__list ul li a:hover {
   color: #fff;
   background-color: yellowgreen;
-  background-color: #2684FF;
+  background-color: #2684ff;
 
   /* shadow bottom right */
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
@@ -1249,6 +1275,18 @@ section.default__section.auth__section {
 
 #sidebar .fixed__bottom a:hover {
   color: #000;
+}
+
+#sidebar .fixed__bottom a.logout {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--rv-1-new);
+  opacity: 0.6;
 }
 
 #sidebar .spacer {
@@ -1277,6 +1315,53 @@ section.default__section.auth__section {
   /* overflow-y: auto; */
 
   background-color: var(--off-white);
+}
+
+/* ********** */
+/* Main grid style */
+.main-grid {
+}
+
+.main-grid .left {
+  /* background-color: yellowgreen; */
+  width: 85% !important;
+  height: auto !important;
+  min-height: calc(100vh - var(--header-height) - 5rem);
+  padding: 2rem;
+}
+
+.main-grid .right {
+  /* background-color: yellowgreen; */
+  flex-grow: 1;
+  height: auto !important;
+  margin-right: 0.75rem;
+}
+
+.onsite_alert {
+  text-decoration: none;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 0;
+  background-color: #e5f9e5;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.onsite_alert .close_btn {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: var(--rv-1-25);
+  padding: 0 1rem;
+}
+
+.onsite_alert .close_btn:hover {
+  color: red;
+}
+
+.onsite_alert.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
 }
 
 /* ********** */

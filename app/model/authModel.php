@@ -32,7 +32,9 @@ class authModel extends Model
 
         $result = $this->insert_db("user", $data);
         if ($result) {
-            $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$data["email"]]);
+            // echo $data["email"][0];
+            $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$data["email"][0]]);
+            // print_r($result);
             return $result[0];
         }
 

@@ -120,7 +120,6 @@ class AdminPanelChartFive
         </head>
         <body>
             <div id="chartContainer" style="height: 220px; width: 100%;"></div>
-            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
         </body>
         </html>
 <?php

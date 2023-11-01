@@ -183,6 +183,22 @@ $(document).ready(function () {
         $(this).closest("tr").remove();
     });
 
+    // on click js-link 
+    $(document).on("click", ".js-link", function (e) {
+        e.preventDefault();
+        var href = $(this).attr("href");
+        if (href == "#")
+            return;
+
+        if (isInternalLink(href))
+            window.location.href = href;
+    });
+
+    // if clicked on a inside js-link
+    $(document).on("click", ".js-link a, .js-link .btn", function (e) {
+        e.stopPropagation();
+    });
+
     // on click sidebar-toggle-btn
     $(document).on("click", ".sidebar-toggle-btn", function () {
         // transform: translateX(0%);

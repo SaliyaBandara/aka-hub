@@ -3,7 +3,7 @@
 class Sidebar
 {
 
-    public function __construct($active_page = null)
+    public function __construct($active_page = null, $role = 0)
     {
 
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true)
@@ -55,7 +55,7 @@ class Sidebar
                 'posts' => ['Posts', 'bxs-dashboard'],
                 'counselorFeed' => ['Counselor Feed', 'bxs-dashboard'],
             ];
-        }else if ($role == 6) { //ClubRep
+        } else if ($role == 6) { //ClubRep
             $pages = [
                 'dashboard' => ['Dashboard', 'bxs-dashboard'],
                 'courses' => ['Courses', 'bxs-book'],
@@ -108,6 +108,10 @@ class Sidebar
                 Do you need counselor support?
                 <a href="" target="_blank" rel="noopener noreferrer">Click</a>
                 here to talk with a counselor.
+            </div>
+
+            <div class="fixed__bottom">
+                <a class="logout" href="./logout">Logout <i class='bx bx-log-out'></i> </a>
             </div>
 
         </div>

@@ -7,7 +7,7 @@ class Calendar
     {
 
 ?>
-        <div class="wrapper">
+        <div class="calendar-wrapper wrapper">
             <header>
                 <p class="current-date"></p>
                 <div class="icons">
@@ -51,6 +51,8 @@ class Calendar
             .wrapper {
                 margin-top: 25px;
                 width: 275px;
+                width: 100%;
+                min-height: 275px;
                 background: #fff;
                 border-radius: 10px;
                 -webkit-box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
@@ -70,19 +72,20 @@ class Calendar
                 justify-content: space-between;
                 background: #2684FF;
                 border-radius: 10px 10px 0 0;
+                z-index: auto;
             }
             .wrapper header p {
                 color: #fff;
                 font-size: 1.3rem;
                 font-weight: 500;
             }
-            header .icons {
+            .calendar-wrapper header .icons {
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
             }
 
-            header .icons span {
+            .calendar-wrapper header .icons span {
                 height: 38px;
                 width: 38px;
                 margin: 0 1px;
@@ -101,11 +104,11 @@ class Calendar
                 margin-right: -10px;
             }
 
-            header .icons span:hover {
+            .calendar-wrapper header .icons span:hover {
                 background: #f2f2f2;
             }
 
-            header .current-date {
+            .calendar-wrapper header .current-date {
                 font-size: 15px;
                 font-weight: 500;
             }

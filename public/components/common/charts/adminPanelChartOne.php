@@ -23,7 +23,6 @@ class AdminPanelChartOne
             array("x" => 1451586600000, "y" => 2140000)
         );
 
-        ob_start(); // Start output buffering
 ?>
 
         <div id="chartContainer1" style="height: 220px; width: 100%; padding:20px"></div>
@@ -54,10 +53,9 @@ class AdminPanelChartOne
         </script>
 
 
-        <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 <?php
-        return ob_get_clean(); // Return the buffered HTML content
+
     }
 }
 ?>

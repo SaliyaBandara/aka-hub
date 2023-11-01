@@ -9,9 +9,9 @@ class Controller
         $this->view = new View();
     }
 
-    public function redirect()
+    public function redirect($redirect = "")
     {
-        header("Location: " . BASE_URL . "/");
+        header("Location: " . BASE_URL . "/$redirect");
         die();
     }
 

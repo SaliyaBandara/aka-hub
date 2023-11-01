@@ -320,7 +320,7 @@ $HTMLFooter = new HTMLFooter();
                         }
 
                         setTimeout(function() {
-                            window.location.replace("./")
+                            window.location.replace("./dashboard")
                         }, 2000);
 
                     } else if (response['status'] == 403)

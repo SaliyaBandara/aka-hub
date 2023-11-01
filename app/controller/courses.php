@@ -2,7 +2,7 @@
 class Courses extends Controller
 {
 
-    public function redirect()
+    public function redirect($redirect = "")
     {
         header("Location: " . BASE_URL . "/courses");
         die();
@@ -11,7 +11,7 @@ class Courses extends Controller
     public function index()
     {
         $this->requireLogin();
-        
+
         $data = [
             'title' => 'Courses',
             'message' => 'Welcome to Aka Hub!'
@@ -20,6 +20,114 @@ class Courses extends Controller
         $data["teaching_student"] = $_SESSION["teaching_student"];
         $data["courses"] = $this->model('readModel')->getAll("courses");
         $this->view->render('student/courses/index', $data);
+    }
+
+    public function view($id = 0)
+    {
+        $this->requireLogin();
+
+        // if ($id == 0)
+        //     $this->redirect();
+
+        $data = [
+            'title' => 'Course',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["id"] = $id;
+        $data["course"] = $this->model('readModel')->getOne("courses", $id);
+        if (!$data["course"])
+            $this->redirect();
+
+        $data["material"] = $this->model('readModel')->getCourseMaterial($id);
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+
+        // print_r($data["material"]);
+
+        // $data["course"] = $this->model('readModel')->getOne("courses", $id);
+        // if (!$data["course"])
+        //     $this->redirect();
+
+        $this->view->render('student/courses/view', $data);
+    }
+
+    public function material($action = "add_edit", $course_id = 0, $id = 0)
+    {
+        $this->requireLogin();
+        if ($_SESSION["teaching_student"] != 1)
+            $this->redirect();
+
+        if ($course_id == 0)
+            $this->redirect();
+
+        $data = [
+            'title' => $id == 0 ? 'Add Course Material' : 'Edit Course Material',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["course"] = $this->model('readModel')->getOne("courses", $course_id);
+        if (!$data["course"])
+            $this->redirect();
+
+        $data["data_template"] = $this->model('readModel')->getEmptyCourseMaterial();
+        $data["material"] = $data["data_template"]["empty"];
+        $data["data_template"] = $data["data_template"]["template"];
+
+        if (isset($_POST['add_edit'])) {
+            $values = $_POST["add_edit"];
+
+            $values["course_id"] = $course_id;
+            $values["user_id"] = $_SESSION["user_id"];
+            // $values["reference_links"] = json_encode($values["reference_links"]);
+            if (isset($values["kuppi_video"]))
+                $values["video_links"] = json_encode($values["kuppi_video"]);
+            if (isset($values["course_materials"]))
+                $values["short_notes"] = json_encode($values["course_materials"]);
+
+            $this->validate_template($values, $data["data_template"]);
+
+            if ($id == 0)
+                $result = $this->model('createModel')->insert_db("course_materials", $values, $data["data_template"]);
+            else
+                $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
+
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
+        }
+
+        if ($id != 0) {
+            $data["material"] = $this->model('readModel')->getOne("course_materials", $id);
+            if (!$data["material"])
+                $this->redirect();
+        }
+
+        // print_r($data["material"]);
+
+        $data["id"] = $id;
+        $data["action"] = $action;
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $this->view->render('student/courses/add_edit_material', $data);
+    }
+
+    // delete material
+    public function delete_material($id = 0)
+    {
+        $this->requireLogin();
+        if ($_SESSION["teaching_student"] != 1)
+            $this->redirect();
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Please provide a valid course material id")));
+
+        $result = $this->model('deleteModel')->deleteOne("course_materials", $id);
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting course material")));
     }
 
     public function add_edit($id = 0, $action = "create")
@@ -70,7 +178,7 @@ class Courses extends Controller
 
     public function delete($id = 0)
     {
-        
+
         $this->requireLogin();
         if ($_SESSION["teaching_student"] != 1)
             $this->redirect();

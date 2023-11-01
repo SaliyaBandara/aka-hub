@@ -12,13 +12,20 @@ $sidebar = new Sidebar("courses");
 
             <!-- section header -->
             <section>
+
+                <?php if ($data["teaching_student"] == 1) { ?>
+                    <div class="mb-1 form-group">
+                        <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
+                            <i class='bx bx-plus'></i> Add Course
+                        </a>
+                    </div>
+                <?php } ?>
+
                 <div class="section_header mb-1 flex">
                     <div class="title font-1-5 font-semibold flex align-center">
                         <i class='bx bxs-calendar-check me-0-5'></i> Courses List
                     </div>
                 </div>
-
-
 
 
                 <!-- todo flex wrap -->
@@ -55,7 +62,7 @@ $sidebar = new Sidebar("courses");
                         $img_src = USER_IMG_PATH . $course["cover_img"];
                     ?>
 
-                        <div href="#" class="todo_item flex align-center">
+                        <div href="./courses/view/<?= $course["id"] ?>" class="js-link todo_item flex align-center">
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src="<?= $img_src ?>" alt="">
@@ -217,6 +224,10 @@ $sidebar = new Sidebar("courses");
             let id = $(this).attr("data-id");
             let $this = $(this);
 
+            // confirm delete
+            if (!confirm("Are you sure you want to delete this course?"))
+                return;
+
             $.ajax({
                 url: `${BASE_URL}/courses/delete/${id}`,
                 type: 'post',
@@ -239,5 +250,4 @@ $sidebar = new Sidebar("courses");
             });
         });
     });
-
 </script>

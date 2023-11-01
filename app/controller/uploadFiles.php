@@ -2,7 +2,7 @@
 class UploadFiles extends Controller
 {
 
-    public function redirect()
+    public function redirect($redirect = "")
     {
         header("Location: " . BASE_URL . "/courses");
         die();
@@ -29,7 +29,7 @@ class UploadFiles extends Controller
             $digits = 4;
 
             $uploadPath = $newFilename = NULL;
-            
+
             $newFilename = $file_prefix . "_";
             $uploadPath = "./assets/user_uploads/img/";
 
@@ -105,6 +105,60 @@ class UploadFiles extends Controller
 
             // resize_image($uploadPath, $fileNameFinal, $newFilename, $extension, $type, 1, (1 / 3));
             // resize_image($uploadPath, $fileNameFinal, $newFilename, $extension, $type, 2, (2 / 3));
+
+            die;
+        }
+    }
+    public function pdf($file_prefix = "")
+    {
+        $this->requireLogin();
+
+        $file_prefix = filter_var($file_prefix, FILTER_SANITIZE_STRING);
+        if (isset($_FILES["file"]["name"])) {
+            $now = new DateTime();
+            $digits = 4;
+
+            $uploadPath = $newFilename = NULL;
+
+            $newFilename = $file_prefix . "_";
+            $uploadPath = "./assets/user_uploads/pdf/";
+
+            $allowed_prefixes = ["course_materials"];
+            if (!in_array($file_prefix, $allowed_prefixes))
+                $this->errorImg401("Invalid Request");
+
+            $newFilename .= $now->format('YmdHis') . uniqid() . preg_replace('/[\s.,-]+/', '', trim(strtolower(microtime()))) . (rand(pow(10, $digits - 1), pow(10, $digits) - 1));
+
+            $fileSize = $_FILES["file"]["size"]; // File size in bytes
+            $fileName = $_FILES["file"]["name"]; // The file name
+            $fileTmpLoc = $_FILES["file"]["tmp_name"]; // File in the PHP tmp folder
+            $fileType = $_FILES["file"]["type"]; // The type of file it is
+            $fileErrorMsg = $_FILES["file"]["error"]; // 0 for false... and 1 for true
+
+            // Verify if valid file
+            if ($fileType != "application/pdf")
+                $this->errorImg401("Not a valid pdf file");
+
+            $extension = ".pdf";
+            $sizeLimit = 10 * 1024 * 1024;
+
+            if ($fileSize >= $sizeLimit)
+                $this->errorImg401("File size is larger than $sizeLimit MB");
+
+            if ($fileType != "application/pdf")
+                $this->errorImg401("Please make sure that your file is in the format: PDF");
+
+            if (!$fileTmpLoc)
+                $this->errorImg401("Please select a file before clicking upload");
+
+            // $fileNameFinal = $newFilename . "@3x" .  $extension;
+            $fileNameFinal = $newFilename .  $extension;
+
+            if (move_uploaded_file($fileTmpLoc, $uploadPath . $fileNameFinal)) {
+                http_response_code(200);
+                header('Content-Type: application/json; charset=utf-8');
+                echo (json_encode(array("status" => "200", "desc" => "File upload successful", "filename" => $fileNameFinal)));
+            }
 
             die;
         }
