@@ -34,6 +34,7 @@ $logDetailsArea = new LogDetailsArea();
         .main-grid .leftApprove {
             width: 100%;
             height: auto;
+            padding: 0 140px 0 140px;
         }
 
         /* .main-grid .right{

@@ -35,6 +35,7 @@ $userDetailsArea = new UserDetailsArea();
         .main-grid .leftViewUserDistribution {
             width: 100%;
             height: 850px;
+            padding: 0 140px 0 140px;
         }
 
         /* .main-grid .right{

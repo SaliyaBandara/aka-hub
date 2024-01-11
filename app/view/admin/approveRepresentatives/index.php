@@ -35,6 +35,7 @@ $approveArea = new ApproveArea();
         .main-grid .left{
             width: 100%!important;
             height: 1350px;
+            padding: 0 150px 0 150px;
         }
         /* .main-grid .right{
             flex-grow: 1;
