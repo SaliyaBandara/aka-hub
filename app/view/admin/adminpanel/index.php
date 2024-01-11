@@ -157,7 +157,7 @@ $calendar = new Calendar();
         }
 
         .graphContainor {
-            width: 50%;
+            width: 55%;
             height: 100%;
             display: flex;
             justify-content: center;

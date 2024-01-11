@@ -44,7 +44,6 @@ class AdminPanelChartThree
         </body>
         </html>
         <?php
-        return ob_get_clean(); // Return the buffered HTML content
     }
 }
 ?>
