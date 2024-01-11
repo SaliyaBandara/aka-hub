@@ -239,7 +239,7 @@ $sidebar = new Sidebar("manageMaterials");
 
         .tableArea {
             width: 100%;
-            height: 80%;
+            height: auto;
             display: flex;
             justify-content: center;
         }
@@ -452,7 +452,7 @@ $sidebar = new Sidebar("manageMaterials");
         .main-grid .leftManageMaterials {
             width: 100%;
             /* background-color: yellowgreen; */
-            height: 110vh;
+            height: auto;
             padding: 2rem;
         }
 
@@ -494,6 +494,14 @@ $sidebar = new Sidebar("manageMaterials");
             width: 50%;
             height: 100%;
             display: flex;
+        }
+        .leftManageMaterials{
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
         }
     </style>
 
