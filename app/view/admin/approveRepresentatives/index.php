@@ -23,7 +23,7 @@ $approveArea = new ApproveArea();
     <style>
         .approveDivContainor{
             width: 100%;
-            height: 500px;
+            height: auto;
         }
         .approveDivContainor h3{
             text-align: center;
@@ -33,8 +33,8 @@ $approveArea = new ApproveArea();
         }
 
         .main-grid .left{
-            width: 100%;
-            height: 1150px;
+            width: 100%!important;
+            height: 1350px;
         }
         /* .main-grid .right{
             flex-grow: 1;

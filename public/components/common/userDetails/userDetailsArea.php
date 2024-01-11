@@ -50,11 +50,11 @@ class UserDetailsArea
             .h3-RepApprove{
                 text-align: center;
                 margin-bottom: 20px;
-                width: 90%;
+                width: 100%;
             }
             #nameHeader {
                 width: 25%;
-                height: 65px;
+                height: 55px;
                 color: white;
                 display: flex;
                 align-items: center;
@@ -63,7 +63,7 @@ class UserDetailsArea
 
             #mailHeader {
                 width: 25%;
-                height: 65px;
+                height: 55px;
                 color: white;
                 display: flex;
                 align-items: center;
@@ -72,7 +72,7 @@ class UserDetailsArea
 
             #indexNumberHeader {
                 width: 25%;
-                height: 65px;
+                height: 55px;
                 color: white;
                 display: flex;
                 align-items: center;
@@ -81,19 +81,18 @@ class UserDetailsArea
 
             #roleHeader {
                 width: 25%;
-                height: 65px;
+                height: 55px;
                 color: white;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
             .tableContainor {
-                width: 90%;
+                width: 100%;
                 height: 90%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
                 margin-top: 50px;
             }
 
@@ -125,7 +124,7 @@ class UserDetailsArea
             }
 
             .div-tableHeader {
-                width: 90.5%;
+                width: 100%;
                 height: 65px;
                 background-color: #2684FF;
                 opacity: 1;
@@ -135,10 +134,9 @@ class UserDetailsArea
             .cardContainor {
                 width: 100%;
                 height: 100%;
-                margin: 50px 0 50px 0;
-                padding-left: 100px;
                 justify-content: center;
                 align-items: center;
+                padding: 30px;
             }
 
             .containorForcardArea {

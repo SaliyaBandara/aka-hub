@@ -9,7 +9,7 @@ $sidebar = new Sidebar("manageMaterials");
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     
     <div class="main-grid flex">
-        <div class="left">
+        <div class="leftManageMaterials">
             <div class="buttonAddMaterials">
                 <h4>Add Material</h4>
             </div>
@@ -223,7 +223,6 @@ $sidebar = new Sidebar("manageMaterials");
         .tableFootLeft {
             width: 50%;
             height: 100%;
-
         }
 
         .tableFootRight {
@@ -318,7 +317,7 @@ $sidebar = new Sidebar("manageMaterials");
         .materialCard {
             background-color: white;
             width: 100%;
-            height: 75px;
+            height: 55px;
             justify-content: space-between;
             align-items: center;
             display: flex;
@@ -333,7 +332,7 @@ $sidebar = new Sidebar("manageMaterials");
         .h3-RepApprove {
             text-align: center;
             margin-bottom: 20px;
-            width: 90%;
+            width: 100%;
         }
 
         .tableHeaderItem {
@@ -410,8 +409,8 @@ $sidebar = new Sidebar("manageMaterials");
 
         .divTableView {
             margin-top: 15px;
-            width: 90%;
-            height: 60%;
+            width: 100%;
+            height: auto;
         }
 
         .noOfProductsToDisplay {
@@ -450,7 +449,7 @@ $sidebar = new Sidebar("manageMaterials");
             padding-right: 95px;
         }
 
-        .main-grid .left {
+        .main-grid .leftManageMaterials {
             width: 100%;
             /* background-color: yellowgreen; */
             height: 110vh;

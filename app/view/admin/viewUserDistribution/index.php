@@ -10,7 +10,7 @@ $userDetailsArea = new UserDetailsArea();
 
 
     <div class="main-grid flex">
-        <div class="left">
+        <div class="leftViewUserDistribution">
             <div class="approveDivContainor">
                 <?php echo $userDetailsArea->render(); ?>
             </div>
@@ -32,9 +32,9 @@ $userDetailsArea = new UserDetailsArea();
 
         .main-grid {}
 
-        .main-grid .left {
+        .main-grid .leftViewUserDistribution {
             width: 100%;
-            height: 1150px;
+            height: 850px;
         }
 
         /* .main-grid .right{

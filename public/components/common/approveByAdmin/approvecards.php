@@ -64,7 +64,7 @@ class ApproveCards
                 font-size: 17.5px;
             }
             #repName {
-                width: 15%;
+                width: 16%;
                 height: 20%;
             }
             #repMail {
@@ -72,11 +72,11 @@ class ApproveCards
                 height: 20%;
             }
             #repIndex {
-                width: 15%;
+                width: 25%;
                 height: 20%;
             }
             #repType {
-                width: 15%;
+                width: 20%;
                 height: 20%;
             }
             .repAccept{
@@ -114,8 +114,8 @@ class ApproveCards
             }
             .approve-card {
                 background-color: white;
-                width: 90%;
-                height: 65px;
+                width: 100%;
+                height: 55px;
                 justify-content: space-between;
                 align-items: center;
                 margin: 0px 0 0 3px;

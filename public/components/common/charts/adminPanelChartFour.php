@@ -50,7 +50,6 @@ class AdminPanelChartFour
         <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script> -->
 
 <?php
-        return ob_get_clean(); // Return the buffered HTML content
     }
 }
 ?>

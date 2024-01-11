@@ -10,7 +10,7 @@ $logDetailsArea = new LogDetailsArea();
 
 
     <div class="main-grid flex">
-        <div class="left">
+        <div class="leftApprove">
             <div class="approveDivContainor">
                 <?php echo $logDetailsArea->render(); ?>
             </div>
@@ -23,18 +23,17 @@ $logDetailsArea = new LogDetailsArea();
     <style>
         .approveDivContainor {
             width: 100%;
-            height: 500px;
+            height: auto;
+            padding: 31px;
         }
 
         .approveDivContainor h3 {
             text-align: center;
         }
 
-        .main-grid {}
-
-        .main-grid .left {
+        .main-grid .leftApprove {
             width: 100%;
-            height: 1150px;
+            height: auto;
         }
 
         /* .main-grid .right{
