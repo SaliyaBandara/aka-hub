@@ -6,7 +6,7 @@ $sidebar = new Sidebar("counselorFeed");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="my-2 mx-2">
         <h3 class="text-muted"><?= $data["id"] == 0 ? "Create New Post" : "Edit Post" ?></h3>
 

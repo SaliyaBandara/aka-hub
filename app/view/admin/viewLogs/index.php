@@ -6,7 +6,7 @@ $logDetailsArea = new LogDetailsArea();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Kasun", "Udara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
 
 
     <div class="main-grid flex">
