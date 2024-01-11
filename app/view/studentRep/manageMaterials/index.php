@@ -350,6 +350,7 @@ $sidebar = new Sidebar("manageMaterials");
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 0 130px 0 130px;
         }
 
         .searchText {
