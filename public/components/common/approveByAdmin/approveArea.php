@@ -5,9 +5,7 @@ class ApproveArea
 
     public function render()
     {
-        $approveCard = new ApproveCards();
 ?>
-        <div class="scrollableContainer">
             <div class="containorForcardArea">
                 <div class="tableContainor">
                     <div class="cardContainor">
@@ -35,23 +33,130 @@ class ApproveArea
                                 Action to Perform
                             </div>
                         </div>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
-                        <?php echo $approveCard->render(); ?>
+                        <div class="scrollableContainer">
+                        <?php
+                        $data = [
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                            [
+                                'student_name' => 'Binura',
+                                'university_email' => '2021CS198@.stu.cmb.ac.lk',
+                                'index_number' => '21001987',
+                                'rep_type' => 'Student Rep'
+                            ],
+                            [
+                                'student_name' => 'John Doe',
+                                'university_email' => 'john.doe@example.com',
+                                'index_number' => '12345678',
+                                'rep_type' => 'Club Rep'
+                            ],
+                        ];
+                        if(is_array($data)){
+                            foreach ($data as $card) {
+                        ?>
+                            <div class="approve-card">
+                                <div class="approve-card-div">
+                                    <div id="repName">
+                                        <?php echo $card['student_name']; ?>
+                                    </div>
+                                    <div id="repMail">
+                                        <?php echo $card['university_email']; ?>
+                                    </div>
+                                    <div id="repIndex">
+                                        <?php echo $card['index_number']; ?>
+                                    </div>
+                                    <div id="repType">
+                                        <?php echo $card['rep_type']; ?>
+                                    </div>
+                                    <div class="repAccept">
+                                        <div class="acceptButton">Accept</div>
+                                    </div>
+                                    <div class="repDecline">
+                                        <div class="declineButton">Decline</div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                    }
+                        ?>                        
                     </div>
                 </div>
             </div>
         </div>
         <style>
             .scrollableContainer {
-                height: 550px;
+                height: 430px;
                 overflow-y: auto;
                 overflow-x: hidden;
             }
@@ -169,6 +274,118 @@ class ApproveArea
             .notificationContainor h3 {
                 text-align: center;
                 width: 92%;
+            }
+
+            .acceptButton {
+                border: 1px solid #2684FF;
+                width: 65%;
+                height: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0px 0px 5px 0px #2684FF;
+                border-radius: 5px;
+            }
+
+            .declineButton {
+                border: 1px solid #ff9b2d;
+                width: 65%;
+                height: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 0px 0px 5px 0px #ff9b2d;
+                border-radius: 5px;
+            }
+
+            .acceptButton:hover {
+                background-color: #2684FF;
+                opacity: 1;
+                cursor: pointer;
+                color: white;
+                font-size: 17.5px;
+            }
+
+            .declineButton:hover {
+                background-color: #ff9b2d;
+                opacity: 1;
+                cursor: pointer;
+                color: white;
+                font-size: 17.5px;
+            }
+
+            #repName {
+                width: 16%;
+                height: 20%;
+            }
+
+            #repMail {
+                width: 25%;
+                height: 20%;
+            }
+
+            #repIndex {
+                width: 25%;
+                height: 20%;
+            }
+
+            #repType {
+                width: 20%;
+                height: 20%;
+            }
+
+            .repAccept {
+                width: 15%;
+                height: 65px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .repDecline {
+                width: 15%;
+                height: 38px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .acceptIcon {
+                width: 65px;
+                height: 65px;
+            }
+
+            .declineIcon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .acceptIcon:hover {
+                width: 67px;
+                height: 67px;
+                cursor: pointer;
+            }
+
+            .declineIcon:hover {
+                width: 37px;
+                height: 37px;
+                cursor: pointer;
+            }
+            .approve-card {
+                background-color: white;
+                width: 100%;
+                height: 55px;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0px 0 0 3px;
+                display: flex;
+            }
+
+            .approve-card-div {
+                text-align: center;
+                align-items: center;
+                display: flex;
+                width: 100%;
             }
         </style>
 
