@@ -172,13 +172,13 @@ $sidebar = new Sidebar("courses");
             <div class="divRequestSection">
                 <div class="divRequestToBe">
                     <p class="doYouNeedP">Do you need access for</p></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeStudentRep/">
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
                         <p class="repP">Student Rep ?</p>
                     </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeClubRep/">
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep">
                         <p class="repP">Club Rep ?</p>
                     </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeTeachingStudent/">
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
                         <p class="repP">Teaching Student ?</p>
                     </a></br>
                 </div>

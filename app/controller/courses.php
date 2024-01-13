@@ -193,76 +193,25 @@ class Courses extends Controller
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 
-    public function clickToBeStudentRep()
+    public function clickToBeRole($role)
     {
         $this->requireLogin();
-        if ($_SESSION["student_rep"] == 1) {
-            die(json_encode(array("status" => "400", "desc" => "You are already a student rep")));
-        } else if ($_SESSION["student_rep"] == 2) {
-            die(json_encode(array("status" => "400", "desc" => "You are already requested to be a student rep")));
-        } else if ($_SESSION["student_rep"] == 0) {
+        if ($_SESSION["$role"] == 1) {
+            die(json_encode(array("status" => "400", "desc" => "You are already a $role")));
+        } else if ($_SESSION["$role"] == 2) {
+            die(json_encode(array("status" => "400", "desc" => "You are already requested to be a $role")));
+        } else if ($_SESSION["$role"] == 0) {
 
-            $result = $this->model('updateModel')->update_one(
+            $result = $this->model('updateModel')->to_get_role(
                 "user",
-                array("student_rep" => 2),
-                [],
-                "id",
+                $role,
                 $_SESSION["user_id"],
-                "i"
+                2
             );
             if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Successfully requested to be a student rep")));
+                die(json_encode(array("status" => "200", "desc" => "Successfully requested to be a $role")));
             else {
-                die(json_encode(array("status" => "400", "desc" => "Requested to be a student rep is unsuccessfull")));
-            }
-        }
-    }
-
-    public function clickToBeClubRep()
-    {
-        $this->requireLogin();
-        if ($_SESSION["club_rep"] == 1) {
-            die(json_encode(array("status" => "400", "desc" => "You are already a club rep")));
-        } else if ($_SESSION["club_rep"] == 2) {
-            die(json_encode(array("status" => "400", "desc" => "You are already requested to be a club rep")));
-        } else if ($_SESSION["club_rep"] == 0) {
-
-            $result = $this->model('updateModel')->update_one(
-                "user",
-                array("club_rep" => 2),
-                [],
-                "id",
-                $_SESSION["user_id"],
-                "i"
-            );
-            if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Successfully requested to be a club rep")));
-            else {
-                die(json_encode(array("status" => "400", "desc" => "Requested to be a club rep is unsuccessfull")));
-            }
-        }
-    }
-
-    public function clickToBeTeachingStudent()
-    {
-        $this->requireLogin();
-        if ($_SESSION["teaching_student"] == 1) {
-            die(json_encode(array("status" => "400", "desc" => "You are already a teaching student")));
-        } else if ($_SESSION["teaching_student"] == 2) {
-            die(json_encode(array("status" => "400", "desc" => "You are already requested to be a teaching student")));
-        } else if ($_SESSION["teaching_student"] == 0) {
-            $result = $this->model('updateModel')->update_one(
-                "user",
-                array("teaching_student" => 2),
-                [],
-                "id",
-                $_SESSION["user_id"],
-                "i"
-            );
-            if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Successfully requested to be a teaching student")));
-            else {
-                die(json_encode(array("status" => "400", "desc" => "Requested to be a teaching student is unsuccessfull")));
+                die(json_encode(array("status" => "400", "desc" => "Requested to be a $role is unsuccessfull")));
             }
         }
     }
