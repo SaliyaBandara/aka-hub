@@ -15,7 +15,6 @@ require_once '../public/components/common/welcomeSearch.php';
 require_once '../public/components/common/calendar.php';
 
 //components for admin and superadmin to approve studentrepps and clubreps
-require_once '../public/components/common/approveByAdmin/approvecards.php';
 require_once '../public/components/common/approveByAdmin/approveArea.php';
 
 //components for feeds
