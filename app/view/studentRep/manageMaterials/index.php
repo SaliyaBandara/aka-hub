@@ -7,11 +7,13 @@ $sidebar = new Sidebar("manageMaterials");
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
-    
+
     <div class="main-grid flex">
         <div class="leftManageMaterials">
-            <div class="buttonAddMaterials">
-                <h4>Add Material</h4>
+            <div class="addMaterialDiv">
+                <div class="buttonAddMaterials">
+                    <h4>Add Material</h4>
+                </div>
             </div>
             <div class="divSearchAndDisplayProducts">
                 <div class="divDisplayProductsPart">
@@ -59,452 +61,444 @@ $sidebar = new Sidebar("manageMaterials");
                                     Action
                                 </div>
                             </div>
-                            <div class="materialCard">
-                                <div class="tableItem">
-                                    01
+
+                            <div class="scrollableContainer">
+                                <div class="materialCard">
+                                    <div class="tableItem">
+                                        01
+                                    </div>
+                                    <div class="tableItem">
+                                        ShortNote
+                                    </div>
+                                    <div class="tableItem">
+                                        Y1S1
+                                    </div>
+                                    <div class="tableItem">
+                                        DSA
+                                    </div>
+                                    <div class="tableItem">
+                                        defafafafa
+                                    </div>
+                                    <div class="tableItem">
+                                        Active
+                                    </div>
+                                    <div class="tableItem">
+                                        <div class="acceptButton">Edit</div>
+                                        <div class="declineButton">Delete</div>
+                                    </div>
                                 </div>
-                                <div class="tableItem">
-                                    ShortNote
+                                <div class="materialCard">
+                                    <div class="tableItem">
+                                        01
+                                    </div>
+                                    <div class="tableItem">
+                                        ShortNote
+                                    </div>
+                                    <div class="tableItem">
+                                        Y1S1
+                                    </div>
+                                    <div class="tableItem">
+                                        DSA
+                                    </div>
+                                    <div class="tableItem">
+                                        defafafafa
+                                    </div>
+                                    <div class="tableItem">
+                                        Active
+                                    </div>
+                                    <div class="tableItem">
+                                        <div class="acceptButton">Edit</div>
+                                        <div class="declineButton">Delete</div>
+                                    </div>
                                 </div>
-                                <div class="tableItem">
-                                    Y1S1
+                                <div class="materialCard">
+                                    <div class="tableItem">
+                                        01
+                                    </div>
+                                    <div class="tableItem">
+                                        ShortNote
+                                    </div>
+                                    <div class="tableItem">
+                                        Y1S1
+                                    </div>
+                                    <div class="tableItem">
+                                        DSA
+                                    </div>
+                                    <div class="tableItem">
+                                        defafafafa
+                                    </div>
+                                    <div class="tableItem">
+                                        Active
+                                    </div>
+                                    <div class="tableItem">
+                                        <div class="acceptButton">Edit</div>
+                                        <div class="declineButton">Delete</div>
+                                    </div>
                                 </div>
-                                <div class="tableItem">
-                                    DSA
+                                <div class="materialCard">
+                                    <div class="tableItem">
+                                        01
+                                    </div>
+                                    <div class="tableItem">
+                                        ShortNote
+                                    </div>
+                                    <div class="tableItem">
+                                        Y1S1
+                                    </div>
+                                    <div class="tableItem">
+                                        DSA
+                                    </div>
+                                    <div class="tableItem">
+                                        defafafafa
+                                    </div>
+                                    <div class="tableItem">
+                                        Active
+                                    </div>
+                                    <div class="tableItem">
+                                        <div class="acceptButton">Edit</div>
+                                        <div class="declineButton">Delete</div>
+                                    </div>
                                 </div>
-                                <div class="tableItem">
-                                    defafafafa
-                                </div>
-                                <div class="tableItem">
-                                    Active
-                                </div>
-                                <div class="tableItem">
-                                    <div class="acceptButton">Edit</div>
-                                    <div class="declineButton">Delete</div>
+                                <div class="materialCard">
+                                    <div class="tableItem">
+                                        01
+                                    </div>
+                                    <div class="tableItem">
+                                        ShortNote
+                                    </div>
+                                    <div class="tableItem">
+                                        Y1S1
+                                    </div>
+                                    <div class="tableItem">
+                                        DSA
+                                    </div>
+                                    <div class="tableItem">
+                                        defafafafa
+                                    </div>
+                                    <div class="tableItem">
+                                        Active
+                                    </div>
+                                    <div class="tableItem">
+                                        <div class="acceptButton">Edit</div>
+                                        <div class="declineButton">Delete</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="materialCard">
-                                <div class="tableItem">
-                                    01
-                                </div>
-                                <div class="tableItem">
-                                    ShortNote
-                                </div>
-                                <div class="tableItem">
-                                    Y1S1
-                                </div>
-                                <div class="tableItem">
-                                    DSA
-                                </div>
-                                <div class="tableItem">
-                                    defafafafa
-                                </div>
-                                <div class="tableItem">
-                                    Active
-                                </div>
-                                <div class="tableItem">
-                                    <div class="acceptButton">Edit</div>
-                                    <div class="declineButton">Delete</div>
-                                </div>
-                            </div>
-                            <div class="materialCard">
-                                <div class="tableItem">
-                                    01
-                                </div>
-                                <div class="tableItem">
-                                    ShortNote
-                                </div>
-                                <div class="tableItem">
-                                    Y1S1
-                                </div>
-                                <div class="tableItem">
-                                    DSA
-                                </div>
-                                <div class="tableItem">
-                                    defafafafa
-                                </div>
-                                <div class="tableItem">
-                                    Active
-                                </div>
-                                <div class="tableItem">
-                                    <div class="acceptButton">Edit</div>
-                                    <div class="declineButton">Delete</div>
-                                </div>
-                            </div>
-                            <div class="materialCard">
-                                <div class="tableItem">
-                                    01
-                                </div>
-                                <div class="tableItem">
-                                    ShortNote
-                                </div>
-                                <div class="tableItem">
-                                    Y1S1
-                                </div>
-                                <div class="tableItem">
-                                    DSA
-                                </div>
-                                <div class="tableItem">
-                                    defafafafa
-                                </div>
-                                <div class="tableItem">
-                                    Active
-                                </div>
-                                <div class="tableItem">
-                                    <div class="acceptButton">Edit</div>
-                                    <div class="declineButton">Delete</div>
-                                </div>
-                            </div>
-                            <div class="materialCard">
-                                <div class="tableItem">
-                                    01
-                                </div>
-                                <div class="tableItem">
-                                    ShortNote
-                                </div>
-                                <div class="tableItem">
-                                    Y1S1
-                                </div>
-                                <div class="tableItem">
-                                    DSA
-                                </div>
-                                <div class="tableItem">
-                                    defafafafa
-                                </div>
-                                <div class="tableItem">
-                                    Active
-                                </div>
-                                <div class="tableItem">
-                                    <div class="acceptButton">Edit</div>
-                                    <div class="declineButton">Delete</div>
-                                </div>
-                            </div>
-                            <!--<div class="materialCard">
-                                <div class="tableItem">
-                                    01
-                                </div>
-                                <div class="tableItem">
-                                    ShortNote
-                                </div>
-                                <div class="tableItem">
-                                    Y1S1
-                                </div>
-                                <div class="tableItem">
-                                    DSA
-                                </div>
-                                <div class="tableItem">
-                                    defafafafa
-                                </div>
-                                <div class="tableItem">
-                                    Active
-                                </div>
-                                <div class="tableItem">
-                                    <div class="acceptButton">Accept</div>
-                                    <div class="declineButton">Decline</div>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tableFoot">
-                <div class="tableFootLeft">
-                    Showing Products 1 to 5 of 352
-                </div>
-                <div class="tableFootRight">
-
-                </div>
-            </div>
         </div>
-        <div class="right"></div>
     </div>
+</div>
+<div class="tableFoot">
+    <div class="tableFootLeft">
+        Showing Products 1 to 5 of 352
+    </div>
+    <div class="tableFootRight">
 
-    <style>
-        .tableFootLeft {
-            width: 50%;
-            height: 100%;
-        }
+    </div>
+</div>
+<style>
+    .scrollableContainer {
+        height: 550px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 
-        .tableFootRight {
-            width: 50%;
-            height: 100%;
-        }
+    .addMaterialDiv {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
 
-        .tableFoot {
-            width: 100%;
-            height: 50px;
-            margin-top: 10px;
-            display: flex;
-        }
+    .tableFootLeft {
+        width: 50%;
+        height: 100%;
+    }
 
-        .tableArea {
-            width: 100%;
-            height: auto;
-            display: flex;
-            justify-content: center;
-        }
+    .tableFootRight {
+        width: 50%;
+        height: 100%;
+    }
 
-        .acceptButton {
-            width: 48%;
-            height: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0px 0px 5px 0px #2684FF;
-            border-radius: 5px;
-            margin: 5px;
-        }
+    .tableFoot {
+        width: 100%;
+        height: 50px;
+        margin-top: 10px;
+        display: flex;
+    }
 
-        .declineButton {
-            width: 48%;
-            height: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0px 0px 5px 0px #ff9b2d;
-            border-radius: 5px;
-            margin: 5px;
-        }
+    .tableArea {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+    }
 
-        .acceptButton:hover {
-            background-color: #2684FF;
-            opacity: 1;
-            cursor: pointer;
-            color: white;
-            font-size: 17.5px;
-        }
+    .acceptButton {
+        width: 48%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 0px 5px 0px #2684FF;
+        border-radius: 5px;
+        margin: 5px;
+    }
 
-        .declineButton:hover {
-            background-color: #ff9b2d;
-            opacity: 1;
-            cursor: pointer;
-            color: white;
-            font-size: 17.5px;
-        }
+    .declineButton {
+        width: 48%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 0px 5px 0px #ff9b2d;
+        border-radius: 5px;
+        margin: 5px;
+    }
 
-        .tableItem {
-            width: 14.28%;
-            height: 100%;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .acceptButton:hover {
+        background-color: #2684FF;
+        opacity: 1;
+        cursor: pointer;
+        color: white;
+        font-size: 17.5px;
+    }
 
-        .acceptIcon {
-            width: 65px;
-            height: 65px;
-            margin: 2px;
-        }
+    .declineButton:hover {
+        background-color: #ff9b2d;
+        opacity: 1;
+        cursor: pointer;
+        color: white;
+        font-size: 17.5px;
+    }
 
-        .declineIcon {
-            width: 35px;
-            height: 35px;
-        }
+    .tableItem {
+        width: 14.28%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .acceptIcon:hover {
-            width: 67px;
-            height: 67px;
-            cursor: pointer;
-        }
+    .acceptIcon {
+        width: 65px;
+        height: 65px;
+        margin: 2px;
+    }
 
-        .declineIcon:hover {
-            width: 37px;
-            height: 37px;
-            cursor: pointer;
-        }
+    .declineIcon {
+        width: 35px;
+        height: 35px;
+    }
 
-        .materialCard {
-            background-color: white;
-            width: 100%;
-            height: 55px;
-            justify-content: space-between;
-            align-items: center;
-            display: flex;
-        }
+    .acceptIcon:hover {
+        width: 67px;
+        height: 67px;
+        cursor: pointer;
+    }
+
+    .declineIcon:hover {
+        width: 37px;
+        height: 37px;
+        cursor: pointer;
+    }
+
+    .materialCard {
+        background-color: white;
+        width: 100%;
+        height: 55px;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+    }
 
 
 
 
 
-        .main-grid {}
+    .main-grid {}
 
-        .h3-RepApprove {
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
+    .h3-RepApprove {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 100%;
+    }
 
-        .tableHeaderItem {
-            width: 14.28%;
-            height: 65px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .tableHeaderItem {
+        width: 14.28%;
+        height: 65px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .tableContainor {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 130px 0 130px;
-        }
+    .tableContainor {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 130px 0 130px;
+    }
 
-        .searchText {
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            padding: 1rem 1.25rem;
-            font-size: 0.6rem;
-            font-weight: 500;
-            background-color: #f1f1f1;
-        }
+    .searchText {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        font-size: 0.6rem;
+        font-weight: 500;
+        background-color: #f1f1f1;
+    }
 
-        .searchBar {
-            height: 30px;
-            margin-left: 5px;
-        }
+    .searchBar {
+        height: 30px;
+        margin-left: 5px;
+    }
 
-        .searchBarContainor {
-            width: 100%;
-            height: 30px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-right: 95px;
-        }
+    .searchBarContainor {
+        width: 100%;
+        height: 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-right: 95px;
+    }
 
-        .div-tableHeader {
-            width: 100%;
-            height: 65px;
-            background-color: #2684FF;
-            opacity: 1;
-            display: flex;
-        }
+    .div-tableHeader {
+        width: 100%;
+        height: 65px;
+        background-color: #2684FF;
+        opacity: 1;
+        display: flex;
+    }
 
-        .cardContainor {
-            width: 100%;
-            height: 100%;
-            margin: 50px 0 50px 0;
-            justify-content: center;
-            align-items: center;
-        }
+    .cardContainor {
+        width: 100%;
+        height: 100%;
+        margin: 50px 0 50px 0;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .containorForcardArea {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
+    .containorForcardArea {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .notificationContainor h3 {
-            text-align: center;
-            width: 92%;
-        }
+    .notificationContainor h3 {
+        text-align: center;
+        width: 92%;
+    }
 
-        .divTableView {
-            margin-top: 15px;
-            width: 100%;
-            height: auto;
-        }
+    .divTableView {
+        margin-top: 15px;
+        width: 100%;
+        height: auto;
+    }
 
-        .noOfProductsToDisplay {
-            margin-top: 8px;
-            width: 50px;
-            height: 80%;
-            border: 0.5px solid black;
-            margin-right: 8px;
-            margin-left: 8px;
-        }
+    .noOfProductsToDisplay {
+        margin-top: 8px;
+        width: 50px;
+        height: 80%;
+        border: 0.5px solid black;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
 
-        .searchText {
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            padding: 1rem 1.25rem;
-            font-size: 0.6rem;
-            font-weight: 500;
-            background-color: #f1f1f1;
-        }
+    .searchText {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        font-size: 0.6rem;
+        font-weight: 500;
+        background-color: #f1f1f1;
+    }
 
-        .searchBar {
-            height: 30px;
-            margin-left: 5px;
-        }
+    .searchBar {
+        height: 30px;
+        margin-left: 5px;
+    }
 
-        .searchBarContainor {
-            width: 100%;
-            height: 30px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-right: 95px;
-        }
+    .searchBarContainor {
+        width: 100%;
+        height: 30px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-right: 95px;
+    }
 
-        .main-grid .leftManageMaterials {
-            width: 100%;
-            /* background-color: yellowgreen; */
-            height: auto;
-            padding: 2rem;
-        }
+    .main-grid .leftManageMaterials {
+        width: 100%;
+        /* background-color: yellowgreen; */
+        height: auto;
+        padding: 2rem;
+    }
 
-        .buttonAddMaterials {
-            width: 200px;
-            height: 40px;
-            background-color: #2684FF;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
+    .buttonAddMaterials {
+        width: 200px;
+        height: 40px;
+        background-color: #2684FF;
+        border-radius: 5px;
+        color: white;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
 
-        .buttonAddMaterials:hover {
-            cursor: pointer;
-            background-color: #1E6FF2;
-        }
+    .buttonAddMaterials:hover {
+        cursor: pointer;
+        background-color: #1E6FF2;
+    }
 
-        .divSearchAndDisplayProducts {
-            margin-top: 20px;
-            width: 100%;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .divSearchAndDisplayProducts {
+        margin-top: 20px;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .divSearchPart {
-            padding: 10px;
-            width: 50%;
-            height: 100%;
-        }
+    .divSearchPart {
+        padding: 10px;
+        width: 50%;
+        height: 100%;
+    }
 
-        .divDisplayProductsPart {
-            padding-left: 100px;
-            width: 50%;
-            height: 100%;
-            display: flex;
-        }
-        .leftManageMaterials{
-            width: 100%;
-            height: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-        }
-    </style>
+    .divDisplayProductsPart {
+        padding-left: 100px;
+        width: 50%;
+        height: 100%;
+        display: flex;
+    }
+
+    .leftManageMaterials {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+</style>
 
 </div>
 

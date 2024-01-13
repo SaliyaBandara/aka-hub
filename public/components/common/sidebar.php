@@ -21,13 +21,13 @@ class Sidebar
             $pages = [
                 'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                 'approveRepresentatives' => ['Approvals', 'bxs-home'],
-                'existingCounselors' => ['Counselor Acc', 'bxs-dashboard'],
+                'existingCounselors' => ['Counselor Acc', 'bx-body'],
                 'viewlogs' => ['User Logs', 'bxs-dashboard'],
                 'manageMaterials' => ['Materials', 'bxs-book'],
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
-                'feedsSelection' => ['Feeds', 'bxs-cog'],
+                'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                 'forum' => ['Forum', 'bxs-cog'],
-                'viewUserDistribution' => ['User Distribution', 'bxs-cog'],
+                'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
             ];
         } else if ($role == 3) { //superadmin
             $pages = [

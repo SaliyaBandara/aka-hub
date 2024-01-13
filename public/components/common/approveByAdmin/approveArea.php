@@ -6,49 +6,56 @@ class ApproveArea
     public function render()
     {
         $approveCard = new ApproveCards();
-?> <div class="containorForcardArea">
-            <div class="tableContainor">
-                <div class="cardContainor">
-                    <h3 class="h3-RepApprove">Representatives Approving Area</h3>
-                    <div class="searchBarContainor">
-                        <label>Search</label>
-                        <div class="searchBar">
-                            <input class="searchText" type="text" name="search" id="search">
+?>
+        <div class="scrollableContainer">
+            <div class="containorForcardArea">
+                <div class="tableContainor">
+                    <div class="cardContainor">
+                        <h3 class="h3-RepApprove">Representatives Approving Area</h3>
+                        <div class="searchBarContainor">
+                            <label>Search</label>
+                            <div class="searchBar">
+                                <input class="searchText" type="text" name="search" id="search">
+                            </div>
                         </div>
+                        <div class="div-tableHeader">
+                            <div id="nameHeader" class="tableHeaderItem">
+                                Student Name
+                            </div>
+                            <div id="mailHeader" class="tableHeaderItem">
+                                University Email
+                            </div>
+                            <div id="indexNumberHeader" class="tableHeaderItem">
+                                Index Number
+                            </div>
+                            <div id="repTypeHeader" class="tableHeaderItem">
+                                Rep Type
+                            </div>
+                            <div id="actionHeader" class="tableHeaderItem">
+                                Action to Perform
+                            </div>
+                        </div>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
+                        <?php echo $approveCard->render(); ?>
                     </div>
-                    <div class="div-tableHeader">
-                        <div id="nameHeader" class="tableHeaderItem">
-                            Student Name
-                        </div>
-                        <div id="mailHeader" class="tableHeaderItem">
-                            University Email
-                        </div>
-                        <div id="indexNumberHeader" class="tableHeaderItem">
-                            Index Number
-                        </div>
-                        <div id="repTypeHeader" class="tableHeaderItem">
-                            Rep Type
-                        </div>
-                        <div id="actionHeader" class="tableHeaderItem">
-                            Action to Perform
-                        </div>
-                    </div>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
-                    <?php echo $approveCard->render(); ?>
                 </div>
             </div>
-
         </div>
-
         <style>
+            .scrollableContainer {
+                height: 550px;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
             .h3-RepApprove {
                 text-align: center;
                 margin-bottom: 20px;
@@ -106,7 +113,6 @@ class ApproveArea
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                /* box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); */
                 margin-top: 50px;
             }
 
