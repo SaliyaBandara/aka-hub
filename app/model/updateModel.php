@@ -34,6 +34,7 @@ class updateModel extends Model
 
         $placeholders = implode(", ", $columns);
         $query = "UPDATE $table SET $placeholders WHERE $conditionColumn = ?";
+        print_r($query);
         $values[] = $conditionValue;
         $valueTypes[] = $conditionType;
         $valueTypesString = implode('', $valueTypes);

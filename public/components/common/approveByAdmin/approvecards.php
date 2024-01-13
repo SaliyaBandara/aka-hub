@@ -13,10 +13,10 @@ class ApproveCards
                 <div id="repMail">
                     2021CS198@.stu.cmb.ac.lk
                 </div>
-                <div id= "repIndex">
+                <div id="repIndex">
                     21001987
                 </div>
-                <div id= "repType">
+                <div id="repType">
                     Student Rep
                 </div>
                 <div class="repAccept">
@@ -31,87 +31,102 @@ class ApproveCards
             </div>
         </div>
         <style>
-            .acceptButton{
+            .acceptButton {
                 border: 1px solid #2684FF;
-                width: 75%;
-                height: 55%;
-                display:flex;
+                width: 65%;
+                height: 50%;
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 box-shadow: 0px 0px 5px 0px #2684FF;
+                border-radius: 5px;
             }
-            .declineButton{
+
+            .declineButton {
                 border: 1px solid #ff9b2d;
-                width: 75%;
-                height: 100%;
-                display:flex;
+                width: 65%;
+                height: 80%;
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 box-shadow: 0px 0px 5px 0px #ff9b2d;
+                border-radius: 5px;
             }
-            .acceptButton:hover{
+
+            .acceptButton:hover {
                 background-color: #2684FF;
-                opacity:1;
+                opacity: 1;
                 cursor: pointer;
                 color: white;
                 font-size: 17.5px;
             }
-            .declineButton:hover{
+
+            .declineButton:hover {
                 background-color: #ff9b2d;
-                opacity:1;
+                opacity: 1;
                 cursor: pointer;
                 color: white;
                 font-size: 17.5px;
             }
+
             #repName {
                 width: 16%;
                 height: 20%;
             }
+
             #repMail {
                 width: 25%;
                 height: 20%;
             }
+
             #repIndex {
                 width: 25%;
                 height: 20%;
             }
+
             #repType {
                 width: 20%;
                 height: 20%;
             }
-            .repAccept{
+
+            .repAccept {
                 width: 15%;
                 height: 65px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-            
-            .repDecline{
+
+            .repDecline {
                 width: 15%;
-                height:38px;
+                height: 38px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-            .acceptIcon{
+
+            .acceptIcon {
                 width: 65px;
                 height: 65px;
-            }   
-            .declineIcon{
+            }
+
+            .declineIcon {
                 width: 35px;
                 height: 35px;
             }
-            .acceptIcon:hover{
+
+            .acceptIcon:hover {
                 width: 67px;
                 height: 67px;
                 cursor: pointer;
             }
-            .declineIcon:hover{
+
+            .declineIcon:hover {
                 width: 37px;
                 height: 37px;
                 cursor: pointer;
             }
+
             .approve-card {
                 background-color: white;
                 width: 100%;

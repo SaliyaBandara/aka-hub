@@ -165,7 +165,26 @@ $sidebar = new Sidebar("courses");
             </section>
 
         </div>
-        <div class="right"></div>
+        <div class="right">
+            <div class="divCalendarSection">
+
+            </div>
+            <div class="divRequestSection">
+                <div class="divRequestToBe">
+                    <p class="doYouNeedP">Do you need access for</p></br>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeStudentRep/">
+                        <p class="repP">Student Rep ?</p>
+                    </a></br>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeClubRep/">
+                        <p class="repP">Club Rep ?</p>
+                    </a></br>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeTeachingStudent/">
+                        <p class="repP">Teaching Student ?</p>
+                    </a></br>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <style>
@@ -182,6 +201,41 @@ $sidebar = new Sidebar("courses");
             flex-grow: 1;
             /* background-color: yellowgreen; */
             height: 150vh;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .divCalendarSection {
+            height: 65vh;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .divRequestSection {
+            height: 15vh;
+            background-color: #fff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .repP {
+            text-align: center;
+            margin: -7px;
+        }
+
+        .doYouNeedP {
+            text-align: center;
+            margin: 0;
+        }
+
+        .divRequestSection a {
+            text-align: center;
+            /* text-decoration: none; */
+            color: black;
+            margin: 0;
         }
 
         .onsite_alert {
@@ -250,4 +304,7 @@ $sidebar = new Sidebar("courses");
             });
         });
     });
+</script>
+<script>
+
 </script>
