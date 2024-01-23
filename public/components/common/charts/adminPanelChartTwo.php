@@ -44,10 +44,7 @@ class AdminPanelChartTwo
             });
         </script>
 
-        <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-
 <?php
-        return ob_get_clean(); // Return the buffered HTML content
     }
 }
 ?>

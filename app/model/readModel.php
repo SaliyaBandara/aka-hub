@@ -576,5 +576,11 @@ class readModel extends Model
         ];
     }
 
-
+    public function getRequestsToApprove(){
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
 }

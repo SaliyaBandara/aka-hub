@@ -21,13 +21,13 @@ class Sidebar
             $pages = [
                 'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                 'approveRepresentatives' => ['Approvals', 'bxs-home'],
-                'existingCounselors' => ['Counselor Acc', 'bxs-dashboard'],
+                'existingCounselors' => ['Counselor Acc', 'bx-body'],
                 'viewlogs' => ['User Logs', 'bxs-dashboard'],
                 'manageMaterials' => ['Materials', 'bxs-book'],
                 'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
-                'feedsSelection' => ['Feeds', 'bxs-cog'],
+                'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                 'forum' => ['Forum', 'bxs-cog'],
-                'viewUserDistribution' => ['User Distribution', 'bxs-cog'],
+                'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
             ];
         } else if ($role == 3) { //superadmin
             $pages = [
@@ -48,12 +48,11 @@ class Sidebar
             ];
         } else if ($role == 5) { //counselor
             $pages = [
-                'counselorPanel' => ['Counselor Panel', 'bxs-dashboard'],
-                'upcomingReservations' => ['Upcoming Reservation', 'bxs-home'],
-                'reservationRequests' => ['Reservation Requests', 'bxs-dashboard'],
-                'manageTimeSlots' => ['Time Slots', 'bxs-dashboard'],
-                'posts' => ['Posts', 'bxs-dashboard'],
-                'counselorFeed' => ['Counselor Feed', 'bxs-dashboard'],
+                'counselorPanel' => ['Counselor Panel', 'bxs-home'],
+                'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
+                'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
+                'manageTimeSlots' => ['Time Slots', 'bxs-time-five'],
+                'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
             ];
         } else if ($role == 6) { //ClubRep
             $pages = [

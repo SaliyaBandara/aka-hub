@@ -12,7 +12,7 @@ $calendar = new Calendar();
 
 <div id="sidebar-active" class="hideScrollbar">
 
-    <?php $welcomeSearch = new WelcomeSearch("Kasun", "Udara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
         <div class="left">
@@ -157,7 +157,7 @@ $calendar = new Calendar();
         }
 
         .graphContainor {
-            width: 50%;
+            width: 55%;
             height: 100%;
             display: flex;
             justify-content: center;

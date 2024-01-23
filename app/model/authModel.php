@@ -36,7 +36,7 @@ class authModel extends Model
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$data["email"][0]]);
             // print_r($result);
             return $result[0];
-        }
+        }       
 
         return false;
     }

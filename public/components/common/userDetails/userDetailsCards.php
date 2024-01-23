@@ -41,8 +41,8 @@ class UserDetailsCards
             
             .approve-card {
                 background-color: white;
-                width: 90%;
-                height: 65px;
+                width: 100%;
+                height: 55px;
                 justify-content: space-between;
                 align-items: center;
                 margin: 0px 0 0 3px;

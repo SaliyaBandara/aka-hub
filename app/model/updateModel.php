@@ -34,6 +34,7 @@ class updateModel extends Model
 
         $placeholders = implode(", ", $columns);
         $query = "UPDATE $table SET $placeholders WHERE $conditionColumn = ?";
+        print_r($query);
         $values[] = $conditionValue;
         $valueTypes[] = $conditionType;
         $valueTypesString = implode('', $valueTypes);
@@ -41,4 +42,16 @@ class updateModel extends Model
         $result = $this->db_handle->insert($query, $valueTypesString, $values);
         return $result;
     }
+
+
+    public function to_get_role($table, $role, $id, $num){
+        $query = "UPDATE $table SET $role = $num WHERE id = ?";
+        $values = [$id];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+    
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
+    
 }

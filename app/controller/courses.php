@@ -192,4 +192,27 @@ class Courses extends Controller
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
+
+    public function clickToBeRole($role)
+    {
+        $this->requireLogin();
+        if ($_SESSION["$role"] == 1) {
+            die(json_encode(array("status" => "400", "desc" => "You are already a $role")));
+        } else if ($_SESSION["$role"] == 2) {
+            die(json_encode(array("status" => "400", "desc" => "You are already requested to be a $role")));
+        } else if ($_SESSION["$role"] == 0) {
+
+            $result = $this->model('updateModel')->to_get_role(
+                "user",
+                $role,
+                $_SESSION["user_id"],
+                2
+            );
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Successfully requested to be a $role")));
+            else {
+                die(json_encode(array("status" => "400", "desc" => "Requested to be a $role is unsuccessfull")));
+            }
+        }
+    }
 }
