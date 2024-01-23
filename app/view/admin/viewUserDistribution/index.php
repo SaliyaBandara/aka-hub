@@ -6,11 +6,11 @@ $userDetailsArea = new UserDetailsArea();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Kasun", "Udara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
 
 
     <div class="main-grid flex">
-        <div class="left">
+        <div class="leftViewUserDistribution">
             <div class="approveDivContainor">
                 <?php echo $userDetailsArea->render(); ?>
             </div>
@@ -32,9 +32,10 @@ $userDetailsArea = new UserDetailsArea();
 
         .main-grid {}
 
-        .main-grid .left {
+        .main-grid .leftViewUserDistribution {
             width: 100%;
-            height: 1150px;
+            height: 850px;
+            padding: 0 140px 0 140px;
         }
 
         /* .main-grid .right{

@@ -5,7 +5,7 @@ $sidebar = new Sidebar("electionsAndPolls");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
             <div class="divCreatePolls">

@@ -6,9 +6,7 @@ $candidateCard = new CandidateCard();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Kasun", "Udara"); ?>
-
-
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
             <div class="profileHeading">Your Profile</div>

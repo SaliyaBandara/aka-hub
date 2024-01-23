@@ -6,7 +6,7 @@ $sidebar = new Sidebar("courses");
 
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
 
 
     <div class="main-grid flex">
