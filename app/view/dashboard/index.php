@@ -29,36 +29,40 @@ $calendar = new Calendar();
                 <!-- todo flex wrap -->
                 <div class="todo_flex_wrap flex flex-wrap">
 
+                <?php 
+                    foreach ($data["main_events"] as $main_events) {
+                    ?>
+
                     <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
+                    <div>
+                        <?php
+                        $currentDate = new DateTime();
+                        $endDate = new DateTime($main_events["end_date"]);
+                        
+                        if ($currentDate <= $endDate) {
+                            $dateDiff = $currentDate->diff($endDate);
+                            $daysRemaining = $dateDiff->days;
+                            
+                            if ($daysRemaining === 0) {
+                                echo '<div class="todo_item_date flex align-center justify-center">Today</div>';
+                            } elseif ($daysRemaining === 1) {
+                                echo '<div class="todo_item_date flex align-center justify-center">Tomorrow</div>';
+                            } else {
+                                echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                            }
+                        } else {
+                            echo '<div class="todo_item_date flex align-center justify-center">Event has ended</div>';
+                        }
+                        ?>
+                    </div>
+
                         <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
+                            <!-- <div class="font-1-25 font-semibold"><?= $main_events["course_name"] ?></div> -->
+                            <div class="font-1 font-medium text-muted"><?= $main_events["title"] ?></div>
+                            <div class="font-0-8 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
                         </div>
                     </a>
-                    <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
-                        </div>
-                    </a>
-                    <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
-                        </div>
-                    </a>
+                    <?php } ?>
 
                 </div>
 
