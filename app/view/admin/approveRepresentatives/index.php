@@ -62,12 +62,12 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                         ?>
                                                     </div>
                                                     <div class="repAccept">
-                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/acceptRole/<?php echo urlencode($card['id']); ?>/student_rep">
+                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/acceptRole/<?php echo urlencode($card['id']); ?>/student_rep" class="repAcceptButon" data-role="representativeAccept">
                                                             <div class="acceptButton">Accept</div>
                                                         </a>
                                                     </div>
                                                     <div class="repDecline">
-                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/declineRole/<?php echo urlencode($card['id']); ?>/student_rep">
+                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/declineRole/<?php echo urlencode($card['id']); ?>/student_rep" class="repAcceptButon" data-role="representativeAccept">
                                                             <div class="declineButton">Decline</div>
                                                         </a>
                                                     </div>
@@ -87,16 +87,15 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                     <div id="repType">
                                                         <?php
                                                         echo 'Club Rep';
-
                                                         ?>
                                                     </div>
                                                     <div class="repAccept">
-                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/acceptRole/<?php echo urlencode($card['id']); ?>/club_rep">
+                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/acceptRole/<?php echo urlencode($card['id']); ?>/club_rep" class="repAcceptButon" data-role="representativeAccept">
                                                             <div class="acceptButton">Accept</div>
                                                         </a>
                                                     </div>
                                                     <div class="repDecline">
-                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/declineRole/<?php echo urlencode($card['id']); ?>/club_rep">
+                                                        <a href="<?php echo BASE_URL; ?>/approveRepresentatives/declineRole/<?php echo urlencode($card['id']); ?>/club_rep" class="repAcceptButon" data-role="representativeAccept">
                                                             <div class="declineButton">Decline</div>
                                                         </a>
                                                     </div>
@@ -128,15 +127,15 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                     <div class="repAccept">
                                                         <?php
                                                         if (isset($card['student_rep']) && $card['student_rep'] == 2) {
-                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptRole/' . urlencode($card['id']) . '/student_rep">';
+                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptRole/' . urlencode($card['id']) . '/student_rep" class="repAcceptButon" data-role="representativeAccept">';
                                                             echo '<div class="acceptButton">Accept</div>';
                                                             echo '</a>';
                                                         } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
-                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptRole/' . urlencode($card['id']) . '/club_rep">';
+                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptRole/' . urlencode($card['id']) . '/club_rep" class="repAcceptButon" data-role="representativeAccept">';
                                                             echo '<div class="acceptButton">Accept</div>';
                                                             echo '</a>';
                                                         } else {
-                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptStudentRep">';
+                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptStudentRep" class="repAcceptButon" data-role="representativeAccept">';
                                                             echo '<div class="acceptButton">Accept</div>';
                                                             echo '</a>';
                                                         }
@@ -145,15 +144,15 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                     <div class="repDecline">
                                                         <?php
                                                         if (isset($card['student_rep']) && $card['student_rep'] == 2) {
-                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/declineRole/' . urlencode($card['id']) . '/student_rep">';
+                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/declineRole/' . urlencode($card['id']) . '/student_rep" class="repAcceptButon" data-role="representativeAccept">';
                                                             echo '<div class="declineButton">Decline</div>';
                                                             echo '</a>';
                                                         } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
-                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/declineRole/' . urlencode($card['id']) . '/club_rep">';
+                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/declineRole/' . urlencode($card['id']) . '/club_rep" class="repAcceptButon" data-role="representativeAccept">';
                                                             echo '<div class="declineButton">Decline</div>';
                                                             echo '</a>';
                                                         } else {
-                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptStudentRep">';
+                                                            echo '<a href="' . BASE_URL . '/approveRepresentatives/acceptStudentRep" class="repAcceptButon" data-role="representativeAccept">';
                                                             echo '<div class="declineButton">Decline</div>';
                                                             echo '</a>';
                                                         }
@@ -437,5 +436,29 @@ $sidebar = new Sidebar("approveRepresentatives");
             height: 1000px;
         } */
     </style>
+    <script>
+        $(document).ready(function() {
+            $(document).on("click", ".repAcceptButon", function(event) {
+                event.preventDefault();
+                let role = $(this).data("role");
+                let action = $(this).attr("href").includes("accept") ? "accepted" : "declined";
 
+                $.ajax({
+                    url: $(this).attr("href"),
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Representative ${action} successfully.`);
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+            });
+        });
+    </script>
 </div>
