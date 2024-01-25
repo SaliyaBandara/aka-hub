@@ -199,7 +199,7 @@ class Courses extends Controller
         if ($_SESSION["$role"] == 1) {
             die(json_encode(array("status" => "400", "desc" => "You are already a $role")));
         } else if ($_SESSION["$role"] == 2) {
-            die(json_encode(array("status" => "400", "desc" => "You are already requested to be a $role")));
+            die(json_encode(array("status" => "400", "desc" => "Already requested")));
         } else if ($_SESSION["$role"] == 0) {
 
             $result = $this->model('updateModel')->to_get_role(
@@ -209,9 +209,9 @@ class Courses extends Controller
                 2
             );
             if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Successfully requested to be a $role")));
+                die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
             else {
-                die(json_encode(array("status" => "400", "desc" => "Requested to be a $role is unsuccessfull")));
+                die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
             }
         }
     }

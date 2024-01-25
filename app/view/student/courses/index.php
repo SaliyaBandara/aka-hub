@@ -171,19 +171,19 @@ $sidebar = new Sidebar("courses");
             </div>
             <div class="divRequestSection">
                 <div class="divRequestToBe">
-                    <p class="doYouNeedP">Do you need access for</p></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
+                    <p class="doYouNeedP">Do you need access for</p>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep" class="repLink" data-role="student_rep">
                         <p class="repP">Student Rep ?</p>
-                    </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep">
+                    </a>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep" class="repLink" data-role="club_rep">
                         <p class="repP">Club Rep ?</p>
-                    </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
+                    </a>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student" class="repLink" data-role="teaching_student">
                         <p class="repP">Teaching Student ?</p>
-                    </a></br>
+                    </a>
                 </div>
-
             </div>
+
         </div>
     </div>
 
@@ -219,6 +219,7 @@ $sidebar = new Sidebar("courses");
             justify-content: center;
             align-items: center;
             font-size: 0.8rem;
+            width: 100%;
         }
 
         .repP {
@@ -231,11 +232,11 @@ $sidebar = new Sidebar("courses");
             margin: 0;
         }
 
-        .divRequestSection a {
+        .divRequestToBe a {
             text-align: center;
-            /* text-decoration: none; */
             color: black;
-            margin: 0;
+            margin: 10px;
+            /* border: 1px solid red; */
         }
 
         .onsite_alert {
@@ -303,6 +304,27 @@ $sidebar = new Sidebar("courses");
                 }
             });
         });
+            $(document).on("click", ".repLink", function(event) {
+                event.preventDefault();
+                let role = $(this).data("role");
+                $.ajax({
+                    url: `${BASE_URL}/Courses/clickToBeRole/${role}`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", response['desc']);
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+        });
+
+
     });
 </script>
 <script>
