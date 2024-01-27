@@ -304,24 +304,24 @@ $sidebar = new Sidebar("courses");
                 }
             });
         });
-            $(document).on("click", ".repLink", function(event) {
-                event.preventDefault();
-                let role = $(this).data("role");
-                $.ajax({
-                    url: `${BASE_URL}/Courses/clickToBeRole/${role}`,
-                    type: 'post',
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response['status'] == 200) {
-                            alertUser("success", response['desc']);
-                        } else {
-                            alertUser("warning", response['desc']);
-                        }
-                    },
-                    error: function(ajaxContext) {
-                        alertUser("danger", "Something Went Wrong");
+        $(document).on("click", ".repLink", function(event) {
+            event.preventDefault();
+            let role = $(this).data("role");
+            $.ajax({
+                url: `${BASE_URL}/Courses/clickToBeRole/${role}`,
+                type: 'post',
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc']);
+                    } else {
+                        alertUser("warning", response['desc']);
                     }
-                });
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
         });
 
 
