@@ -44,22 +44,22 @@ $calendar = new Calendar();
                             $daysRemaining = $dateDiff->days;
                             
                             if ($daysRemaining === 0) {
-                                echo '<div class="todo_item_date flex align-center justify-center">Today</div>';
+                                echo '<div class="todo_item_date flex align-center justify-center">0</div>';
                             } elseif ($daysRemaining === 1) {
-                                echo '<div class="todo_item_date flex align-center justify-center">Tomorrow</div>';
+                                echo '<div class="todo_item_date flex align-center justify-center">1</div>';
                             } else {
-                                echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                            echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
                             }
                         } else {
-                            echo '<div class="todo_item_date flex align-center justify-center">Event has ended</div>';
+                            echo '<div class="todo_item_date flex align-center justify-center">-1</div>';
                         }
                         ?>
                     </div>
 
                         <div class="todo_item_text">
                             <!-- <div class="font-1-25 font-semibold"><?= $main_events["course_name"] ?></div> -->
-                            <div class="font-1 font-medium text-muted"><?= $main_events["title"] ?></div>
-                            <div class="font-0-8 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
+                            <div class="font-1 font-meidum text-muted"><?= $main_events["title"] ?></div>
+                            <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
                         </div>
                     </a>
                     <?php } ?>
@@ -127,7 +127,48 @@ $calendar = new Calendar();
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
             </div>
+            <div class = "flex-column justify-center align-center divButtonSection">
+                <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
+                    Are you a responsible student representative?
+                </div>
+                <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
+                    <div class = "btn btn-primary mb-1 form form-group requestButton justify-center align-center">
+                        Send Request
+                    </div>
+                </a>
+            </div>
         </div>
+        <style>
+                    .divButtonSection{
+                        border-radius: 10px;
+                        margin:1rem;
+                        /* border: 1px solid red; */
+                        justify-content: center;
+                        padding:1rem;
+                    }
+
+                    .divButtonSection a{
+                        text-decoration:none;
+                    }
+
+
+                    .requestButton{
+                        border: 1px solid #2684ff;
+                        background-color: var(--secondary-color);
+                        color: white;
+                        width: 100%;
+                        text-align:center;
+                    }
+
+                    .requestDescription{
+                        text-align: center;
+                        width : 100%;
+                        /* border:1px solid red; */
+                        padding-bottom: 1rem;
+                        color: black;
+                    }
+        </style>
+
     </div>
 
 </div>
