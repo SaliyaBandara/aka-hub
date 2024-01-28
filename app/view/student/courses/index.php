@@ -172,16 +172,16 @@ $calendar = new Calendar();
             </div>
             <div class="divRequestSection">
                 <div class="divRequestToBe">
-                    <p class="doYouNeedP">Do you need access for</p></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
+                    <p class="doYouNeedP">Do you need access for</p>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep" class="repLink" data-role="student_rep">
                         <p class="repP">Student Rep ?</p>
-                    </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep">
+                    </a>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep" class="repLink" data-role="club_rep">
                         <p class="repP">Club Rep ?</p>
-                    </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
+                    </a>
+                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student" class="repLink" data-role="teaching_student">
                         <p class="repP">Teaching Student ?</p>
-                    </a></br>
+                    </a>
                 </div>
 
             </div> -->
@@ -200,7 +200,6 @@ $calendar = new Calendar();
                     </div>
                 </a>
             </div>
-            
         </div>
     </div>
 
@@ -244,7 +243,7 @@ $calendar = new Calendar();
         .divButtonSection a{
             text-decoration: none !important;
         }
-
+      
         .requestDescription{
             text-align: center;
             width : 100%;
@@ -318,6 +317,27 @@ $calendar = new Calendar();
                 }
             });
         });
+        $(document).on("click", ".repLink", function(event) {
+            event.preventDefault();
+            let role = $(this).data("role");
+            $.ajax({
+                url: `${BASE_URL}/Courses/clickToBeRole/${role}`,
+                type: 'post',
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc']);
+                    } else {
+                        alertUser("warning", response['desc']);
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+
     });
 </script>
 <script>

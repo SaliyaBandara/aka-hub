@@ -33,9 +33,9 @@ class ApproveRepresentatives extends Controller
             1
         );
         if ($result)
-            die(json_encode(array("status" => "200", "desc" => "Successfully updated to be a $role")));
+            die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
         else {
-            die(json_encode(array("status" => "400", "desc" => "Accepting a $role is unsuccessfull")));
+            die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
         }
     }
     public function declineRole($id = 0, $role = 0)
@@ -48,9 +48,9 @@ class ApproveRepresentatives extends Controller
             0
         );
         if ($result)
-            die(json_encode(array("status" => "200", "desc" => "Successfully denied the request to be a $role")));
+            die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
         else {
-            die(json_encode(array("status" => "400", "desc" => "Denying  a $role is unsuccessfull")));
+            die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
         }
     }
 }
