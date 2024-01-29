@@ -135,7 +135,7 @@ $calendar = new Calendar();
                     <div class = "btn btn-primary mb-1 form form-group repRequestButton justify-center align-center">
                         Send Request
                     </div>
-                </a>
+                </div>
             </div>
         </div>
         <style>
