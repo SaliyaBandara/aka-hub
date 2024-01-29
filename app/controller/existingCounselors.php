@@ -5,14 +5,15 @@ class ExistingCounselors extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1)
-            $this->redirect();
+        // if ($_SESSION["user_role"] != 1)
+        //     $this->redirect();
 
         $data = [
             'title' => 'Existing Counselors',
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["role"] = $_SESSION["user_role"];
         $data["counselors"] = $this->model('readModel')->getCounselors();
         $this->view->render('admin/existingCounselors/index', $data);
     }

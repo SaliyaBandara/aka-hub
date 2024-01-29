@@ -38,7 +38,8 @@ class readModel extends Model
 
     public function getCounselors()
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE role = ?", "i", [5]);
+        $sql = "SELECT * from user u , counselor c where user_id = u.id AND ?";
+        $result = $this->db_handle->runQuery($sql, "i", [5]);
         if (count($result) > 0)
             return $result;
 
@@ -64,17 +65,20 @@ class readModel extends Model
     }
 
 
-    // public function getAllEvents($table)
-    // {
+    public function getAllEvents($table)
+    {
 
-    //     $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
 
-    //     if (count($result) > 0)
-    //         return $result;
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
 
-    //     return false;
+        if (count($result) > 0)
+            return $result;
 
-    // }
+        return false;
+
+    }
 
 
     // get all the posts of the counselor

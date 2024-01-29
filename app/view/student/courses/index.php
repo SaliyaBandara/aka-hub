@@ -167,25 +167,6 @@ $calendar = new Calendar();
 
         </div>
 
-        <!-- <div class="divCalendarSection">
-
-            </div>
-            <div class="divRequestSection">
-                <div class="divRequestToBe">
-                    <p class="doYouNeedP">Do you need access for</p>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep" class="repLink" data-role="student_rep">
-                        <p class="repP">Student Rep ?</p>
-                    </a>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep" class="repLink" data-role="club_rep">
-                        <p class="repP">Club Rep ?</p>
-                    </a>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student" class="repLink" data-role="teaching_student">
-                        <p class="repP">Teaching Student ?</p>
-                    </a>
-                </div>
-
-            </div> -->
-
         <div class="right">
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
@@ -194,8 +175,8 @@ $calendar = new Calendar();
                 <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
                     Send your request now to join our "Teaching Army" !
                 </div>
-                <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
-                    <div class = "btn btn-primary mb-1 form form-group requestButton justify-center align-center">
+                <div href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
+                    <div class = "btn btn-primary mb-1 form form-group teachingRequestButton justify-center align-center">
                         Send Request
                     </div>
                 </a>
@@ -231,7 +212,7 @@ $calendar = new Calendar();
         }
 
 
-        .requestButton{
+        .teachingRequestButton{
             border: 1px solid #2684ff;
             background-color: var(--secondary-color);
             color: white;
@@ -317,26 +298,28 @@ $calendar = new Calendar();
                 }
             });
         });
-        $(document).on("click", ".repLink", function(event) {
-            event.preventDefault();
-            let role = $(this).data("role");
+
+        $(document).on("click", ".teachingRequestButton", function() {
             $.ajax({
-                url: `${BASE_URL}/Courses/clickToBeRole/${role}`,
+                url: `${BASE_URL}/Courses/clickToBeRole/teaching_student`,
                 type: 'post',
+                data: {
+                    request: true
+                },
                 dataType: 'json',
                 success: function(response) {
                     if (response['status'] == 200) {
-                        alertUser("success", response['desc']);
-                    } else {
-                        alertUser("warning", response['desc']);
-                    }
+                        alertUser("success", response['desc'])
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
                 },
                 error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong");
+                    alertUser("danger", "Something Went Wrong")
                 }
             });
         });
-
 
     });
 </script>

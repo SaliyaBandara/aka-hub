@@ -13,45 +13,47 @@ $sidebar = new Sidebar("existingCounselors");
             <h3>Existing Counselors</h3>
             <div class="divCounselorCards">
                 <div class="conunselorCardLine">
-                    <!-- <div class="counselorCard">
-                            <h4>Proffessional Counselor</h4>
-                            <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
-                            </div>
-                            <h5>A.H.T.N Thushanthika</h5>
-                            <h5>a.h.t.n.thushanthika@gmail.com</h5>
-                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
-                            <div class="edit-delete-containor">
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                </div>
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
-                                </div>
-                            </div>
-                        </div> -->
-
                     <?php
-
                     if (is_array($data["counselors"])) {
+                        
                         foreach ($data["counselors"] as $key => $value) {
                             if ($value["role"] == 5) {
                                 echo "<div class='counselorCard'>";
-                                echo "<h4>Student Counselor</h4>";
+                                if($value["type"] == 1){
+                                    echo "<h4>Professional Counselor</h4>";
+                                }
+                                else{
+                                    echo "<h4>Student Counselor</h4>";
+                                }
                                 echo "<div class='counselor-image-containor'>";
                                 echo "<img src='" . BASE_URL . "/public/assets/img/counselors/counselorImage.jpg' alt='' id = 'counselorPhoto'>";
                                 echo "</div>";
                                 echo "<h5>" . $value["name"] . "</h5>";
                                 echo "<h5>" . $value["email"] . "</h5>";
+                                echo "<h5> 0" . $value["contact"] . "</h5>";
+
+                                //if user is a student 
+                                if($data["role"] != 1){
+                                    echo "<div href = '#' class = 'detailsButtonArea'>";
+                                    echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
+                                    echo "View Details";
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
+
                                 // echo "<p>".$value["description"]."</p>";
-                                echo "<div class='edit-delete-containor'>";
-                                echo "<a href='" . BASE_URL . "/addCounselors/index/" . $value["id"] . "' class='block iconContainor'>";
-                                echo "<img src='" . BASE_URL . "/public/assets/img/icons/edit.png' alt=''>";
-                                echo "</a>";
-                                echo "<div class='iconContainor delete-item' data-id='" . $value["id"] . "'>";
-                                echo "<img src='" . BASE_URL . "/public/assets/img/icons/rejected.png' alt=''>";
-                                echo "</div>";
-                                echo "</div>";
+                                //if user is an admin
+                                if($data["role"] == 1) {
+                                    echo "<div class='edit-delete-containor'>";
+                                    echo "<a href='" . BASE_URL . "/addCounselors/index/" . $value["id"] . "' class='block iconContainor'>";
+                                    echo "<img src='" . BASE_URL . "/public/assets/img/icons/edit.png' alt=''>";
+                                    echo "</a>";
+                                    echo "<div class='iconContainor delete-item' data-id='" . $value["id"] . "'>";
+                                    echo "<img src='" . BASE_URL . "/public/assets/img/icons/rejected.png' alt=''>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                    
+                                }
                                 echo "</div>";
                             }
                         }
@@ -95,13 +97,23 @@ $sidebar = new Sidebar("existingCounselors");
                             </div>
                         </div> -->
                 </div>
-                <div class="buttonDivToAddCounselors">
+
+                <?php if ($data["role"] == 1) { ?>
+                    <div class="buttonDivToAddCounselors">
+                        <div class="gotoAddCounselor">
+                            <div>
+                                <a href="<?= BASE_URL ?>/addCounselors/index/0" class="mwb-form-submit-btn">Add Counselor</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                <!-- <div class="buttonDivToAddCounselors">
                     <div class="gotoAddCounselor">
                         <div>
                             <a href="<?= BASE_URL ?>/addCounselors/index/0" class="mwb-form-submit-btn">Add Counselor</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -214,6 +226,7 @@ $sidebar = new Sidebar("existingCounselors");
 
         .counselorCard h5 {
             text-align: center;
+            
         }
 
         .counselorCard p {
@@ -231,6 +244,22 @@ $sidebar = new Sidebar("existingCounselors");
 
             flex-wrap: wrap;
         }
+
+        .detailsButtonArea{
+            width: 100%;
+            /* border: 1px solid red; */
+            justify-content: center ;
+            align-items: center ;
+            display:flex;
+        }
+/* 
+        .detailsButton{
+            width: 50%;
+            border: 1px solid red;
+            justify-content: center ;
+            align-items: center ;
+            text-align: center;
+        } */
 
         .divCounselorCards {
             width: 100%;

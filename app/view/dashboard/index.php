@@ -57,7 +57,7 @@ $calendar = new Calendar();
                     </div>
 
                         <div class="todo_item_text">
-                            <!-- <div class="font-1-25 font-semibold"><?= $main_events["course_name"] ?></div> -->
+                            <div class="font-1-25 font-semibold"><?= $main_events["name"] ?></div>
                             <div class="font-1 font-meidum text-muted"><?= $main_events["title"] ?></div>
                             <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
                         </div>
@@ -131,8 +131,8 @@ $calendar = new Calendar();
                 <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
                     Are you a responsible student representative?
                 </div>
-                <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
-                    <div class = "btn btn-primary mb-1 form form-group requestButton justify-center align-center">
+                <div href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
+                    <div class = "btn btn-primary mb-1 form form-group repRequestButton justify-center align-center">
                         Send Request
                     </div>
                 </a>
@@ -152,7 +152,7 @@ $calendar = new Calendar();
                     }
 
 
-                    .requestButton{
+                    .repRequestButton{
                         border: 1px solid #2684ff;
                         background-color: var(--secondary-color);
                         color: white;
@@ -175,7 +175,9 @@ $calendar = new Calendar();
 
 
 <?php $HTMLFooter = new HTMLFooter(); ?>
-
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
 <script>
     $(document).ready(function() {
 
@@ -200,5 +202,30 @@ $calendar = new Calendar();
 
         });
 
+        $(document).on("click", ".repRequestButton", function() {
+            $.ajax({
+                url: `${BASE_URL}/Courses/clickToBeRole/student_rep`,
+                type: 'post',
+                data: {
+                    request: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
     });
+
+    
+
 </script>
