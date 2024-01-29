@@ -105,7 +105,7 @@ class Sidebar
 
             <div class="fixed__bottom">
                 Do you need counselor support?
-                Click <a href="" target="_blank" rel="noopener noreferrer">here</a>
+                Click <a href= "<?= BASE_URL ?>/existingCounselors">here</a>
                 to talk with a counselor.
             </div>
 
