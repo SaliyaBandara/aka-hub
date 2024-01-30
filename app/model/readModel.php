@@ -632,21 +632,6 @@ class readModel extends Model
         ];
     }
 
-    public function getRequestsToApprove(){
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
-        if ($result !== false) {
-            return $result;
-        }
-        return false;
-    }
-    public function getPreviewRepresentative($id) {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
-        if ($result !== false) {
-            return $result;
-        }
-        return false;
-    }
-
     //Counselor and Club Representative Posts
 
     public function getEmptyPost()
