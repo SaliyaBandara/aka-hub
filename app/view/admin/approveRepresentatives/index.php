@@ -68,8 +68,11 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                         </div>
                                                     </div>
                                                     <div class="repPreview">
-                                                        <div class="previewButton">Preview</div>
+                                                        <div class="previewButton">
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                        </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                             <div class="approve-card">
@@ -97,8 +100,11 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                         </div>
                                                     </div>
                                                     <div class="repPreview">
-                                                        <div class="previewButton">Preview</div>
+                                                        <div class="previewButton">
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                        </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         <?php
@@ -159,8 +165,11 @@ $sidebar = new Sidebar("approveRepresentatives");
                                                         ?>
                                                     </div>
                                                     <div class="repPreview">
-                                                        <div class="previewButton">Preview</div>
+                                                        <div class="previewButton">
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                        </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                 <?php
@@ -174,16 +183,42 @@ $sidebar = new Sidebar("approveRepresentatives");
                 </div>
             </div>
         </div>
-  <!-- Your right content goes here -->
+        <!-- Your right content goes here -->
     </div>
 </div>
 </div>
 
 <style>
+    .previewButton a {
+        text-decoration: none;
+        color: white;
+    }
+
     .repPreview {
-        border: 1px solid red;
-        width: 15%;
+        width: 10%;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 13px;
+    }
+
+    .repPreview div {
+        text-decoration: none;
+        color: white;
+        background-color: #2684FF;
+        width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 0px 5px 0px #2684FF;
+        border-radius: 5px;
+    }
+
+    .repPreview div:hover {
+        background-color: #2684FF;
+        cursor: pointer;
     }
 
     .approveDivContainor {
@@ -376,6 +411,8 @@ $sidebar = new Sidebar("approveRepresentatives");
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-left: -10px;
+        margin-right: 13px;
     }
 
     .repDecline div {

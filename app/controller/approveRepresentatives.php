@@ -12,15 +12,15 @@ class ApproveRepresentatives extends Controller
         $this->view->render('admin/approveRepresentatives/index', $data);
     }
 
-    public function test()
+    public function previewRepresentative($id)
     {
         $this->requireLogin();
         $data = [
             'title' => 'Rep Approvement',
-            'message' => 'Welcome to Aka Hub!'
+            'message' => 'Welcome to Aka Hub!',
         ];
-
-        $this->view->render('admin/approveRepresentatives/test', $data);
+        $data["previewRepresentative"] = $this->model('readModel')->getPreviewRepresentative($id);
+        $this->view->render('admin/approveRepresentatives/previewRepresentative', $data);
     }
 
     public function acceptRole($id, $role)
