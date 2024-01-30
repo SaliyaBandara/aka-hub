@@ -587,4 +587,12 @@ class readModel extends Model
         }
         return false;
     }
+    public function getPreviewRepresentative($id) {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+    
 }
