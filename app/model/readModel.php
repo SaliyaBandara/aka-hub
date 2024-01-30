@@ -27,6 +27,17 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllUsers()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+
+
     public function getCourseMaterial($course_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM course_materials WHERE course_id = ?", "i", [$course_id]);
@@ -54,13 +65,13 @@ class readModel extends Model
             LEFT OUTER JOIN courses ON main_events.course_id = courses.id
             WHERE main_events.event_id = ?
         ";
-    
+
         $result = $this->db_handle->runQuery($query, "i", [$event_id]);
-    
+
         if ($result !== false && count($result) > 0) {
             return $result[0];  // Assuming you expect only one result for a given event_id
         }
-    
+
         return false;
     }
 
@@ -77,9 +88,25 @@ class readModel extends Model
             return $result;
 
         return false;
-
     }
 
+    public function getRequestsToApprove()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
+    public function getPreviewRepresentative($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
 
     // get all the posts of the counselor
     public function getCounselorPosts()
@@ -396,7 +423,7 @@ class readModel extends Model
     }
 
 
-        /**
+    /**
      * Student Profile Model
      */
 
@@ -414,7 +441,7 @@ class readModel extends Model
     //     materials_notify INT(1) DEFAULT 0,
     //     notify_duration INT(1) DEFAULT 0
     // );
-    
+
 
     public function getEmptyStudentProfile()
     {
@@ -444,7 +471,7 @@ class readModel extends Model
                 "type" => "text",
                 "validation" => ""
             ],
-            
+
             "alt_email" => [
                 "label" => "Alternative Email Address",
                 "type" => "email",
@@ -501,9 +528,9 @@ class readModel extends Model
         ];
     }
 
-    
 
-        /**
+
+    /**
      * Student Profile Model
      */
 
@@ -521,8 +548,8 @@ class readModel extends Model
     //     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
     // );
-    
-    
+
+
 
     public function getEmptyMainEvent()
     {
@@ -553,7 +580,7 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-            
+
             "title" => [
                 "label" => "Title of the event",
                 "type" => "text",
@@ -579,20 +606,4 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
-    public function getRequestsToApprove(){
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
-        if ($result !== false) {
-            return $result;
-        }
-        return false;
-    }
-    public function getPreviewRepresentative($id) {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
-        if ($result !== false) {
-            return $result;
-        }
-        return false;
-    }
-    
 }

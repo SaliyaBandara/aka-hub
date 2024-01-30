@@ -41,11 +41,6 @@ require_once '../public/components/common/charts/liveResultsTwo.php';
 require_once '../public/components/common/counselorReservations/reservationTable.php';
 require_once '../public/components/common/counselorReservations/reservationCards.php';
 
-
-//components for user details card
-require_once '../public/components/common/userDetails/userDetailsArea.php';
-require_once '../public/components/common/userDetails/userDetailsCards.php';
-
 //components for log details card
 require_once '../public/components/common/logDetails/logDetailsArea.php';
 require_once '../public/components/common/logDetails/logDetailsCards.php';
