@@ -16,82 +16,71 @@ class StudentProfile extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["user_role"] = $_SESSION["user_role"];
-        $data["student_profile"] = $this->model('readModel')->getAll("student_profile");
+        $id = $_SESSION["user_id"];
+        // print_r($id);
+        $data["student_details"] = $this->model('readModel')->getUserSettings($id);
         $this->view->render('student/studentProfile/index', $data);
     }
 
-    public function view($id = 0)
-    {
-        $this->requireLogin();
+    // public function view($id = 0)
+    // {
+    //     $this->requireLogin();
 
-        // if ($id == 0)
-        //     $this->redirect();
+    //     // if ($id == 0)
+    //     //     $this->redirect();
 
-        $data = [
-            'title' => 'Student Profile',
-            'message' => 'Welcome to Aka Hub!'
-        ];
+    //     $data = [
+    //         'title' => 'Student Profile',
+    //         'message' => 'Welcome to Aka Hub!'
+    //     ];
 
-        $data["user_role"] = $_SESSION["user_role"];
-        $data["id"] = $id;
-        $data["student_profile"] = $this->model('readModel')->getOne("student_profile", $id);
-        if (!$data["student_profile"])
-            $this->redirect();
+    //     $this->view->render('student/studentProfile/view', $data);
+    // }
 
-        // print_r($data["material"]);
+    // public function add_edit($id = 0, $action = "create")
+    // {
+    //     $this->requireLogin();
+    //     if ($_SESSION["user_role"] != 0)
+    //         $this->redirect();
 
-        // $data["course"] = $this->model('readModel')->getOne("courses", $id);
-        // if (!$data["course"])
-        //     $this->redirect();
+    //     $data = [
+    //         'title' => ($action == "create") ? 'Student Profile' : 'Edit Profile',
+    //         'message' => 'Welcome to Aka Hub!'
+    //     ];
 
-        $this->view->render('student/studentProfile/view', $data);
-    }
+    //     $data["student_profile_template"] = $this->model('readModel')->getEmptyNotificationSetting();
+    //     $data["student_profile"] = $data["student_profile_template"]["empty"];
+    //     $data["student_profile_template"] = $data["student_profile_template"]["template"];
 
-    public function add_edit($id = 0, $action = "create")
-    {
-        $this->requireLogin();
-        if ($_SESSION["user_role"] != 0)
-            $this->redirect();
+    //     if (isset($_POST['add_edit'])) {
+    //         $values = $_POST["add_edit"];
+    //         $this->validate_template($values, $data["student_profile_template"]);
 
-        $data = [
-            'title' => ($action == "create") ? 'Student Profile' : 'Edit Profile',
-            'message' => 'Welcome to Aka Hub!'
-        ];
+    //         if ($id == 0)
+    //             $result = $this->model('createModel')->insert_db("notification_settings", $values, $data["student_profile_template"]);
+    //         else
+    //             $result = $this->model('updateModel')->update_one("notification_settings", $values, $data["student_profile_template"], "id", $id, "i");
 
-        $data["student_profile_template"] = $this->model('readModel')->getEmptyStudentProfile();
-        $data["student_profile"] = $data["student_profile_template"]["empty"];
-        $data["student_profile_template"] = $data["student_profile_template"]["template"];
+    //         if ($result)
+    //             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
-        if (isset($_POST['add_edit'])) {
-            $values = $_POST["add_edit"];
-            $this->validate_template($values, $data["student_profile_template"]);
+    //         die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
+    //     }
 
-            if ($id == 0)
-                $result = $this->model('createModel')->insert_db("student_profile", $values, $data["student_profile_template"]);
-            else
-                $result = $this->model('updateModel')->update_one("student_profile", $values, $data["student_profile_template"], "id", $id, "i");
+    //     $data["id"] = $id;
+    //     $data["action"] = $action;
 
-            if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+    //     if ($id != 0) {
+    //         $data["student_profile"] = $this->model('readModel')->getOne("notification_settings", $id);
+    //         if (!$data["student_profile"])
+    //             $this->redirect();
+    //     }
 
-            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
-        }
+    //     // print params
+    //     // print_r($id);
+    //     // print_r($action);
 
-        $data["id"] = $id;
-        $data["action"] = $action;
-
-        if ($id != 0) {
-            $data["student_profile"] = $this->model('readModel')->getOne("student_profile", $id);
-            if (!$data["student_profile"])
-                $this->redirect();
-        }
-
-        // print params
-        // print_r($id);
-        // print_r($action);
-
-        $this->view->render('student/studentProfile/add_edit', $data);
-    }
+    //     $this->view->render('student/studentProfile/add_edit', $data);
+    // }
 
 }
