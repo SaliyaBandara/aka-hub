@@ -8,21 +8,32 @@ $candidateCard = new CandidateCard();
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
+    <?php
+
+    if ($data["student_details"]) {
+        $userDetails = $data["student_details"][0];
+        // print_r($userDetails);
+    }
+    ?>
+
+    <?php
+        $img_src = USER_IMG_PATH . $userDetails["profile_img"];
+    ?>
 
     <div class="main-grid flex">
         <div class="left">
             <div class ="profileHeading">Your Profile</div>
             <div class = "profileArea">
                 <div class = "profileImageArea">
-                    <div class = "profileImageContainer"><img class = "profileImage" src="<?= BASE_URL ?>/public/assets/img/common/candidateImage.jpg" alt=""></img></div>
+                    <div class = "profileImageContainer"><img src="<?= $img_src ?>" alt="" class = "profileImage"></div>
                     <div class = "editImageButton"><input type = "button" class = "profileButton" value = "Change Picture"/></div>
                 </div>
                 <div class = "profileDetailArea">
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Name : </div><div class = "profileDetailCell">Samudi Perera</div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Email Address : </div><div class = "profileDetailCell">2021cs1234@ucsc.cmb.ac.lk</div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Name : </div><div class = "profileDetailCell"><?= $userDetails["name"] ?></div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Email Address : </div><div class = "profileDetailCell"><?= $userDetails["email"] ?></div></div>
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Degree : </div><div class = "profileDetailCell">Computer Science</div></div>
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Index Number : </div><div class = "profileDetailCell">21001234</div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Alternative Email : </div><div class = "profileDetailCell">Samudi@gmail.com</div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Alternative Email : </div><div class = "profileDetailCell"><?= $userDetails["alt_email"] ?></div></div>
                 </div>
             </div>
             <hr></hr>
@@ -39,36 +50,94 @@ $candidateCard = new CandidateCard();
                 <div class = "notificationInputs">
                     <form>
                         <div class = "notificationInputRow">
-                            <select id="emailAddress" name="emailAddress">
-                                <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
-                                <option value="samudi@gmail.com" selected>samudi@gmail.com</option>
+                            <select id="emailAddress" name="emailAddress" disabled>
+                                <!-- <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
+                                <option value="samudi@gmail.com" selected>samudi@gmail.com</option> -->
+                                <?php
+                                    if($userDetails["preferred_email"] === 1){
+                                        echo '<option selected value="' . $userDetails["email"] . '">' . $userDetails["email"] . '</option>';
+                                    }
+                                    else{
+                                        echo '<option selected value="' . $userDetails["alt_email"] . '">' . $userDetails["alt_email"] . '</option>';
+
+                                    }
+                                        
+                                ?>
                             </select>
                         </div>
                         <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type1" name="onsite" value="onsite">
+                                <!-- <input type="checkbox" id="type1" name="onsite" value="onsite"> -->
+                                <?php
+                                    if($userDetails["exam_notify"] === 1){
+                                        echo '<input type="checkbox" id="type1" name="onsite" value="onsite" checked>';
+                                    }
+                                    else{
+                                        echo '<input type="checkbox" id="type1" name="onsite" value="onsite" disabled>';
+                                    }
+                                ?>
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type2" name="email" value="email" checked>
+                                <!-- <input type="checkbox" id="type2" name="email" value="email" checked> -->
+                                <?php
+                                    if($userDetails["exam_notify"] === 2){
+                                        echo '<input type="checkbox" id="type2" name="email" value="email" checked disabled>';
+                                    }
+                                    else{
+                                        echo '<input type="checkbox" id="type2" name="email" value="email" disabled>';
+                                    }
+                                ?>
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type3" name="none" value="none">
+                                <!-- <input type="checkbox" id="type3" name="none" value="none"> -->
+                                <?php
+                                    if($userDetails["exam_notify"] === 3){
+                                        echo '<input type="checkbox" id="type3" name="none" value="none" checked>';
+                                    }
+                                    else{
+                                        echo '<input type="checkbox" id="type3" name="none" value="none" disabled>';
+                                    }
+                                ?>
                                 <label for="type3">None</label>
                             </div>
                         </div>
                         <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type4" name="onsite" value="onsite" checked>
+                                <!-- <input type="checkbox" id="type4" name="onsite" value="onsite" checked> -->
+                                <?php
+                                    if($userDetails["reminder_notify"] === 1){
+                                        echo '<input type="radio" name="reminder" value="onsite" checked disabled >';
+                                    }
+                                    else{
+                                        echo '<input type="radio" name="reminder" value="onsite" disabled>';
+                                    }
+                                ?>
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type5" name="email" value="email">
+                                <!-- <input type="checkbox" id="type5" name="email" value="email"> -->
+                                <?php
+                                    if($userDetails["reminder_notify"] === 2){
+                                        echo '<input type="radio" name="reminder" value="email" checked disabled >';
+                                    }
+                                    else{
+                                        echo '<input type="radio" name="reminder" value="email" disabled>';
+                                    }
+                                ?>
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <input type="checkbox" id="type6" name="none" value="none">
+                                <!-- <input type="checkbox" id="type6" name="none" value="none"> -->
+                                <?php
+                                    if($userDetails["reminder_notify"] === 3){
+                                        echo '<input type="radio" name="reminder" value="none" checked disabled >';
+                                    }
+                                    else{
+                                        echo '<input type="radio" name="reminder" value="none" disabled>';
+                                    }
+                                ?>
                                 <label for="type3">None</label>
                             </div>
                         </div>

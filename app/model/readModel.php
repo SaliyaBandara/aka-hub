@@ -36,7 +36,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getUserSettings($id)
+    {
+        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
+        $result = $this->db_handle->runQuery($sql,"i",[$id]);
+        if (count($result) > 0)
+            return $result;
 
+        return false;
+    }
 
     public function getCourseMaterial($course_id)
     {
@@ -468,15 +476,11 @@ class readModel extends Model
     // );
 
 
-    public function getEmptyStudentProfile()
+    public function getEmptyNotificationSetting()
     {
 
         $empty = [
-            "student_id" => "",
-            "email" => "",
-            "degree" => "",
-            "alt_email" => "",
-            "profile_picture" => "",
+            "user_id" => "",
             "preferred_email" => "",
             "exam_notify" => "",
             "reminder_notify" => "",
@@ -486,29 +490,7 @@ class readModel extends Model
         ];
 
         $template = [
-            "email" => [
-                "label" => "Email Address",
-                "type" => "email",
-                "validation" => "required"
-            ],
-            "degree" => [
-                "label" => "Degree",
-                "type" => "text",
-                "validation" => ""
-            ],
-
-            "alt_email" => [
-                "label" => "Alternative Email Address",
-                "type" => "email",
-                "validation" => ""
-            ],
-            "profile_picture" => [
-                "label" => "Profile Picture",
-                "type" => "array",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "student_id" => [
+            "user_id" => [
                 "label" => "Student ID",
                 "type" => "text",
                 "validation" => "required",
