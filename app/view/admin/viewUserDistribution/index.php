@@ -29,10 +29,10 @@ $sidebar = new Sidebar("viewUserDistribution");
                                     University Email
                                 </div>
                                 <div id="indexNumberHeader" class="tableHeaderItem">
-                                    Index Number
+                                    Registration Number
                                 </div>
                                 <div id="roleHeader" class="tableHeaderItem">
-                                    Role
+                                    Preview
                                 </div>
                             </div>
 
@@ -50,8 +50,10 @@ $sidebar = new Sidebar("viewUserDistribution");
                                         <div id="roleIndex">
                                             <?php echo $user['student_id']; ?>
                                         </div>
-                                        <div id="roleType">
-                                            <?php echo $user['role']; ?>
+                                        <div class="rolePreview">
+                                            <div class="previewButton">
+                                                <a href="<?= BASE_URL ?>/viewUserDistribution/previewUser/<?php echo $user['id']; ?>">Preview</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -70,18 +72,50 @@ $sidebar = new Sidebar("viewUserDistribution");
     </div>
 
     <style>
+        .previewButton a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .rolePreview {
+            width: 25%;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 13px;
+        }
+
+        .rolePreview div {
+            text-decoration: none;
+            color: white;
+            background-color: #2684FF;
+            width: 40%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 0px 5px 0px #2684FF;
+            border-radius: 5px;
+        }
+
+        .rolePreview div:hover {
+            background-color: #2684FF;
+            cursor: pointer;
+        }
+
         #roleName {
             width: 25%;
             height: 20%;
         }
 
         #roleMail {
-            width: 25%;
+            width: 40%;
             height: 20%;
         }
 
         #roleIndex {
-            width: 25%;
+            width: 30%;
             height: 20%;
         }
 
@@ -140,7 +174,7 @@ $sidebar = new Sidebar("viewUserDistribution");
         }
 
         #mailHeader {
-            width: 25%;
+            width: 40%;
             height: 55px;
             color: white;
             display: flex;
@@ -159,7 +193,7 @@ $sidebar = new Sidebar("viewUserDistribution");
 
         #roleHeader {
             width: 25%;
-            height: 55px;
+            height: 60px;
             color: white;
             display: flex;
             align-items: center;

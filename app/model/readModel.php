@@ -42,6 +42,14 @@ class readModel extends Model
         $result = $this->db_handle->runQuery($sql,"i",[$id]);
         if (count($result) > 0)
             return $result;
+    public function getUser($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
 
         return false;
     }
