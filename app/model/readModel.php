@@ -36,6 +36,14 @@ class readModel extends Model
         return false;
     }
 
+    public function getUser($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
 
 
     public function getCourseMaterial($course_id)
