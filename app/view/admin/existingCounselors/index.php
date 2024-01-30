@@ -161,7 +161,6 @@ $sidebar = new Sidebar("existingCounselors");
             height: 500px;
             display: flex;
             justify-content: right;
-            margin-top: 50px;
             padding: 0 100px 20px 0;
         }
 
