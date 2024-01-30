@@ -46,6 +46,25 @@ class readModel extends Model
         return false;
     }
 
+    public function getOneCounselor($id)
+    {
+        $sql = "SELECT * from user u , counselor c where user_id = u.id AND id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCounselorPosts($posted_by)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM posts WHERE type = 1 AND posted_by = ?", "i", [$posted_by]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getEvent($event_id)
     {
         $query = "
@@ -82,14 +101,14 @@ class readModel extends Model
 
 
     // get all the posts of the counselor
-    public function getCounselorPosts()
-    {
-        $result = $this->db_handle->runQuery("SELECT * FROM counselor_posts ?", "i", [1]);
-        if (count($result) > 0)
-            return $result;
+    // public function getCounselorPosts()
+    // {
+    //     $result = $this->db_handle->runQuery("SELECT * FROM posts where ?", "i", [1]);
+    //     if (count($result) > 0)
+    //         return $result;
 
-        return false;
-    }
+    //     return false;
+    // }
 
     /**
      * Courses Model
@@ -365,15 +384,21 @@ class readModel extends Model
 
         $empty = [
             "description" => "",
-            "image" => ""
+            "image" => "",
+            "title" => ""
         ];
 
         $template = [
-            "user_id" => [
+            "posted_by" => [
                 "label" => "User",
                 "type" => "number",
                 "validation" => "required",
                 "skip" => true
+            ],
+            "title" => [
+                "label" => "Post Title",
+                "type" => "text",
+                "validation" => ""
             ],
             "description" => [
                 "label" => "Description",
@@ -593,6 +618,64 @@ class readModel extends Model
             return $result;
         }
         return false;
+    }
+
+    //Counselor and Club Representative Posts
+
+    public function getEmptyPost()
+    {
+
+        $empty = [
+            "id" => "",
+            "type" => "",
+            "description" => "",
+            "image" => "",
+            "created_datetime" => "",
+            "posted_by" => "",
+            "title" => "",
+            "updatds_datetime" => "",
+        ];
+
+        $template = [
+            "type" => [
+                "label" => "Type of the post",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "image" => [
+                "label" => "Post Image",
+                "type" => "array",
+                "validation" => "",
+                "skip" => true
+            ],
+            
+            "title" => [
+                "label" => "Title of the post",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+
+            "posted_by" => [
+                "label" => "Who posted the post",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
     }
     
 }
