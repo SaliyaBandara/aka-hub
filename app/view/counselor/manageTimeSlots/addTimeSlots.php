@@ -33,27 +33,71 @@ $calendar = new Calendar();
 
              <!-- ===VIRAJITH=== -->
 
-             <div class="wrapper">
-                <h1>Manage Time Slots</h1>
-                <div class="date-range">
-                    <p><input type="date"> to <input type="date"></p>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <!-- <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div> -->
-                        <div class="details">
-                            <i class='bx bxs-time'></i>
-                            <span class="name">8am - 10am</span>
-                            <!-- <p>2nd year Undergraduate</p> -->
+            <h1>Manage Time Slots</h1>
+            <div class="date-range">
+                <p><input type="date"> to <input type="date"></p>
+            </div>
+            <div class="wrapper">    
+                <div class="card card-not-added" >
+                        <div class="content">
+                            <div class="details">
+                                <i class='bx bxs-time'></i>
+                                <span class="name">8am - 10am</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="buttons">
-                        <a href="google.com">Add</a>
-                        <a href="google.com">Delete</a>
-                    </div>
-                    
+                        <div class="buttons">
+                            <a href="google.com" class="button-add">Add</a>
+                            <a href="google.com" class="button-delete">Delete</a>
+                        </div>   
                 </div>
-               
+                <div class="card card-added" >
+                        <div class="content">
+                            <div class="details">
+                                <i class='bx bxs-time'></i>
+                                <span class="name">10am - 12pm</span>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="google.com" class="button-remove">Remove</a>
+                            <a href="google.com" class="button-delete">Delete</a>
+                        </div>   
+                </div>
+                <div class="card card-not-added" >
+                        <div class="content">
+                            <div class="details">
+                                <i class='bx bxs-time'></i>
+                                <span class="name">12pm - 01pm</span>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="google.com" class="button-add">Add</a>
+                            <a href="google.com" class="button-delete">Delete</a>
+                         </div>   
+                </div>
+                <div class="card card-not-added" >
+                        <div class="content">
+                            <div class="details">
+                                <i class='bx bxs-time'></i>
+                                <span class="name">01pm - 03pm</span>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="google.com" class="button-add">Add</a>
+                            <a href="google.com" class="button-delete">Delete</a>
+                        </div>   
+                </div>
+                <div class="card card-not-added" >
+                        <div class="content">
+                            <div class="details">
+                                <i class='bx bxs-time'></i>
+                                <span class="name">03pm - 05pm</span>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a href="google.com" class="button-add">Add</a>
+                            <a href="google.com" class="button-delete">Delete</a>
+                        </div>   
+                </div>
             </div>
 
             
@@ -157,11 +201,11 @@ $calendar = new Calendar();
             justify-content: center;
             height: 100vh;
             z-index: +5;
-            margin-top: -100px;
+            margin-top: -150px;
         }
 
         .wrapper .card{
-            background: #eeecec;
+           
             width: 80%;
             display: flex;
             align-items: center;
@@ -173,28 +217,16 @@ $calendar = new Calendar();
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
+        .card-not-added{
+            background: #eeecec;
+        }
+        .card-added{
+            background: #ff9b2d;
+        }
         .card .content{
             display: flex;
             align-items: center;
 
-        }
-
-        .wrapper .card .img{
-            height: 90px;
-            width: 90px;
-            position: absolute;
-            left: 2px;
-            background: #fff;
-            border-radius: 50%;
-            padding:5px;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .card .img img{
-            height: 100%;
-            width:100%;
-            border-radius: 50%;
-            object-fit: cover;
         }
 
         .card .details {
@@ -206,8 +238,8 @@ $calendar = new Calendar();
             font-size: 18px;
         }
         .details i{
-            margin-right: 40px;
-            margin-left: -20px;
+            margin-right: 30px;
+            margin-left: -50px;
             font-size: 24px;
         }
         .card a{
@@ -216,7 +248,7 @@ $calendar = new Calendar();
             padding: 10px 20px;
             border-radius: 25px;
             color: #fff;
-            background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
+            /* background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%); */
         }
 
         .date-range input{
@@ -227,6 +259,21 @@ $calendar = new Calendar();
             border-radius: 8px;
             border-style: groove;
             background-color: #fff;
+        }
+        .button-add{
+            background: #2684FF;
+            width: 100px;
+            text-align: center;
+        }
+        .button-delete{
+            background: red;
+            width: 100px;
+            text-align: center;
+        }
+        .button-remove{
+            background: #2684FF;
+            width: 100px;
+            text-align: center;
         }
     </style>
 
