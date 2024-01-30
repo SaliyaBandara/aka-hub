@@ -13,27 +13,51 @@ $sidebar = new Sidebar("Settings");
                 <div class = "panelTitle">
                     <h4 class = "text-center"> Published Articles </h4>
                 </div>
-                <div class = "articleCard">
-                    <div class = "articleImage">
-                        <img src= '<?= BASE_URL ?> /public/assets/img/counselors/counselorImage.jpg' alt='' id = 'counselorPhoto'>
-                    </div>
-                    <div class = "articleTitle">
-                        How to maintain stress
-                    </div> 
-                </div>
+                <?php 
+                if (is_array($data["posts"])) {
+                        foreach ($data["posts"] as $posts) {
+                        $img_src = USER_IMG_PATH . $posts["image"];
+                    ?>
+                    <a class = "articleCard" href = "#">
+                        <div class = "articleImage">
+                            <img src="<?= $img_src ?>" alt="">
+                        </div>
+                        <div class = "articleTitle"> <?= $posts["title"] ?></div> 
+                        <div class="articleDescription"><?= substr($posts["description"], 0, 50) . (strlen($posts["description"]) > 100 ? '...' : '') ?></div>
+
+                    </a>
+                <?php }
+                }else{
+                    echo "<div class='font-meidum text-muted'>No articles are published by this counselor</div>";
+                }
+                ?>
                 
             </div>
         </div>
         <div class = "right">
             <div class = "profileDescriptionPanel">
+                <?php 
+                    foreach ($data["counselor"] as $counselor) {
+                    $img_src = USER_IMG_PATH . $counselor["profile_img"];
+                ?>
                 <div class = "descriptionPanelLeft">
                     <div class = "profileImageContainor">
-                        <img src= '<?= BASE_URL ?> /public/assets/img/counselors/counselorImage.jpg' alt='' id = 'counselorPhoto'>
+                        <img src="<?= $img_src ?>" alt="">
                     </div>
                 </div>
                 <div class = "profileDetailsContainer">
-                    <div class = "font-1-25 font-semibold ms-1 mt-2">Dr. Nimal Perera</div>
-                    <div class = "font-1 font-meidum text-muted ms-1 mt-0-5">Professional Counselor</div>
+                    <div class = "font-1-25 font-semibold ms-1 mt-2"><?= $counselor["name"] ?></div>
+                    <div>
+                    <?php
+                        
+                        if ($counselor["type"] == 1) {
+                                echo '<div class = "font-1 font-meidum text-muted ms-1 mt-0-5">Professional Counselor</div>';
+                        } else {
+                            echo '<div class = "font-1 font-meidum text-muted ms-1 mt-0-5">Student Counselor</div>';
+                        }
+                        ?>
+
+                    </div>
                     <div class = "font-1 text-muted ms-1 mt-0-5">You can now talk with the professional counselors to reserve a date for your appointment</div>
                     <div href="#" class = "chatButtonContainer">
                         <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center">
@@ -41,6 +65,7 @@ $sidebar = new Sidebar("Settings");
                         </div>
                     </div>
                 </div>
+                <?php  } ?>
             </div>
         </div>
     </div>
@@ -78,6 +103,8 @@ $sidebar = new Sidebar("Settings");
             margin: 25px;
             border-radius : 10px;
             /* border: 1px solid red; */
+            text-decoration : none;
+            color : black;
         }
 
         .articleImage {
@@ -98,8 +125,17 @@ $sidebar = new Sidebar("Settings");
             margin : 0.5rem;
             font-size: 12px;
             font-weight: bold;
+            text-decoration : none;
             /* border: 1px solid red; */
         }
+
+        .articleDescription{
+            text-align : center;
+            margin : 0.5rem;
+            font-size: 10px;
+            /* border: 1px solid red; */
+        }
+
 
         .main-grid .right{
             margin-right:2rem;

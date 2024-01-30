@@ -35,7 +35,7 @@ $sidebar = new Sidebar("existingCounselors");
                                 //if user is a student 
                                 if($data["role"] != 1){
                                     echo "<div class = 'detailsButtonArea'>";
-                                    echo "<a href=' " .BASE_URL. " /counselorView'>";
+                                    echo "<a href='./counselorView/index/{$value['id']}'>";
                                     echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
                                     echo "View Details";
                                     echo "</div>";
