@@ -82,38 +82,38 @@ $feedArea = new feedArea();
 
                         // )
 
-                        if (is_array($data['posts'])) {
+                        // if (is_array($data['posts'])) {
 
-                            foreach ($data['posts'] as $key => $value) {
-                                $description = $value['description'];
-                                // $description = substr($description, 0, 200);
-                                $img = BASE_URL . "/public/assets/user_uploads/img/" . $value['image'];
+                        //     foreach ($data['posts'] as $key => $value) {
+                        //         $description = $value['description'];
+                        //         // $description = substr($description, 0, 200);
+                        //         $img = BASE_URL . "/public/assets/user_uploads/img/" . $value['image'];
 
-                        ?>
-                                <div class="feed-post">
-                                    <div class="feed-text-div">
-                                        <img class="eventPost" src="<?= $img ?>" alt="">
-                                        <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
-                                        <p style="white-space: pre-line;">
-                                            <?= $description ?>
-                                        </p>
-                                        <div class="editDeleteButton">
-                                            <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $value['id'] ?>"
-                                            class="repEdit">
-                                                <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                            </a>
-                                            <a class="repDecline delete-item" data-id="<?= $value['id'] ?>">
-                                                <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                        // ?>
+                        //         <div class="feed-post">
+                        //             <div class="feed-text-div">
+                        //                 <img class="eventPost" src="<?= $img ?>" alt="">
+                        //                 <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
+                        //                 <p style="white-space: pre-line;">
+                        //                     <?= $description ?>
+                        //                 </p>
+                        //                 <div class="editDeleteButton">
+                        //                     <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $value['id'] ?>"
+                        //                     class="repEdit">
+                        //                         <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
+                        //                     </a>
+                        //                     <a class="repDecline delete-item" data-id="<?= $value['id'] ?>">
+                        //                         <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
+                        //                     </a>
+                        //                 </div>
+                        //             </div>
+                        //         </div>
 
-                        <?php
+                        // <?php
 
 
-                            }
-                        }
+                        //     }
+                        // }
 
 
                         ?>

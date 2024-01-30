@@ -27,9 +27,24 @@ $calendar = new Calendar();
                     </div>
                 </div>
             </div> -->
-            <div class="calendarContainor">
+            <!-- <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
+            </div> -->
+            
+            <div class="calender-main">
+                <h2>Please select a Date or Date Range</h2>
+                <div class="calendarContainor">
+                    <?php echo $calendar->render(); ?>
+                </div>
+                <div class="date-range">
+                    <p><input type="date"> to <input type="date"></p>
+                </div>
+                <div class="manage-time-slots">
+                    <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
+                </div>
             </div>
+            
+
         </div>
         <div class="right">
             <!-- <div class="calendarContainor">
@@ -118,6 +133,44 @@ $calendar = new Calendar();
             justify-content: center;
             align-items: center;
             text-align: center;
+        }
+
+    </style>
+    <style>
+        .calendarContainor{
+            justify-content: space-between;
+            width: 30%;
+            height: 400px;
+        }
+        .calender-main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .date-range{
+            margin-top: 50px;
+        }
+        .date-range input{
+            margin-right: 10px;
+            margin-left: 10px;
+            width: 40%;
+            padding: 8px;
+            border-radius: 8px;
+            border-style: groove;
+            background-color: #fff;
+        }
+        .manage-time-slots{
+            margin-top: 50px;
+        }
+        .manage-time-slots a{
+            text-decoration: none;
+            padding: 7px 18px;
+            border-radius: 25px;
+            color: #fff;
+            /* background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%); */
+            background-color: #ff9b2d;
         }
     </style>
 

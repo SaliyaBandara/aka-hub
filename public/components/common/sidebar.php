@@ -51,7 +51,7 @@ class Sidebar
                 'counselorPanel' => ['Counselor Panel', 'bxs-home'],
                 'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
                 'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
-                'manageTimeSlots' => ['Time Slots', 'bxs-time-five'],
+                'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
                 'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
             ];
         } else if ($role == 6) { //ClubRep

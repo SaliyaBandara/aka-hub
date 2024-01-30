@@ -16,7 +16,7 @@ class CounselorFeed extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["posts"] = $this->model('readModel')->getAll("counselor_posts");
+        // $data["posts"] = $this->model('readModel')->getAll("counselor_posts");
         // print_r($data["posts"]);
 
         $this->view->render('counselor/counselorFeed/index', $data);

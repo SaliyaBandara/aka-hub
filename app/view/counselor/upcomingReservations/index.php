@@ -11,7 +11,7 @@ $calendar = new Calendar();
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
-            <div class="threeCardDiv">
+            <!-- <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <div class="divUsersContainor">
                         6 Received Requests in this Week
@@ -27,63 +27,15 @@ $calendar = new Calendar();
                         2 Accepted Reservations in this Week
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- ===VIRAJITH=== -->
 
-            <div class="wrapper">
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="google.com">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="google.com">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="google.com">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="google.com">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="google.com">View</a>
-                </div>
+            <div class="card-container">
+                <div class="card">Card 1</div>
+                <div class="card">Card 2</div>
+                <div class="card">Card 3</div>
             </div>
-
         </div>
     </div>
     <style>
@@ -186,7 +138,20 @@ $calendar = new Calendar();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
+        .card-container {
+  display: flex;
+  flex-direction: column;
+}
 
+.card {
+  width: 200px;
+  height: 150px;
+  background-color: #f0f0f0;
+  margin: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+        
     </style>
 
     
@@ -212,7 +177,6 @@ $calendar = new Calendar();
             z-index: +5;
             color: white;
             padding: 25px;
-            /* margin-bottom: -50px; */
         }
 
         .cardTotalUsers {
@@ -337,72 +301,6 @@ $calendar = new Calendar();
             background-color: #d4edda;
             border-color: #c3e6cb;
         }
-    </style>
-
-    <style>
-        .wrapper{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            z-index: +5;
-            margin-top: -100px;
-        }
-
-        .wrapper .card{
-            background: #eeecec;
-            width: 80%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            position:relative;
-            margin-bottom: 20px;
-            border-radius: 20px 20px 20px 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
-        }
-
-        .card .content{
-            display: flex;
-            align-items: center;
-
-        }
-
-        .wrapper .card .img{
-            height: 90px;
-            width: 90px;
-            position: absolute;
-            left: 2px;
-            background: #fff;
-            border-radius: 50%;
-            padding:5px;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .card .img img{
-            height: 100%;
-            width:100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .card .details {
-            margin-left: 80px;
-        }
-
-        .details span{
-            font-weight: 600;
-            font-size: 18px;
-        }
-        .card a{
-            text-decoration: none;
-            padding: 7px 18px;
-            border-radius: 25px;
-            color: #fff;
-            background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
-        }
-
     </style>
 
 </div>
