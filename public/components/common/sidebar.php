@@ -14,7 +14,7 @@ class Sidebar
                 'dashboard' => ['Dashboard', 'bxs-dashboard'],
                 'courses' => ['Courses', 'bxs-book'],
                 'chat' => ['Chat', 'bxs-chat'],
-                'electionDashboard' => ['Elections', 'bxs-chat'],
+                'electionDashboard' => ['Elections', 'bxs-check-square'],
                 'studentProfile' => ['Settings', 'bxs-cog'],
             ];
         } else if ($role == 1) { //admin
@@ -105,8 +105,8 @@ class Sidebar
 
             <div class="fixed__bottom">
                 Do you need counselor support?
-                <a href="" target="_blank" rel="noopener noreferrer">Click</a>
-                here to talk with a counselor.
+                Click <a href= "<?= BASE_URL ?>/existingCounselors">here</a>
+                to talk with a counselor.
             </div>
 
             <div class="fixed__bottom">

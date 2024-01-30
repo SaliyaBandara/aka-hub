@@ -29,36 +29,40 @@ $calendar = new Calendar();
                 <!-- todo flex wrap -->
                 <div class="todo_flex_wrap flex flex-wrap">
 
+                <?php 
+                    foreach ($data["main_events"] as $main_events) {
+                    ?>
+
                     <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
+                    <div>
+                        <?php
+                        $currentDate = new DateTime();
+                        $endDate = new DateTime($main_events["end_date"]);
+                        
+                        if ($currentDate <= $endDate) {
+                            $dateDiff = $currentDate->diff($endDate);
+                            $daysRemaining = $dateDiff->days;
+                            
+                            if ($daysRemaining === 0) {
+                                echo '<div class="todo_item_date flex align-center justify-center">0</div>';
+                            } elseif ($daysRemaining === 1) {
+                                echo '<div class="todo_item_date flex align-center justify-center">1</div>';
+                            } else {
+                            echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                            }
+                        } else {
+                            echo '<div class="todo_item_date flex align-center justify-center">-1</div>';
+                        }
+                        ?>
+                    </div>
+
                         <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
+                            <div class="font-1-25 font-semibold"><?= $main_events["name"] ?></div>
+                            <div class="font-1 font-meidum text-muted"><?= $main_events["title"] ?></div>
+                            <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
                         </div>
                     </a>
-                    <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
-                        </div>
-                    </a>
-                    <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
-                        </div>
-                    </a>
+                    <?php } ?>
 
                 </div>
 
@@ -123,14 +127,57 @@ $calendar = new Calendar();
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
             </div>
+            <div class = "flex-column justify-center align-center divButtonSection">
+                <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
+                    Are you a responsible student representative?
+                </div>
+                <div href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
+                    <div class = "btn btn-primary mb-1 form form-group repRequestButton justify-center align-center">
+                        Send Request
+                    </div>
+                </div>
+            </div>
         </div>
+        <style>
+                    .divButtonSection{
+                        border-radius: 10px;
+                        margin:1rem;
+                        /* border: 1px solid red; */
+                        justify-content: center;
+                        padding:1rem;
+                    }
+
+                    .divButtonSection a{
+                        text-decoration:none;
+                    }
+
+
+                    .repRequestButton{
+                        border: 1px solid #2684ff;
+                        background-color: var(--secondary-color);
+                        color: white;
+                        width: 100%;
+                        text-align:center;
+                    }
+
+                    .requestDescription{
+                        text-align: center;
+                        width : 100%;
+                        /* border:1px solid red; */
+                        padding-bottom: 1rem;
+                        color: black;
+                    }
+        </style>
+
     </div>
 
 </div>
 
 
 <?php $HTMLFooter = new HTMLFooter(); ?>
-
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
 <script>
     $(document).ready(function() {
 
@@ -155,5 +202,30 @@ $calendar = new Calendar();
 
         });
 
+        $(document).on("click", ".repRequestButton", function() {
+            $.ajax({
+                url: `${BASE_URL}/Courses/clickToBeRole/student_rep`,
+                type: 'post',
+                data: {
+                    request: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
     });
+
+    
+
 </script>

@@ -2,6 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("courses");
+$calendar = new Calendar();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -165,24 +166,20 @@ $sidebar = new Sidebar("courses");
             </section>
 
         </div>
+
         <div class="right">
-            <div class="divCalendarSection">
-
+            <div class="calendarContainor">
+                <?php echo $calendar->render(); ?>
             </div>
-            <div class="divRequestSection">
-                <div class="divRequestToBe">
-                    <p class="doYouNeedP">Do you need access for</p></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
-                        <p class="repP">Student Rep ?</p>
-                    </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/club_rep">
-                        <p class="repP">Club Rep ?</p>
-                    </a></br>
-                    <a href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
-                        <p class="repP">Teaching Student ?</p>
-                    </a></br>
+            <div class = "flex-column justify-center align-center divButtonSection">
+                <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
+                    Send your request now to join our "Teaching Army" !
                 </div>
-
+                <div href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
+                    <div class = "btn btn-primary mb-1 form form-group teachingRequestButton justify-center align-center">
+                        Send Request
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -190,52 +187,50 @@ $sidebar = new Sidebar("courses");
     <style>
         .main-grid {}
 
-        .main-grid .left {
-            width: 70%;
-            /* background-color: yellowgreen; */
+        /* .main-grid .left {
+            width: 85% !;
+            background-color: yellowgreen;
             height: 50vh;
             padding: 2rem;
-        }
+        } */
 
-        .main-grid .right {
+        /* .main-grid .right {
+            width: 30%;
             flex-grow: 1;
-            /* background-color: yellowgreen; */
+            background-color: red;
             height: 150vh;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
+            
+        } */
 
-        .divCalendarSection {
-            height: 65vh;
-            background-color: #fff;
+        .divButtonSection{
             border-radius: 10px;
-        }
-
-        .divRequestSection {
-            height: 15vh;
-            background-color: #fff;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
+            margin:1rem;
+            /* border: 1px solid red; */
             justify-content: center;
-            align-items: center;
-            font-size: 0.8rem;
+            padding:1rem;
         }
 
-        .repP {
-            text-align: center;
-            margin: -7px;
+
+        .teachingRequestButton{
+            border: 1px solid #2684ff;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 100%;
+            text-align:center;
+            text-decoration: none !important;
         }
 
-        .doYouNeedP {
-            text-align: center;
-            margin: 0;
+        .divButtonSection a{
+            text-decoration: none !important;
         }
-
-        .divRequestSection a {
+      
+        .requestDescription{
             text-align: center;
-            /* text-decoration: none; */
+            width : 100%;
+            /* border:1px solid red; */
+            padding-bottom: 1rem;
             color: black;
-            margin: 0;
         }
 
         .onsite_alert {
@@ -303,8 +298,31 @@ $sidebar = new Sidebar("courses");
                 }
             });
         });
+
+        $(document).on("click", ".teachingRequestButton", function() {
+            $.ajax({
+                url: `${BASE_URL}/Courses/clickToBeRole/teaching_student`,
+                type: 'post',
+                data: {
+                    request: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
     });
 </script>
 <script>
-
+    
 </script>

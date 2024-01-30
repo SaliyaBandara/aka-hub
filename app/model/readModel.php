@@ -38,12 +38,48 @@ class readModel extends Model
 
     public function getCounselors()
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE role = ?", "i", [5]);
+        $sql = "SELECT * from user u , counselor c where user_id = u.id AND ?";
+        $result = $this->db_handle->runQuery($sql, "i", [5]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
+
+    public function getEvent($event_id)
+    {
+        $query = "
+            SELECT main_events.*, courses.name AS course_name
+            FROM main_events
+            LEFT OUTER JOIN courses ON main_events.course_id = courses.id
+            WHERE main_events.event_id = ?
+        ";
+    
+        $result = $this->db_handle->runQuery($query, "i", [$event_id]);
+    
+        if ($result !== false && count($result) > 0) {
+            return $result[0];  // Assuming you expect only one result for a given event_id
+        }
+    
+        return false;
+    }
+
+
+    public function getAllEvents($table)
+    {
+
+        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+
+    }
+
 
     // get all the posts of the counselor
     public function getCounselorPosts()
@@ -351,6 +387,191 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+        /**
+     * Student Profile Model
+     */
+
+    //  CREATE TABLE student_profile (
+    //     id INT(5) AUTO_INCREMENT PRIMARY KEY,
+    //     student_id VARCHAR(255) UNIQUE,
+    //     degree VARCHAR(255),
+    //     alt_email VARCHAR(255),
+    //     profile_picture VARCHAR(255),
+    //     email VARCHAR(255) UNIQUE,
+    //     preferred_email INT(1) DEFAULT 0,
+    //     exam_notify INT(1) DEFAULT 0,
+    //     reminder_notify INT(1) DEFAULT 0,
+    //     events_notify INT(1) DEFAULT 0,
+    //     materials_notify INT(1) DEFAULT 0,
+    //     notify_duration INT(1) DEFAULT 0
+    // );
+    
+
+    public function getEmptyStudentProfile()
+    {
+
+        $empty = [
+            "student_id" => "",
+            "email" => "",
+            "degree" => "",
+            "alt_email" => "",
+            "profile_picture" => "",
+            "preferred_email" => "",
+            "exam_notify" => "",
+            "reminder_notify" => "",
+            "events_notify" => "",
+            "materials_notify" => "",
+            "notify_duration" => ""
+        ];
+
+        $template = [
+            "email" => [
+                "label" => "Email Address",
+                "type" => "email",
+                "validation" => "required"
+            ],
+            "degree" => [
+                "label" => "Degree",
+                "type" => "text",
+                "validation" => ""
+            ],
+            
+            "alt_email" => [
+                "label" => "Alternative Email Address",
+                "type" => "email",
+                "validation" => ""
+            ],
+            "profile_picture" => [
+                "label" => "Profile Picture",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "student_id" => [
+                "label" => "Student ID",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "preferred_email" => [
+                "label" => "Preferred Email Address to receive Notifications",
+                "type" => "select",
+                "skip" => true
+            ],
+            "exam_notify" => [
+                "label" => "Send Exam and Assignment Notifications",
+                "type" => "checkbox",
+                "skip" => true
+            ],
+            "reminder_notify" => [
+                "label" => "Send Reminder Notifications through",
+                "type" => "checkbox",
+                "skip" => true
+            ],
+            "events_notify" => [
+                "label" => "Send New Club Event Post Notifications",
+                "type" => "checkbox",
+                "skip" => true
+            ],
+            "materials_notify" => [
+                "label" => "Send New Material update Notifications",
+                "type" => "checkbox",
+                "skip" => true
+            ],
+            "notify_duration" => [
+                "label" => "Send Reminder Notifications (No. of days before)",
+                "type" => "select",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    
+
+        /**
+     * Student Profile Model
+     */
+
+    //  CREATE TABLE main_events (
+    //     event_id INT(11) AUTO_INCREMENT,
+    //     type INT(11),
+    //     status INT(11),
+    //     title VARCHAR(255),
+    //     description VARCHAR(255),
+    //     end_date DATE,
+    //     start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     user_id INT(11),
+    //     course_id INT(11),
+    //     PRIMARY KEY (event_id),
+    //     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+    //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    // );
+    
+    
+
+    public function getEmptyMainEvent()
+    {
+
+        $empty = [
+            "event_id" => "",
+            "type" => "",
+            "status" => "",
+            "title" => "",
+            "description" => "",
+            "end_date" => "",
+            "start_date" => "",
+            "user_id" => "",
+            "course_id" => "",
+
+        ];
+
+        $template = [
+            "type" => [
+                "label" => "Event Type",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "status" => [
+                "label" => "Event Status",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            
+            "title" => [
+                "label" => "Title of the event",
+                "type" => "text",
+                "validation" => ""
+            ],
+            "description" => [
+                "label" => "Event Description",
+                "type" => "text"
+            ],
+            "end_date" => [
+                "label" => "Event Ending Date",
+                "type" => "date"
+            ],
+            "start_date" => [
+                "label" => "Event Starting Date",
+                "type" => "date"
+            ],
+
         ];
 
         return [
