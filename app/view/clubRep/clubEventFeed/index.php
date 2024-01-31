@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("feedsSelection");
+$sidebar = new Sidebar("clubEventFeed");
 $feedArea = new feedArea();
 ?>
 
