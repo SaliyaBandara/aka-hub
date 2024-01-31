@@ -18,6 +18,7 @@ class Courses extends Controller
         ];
 
         $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
         $data["courses"] = $this->model('readModel')->getAll("courses");
         $this->view->render('student/courses/index', $data);
     }
@@ -35,6 +36,7 @@ class Courses extends Controller
         ];
 
         $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
         $data["id"] = $id;
         $data["course"] = $this->model('readModel')->getOne("courses", $id);
         if (!$data["course"])
@@ -55,7 +57,7 @@ class Courses extends Controller
     public function material($action = "add_edit", $course_id = 0, $id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if (($_SESSION["teaching_student"] != 1)||($_SESSION["student_rep"]!=1))
             $this->redirect();
 
         if ($course_id == 0)
@@ -117,7 +119,7 @@ class Courses extends Controller
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if (($_SESSION["teaching_student"] != 1)||($_SESSION["student_rep"]!=1))
             $this->redirect();
 
         if ($id == 0)
@@ -133,7 +135,7 @@ class Courses extends Controller
     public function add_edit($id = 0, $action = "create")
     {
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if (($_SESSION["teaching_student"] != 1)||($_SESSION["student_rep"]!=1))
             $this->redirect();
 
         $data = [
@@ -180,7 +182,7 @@ class Courses extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if (($_SESSION["teaching_student"] != 1)||($_SESSION["student_rep"]!=1))
             $this->redirect();
 
         if ($id == 0)
