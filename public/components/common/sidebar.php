@@ -8,6 +8,9 @@ class Sidebar
 
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true)
             $role = $_SESSION["user_role"];
+            $student_rep = $_SESSION["student_rep"];
+            $club_rep = $_SESSION["club_rep"];
+            $teaching_student =$_SESSION["teaching_student"];
 
         if ($role == 0) { //student
             $pages = [
@@ -35,6 +38,14 @@ class Sidebar
                 'adminAccount' => ['Admin Account', 'bxs-home'],
                 'commonProfile' => ['Admin Profile', 'bxs-home'],
             ];
+        } else if ($role == 5) { //counselor
+            $pages = [
+                'counselorPanel' => ['Counselor Panel', 'bxs-home'],
+                'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
+                'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
+                'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
+                'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
+            ];
         } else if ($role == 4) { //student-rep
             $pages = [
                 'dashboard' => ['Dashboard', 'bxs-dashboard'],
@@ -45,14 +56,6 @@ class Sidebar
                 'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
                 'manageMaterials' => ['Materials', 'bxs-book'],
 
-            ];
-        } else if ($role == 5) { //counselor
-            $pages = [
-                'counselorPanel' => ['Counselor Panel', 'bxs-home'],
-                'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
-                'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
-                'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
-                'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
             ];
         } else if ($role == 6) { //ClubRep
             $pages = [
@@ -105,7 +108,7 @@ class Sidebar
 
             <div class="fixed__bottom">
                 Do you need counselor support?
-                Click <a href= "<?= BASE_URL ?>/existingCounselors">here</a>
+                Click <a href="<?= BASE_URL ?>/existingCounselors">here</a>
                 to talk with a counselor.
             </div>
 
