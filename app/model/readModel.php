@@ -62,6 +62,16 @@ class readModel extends Model
         return false;
     }
 
+    public function getMaterials(){
+        $sql = "SELECT co.name AS course_name, co.code AS course_code, co.year, co.semester,
+        u.name AS user_name, u.student_id, u.email from course_materials cm , courses co, user u where course_id = co.id AND user_id = u.id AND ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        if (count($result)>0) {
+            return $result;
+        }
+        return false;
+    }
+
     public function getCounselors()
     {
         $sql = "SELECT * from user u , counselor c where user_id = u.id AND ?";

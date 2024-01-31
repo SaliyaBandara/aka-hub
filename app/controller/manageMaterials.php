@@ -7,7 +7,7 @@ class ManageMaterials extends Controller{
             'title' => 'Manage Materials',
             'message' => 'Welcome to Aka Hub!'
         ];
-
+        $data["materials"] = $this->model('readModel')->getMaterials();
         $this->view->render('studentRep/manageMaterials/index', $data);
     }
 
