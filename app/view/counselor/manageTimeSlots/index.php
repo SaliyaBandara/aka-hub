@@ -32,12 +32,12 @@ $calendar = new Calendar();
             </div> -->
             
             <div class="calender-main">
-                <h2>Please select a Date or Date Range</h2>
                 <div class="calendarContainor">
                     <?php echo $calendar->render(); ?>
                 </div>
+                <h2>Please select a Date or Date Range</h2>
                 <div class="date-range">
-                    <p><input type="date"> to <input type="date"></p>
+                    <p class="p1"><input type="date"> to <input type="date"></p>
                 </div>
                 <div class="manage-time-slots">
                     <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
@@ -150,7 +150,7 @@ $calendar = new Calendar();
             flex-direction: column;
         }
         .date-range{
-            margin-top: 50px;
+            margin-top: 20px;
         }
         .date-range input{
             margin-right: 10px;
@@ -171,6 +171,13 @@ $calendar = new Calendar();
             color: #fff;
             /* background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%); */
             background-color: #ff9b2d;
+        }
+        .p1{
+            font-size: 18px;
+            font-weight: 700;
+        }
+        h2{
+            margin-top: 40px;
         }
     </style>
 
