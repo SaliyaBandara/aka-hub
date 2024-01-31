@@ -40,22 +40,22 @@ $sidebar = new Sidebar("manageMaterials");
                         <div class="cardContainor">
                             <div class="div-tableHeader">
                                 <div class="tableHeaderItem">
-                                    ID
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Type
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Year
+                                    Course Code
                                 </div>
                                 <div class="tableHeaderItem">
                                     Subject
                                 </div>
                                 <div class="tableHeaderItem">
-                                    Content
+                                    Year
                                 </div>
                                 <div class="tableHeaderItem">
-                                    Status
+                                    Semester
+                                </div>
+                                <div class="tableHeaderItem">
+                                    User
+                                </div>
+                                <div class="tableHeaderItem">
+                                    Reg Number
                                 </div>
                                 <div class="tableHeaderItem">
                                     Action
@@ -63,126 +63,37 @@ $sidebar = new Sidebar("manageMaterials");
                             </div>
 
                             <div class="scrollableContainer">
-                                <div class="materialCard">
-                                    <div class="tableItem">
-                                        01
+                                <?php
+                                foreach ($data["materials"] as $material) {
+                                ?>
+                                    <div class="materialCard">
+                                        <div class="tableItem">
+                                            <?php echo $material['course_code']; ?>
+                                        </div>
+                                        <div class="tableItem">
+                                            <?php echo $material['course_name']; ?>
+                                        </div>
+                                        <div class="tableItem">
+                                            <?php echo $material['year']; ?> year
+                                        </div>
+                                        <div class="tableItem">
+                                            SEM <?php echo $material['semester']; ?>
+                                        </div>
+                                        <div class="tableItem">
+                                            <?php echo $material['user_name']; ?>
+                                        </div>
+                                        <div class="tableItem">
+                                            <?php echo $material['student_id']; ?>
+                                        </div>
+                                        <div class="tableItem">
+                                            <div class="acceptButton" href="">View</div>
+                                            <div class="declineButton">Delete</div>
+                                        </div>
                                     </div>
-                                    <div class="tableItem">
-                                        ShortNote
-                                    </div>
-                                    <div class="tableItem">
-                                        Y1S1
-                                    </div>
-                                    <div class="tableItem">
-                                        DSA
-                                    </div>
-                                    <div class="tableItem">
-                                        defafafafa
-                                    </div>
-                                    <div class="tableItem">
-                                        Active
-                                    </div>
-                                    <div class="tableItem">
-                                        <div class="acceptButton">Edit</div>
-                                        <div class="declineButton">Delete</div>
-                                    </div>
-                                </div>
-                                <div class="materialCard">
-                                    <div class="tableItem">
-                                        01
-                                    </div>
-                                    <div class="tableItem">
-                                        ShortNote
-                                    </div>
-                                    <div class="tableItem">
-                                        Y1S1
-                                    </div>
-                                    <div class="tableItem">
-                                        DSA
-                                    </div>
-                                    <div class="tableItem">
-                                        defafafafa
-                                    </div>
-                                    <div class="tableItem">
-                                        Active
-                                    </div>
-                                    <div class="tableItem">
-                                        <div class="acceptButton">Edit</div>
-                                        <div class="declineButton">Delete</div>
-                                    </div>
-                                </div>
-                                <div class="materialCard">
-                                    <div class="tableItem">
-                                        01
-                                    </div>
-                                    <div class="tableItem">
-                                        ShortNote
-                                    </div>
-                                    <div class="tableItem">
-                                        Y1S1
-                                    </div>
-                                    <div class="tableItem">
-                                        DSA
-                                    </div>
-                                    <div class="tableItem">
-                                        defafafafa
-                                    </div>
-                                    <div class="tableItem">
-                                        Active
-                                    </div>
-                                    <div class="tableItem">
-                                        <div class="acceptButton">Edit</div>
-                                        <div class="declineButton">Delete</div>
-                                    </div>
-                                </div>
-                                <div class="materialCard">
-                                    <div class="tableItem">
-                                        01
-                                    </div>
-                                    <div class="tableItem">
-                                        ShortNote
-                                    </div>
-                                    <div class="tableItem">
-                                        Y1S1
-                                    </div>
-                                    <div class="tableItem">
-                                        DSA
-                                    </div>
-                                    <div class="tableItem">
-                                        defafafafa
-                                    </div>
-                                    <div class="tableItem">
-                                        Active
-                                    </div>
-                                    <div class="tableItem">
-                                        <div class="acceptButton">Edit</div>
-                                        <div class="declineButton">Delete</div>
-                                    </div>
-                                </div>
-                                <div class="materialCard">
-                                    <div class="tableItem">
-                                        01
-                                    </div>
-                                    <div class="tableItem">
-                                        ShortNote
-                                    </div>
-                                    <div class="tableItem">
-                                        Y1S1
-                                    </div>
-                                    <div class="tableItem">
-                                        DSA
-                                    </div>
-                                    <div class="tableItem">
-                                        defafafafa
-                                    </div>
-                                    <div class="tableItem">
-                                        Active
-                                    </div>
-                                    <div class="tableItem">
-                                        <div class="acceptButton">Edit</div>
-                                        <div class="declineButton">Delete</div>
-                                    </div>
-                                </div>
+
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -244,6 +155,8 @@ $sidebar = new Sidebar("manageMaterials");
         justify-content: center;
         align-items: center;
         box-shadow: 0px 0px 5px 0px #2684FF;
+        background-color: #2684FF;
+        color: white;
         border-radius: 5px;
         margin: 5px;
     }
@@ -255,6 +168,8 @@ $sidebar = new Sidebar("manageMaterials");
         justify-content: center;
         align-items: center;
         box-shadow: 0px 0px 5px 0px #ff9b2d;
+        background-color: #ff9b2d;
+        color: white;
         border-radius: 5px;
         margin: 5px;
     }
@@ -264,7 +179,6 @@ $sidebar = new Sidebar("manageMaterials");
         opacity: 1;
         cursor: pointer;
         color: white;
-        font-size: 17.5px;
     }
 
     .declineButton:hover {
@@ -272,7 +186,6 @@ $sidebar = new Sidebar("manageMaterials");
         opacity: 1;
         cursor: pointer;
         color: white;
-        font-size: 17.5px;
     }
 
     .tableItem {
