@@ -11,9 +11,11 @@ $sidebar = new Sidebar("manageMaterials");
     <div class="main-grid flex">
         <div class="leftManageMaterials">
             <div class="addMaterialDiv">
-                <div class="buttonAddMaterials">
-                    <h4>Add Material</h4>
-                </div>
+                <a href="<?= BASE_URL ?>/Courses/material">
+                    <div class="buttonAddMaterials">
+                        <h4>Add Material</h4>
+                    </div>
+                </a>
             </div>
             <div class="divSearchAndDisplayProducts">
                 <div class="divDisplayProductsPart">
