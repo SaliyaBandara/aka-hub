@@ -25,88 +25,87 @@ $sidebar = new Sidebar("manageMaterials");
                     $video_links = json_decode($course_material->video_links);
                     $short_notes = json_decode($course_material->short_notes);
                     $reference_links = json_decode($course_material->reference_links);
-
                 ?>
 
-                        <div class="material-item mb-1">
-                            <div class="desc flex justify-between align-center">
-                                <div>
-                                    <?= $course_material->description ?>
-                                </div>
-                                <div>
-                                    <?php $date = new DateTime($course_material->updated_at);
-                                    $date = $date->format('Y F d - h:i A');
-                                    echo $date; ?>
+                    <div class="material-item mb-1">
+                        <div class="desc flex justify-between align-center">
+                            <div>
+                                <?= $course_material->description ?>
+                            </div>
+                            <div>
+                                <?php $date = new DateTime($course_material->updated_at);
+                                $date = $date->format('Y F d - h:i A');
+                                echo $date; ?>
 
-                                </div>
-                                <?php
-                                if ($data["role"] == 1) {
-                                ?>
-                                    <div class="todo_item_actions flex">
-                                        <a href="<?= BASE_URL ?>/manageMaterial/material/add_edit/<?= $data["id"] ?>/<?= $course_material->id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
-                                        <div class="btn delete-item" data-id="<?= $course_material->id ?>">
-                                            <i class='bx bx-trash text-danger'></i>
-                                        </div>
-                                    </div>
-
-                                <?php } ?>
                             </div>
                             <?php
-                            if (is_array($video_links)) {
-                                echo '<div class="links-wrapper mt-1"><div class="links-title">Kuppi Video Links</div>';
-                                foreach ($video_links as $video_link) {
-                                    $module_name = $video_link[0];
-                                    $links = $video_link[1];
-
+                            if ($data["role"] == 1) {
                             ?>
-                                    <div class="video_links">
-                                        <div class="module_name text--secondary mb-0-5"><?= $video_link[0] ?></div>
-                                        <div class="link-items ms-1">
-                                            <?php
-                                            foreach ($links as $link) {
-                                            ?>
-                                                <div class="link-item">
-                                                    <a href="<?= $link ?>" target="_blank" class="link">
-                                                        Open <div class="yt-logo">
-                                                            <img src="<?= ASSETS_PATH ?>img/common/youtube-logo.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
+                                <div class="todo_item_actions flex">
+                                    <a href="<?= BASE_URL ?>/manageMaterials/material/add_edit/<?= $course_material->material_ID ?>/<?= $data["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                    <div class="btn delete-item" data-id="<?= $course_material->id ?>">
+                                        <i class='bx bx-trash text-danger'></i>
                                     </div>
+                                </div>
 
-                                <?php }
-                                echo "</div>";
-                            }
+                            <?php } ?>
+                        </div>
+                        <?php
+                        if (is_array($video_links)) {
+                            echo '<div class="links-wrapper mt-1"><div class="links-title">Kuppi Video Links</div>';
+                            foreach ($video_links as $video_link) {
+                                $module_name = $video_link[0];
+                                $links = $video_link[1];
 
-                            if (is_array($short_notes)) {
-                                echo '<div class="links-wrapper mt-1"><div class="links-title">Notes</div><div class="notes-wrapper">';
-                                foreach ($short_notes as $note) {
-                                    $img = ASSETS_PATH . "img/common/pdf.png";
-                                    $note = USER_PDF_PATH . $note;
-
-                                ?>
-
-                                    <div class="note-item">
-                                        <a href="<?= $note ?>" target="_blank">
-                                            <img src="<?= $img ?>" alt="" class="img">
-                                        </a>
+                        ?>
+                                <div class="video_links">
+                                    <div class="module_name text--secondary mb-0-5"><?= $video_link[0] ?></div>
+                                    <div class="link-items ms-1">
+                                        <?php
+                                        foreach ($links as $link) {
+                                        ?>
+                                            <div class="link-item">
+                                                <a href="<?= $link ?>" target="_blank" class="link">
+                                                    Open <div class="yt-logo">
+                                                        <img src="<?= ASSETS_PATH ?>img/common/youtube-logo.png" alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
+                                </div>
 
                             <?php }
-                                echo "</div>";
-                                echo "</div>";
-                            }
+                            echo "</div>";
+                        }
+
+                        if (is_array($short_notes)) {
+                            echo '<div class="links-wrapper mt-1"><div class="links-title">Notes</div><div class="notes-wrapper">';
+                            foreach ($short_notes as $note) {
+                                $img = ASSETS_PATH . "img/common/pdf.png";
+                                $note = USER_PDF_PATH . $note;
+
                             ?>
 
+                                <div class="note-item">
+                                    <a href="<?= $note ?>" target="_blank">
+                                        <img src="<?= $img ?>" alt="" class="img">
+                                    </a>
+                                </div>
 
-                        </div>
+                        <?php }
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                        ?>
 
 
-                <?php 
+                    </div>
+
+
+                <?php
                 } else {
                     echo "<div class='font-bold'>No Course Materials Found for this module</div>";
                 }

@@ -172,6 +172,7 @@ class ManageMaterials extends Controller
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
+    
     public function viewMaterial($id)
     {
         $this->requireLogin();
