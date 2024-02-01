@@ -39,7 +39,7 @@ class readModel extends Model
     public function getUserSettings($id)
     {
         $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
-        $result = $this->db_handle->runQuery($sql,"i",[$id]);
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
     }
@@ -52,7 +52,7 @@ class readModel extends Model
 
         return false;
     }
-    
+
     public function getCourseMaterial($course_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM course_materials WHERE course_id = ?", "i", [$course_id]);
@@ -62,13 +62,25 @@ class readModel extends Model
         return false;
     }
 
-    public function getMaterials(){
-        $sql = "SELECT co.name AS course_name, co.code AS course_code, co.year, co.semester,
+    public function getMaterials()
+    {
+        $sql = "SELECT co.name AS course_name, co.code AS course_code, co.year, co.semester, cm.id As material_ID,
         u.name AS user_name, u.student_id, u.email from course_materials cm , courses co, user u where course_id = co.id AND user_id = u.id AND ?";
         $result = $this->db_handle->runQuery($sql, "i", [1]);
-        if (count($result)>0) {
+        if (count($result) > 0) {
             return $result;
         }
+        return false;
+    }
+
+    public function getMaterialToView($id)
+    {
+        $sql = "SELECT co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND ?";
+
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
         return false;
     }
 
@@ -666,7 +678,7 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-            
+
             "title" => [
                 "label" => "Title of the post",
                 "type" => "text",
@@ -688,5 +700,4 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
 }

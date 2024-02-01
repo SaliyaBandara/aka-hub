@@ -1,5 +1,6 @@
 <?php
-class ManageMaterials extends Controller{
+class ManageMaterials extends Controller
+{
     public function index()
     {
         $this->requireLogin();
@@ -15,36 +16,26 @@ class ManageMaterials extends Controller{
     {
         $this->requireLogin();
 
-        // if ($id == 0)
-        //     $this->redirect();
-
         $data = [
             'title' => 'Manage Materials',
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["role"] = $_SESSION["user_role"];
+
         $data["id"] = $id;
-        $data["course"] = $this->model('readModel')->getOne("courses", $id);
+        $data["course"] = $this->model('readModel')->getOne("course_materials", $id);
         if (!$data["course"])
             $this->redirect();
 
-        $data["material"] = $this->model('readModel')->getCourseMaterial($id);
-        $data["teaching_student"] = $_SESSION["teaching_student"];
-
-        // print_r($data["material"]);
-
-        // $data["course"] = $this->model('readModel')->getOne("courses", $id);
-        // if (!$data["course"])
-        //     $this->redirect();
-
-        $this->view->render('student/courses/view', $data);
+        $data["viewMaterial"] = $this->model('readModel')->getMaterialToView($id);
+        $this->view->render('admin/manageMaterials/view', $data);
     }
 
     public function material($action = "add_edit", $course_id = 0, $id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
         if ($course_id == 0)
@@ -99,14 +90,14 @@ class ManageMaterials extends Controller{
         $data["action"] = $action;
 
         $data["teaching_student"] = $_SESSION["teaching_student"];
-        $this->view->render('student/courses/add_edit_material', $data);
+        $this->view->render('admin/manageMaterials/add_edit_material', $data);
     }
 
     // delete material
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
         if ($id == 0)
@@ -122,7 +113,7 @@ class ManageMaterials extends Controller{
     public function add_edit($id = 0, $action = "create")
     {
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
         $data = [
@@ -162,14 +153,14 @@ class ManageMaterials extends Controller{
         // print_r($id);
         // print_r($action);
 
-        $this->view->render('student/courses/add_edit', $data);
+        $this->view->render('admin/manageMaterials/add_edit', $data);
     }
 
     public function delete($id = 0)
     {
 
         $this->requireLogin();
-        if ($_SESSION["teaching_student"] != 1)
+        if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
         if ($id == 0)
@@ -181,5 +172,17 @@ class ManageMaterials extends Controller{
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
-
+    public function viewMaterial($id)
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1)
+            $this->redirect();
+        $data = [
+            'title' => 'Manage Materials',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+        $data["viewMaterial"] = $this->model('readModel')->getMaterialToView($id);
+        print_r($data["viewMaterial"]);
+        $this->view->render('admin/manageMaterials/viewMaterial', $data);
+    }
 }
