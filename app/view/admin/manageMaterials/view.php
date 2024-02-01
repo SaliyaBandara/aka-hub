@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("Settings");
+$sidebar = new Sidebar("manageMaterials");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -12,57 +12,19 @@ $sidebar = new Sidebar("Settings");
 
             <!-- section header -->
             <section>
-
-                <?php if ($data["teaching_student"] == 1) { ?>
-                    <div class="form-group">
-                        <a href="../material/add_edit/<?= $data["id"] ?>/0/create" class="btn btn-primary">
-                            <i class='bx bx-plus'></i> Add Materials
-                        </a>
-                    </div>
-                <?php } ?>
-
                 <div class="section_header mb-1 flex">
                     <h3 class="title font-1-5 font-semibold flex align-center text-muted">
-                        Courses Materials for Module &nbsp;<span class="text--black"> <?= $data["course"]["name"] ?> - <?= $data["course"]["code"] ?></span>
+                        &nbsp;<span class="text--black"> <?= $data["viewMaterial"][0]["course_name"] ?> - <?= $data["viewMaterial"][0]["course_code"] ?></span>
                     </h3>
                 </div>
 
                 <?php
 
-                // Array
-                // (
-                //     [0] => Array
-                //         (
-                //             [id] => 1
-                //             [course_id] => 3
-                //             [user_id] => 1
-                //             [video_links] => [["Physical Layer",["https:\/\/youtu.be\/cYQkaql1mWc","https:\/\/youtu.be\/cYQkaql1mWc","https:\/\/youtu.be\/cYQkaql1mWc"]],["Data Link",["https:\/\/youtu.be\/cYQkaql1mWc"]]]
-                //             [reference_links] => 
-                //             [short_notes] => ["course_materials_2023110104180465418424f335d09982650016987924845467.pdf","course_materials_2023110104180965418429948a306084220016987924893044.pdf","course_materials_2023110105060665418f66ac0ce07047210016987953669908.pdf"]
-                //             [description] => Networking Stuff
-                //             [created_at] => 2023-11-01 04:27:35
-                //             [updated_at] => 2023-11-01 04:27:35
-                //         )
-
-                //     [1] => Array
-                //         (
-                //             [id] => 15
-                //             [course_id] => 3
-                //             [user_id] => 1
-                //             [video_links] => null
-                //             [reference_links] => 
-                //             [short_notes] => ["course_materials_2023110104502965418bbddb4c508982470016987944293278.pdf","course_materials_2023110104502965418bbde55fe09395210016987944299367.pdf"]
-                //             [description] => 
-                //             [created_at] => 2023-11-01 04:50:31
-                //             [updated_at] => 2023-11-01 04:50:31
-                //         )
-
-                if (is_array($data["material"])) {
-                    foreach ($data["material"] as $course_material) {
-                        $course_material = (object) $course_material;
-                        $video_links = json_decode($course_material->video_links);
-                        $short_notes = json_decode($course_material->short_notes);
-                        $reference_links = json_decode($course_material->reference_links);
+                if (isset($data["viewMaterial"][0])) {
+                    $course_material = (object) $data["viewMaterial"][0];
+                    $video_links = json_decode($course_material->video_links);
+                    $short_notes = json_decode($course_material->short_notes);
+                    $reference_links = json_decode($course_material->reference_links);
 
                 ?>
 
@@ -73,16 +35,15 @@ $sidebar = new Sidebar("Settings");
                                 </div>
                                 <div>
                                     <?php $date = new DateTime($course_material->updated_at);
-                                    // format date to 2021 November 01 04:27 AM
                                     $date = $date->format('Y F d - h:i A');
                                     echo $date; ?>
 
                                 </div>
                                 <?php
-                                if ($data["teaching_student"] == 1) {
+                                if ($data["role"] == 1) {
                                 ?>
                                     <div class="todo_item_actions flex">
-                                        <a href="<?= BASE_URL ?>/courses/material/add_edit/<?= $data["id"] ?>/<?= $course_material->id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                        <a href="<?= BASE_URL ?>/manageMaterial/material/add_edit/<?= $data["id"] ?>/<?= $course_material->id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
                                         <div class="btn delete-item" data-id="<?= $course_material->id ?>">
                                             <i class='bx bx-trash text-danger'></i>
                                         </div>
@@ -145,11 +106,11 @@ $sidebar = new Sidebar("Settings");
                         </div>
 
 
-                <?php }
-                }else{
+                <?php 
+                } else {
                     echo "<div class='font-bold'>No Course Materials Found for this module</div>";
                 }
-                 ?>
+                ?>
                 <style>
                     .material-item {
                         /* border: 1px solid var(--secondary-color-faded); */
@@ -157,7 +118,7 @@ $sidebar = new Sidebar("Settings");
                         padding: 1.5rem;
                         max-width: 600px;
                         /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                        /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); */
                     }
 
                     .material-item .links-wrapper {

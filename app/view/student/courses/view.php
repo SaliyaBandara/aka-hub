@@ -13,7 +13,7 @@ $sidebar = new Sidebar("Settings");
             <!-- section header -->
             <section>
 
-                <?php if ($data["teaching_student"] == 1) { ?>
+                <?php if (($data["teaching_student"] == 1) || ($data["student_rep"])) { ?>
                     <div class="form-group">
                         <a href="../material/add_edit/<?= $data["id"] ?>/0/create" class="btn btn-primary">
                             <i class='bx bx-plus'></i> Add Materials
@@ -79,7 +79,7 @@ $sidebar = new Sidebar("Settings");
 
                                 </div>
                                 <?php
-                                if ($data["teaching_student"] == 1) {
+                                if (($data["teaching_student"] == 1) || ($data["student_rep"]==1)) {
                                 ?>
                                     <div class="todo_item_actions flex">
                                         <a href="<?= BASE_URL ?>/courses/material/add_edit/<?= $data["id"] ?>/<?= $course_material->id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
@@ -146,10 +146,10 @@ $sidebar = new Sidebar("Settings");
 
 
                 <?php }
-                }else{
+                } else {
                     echo "<div class='font-bold'>No Course Materials Found for this module</div>";
                 }
-                 ?>
+                ?>
                 <style>
                     .material-item {
                         /* border: 1px solid var(--secondary-color-faded); */
