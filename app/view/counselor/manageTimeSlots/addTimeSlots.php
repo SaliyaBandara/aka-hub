@@ -117,11 +117,13 @@ $calendar = new Calendar();
                             <div class="content">
                                 <div class="container">
                                     <form class="form-1">
-                                        <label>Start Time</label>
-                                        <input type="time"> 
-                                        <label>End Time</label>
-                                        <input type="time"><br /><br/>  
-                                        <input type="submit" value="Create">
+                                        <div>
+                                            <div class="form-line"><label class="form-input1">Start Time :</label><input type="time"> </div>
+                                            <div class="form-line"><label class="form-input2">End Time   :</label><input type="time"><br /></div>    
+                                        </div>
+                                        <div class="submit-form">
+                                            <input type="submit" value="Create">
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -233,9 +235,10 @@ $calendar = new Calendar();
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        /* height: 100vh; */
+        /* min-height: 100vh; */
         /* z-index: +5; */
-        margin-top: -200px;
+        /* margin-top: -200px; */
     }
 
     .wrapper .card{
@@ -357,6 +360,7 @@ $calendar = new Calendar();
         transition: opacity 500ms;
         visibility: hidden;
         opacity: 0;
+        z-index: 9999;
     }
     .overlay:target{
         visibility: visible;
@@ -427,44 +431,42 @@ $calendar = new Calendar();
         letter-spacing: 3px;
     }
     .popup-form{
-        width: 40%;
+        width: 30%;
         padding: 8px;
         border-radius: 8px;
         border-style: groove;
         background-color: #fff; 
     }
-    .form1 {
-        align-items: center;
-    }
-
-    .form-1 {
+    .form-1{
         text-align: center;
     }
+   
+    .submit-form{
+        margin-top: 20px;
+    }
 
-    .form-1 input[type="time"],
-    .form-1 input[type="submit"] {
+    .form-1 input[type="time"]{
         margin: 0 auto; /* Center horizontally */
+        margin-right: 10px;
+        margin-left: -15px;
+        width: 150px;
+        padding: 5px;
+        border-radius: 8px;
+        /* border-style: groove; */
+        /* background-color: #fff; */
     }
 
     .wrapper1 h2{
         text-align: center;
     }
-</style>
-
-<style>
-    #sidebar-active {
-
-        margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
-        /* background-color: yellowgreen; */
-        width: (100vw - var(--sidebar-width-actual));
-        /* height: 50vh; */
-
-        /* border: 2px solid red; */
-
-
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        overflow: hidden;
+    .form-input1{
+        margin-right: 26px;
+    }
+    .form-input2{
+        margin-right: 50px ;
+    }
+    .form-line{
+        margin-bottom: 20px;
     }
 </style>
 
