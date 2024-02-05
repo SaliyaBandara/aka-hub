@@ -68,14 +68,7 @@ $candidateCard = new CandidateCard();
                         <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
                                 <!-- <input type="checkbox" id="type1" name="onsite" value="onsite"> -->
-                                <?php
-                                    if($userDetails["exam_notify"] === 1){
-                                        echo '<input type="checkbox" id="type1" name="onsite" value="onsite" checked>';
-                                    }
-                                    else{
-                                        echo '<input type="checkbox" id="type1" name="onsite" value="onsite" disabled>';
-                                    }
-                                ?>
+                                <input type="checkbox" id="type1" name="onsite" <?= $userDetails["exam_notify"] == 1 ? "checked" : "" ?> value="onsite">
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
