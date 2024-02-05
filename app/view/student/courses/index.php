@@ -14,7 +14,7 @@ $calendar = new Calendar();
             <!-- section header -->
             <section>
 
-                <?php if ($data["teaching_student"] == 1) { ?>
+                <?php if (($data["teaching_student"] == 1)||($data["student_rep"])) { ?>
                     <div class="mb-1 form-group">
                         <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
                             <i class='bx bx-plus'></i> Add Course
@@ -76,7 +76,7 @@ $calendar = new Calendar();
                             </div>
 
                             <?php
-                            if ($data["teaching_student"] == 1) {
+                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
                             ?>
 
                                 <div class="todo_item_actions">

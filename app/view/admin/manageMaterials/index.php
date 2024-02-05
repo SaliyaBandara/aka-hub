@@ -11,22 +11,10 @@ $sidebar = new Sidebar("manageMaterials");
     <div class="main-grid flex">
         <div class="leftManageMaterials">
             <div class="addMaterialDiv">
-                <a href="<?= BASE_URL ?>/Courses/material">
-                    <div class="buttonAddMaterials">
-                        <h4>Add Material</h4>
-                    </div>
-                </a>
+                
             </div>
             <div class="divSearchAndDisplayProducts">
-                <div class="divDisplayProductsPart">
-                    <div class="H4Holder">
-                        <h4>Display</h4>
-                    </div>
-                    <div class="noOfProductsToDisplay"></div>
-                    <div class="H4Holder">
-                        <h4>Products</h4>
-                    </div>
-                </div>
+                <div class="divDisplayProductsPart"></div>
                 <div class="divSearchPart">
                     <div class="searchBarContainor">
                         <h4>Search</h4>
@@ -88,8 +76,7 @@ $sidebar = new Sidebar("manageMaterials");
                                             <?php echo $material['student_id']; ?>
                                         </div>
                                         <div class="tableItem">
-                                            <div class="acceptButton" href="">View</div>
-                                            <div class="declineButton">Delete</div>
+                                            <div class="acceptButton"> <a href="<?= BASE_URL ?>/manageMaterials/view/<?php echo $material['material_ID']; ?>" class="btn btn-primary">View</a></div>
                                         </div>
                                     </div>
 

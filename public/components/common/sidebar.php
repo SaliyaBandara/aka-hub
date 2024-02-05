@@ -12,7 +12,7 @@ class Sidebar
             $club_rep = $_SESSION["club_rep"];
             $teaching_student = $_SESSION["teaching_student"];
 
-            $pages=[];
+            $pages = [];
             if ($role == 0) { //student
                 $studentPages = [
                     'dashboard' => ['Dashboard', 'bxs-dashboard'],
@@ -55,6 +55,7 @@ class Sidebar
                     'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
                     'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
+                    //chat needed to be added....
                 ];
 
                 $pages = array_merge($pages, $counselorPages);
@@ -62,13 +63,14 @@ class Sidebar
 
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
+                    'elections' => ['Elections', 'bxs-chat'],
                     'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
                     'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
                     'manageMaterials' => ['Materials', 'bxs-book'],
-
                 ];
                 $pages = array_merge($pages, $studentrepPages);
             }
+
             if ($club_rep == 1) { //ClubRep
                 $clubrepPages = [
                     'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],

@@ -50,6 +50,10 @@
   font-size: var(--rv-1);
 }
 
+.font-1-5 {
+  font-size: var(--rv-1-5);
+}
+
 /* utility classes */
 
 .fixed {
@@ -64,8 +68,16 @@
   pointer-events: none;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 .block {
   display: block;
+}
+
+.d-none {
+  display: none;
 }
 
 .flex {
@@ -148,6 +160,18 @@
   color: #fa5c7c !important;
 }
 
+.text-success {
+  color: #4bb543 !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-secondary {
+  color: var(--secondary-color) !important;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -173,6 +197,11 @@
   margin-right: 2rem;
 }
 
+.my-0-5 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .my-1 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -181,6 +210,10 @@
 .my-2 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.mb-0{
+  margin-bottom: 0 !important;
 }
 
 .mb-0-5 {
@@ -1334,6 +1367,10 @@ section.default__section.auth__section {
   height: auto !important;
   min-height: calc(100vh - var(--header-height) - 5rem);
   padding: 2rem;
+}
+
+.main-grid .left.w-100{
+  width: 100% !important;
 }
 
 .main-grid .right {

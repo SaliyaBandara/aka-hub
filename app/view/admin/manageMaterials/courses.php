@@ -1,7 +1,6 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
-// $header = new header();
-$sidebar = new Sidebar("courses");
+$sidebar = new Sidebar("manageMaterials");
 $calendar = new Calendar();
 ?>
 

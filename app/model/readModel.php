@@ -39,7 +39,7 @@ class readModel extends Model
     public function getUserSettings($id)
     {
         $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
-        $result = $this->db_handle->runQuery($sql,"i",[$id]);
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
     }
@@ -52,7 +52,7 @@ class readModel extends Model
 
         return false;
     }
-    
+
     public function getCourseMaterial($course_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM course_materials WHERE course_id = ?", "i", [$course_id]);
@@ -62,13 +62,25 @@ class readModel extends Model
         return false;
     }
 
-    public function getMaterials(){
-        $sql = "SELECT co.name AS course_name, co.code AS course_code, co.year, co.semester,
+    public function getMaterials()
+    {
+        $sql = "SELECT co.name AS course_name, co.code AS course_code, co.year, co.semester, cm.id As material_ID,
         u.name AS user_name, u.student_id, u.email from course_materials cm , courses co, user u where course_id = co.id AND user_id = u.id AND ?";
         $result = $this->db_handle->runQuery($sql, "i", [1]);
-        if (count($result)>0) {
+        if (count($result) > 0) {
             return $result;
         }
+        return false;
+    }
+
+    public function getMaterialToView($id)
+    {
+        $sql = "SELECT co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND ?";
+
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
         return false;
     }
 
@@ -416,6 +428,127 @@ class readModel extends Model
     }
 
     /**
+     * Elections Model
+     */
+
+    // CREATE TABLE elections (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     name VARCHAR(255) NOT NULL,
+    //     start_date DATETIME NOT NULL,
+    //     end_date DATETIME NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    public function getEmptyElection()
+    {
+
+        $empty = [
+            "user_id" => "",
+            "name" => "",
+            "start_date" => "",
+            "end_date" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "name" => [
+                "label" => "Election Name",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "start_date" => [
+                "label" => "Start Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+            "end_date" => [
+                "label" => "End Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    /**
+     * Elections Questions Model
+     */
+
+
+    // CREATE TABLE election_questions (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     question VARCHAR(255) NOT NULL,
+    //     question_type VARCHAR(255) NOT NULL,
+    //     question_options VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id)
+    // );
+
+    public function getEmptyElectionQuestion()
+    {
+
+        $empty = [
+            "election_id" => "",
+            "question" => "",
+            "question_type" => "",
+            "question_options" => ""
+        ];
+
+        $template = [
+            "election_id" => [
+                "label" => "Election",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question" => [
+                "label" => "Question",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "question_type" => [
+                "label" => "Question Type",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question_options" => [
+                "label" => "Question Options",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+
+    /**
      * Counselor Feed Model
      */
 
@@ -666,7 +799,7 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-            
+
             "title" => [
                 "label" => "Title of the post",
                 "type" => "text",
@@ -688,5 +821,4 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
 }

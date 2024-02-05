@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("Settings");
+$sidebar = new Sidebar("manageMaterials");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -12,144 +12,104 @@ $sidebar = new Sidebar("Settings");
 
             <!-- section header -->
             <section>
-
-                <?php if ($data["teaching_student"] == 1) { ?>
-                    <div class="form-group">
-                        <a href="../material/add_edit/<?= $data["id"] ?>/0/create" class="btn btn-primary">
-                            <i class='bx bx-plus'></i> Add Materials
-                        </a>
-                    </div>
-                <?php } ?>
-
                 <div class="section_header mb-1 flex">
                     <h3 class="title font-1-5 font-semibold flex align-center text-muted">
-                        Courses Materials for Module &nbsp;<span class="text--black"> <?= $data["course"]["name"] ?> - <?= $data["course"]["code"] ?></span>
+                        &nbsp;<span class="text--black"> <?= $data["viewMaterial"][0]["course_name"] ?> - <?= $data["viewMaterial"][0]["course_code"] ?></span>
                     </h3>
                 </div>
 
                 <?php
 
-                // Array
-                // (
-                //     [0] => Array
-                //         (
-                //             [id] => 1
-                //             [course_id] => 3
-                //             [user_id] => 1
-                //             [video_links] => [["Physical Layer",["https:\/\/youtu.be\/cYQkaql1mWc","https:\/\/youtu.be\/cYQkaql1mWc","https:\/\/youtu.be\/cYQkaql1mWc"]],["Data Link",["https:\/\/youtu.be\/cYQkaql1mWc"]]]
-                //             [reference_links] => 
-                //             [short_notes] => ["course_materials_2023110104180465418424f335d09982650016987924845467.pdf","course_materials_2023110104180965418429948a306084220016987924893044.pdf","course_materials_2023110105060665418f66ac0ce07047210016987953669908.pdf"]
-                //             [description] => Networking Stuff
-                //             [created_at] => 2023-11-01 04:27:35
-                //             [updated_at] => 2023-11-01 04:27:35
-                //         )
-
-                //     [1] => Array
-                //         (
-                //             [id] => 15
-                //             [course_id] => 3
-                //             [user_id] => 1
-                //             [video_links] => null
-                //             [reference_links] => 
-                //             [short_notes] => ["course_materials_2023110104502965418bbddb4c508982470016987944293278.pdf","course_materials_2023110104502965418bbde55fe09395210016987944299367.pdf"]
-                //             [description] => 
-                //             [created_at] => 2023-11-01 04:50:31
-                //             [updated_at] => 2023-11-01 04:50:31
-                //         )
-
-                if (is_array($data["material"])) {
-                    foreach ($data["material"] as $course_material) {
-                        $course_material = (object) $course_material;
-                        $video_links = json_decode($course_material->video_links);
-                        $short_notes = json_decode($course_material->short_notes);
-                        $reference_links = json_decode($course_material->reference_links);
-
+                if (isset($data["viewMaterial"][0])) {
+                    $course_material = (object) $data["viewMaterial"][0];
+                    $video_links = json_decode($course_material->video_links);
+                    $short_notes = json_decode($course_material->short_notes);
+                    $reference_links = json_decode($course_material->reference_links);
                 ?>
 
-                        <div class="material-item mb-1">
-                            <div class="desc flex justify-between align-center">
-                                <div>
-                                    <?= $course_material->description ?>
-                                </div>
-                                <div>
-                                    <?php $date = new DateTime($course_material->updated_at);
-                                    // format date to 2021 November 01 04:27 AM
-                                    $date = $date->format('Y F d - h:i A');
-                                    echo $date; ?>
+                    <div class="material-item mb-1">
+                        <div class="desc flex justify-between align-center">
+                            <div>
+                                <?= $course_material->description ?>
+                            </div>
+                            <div>
+                                <?php $date = new DateTime($course_material->updated_at);
+                                $date = $date->format('Y F d - h:i A');
+                                echo $date; ?>
 
-                                </div>
-                                <?php
-                                if ($data["teaching_student"] == 1) {
-                                ?>
-                                    <div class="todo_item_actions flex">
-                                        <a href="<?= BASE_URL ?>/courses/material/add_edit/<?= $data["id"] ?>/<?= $course_material->id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
-                                        <div class="btn delete-item" data-id="<?= $course_material->id ?>">
-                                            <i class='bx bx-trash text-danger'></i>
-                                        </div>
-                                    </div>
-
-                                <?php } ?>
                             </div>
                             <?php
-                            if (is_array($video_links)) {
-                                echo '<div class="links-wrapper mt-1"><div class="links-title">Kuppi Video Links</div>';
-                                foreach ($video_links as $video_link) {
-                                    $module_name = $video_link[0];
-                                    $links = $video_link[1];
-
+                            if ($data["role"] == 1) {
                             ?>
-                                    <div class="video_links">
-                                        <div class="module_name text--secondary mb-0-5"><?= $video_link[0] ?></div>
-                                        <div class="link-items ms-1">
-                                            <?php
-                                            foreach ($links as $link) {
-                                            ?>
-                                                <div class="link-item">
-                                                    <a href="<?= $link ?>" target="_blank" class="link">
-                                                        Open <div class="yt-logo">
-                                                            <img src="<?= ASSETS_PATH ?>img/common/youtube-logo.png" alt="">
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
+                                <div class="todo_item_actions flex">
+                                    <a href="<?= BASE_URL ?>/manageMaterials/material/add_edit/<?= $course_material->material_ID ?>/<?= $data["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                    <div class="btn delete-item" data-id="<?= $course_material->id ?>">
+                                        <i class='bx bx-trash text-danger'></i>
                                     </div>
+                                </div>
 
-                                <?php }
-                                echo "</div>";
-                            }
+                            <?php } ?>
+                        </div>
+                        <?php
+                        if (is_array($video_links)) {
+                            echo '<div class="links-wrapper mt-1"><div class="links-title">Kuppi Video Links</div>';
+                            foreach ($video_links as $video_link) {
+                                $module_name = $video_link[0];
+                                $links = $video_link[1];
 
-                            if (is_array($short_notes)) {
-                                echo '<div class="links-wrapper mt-1"><div class="links-title">Notes</div><div class="notes-wrapper">';
-                                foreach ($short_notes as $note) {
-                                    $img = ASSETS_PATH . "img/common/pdf.png";
-                                    $note = USER_PDF_PATH . $note;
-
-                                ?>
-
-                                    <div class="note-item">
-                                        <a href="<?= $note ?>" target="_blank">
-                                            <img src="<?= $img ?>" alt="" class="img">
-                                        </a>
+                        ?>
+                                <div class="video_links">
+                                    <div class="module_name text--secondary mb-0-5"><?= $video_link[0] ?></div>
+                                    <div class="link-items ms-1">
+                                        <?php
+                                        foreach ($links as $link) {
+                                        ?>
+                                            <div class="link-item">
+                                                <a href="<?= $link ?>" target="_blank" class="link">
+                                                    Open <div class="yt-logo">
+                                                        <img src="<?= ASSETS_PATH ?>img/common/youtube-logo.png" alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
+                                </div>
 
                             <?php }
-                                echo "</div>";
-                                echo "</div>";
-                            }
+                            echo "</div>";
+                        }
+
+                        if (is_array($short_notes)) {
+                            echo '<div class="links-wrapper mt-1"><div class="links-title">Notes</div><div class="notes-wrapper">';
+                            foreach ($short_notes as $note) {
+                                $img = ASSETS_PATH . "img/common/pdf.png";
+                                $note = USER_PDF_PATH . $note;
+
                             ?>
 
+                                <div class="note-item">
+                                    <a href="<?= $note ?>" target="_blank">
+                                        <img src="<?= $img ?>" alt="" class="img">
+                                    </a>
+                                </div>
 
-                        </div>
+                        <?php }
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                        ?>
 
 
-                <?php }
-                }else{
+                    </div>
+
+
+                <?php
+                } else {
                     echo "<div class='font-bold'>No Course Materials Found for this module</div>";
                 }
-                 ?>
+                ?>
                 <style>
                     .material-item {
                         /* border: 1px solid var(--secondary-color-faded); */
@@ -157,7 +117,7 @@ $sidebar = new Sidebar("Settings");
                         padding: 1.5rem;
                         max-width: 600px;
                         /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                        /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); */
                     }
 
                     .material-item .links-wrapper {
