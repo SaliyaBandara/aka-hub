@@ -428,6 +428,127 @@ class readModel extends Model
     }
 
     /**
+     * Elections Model
+     */
+
+    // CREATE TABLE elections (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     name VARCHAR(255) NOT NULL,
+    //     start_date DATETIME NOT NULL,
+    //     end_date DATETIME NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    public function getEmptyElection()
+    {
+
+        $empty = [
+            "user_id" => "",
+            "name" => "",
+            "start_date" => "",
+            "end_date" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "name" => [
+                "label" => "Election Name",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "start_date" => [
+                "label" => "Start Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+            "end_date" => [
+                "label" => "End Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    /**
+     * Elections Questions Model
+     */
+
+
+    // CREATE TABLE election_questions (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     question VARCHAR(255) NOT NULL,
+    //     question_type VARCHAR(255) NOT NULL,
+    //     question_options VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id)
+    // );
+
+    public function getEmptyElectionQuestion()
+    {
+
+        $empty = [
+            "election_id" => "",
+            "question" => "",
+            "question_type" => "",
+            "question_options" => ""
+        ];
+
+        $template = [
+            "election_id" => [
+                "label" => "Election",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question" => [
+                "label" => "Question",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "question_type" => [
+                "label" => "Question Type",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question_options" => [
+                "label" => "Question Options",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+
+    /**
      * Counselor Feed Model
      */
 
