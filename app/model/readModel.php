@@ -27,9 +27,57 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllUsers()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getUserSettings($id)
+    {
+        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+    }
+
+    public function getUser($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
     public function getCourseMaterial($course_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM course_materials WHERE course_id = ?", "i", [$course_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getMaterials()
+    {
+        $sql = "SELECT co.name AS course_name, co.code AS course_code, co.year, co.semester, cm.id As material_ID,
+        u.name AS user_name, u.student_id, u.email from course_materials cm , courses co, user u where course_id = co.id AND user_id = u.id AND ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        if (count($result) > 0) {
+            return $result;
+        }
+        return false;
+    }
+
+    public function getMaterialToView($id)
+    {
+        $sql = "SELECT co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND ?";
+
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
 
@@ -46,6 +94,25 @@ class readModel extends Model
         return false;
     }
 
+    public function getOneCounselor($id)
+    {
+        $sql = "SELECT * from user u , counselor c where user_id = u.id AND id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCounselorPosts($posted_by)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM posts WHERE type = 1 AND posted_by = ?", "i", [$posted_by]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getEvent($event_id)
     {
         $query = "
@@ -54,13 +121,13 @@ class readModel extends Model
             LEFT OUTER JOIN courses ON main_events.course_id = courses.id
             WHERE main_events.event_id = ?
         ";
-    
+
         $result = $this->db_handle->runQuery($query, "i", [$event_id]);
-    
+
         if ($result !== false && count($result) > 0) {
             return $result[0];  // Assuming you expect only one result for a given event_id
         }
-    
+
         return false;
     }
 
@@ -77,19 +144,35 @@ class readModel extends Model
             return $result;
 
         return false;
-
     }
 
-
-    // get all the posts of the counselor
-    public function getCounselorPosts()
+    public function getRequestsToApprove()
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM counselor_posts ?", "i", [1]);
-        if (count($result) > 0)
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
+        if ($result !== false) {
             return $result;
-
+        }
         return false;
     }
+
+    public function getPreviewRepresentative($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
+    // get all the posts of the counselor
+    // public function getCounselorPosts()
+    // {
+    //     $result = $this->db_handle->runQuery("SELECT * FROM posts where ?", "i", [1]);
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
 
     /**
      * Courses Model
@@ -345,6 +428,127 @@ class readModel extends Model
     }
 
     /**
+     * Elections Model
+     */
+
+    // CREATE TABLE elections (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     name VARCHAR(255) NOT NULL,
+    //     start_date DATETIME NOT NULL,
+    //     end_date DATETIME NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    public function getEmptyElection()
+    {
+
+        $empty = [
+            "user_id" => "",
+            "name" => "",
+            "start_date" => "",
+            "end_date" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "name" => [
+                "label" => "Election Name",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "start_date" => [
+                "label" => "Start Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+            "end_date" => [
+                "label" => "End Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    /**
+     * Elections Questions Model
+     */
+
+
+    // CREATE TABLE election_questions (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     question VARCHAR(255) NOT NULL,
+    //     question_type VARCHAR(255) NOT NULL,
+    //     question_options VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id)
+    // );
+
+    public function getEmptyElectionQuestion()
+    {
+
+        $empty = [
+            "election_id" => "",
+            "question" => "",
+            "question_type" => "",
+            "question_options" => ""
+        ];
+
+        $template = [
+            "election_id" => [
+                "label" => "Election",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question" => [
+                "label" => "Question",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "question_type" => [
+                "label" => "Question Type",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question_options" => [
+                "label" => "Question Options",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+
+    /**
      * Counselor Feed Model
      */
 
@@ -365,15 +569,21 @@ class readModel extends Model
 
         $empty = [
             "description" => "",
-            "image" => ""
+            "image" => "",
+            "title" => ""
         ];
 
         $template = [
-            "user_id" => [
+            "posted_by" => [
                 "label" => "User",
                 "type" => "number",
                 "validation" => "required",
                 "skip" => true
+            ],
+            "title" => [
+                "label" => "Post Title",
+                "type" => "text",
+                "validation" => ""
             ],
             "description" => [
                 "label" => "Description",
@@ -396,7 +606,7 @@ class readModel extends Model
     }
 
 
-        /**
+    /**
      * Student Profile Model
      */
 
@@ -414,17 +624,13 @@ class readModel extends Model
     //     materials_notify INT(1) DEFAULT 0,
     //     notify_duration INT(1) DEFAULT 0
     // );
-    
 
-    public function getEmptyStudentProfile()
+
+    public function getEmptyNotificationSetting()
     {
 
         $empty = [
-            "student_id" => "",
-            "email" => "",
-            "degree" => "",
-            "alt_email" => "",
-            "profile_picture" => "",
+            "user_id" => "",
             "preferred_email" => "",
             "exam_notify" => "",
             "reminder_notify" => "",
@@ -434,29 +640,7 @@ class readModel extends Model
         ];
 
         $template = [
-            "email" => [
-                "label" => "Email Address",
-                "type" => "email",
-                "validation" => "required"
-            ],
-            "degree" => [
-                "label" => "Degree",
-                "type" => "text",
-                "validation" => ""
-            ],
-            
-            "alt_email" => [
-                "label" => "Alternative Email Address",
-                "type" => "email",
-                "validation" => ""
-            ],
-            "profile_picture" => [
-                "label" => "Profile Picture",
-                "type" => "array",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "student_id" => [
+            "user_id" => [
                 "label" => "Student ID",
                 "type" => "text",
                 "validation" => "required",
@@ -501,9 +685,9 @@ class readModel extends Model
         ];
     }
 
-    
 
-        /**
+
+    /**
      * Student Profile Model
      */
 
@@ -521,8 +705,8 @@ class readModel extends Model
     //     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE RESTRICT ON UPDATE RESTRICT,
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
     // );
-    
-    
+
+
 
     public function getEmptyMainEvent()
     {
@@ -553,7 +737,7 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-            
+
             "title" => [
                 "label" => "Title of the event",
                 "type" => "text",
@@ -580,11 +764,61 @@ class readModel extends Model
         ];
     }
 
-    public function getRequestsToApprove(){
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
-        if ($result !== false) {
-            return $result;
-        }
-        return false;
+    //Counselor and Club Representative Posts
+
+    public function getEmptyPost()
+    {
+
+        $empty = [
+            "id" => "",
+            "type" => "",
+            "description" => "",
+            "image" => "",
+            "created_datetime" => "",
+            "posted_by" => "",
+            "title" => "",
+            "updatds_datetime" => "",
+        ];
+
+        $template = [
+            "type" => [
+                "label" => "Type of the post",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "image" => [
+                "label" => "Post Image",
+                "type" => "array",
+                "validation" => "",
+                "skip" => true
+            ],
+
+            "title" => [
+                "label" => "Title of the post",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+
+            "posted_by" => [
+                "label" => "Who posted the post",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
     }
 }

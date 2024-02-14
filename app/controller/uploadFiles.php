@@ -33,7 +33,7 @@ class UploadFiles extends Controller
             $newFilename = $file_prefix . "_";
             $uploadPath = "./assets/user_uploads/img/";
 
-            $allowed_prefixes = ["course_cover"];
+            $allowed_prefixes = ["course_cover", "election_cover", "election_question"];
             if (!in_array($file_prefix, $allowed_prefixes))
                 $this->errorImg401("Invalid Request");
 

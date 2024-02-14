@@ -1,7 +1,6 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
-// $header = new header();
-$sidebar = new Sidebar("courses");
+$sidebar = new Sidebar("manageMaterials");
 $calendar = new Calendar();
 ?>
 
@@ -14,7 +13,7 @@ $calendar = new Calendar();
             <!-- section header -->
             <section>
 
-                <?php if (($data["teaching_student"] == 1)||($data["student_rep"])) { ?>
+                <?php if ($data["teaching_student"] == 1) { ?>
                     <div class="mb-1 form-group">
                         <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
                             <i class='bx bx-plus'></i> Add Course
@@ -76,7 +75,7 @@ $calendar = new Calendar();
                             </div>
 
                             <?php
-                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
+                            if ($data["teaching_student"] == 1) {
                             ?>
 
                                 <div class="todo_item_actions">

@@ -2,7 +2,7 @@
 
 class CounselorView extends Controller
 {
-    public function index()
+    public function index($id = 0)
     {
         $this->requireLogin();
 
@@ -11,6 +11,12 @@ class CounselorView extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+
+        
+        // if (!$data["counselor"])
+        //     $this->redirect();
+        $data["counselor"] = $this->model('readModel')->getOneCounselor($id);
+        $data["posts"] = $this->model('readModel')->getCounselorPosts($id);
         $this->view->render('student/counselor/view', $data);
     }
 }

@@ -16,8 +16,7 @@ class CounselorFeed extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        // $data["posts"] = $this->model('readModel')->getAll("counselor_posts");
-        // print_r($data["posts"]);
+        $data["posts"] = $this->model('readModel')->getAll("posts");
 
         $this->view->render('counselor/counselorFeed/index', $data);
     }
@@ -40,15 +39,15 @@ class CounselorFeed extends Controller
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
 
-            $values["user_id"] = $_SESSION["user_id"];
-            $values["image"] = $values["cover_img"];
+            $values["user_id"] = $_SESSION["user_role"];
+            $values["image"] = $values["image"];
 
             $this->validate_template($values, $data["post_template"]);
 
             if ($id == 0)
-                $result = $this->model('createModel')->insert_db("counselor_posts", $values, $data["post_template"]);
+                $result = $this->model('createModel')->insert_db("posts", $values, $data["post_template"]);
             else
-                $result = $this->model('updateModel')->update_one("counselor_posts", $values, $data["post_template"], "id", $id, "i");
+                $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
 
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
@@ -60,7 +59,7 @@ class CounselorFeed extends Controller
         // $data["action"] = $action;
 
         if ($id != 0) {
-            $data["post"] = $this->model('readModel')->getOne("counselor_posts", $id);
+            $data["post"] = $this->model('readModel')->getOne("posts", $id);
             if (!$data["post"])
                 $this->redirect();
         }
@@ -82,7 +81,7 @@ class CounselorFeed extends Controller
             die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
 
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
-        $result = $this->model('deleteModel')->deleteOne("counselor_posts", $id);
+        $result = $this->model('deleteModel')->deleteOne("posts", $id);
 
         if ($result)
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));

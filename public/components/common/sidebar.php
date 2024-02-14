@@ -6,65 +6,86 @@ class Sidebar
     public function __construct($active_page = null, $role = 0)
     {
 
-        if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true)
+        if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
             $role = $_SESSION["user_role"];
+          
+            $student_rep = $_SESSION["student_rep"];
+            $club_rep = $_SESSION["club_rep"];
+            $teaching_student = $_SESSION["teaching_student"];
 
-        if ($role == 0) { //student
-            $pages = [
-                'dashboard' => ['Dashboard', 'bxs-dashboard'],
-                'courses' => ['Courses', 'bxs-book'],
-                'chat' => ['Chat', 'bxs-chat'],
-                'electionDashboard' => ['Elections', 'bxs-check-square'],
-                'studentProfile' => ['Settings', 'bxs-cog'],
-            ];
-        } else if ($role == 1) { //admin
-            $pages = [
-                'adminpanel' => ['Dashboard', 'bxs-dashboard'],
-                'approveRepresentatives' => ['Approvals', 'bxs-home'],
-                'existingCounselors' => ['Counselor Acc', 'bx-body'],
-                'viewlogs' => ['User Logs', 'bxs-dashboard'],
-                'manageMaterials' => ['Materials', 'bxs-book'],
-                'electionsAndPolls' => ['Elections & Polls', 'bxs-pie-chart-alt-2'],
-                'feedsSelection' => ['Feeds', 'bxs-dock-left'],
-                'forum' => ['Forum', 'bxs-cog'],
-                'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
-            ];
-        } else if ($role == 3) { //superadmin
-            $pages = [
-                'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
-                'adminAccount' => ['Admin Account', 'bxs-home'],
-                'commonProfile' => ['Admin Profile', 'bxs-home'],
-            ];
-        } else if ($role == 4) { //student-rep
-            $pages = [
-                'dashboard' => ['Dashboard', 'bxs-dashboard'],
-                'courses' => ['Courses', 'bxs-book'],
-                'chat' => ['Chat', 'bxs-chat'],
-                'electionsAndPolls' => ['Elections & Polls', 'bxs-chat'],
-                'commonProfile' => ['Settings', 'bxs-cog'],
-                'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
-                'manageMaterials' => ['Materials', 'bxs-book'],
+            $pages = [];
+            if ($role == 0) { //student
+                $studentPages = [
+                    'dashboard' => ['Dashboard', 'bxs-dashboard'],
+                    'courses' => ['Courses', 'bxs-book'],
+                    'chat' => ['Forum', 'bxs-chat'],
+                    'electionDashboard' => ['Elections', 'bxs-check-square'],
+                    'studentProfile' => ['Settings', 'bxs-cog'],
+                ];
+                $pages = array_merge($pages, $studentPages);
+            }
 
-            ];
-        } else if ($role == 5) { //counselor
-            $pages = [
-                'counselorPanel' => ['Counselor Panel', 'bxs-home'],
-                'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
-                'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
-                'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
-                'counselorChat' => ['Messages', 'bx bxs-chat'],
-                'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
-            ];
-        } else if ($role == 6) { //ClubRep
-            $pages = [
-                'dashboard' => ['Dashboard', 'bxs-dashboard'],
-                'courses' => ['Courses', 'bxs-book'],
-                'chat' => ['Chat', 'bxs-chat'],
-                'electionsAndPolls' => ['Elections & Polls', 'bxs-chat'],
-                'commonProfile' => ['Settings', 'bxs-cog'],
-                'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
-                'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
-            ];
+            if ($role == 1) { //admin
+                $adminPages = [
+                    'adminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    'approveRepresentatives' => ['Approvals', 'bxs-home'],
+                    'existingCounselors' => ['Counselor Acc', 'bx-body'],
+                    'viewlogs' => ['User Logs', 'bxs-dashboard'],
+                    'manageMaterials' => ['Manage Materials', 'bxs-book'],
+                    'electionsAndPolls' => ['Manage Elections', 'bxs-pie-chart-alt-2'],
+                    'feedsSelection' => ['Feeds', 'bxs-dock-left'],
+                    'forum' => ['Forum', 'bxs-cog'],
+                    'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
+                ];
+                $pages = array_merge($pages, $adminPages);
+            }
+
+            if ($role == 3) { //superadmin
+                $superAdminPages = [
+                    'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    'adminAccount' => ['Admin Account', 'bxs-home'],
+                    'commonProfile' => ['Admin Profile', 'bxs-home'],
+                ];
+                $pages = array_merge($pages, $superAdminPages);
+            }
+
+            if ($role == 5) { //counselor
+                $counselorPages = [
+                    'counselorPanel' => ['Counselor Panel', 'bxs-home'],
+                    'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
+                    'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
+                    'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
+                    'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
+                    //chat needed to be added....
+                ];
+
+                $pages = array_merge($pages, $counselorPages);
+            }
+
+            if ($student_rep == 1) { //student-rep
+                $studentrepPages = [
+                    'elections' => ['Elections', 'bxs-chat'],
+                    'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
+                    'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
+                    'manageMaterials' => ['Materials', 'bxs-book'],
+                ];
+                $pages = array_merge($pages, $studentrepPages);
+            }
+
+            if ($club_rep == 1) { //ClubRep
+                $clubrepPages = [
+                    'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
+                    'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
+                    'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
+                ];
+                $pages = array_merge($pages, $clubrepPages);
+            }
+            if ($teaching_student == 1) { //teaching student
+                $teachingStudentPages = [
+                    'manageMaterials' => ['Materials', 'bxs-book'],
+                ];
+                $pages = array_merge($pages, $teachingStudentPages);
+            }
         }
 
 ?>
@@ -106,7 +127,7 @@ class Sidebar
 
             <div class="fixed__bottom">
                 Do you need counselor support?
-                Click <a href= "<?= BASE_URL ?>/existingCounselors">here</a>
+                Click <a href="<?= BASE_URL ?>/existingCounselors">here</a>
                 to talk with a counselor.
             </div>
 

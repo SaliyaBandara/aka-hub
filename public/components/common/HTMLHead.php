@@ -52,6 +52,8 @@ class HTMLHead
             <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
             <link href="<?= BASE_URL ?>/public/assets/libs/@fancyapps/fancybox/dist/jquery.fancybox.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
+            <link href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/tables.css">
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/normalize.css">
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/common.css">
             <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/main.css?ver=3.0">

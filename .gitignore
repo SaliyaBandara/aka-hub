@@ -21,3 +21,6 @@ secret.php
 
 !/public/assets/user_uploads/img/.gitkeep
 !/public/assets/user_uploads/pdf/.gitkeep
+/app/Config/secret.php
+/app/Config/db.php
+# /app/Config/global.php
