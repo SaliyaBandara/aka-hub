@@ -8,6 +8,7 @@ class Sidebar
 
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
             $role = $_SESSION["user_role"];
+          
             $student_rep = $_SESSION["student_rep"];
             $club_rep = $_SESSION["club_rep"];
             $teaching_student = $_SESSION["teaching_student"];
@@ -51,7 +52,7 @@ class Sidebar
             if ($role == 5) { //counselor
                 $counselorPages = [
                     'counselorPanel' => ['Counselor Panel', 'bxs-home'],
-                    'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
+                    'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
                     'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
                     'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
