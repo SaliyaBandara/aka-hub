@@ -55,8 +55,8 @@ class Sidebar
                     'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
                     'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
                     'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
+                    'counselorChat' => ['Counselor Chat', 'bxs-chat'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
-                    //chat needed to be added....
                 ];
 
                 $pages = array_merge($pages, $counselorPages);
