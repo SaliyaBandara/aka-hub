@@ -49,9 +49,10 @@ class Sidebar
         } else if ($role == 5) { //counselor
             $pages = [
                 'counselorPanel' => ['Counselor Panel', 'bxs-home'],
-                'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
+                'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
                 'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
                 'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
+                'counselorChat' => ['Messages', 'bx bxs-chat'],
                 'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
             ];
         } else if ($role == 6) { //ClubRep

@@ -31,71 +31,94 @@ $calendar = new Calendar();
 
             <!-- ===VIRAJITH=== -->
 
-            <div class="wrapper">
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
+                
+
+
+            <?php
+                    foreach ($data["reservation_requests"] as $reservation_request) {
+                    $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
+            ?>
+                <div class="wrapper">
+                    
+                            <div class="card" >
+                                <div class="content">
+                                    <div class="img"><img src="<?= $img_src ?>"></div>
+                                    <div class="details">
+                                        <span class="name"><?= $reservation_request["name"] ?></span>
+                                        <p><?= $reservation_request["year"] ?> year Undergraduate</p>
+                                    </div>
+                                </div>
+                                <a href="#divone">View</a>
+                            </div>
+                        </div> 
+                    <!-- <div class="card" >
+                        <div class="content">
+                            <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
+                            <div class="details">
+                                <span class="name">Virajith Dissanayaka</span>
+                                <p>2nd year Undergraduate</p>
+                            </div>
                         </div>
+                        <a href="#divone">View</a>
                     </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
+                    <div class="card" >
+                        <div class="content">
+                            <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
+                            <div class="details">
+                                <span class="name">Virajith Dissanayaka</span>
+                                <p>2nd year Undergraduate</p>
+                            </div>
                         </div>
+                        <a href="#divone">View</a>
                     </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
+                    <div class="card" >
+                        <div class="content">
+                            <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
+                            <div class="details">
+                                <span class="name">Virajith Dissanayaka</span>
+                                <p>2nd year Undergraduate</p>
+                            </div>
                         </div>
+                        <a href="#divone">View</a>
                     </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
+                    <div class="card" >
+                        <div class="content">
+                            <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
+                            <div class="details">
+                                <span class="name">Virajith Dissanayaka</span>
+                                <p>2nd year Undergraduate</p>
+                            </div>
                         </div>
+                        <a href="#divone">View</a>
                     </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
+                    <div class="card" >
+                        <div class="content">
+                            <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
+                            <div class="details">
+                                <span class="name">Virajith Dissanayaka</span>
+                                <p>2nd year Undergraduate</p>
+                            </div>
                         </div>
-                    </div>
-                    <a href="#divone">View</a>
-                </div>
+                        <a href="#divone">View</a>
+                    </div> -->
+            <?php } ?>       
             </div>
             <div class="new">
                 <div class="overlay" id="divone">
                     <div class="wrapper1 popup-form">
-                        <h2>Create Custom  Time  Slot</h2>
+                        <h2>Reservation Details</h2>
                         <a href="" class="close">&times;</a>
                         <div class="content">
                             <div class="container">
                                 <form class="form-1">
-                                    <label>Start Time</label>
-                                    <input type="time"> 
-                                    <label>End Time</label>
-                                    <input type="time"><br /><br/>  
-                                    <input type="submit" value="Create">
+                                    <label>Name:</label>
+                                    <label>Virajith Dissanayaka</label><br/>
+                                    
+                                    <label>Year:</label>
+                                    <label>2nd year</label><br/>
+                                    
+                                    <input type="submit" value="Accept">
+                                    <input type="submit" value="Decline">
                                 </form>
                             </div>
                         </div>
@@ -434,6 +457,7 @@ $calendar = new Calendar();
         transition: opacity 500ms;
         visibility: hidden;
         opacity: 0;
+        z-index: 9999;
     }
     .overlay:target{
         visibility: visible;
@@ -448,6 +472,7 @@ $calendar = new Calendar();
         position: relative;
         transition: all 5s ease-in-out;
         margin-top: 300px;
+        /* z-index: 9999; */
     }
     .wrapper1 h2{
         margin-top: 0;

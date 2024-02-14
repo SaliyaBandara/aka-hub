@@ -10,6 +10,7 @@ class ReservationRequests extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["reservation_requests"] = $this->model('readModel')->getAll("reservation_requests");
         $this->view->render('counselor/reservationrequests/index', $data);
     }
 
