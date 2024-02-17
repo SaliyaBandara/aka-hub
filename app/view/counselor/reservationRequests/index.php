@@ -39,17 +39,17 @@ $calendar = new Calendar();
                     $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
             ?>
                 <div class="wrapper">
-                            <div class="card" >
-                                <div class="content">
-                                    <div class="img"><img src="<?= $img_src ?>"></div>
-                                    <div class="details">
-                                        <span class="name"><?= $reservation_request["name"] ?></span>
-                                        <p><?= $reservation_request["year"] ?> year Undergraduate</p>
-                                    </div>
-                                </div>
-                                <a href="#divone">View</a>
+                    <div class="card" >
+                        <div class="content">
+                            <div class="img"><img src="<?= $img_src ?>"></div>
+                            <div class="details">
+                                <span class="name"><?= $reservation_request["name"] ?></span>
+                                <p><?= $reservation_request["year"] ?> year Undergraduate</p>
                             </div>
-                        </div> 
+                        </div>
+                        <a href="#divone">View</a>
+                    </div>
+                </div> 
             <?php } ?>       
             </div>
             <div class="new">

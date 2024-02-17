@@ -11,27 +11,7 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-            <!-- <div class="threeCardDiv">
-                <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
-                </div>
-                <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
-                </div>
-                <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        8 Total Requests in this week
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div> -->
-
+            
              <!-- ===VIRAJITH=== -->
 
             <div class="main-div">
@@ -45,70 +25,87 @@ $calendar = new Calendar();
                 <div class="custom-button-div">
                     <a href="#divone" class="button-custom">Create a Custom time slot</a>
                 </div>
-                
-               
-                <div class="wrapper">    
-                    <div class="card card-not-added" >
-                            <div class="content">
-                                <div class="details">
-                                    <i class='bx bxs-time'></i>
-                                    <span class="name">8am - 10am</span>
+
+                <div class="wrapper">
+                    <?php
+                            foreach ($data["timeslots"] as $timeslot) {
+                            // $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
+                    ?>
+                    
+                        <div class="card card-not-added" >
+                                <div class="content">
+                                    <div class="details">
+                                        <i class='bx bxs-time'></i>
+                                        <span class="name"><?= date("H:i", strtotime($timeslot["start_time"])) ?> to <?= date("H:i", strtotime($timeslot["end_time"])) ?></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons">
-                                <a href="google.com" class="button-add">Add</a>
-                                <a href="google.com" class="button-delete">Delete</a>
-                            </div>   
-                    </div>
-                    <div class="card card-added" >
-                            <div class="content">
-                                <div class="details">
-                                    <i class='bx bxs-time'></i>
-                                    <span class="name">10am - 12pm</span>
+                                <div class="buttons">
+                                    <a href="#" class="button-add">Add</a>
+                                    <a href="#" class="button-delete">Delete</a>
+                                </div>   
+                        </div>    
+                        <!-- <div class="card card-not-added" >
+                                <div class="content">
+                                    <div class="details">
+                                        <i class='bx bxs-time'></i>
+                                        <span class="name">8am - 10am</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons">
-                                <a href="google.com" class="button-remove">Remove</a>
-                                <a href="google.com" class="button-delete">Delete</a>
-                            </div>   
-                    </div>
-                    <div class="card card-not-added" >
-                            <div class="content">
-                                <div class="details">
-                                    <i class='bx bxs-time'></i>
-                                    <span class="name">12pm - 01pm</span>
+                                <div class="buttons">
+                                    <a href="google.com" class="button-add">Add</a>
+                                    <a href="google.com" class="button-delete">Delete</a>
+                                </div>   
+                        </div>
+                        <div class="card card-added" >
+                                <div class="content">
+                                    <div class="details">
+                                        <i class='bx bxs-time'></i>
+                                        <span class="name">10am - 12pm</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons">
-                                <a href="google.com" class="button-add">Add</a>
-                                <a href="google.com" class="button-delete">Delete</a>
-                            </div>   
-                    </div>
-                    <div class="card card-not-added" >
-                            <div class="content">
-                                <div class="details">
-                                    <i class='bx bxs-time'></i>
-                                    <span class="name">01pm - 03pm</span>
+                                <div class="buttons">
+                                    <a href="google.com" class="button-remove">Remove</a>
+                                    <a href="google.com" class="button-delete">Delete</a>
+                                </div>   
+                        </div>
+                        <div class="card card-not-added" >
+                                <div class="content">
+                                    <div class="details">
+                                        <i class='bx bxs-time'></i>
+                                        <span class="name">12pm - 01pm</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons">
-                                <a href="google.com" class="button-add">Add</a>
-                                <a href="google.com" class="button-delete">Delete</a>
-                            </div>   
-                    </div>
-                    <div class="card card-not-added" >
-                            <div class="content">
-                                <div class="details">
-                                    <i class='bx bxs-time'></i>
-                                    <span class="name">03pm - 05pm</span>
+                                <div class="buttons">
+                                    <a href="google.com" class="button-add">Add</a>
+                                    <a href="google.com" class="button-delete">Delete</a>
+                                </div>   
+                        </div>
+                        <div class="card card-not-added" >
+                                <div class="content">
+                                    <div class="details">
+                                        <i class='bx bxs-time'></i>
+                                        <span class="name">01pm - 03pm</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons">
-                                <a href="google.com" class="button-add">Add</a>
-                                <a href="google.com" class="button-delete">Delete</a>
-                            </div>   
-                    </div>
-                </div>
+                                <div class="buttons">
+                                    <a href="google.com" class="button-add">Add</a>
+                                    <a href="google.com" class="button-delete">Delete</a>
+                                </div>   
+                        </div>
+                        <div class="card card-not-added" >
+                                <div class="content">
+                                    <div class="details">
+                                        <i class='bx bxs-time'></i>
+                                        <span class="name">03pm - 05pm</span>
+                                    </div>
+                                </div>
+                                <div class="buttons">
+                                    <a href="google.com" class="button-add">Add</a>
+                                    <a href="google.com" class="button-delete">Delete</a>
+                                </div>   
+                        </div> -->
+                    <?php } ?>
+                </div> 
                 <div class="new">
                     <div class="overlay" id="divone">
                         <div class="wrapper1 popup-form">
@@ -131,10 +128,11 @@ $calendar = new Calendar();
                     </div>
                 </div>
             </div> 
+               
         </div>
-        <div class="right">
+        <!-- <div class="right">
             
-        </div>
+        </div> -->
 
 </div>
         
