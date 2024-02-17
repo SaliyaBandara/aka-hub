@@ -17,7 +17,9 @@ class ManageTimeSlots extends Controller
             'title' => 'Manage Time Slots',
             'message' => 'Welcome to Aka Hub!'
         ];
-
+        
+        $data["timeslots"] = $this->model('readModel')->getAll("timeslots");
+        // $this->view->render('counselor/reservationrequests/index', $data);
         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
     }
 }
