@@ -6,7 +6,7 @@ class CounselorChat extends Controller
     {
         $this->requireLogin();
         $data = [
-            'title' => 'CounselorPanel',
+            'title' => 'CounselorChat',
             'message' => 'Welcome to Aka Hub!'
         ];
 

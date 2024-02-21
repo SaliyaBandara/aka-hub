@@ -19,7 +19,7 @@ $calendar = new Calendar();
                     <h1>Manage Time Slots</h1>
                 </div>
                 <div class="date-range">
-                    <p class="p2">From<input type="date"> to <input type="date"><a href="google.com" class="button-select">Show</a></p>
+                    <p class="p2">From<input type="date"> to <input type="date"><a href="#" class="button-select">Show</a></p>
                     <p class="p1">Please add your available time slots here</p>
                 </div>
                 <div class="custom-button-div">
@@ -42,7 +42,7 @@ $calendar = new Calendar();
                                 <div class="buttons">
                                     <a href="#" class="button-add">Add</a>
                                     <a href="#" class="button-delete">Delete</a>
-                                </div>   
+                                </div>      
                         </div>    
                         <!-- <div class="card card-not-added" >
                                 <div class="content">
@@ -141,6 +141,9 @@ $calendar = new Calendar();
 
 
 <style>
+    .one{
+
+    }
     .main-grid .left {
         width: 75%;
         height: 150vh;
@@ -225,9 +228,6 @@ $calendar = new Calendar();
 </style>
 
 <style>
-    .main-div{
-        
-    }
     .wrapper{
         display: flex;
         flex-direction: column;

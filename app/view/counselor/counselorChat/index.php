@@ -28,7 +28,183 @@ $calendar = new Calendar();
             </div> -->
 
             <!-- ===VIRAJITH=== -->
-            <div class="wrapper">
+
+            
+            <div class="main-container">
+                <div class="wrapper wrapper-user">
+                    <section class="users">
+                        <!-- <div class="header">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>Active Now</p>
+                                    </div>
+                                </div>
+                        </div> -->
+                        <div class="search">
+                            <span class="text">Select an user to start chat</span>
+                            <input type="text" placeholder="Enter name to search...">
+                            <button><i class='bx bx-search-alt-2' ></i></button>
+                        </div>
+                        <div class="users-list">
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                        </div>
+                    </section>
+                    
+                </div>
+                <div class="wrapper wrapper-chat">
+                    <section class="chat-area">
+                        <header>
+                            <a href="#" class="back-icon"><i class="fas fa-arrow-left"></i></a>
+                            <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                            <div class="details">
+                                <span>Virajith Dissanayaka</span>
+                                <p>Active Now</p>
+                            </div>
+                        </header>
+                        <div class="chat-box">
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- <div class="wrapper">
                 <section class="users">
                     <header>
                         <div class="content">
@@ -58,11 +234,9 @@ $calendar = new Calendar();
                         </a>
                     </div>
                 </section>
-            </div>
-            
-            
-            
+            </div> --> 
         </div>
+        
         <div class="right">
             <!-- <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
@@ -175,24 +349,142 @@ $calendar = new Calendar();
         }
     </style>
     <style>
-        .wrapper{
-            background: #fff;
-            width: 650px;
-            border-radius: 16px;
-            box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
-                        0 32px 64px -48px rgba(0, 0, 0, 0.5);
-            z-index: 10000;            
+        .main-container{
+            display: flex;
+            flex-direction: row;
         }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f7f7f7;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: row; 
+            background: #fff;
+            /* width: 450px !important; */
+            border-radius: 16px;
+            box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+                        0 32px 64px -48px rgba(0,0,0,0.5);
+        }
+        .wrapper-user{
+            width: 35%;
+        }
+        .wrapper-chat{
+            width: 50%;
+        }
+
+        /* SignUp form CSS code */
+        .form{
+            padding: 25px 30px;
+        }
+        .form header{
+            font-size: 25px;
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .form form{
+            margin: 20px 0;
+        }
+        .form form .error-txt{
+            color: #721c24;
+            background: #f8d7da;
+            padding: 8px 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #f5c6cb;
+        }
+        .form form .name-details{
+            display: flex;
+        }
+        form .name-details .field:first-child{
+            margin-right: 10px;
+        }
+        form .name-details .field:last-child{
+            margin-left: 10px;
+        }
+        .form form .field{
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .form form .field label{
+            margin-bottom: 2px;
+        }
+        .form form .field input{
+            outline: none;
+        }
+        .form form .input input{
+            height: 40px;
+            width: 100%;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .form form .image input{
+            font-size: 17px;
+        }
+        .form form .button input{
+            margin-top: 13px;
+            height: 45px;
+            border: none;
+            font-size: 17px;
+            font-weight: 400;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form form .field i{
+            position: absolute;
+            right: 15px;
+            color: #ccc;
+            top: 70%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .form .link{
+            margin: 10px 0;
+            text-align: center;
+            font-size: 17px;
+        }
+        .form .link a{
+            color: #333;
+        }
+        .form .link a:hover{
+            text-decoration: underline;
+        }
+
         /* Users area CSS */
         .users{
             padding: 25px 30px;
         }
-        .users header,
+        .users .header{
+            display: flex;
+            align-items: center;
+            padding-bottom: 20px;
+            justify-content: space-between;
+            text-decoration: none;
+            border-bottom: 1px solid #e6e6e6;
+        }
         .users-list a{
             display: flex;
             align-items: center;
             padding-bottom: 20px;
             justify-content: space-between;
+            text-decoration: none;
             border-bottom: 1px solid #e6e6e6;
         }
         .wrapper img{
@@ -203,7 +495,7 @@ $calendar = new Calendar();
             display: flex;
             align-items: center;
         }
-        .users header .content img{
+        .users .header .content img{
             height:50px;
             width:50px;
         }
@@ -215,7 +507,7 @@ $calendar = new Calendar();
             font-size: 18px;
             font-weight: 500;
         }
-        .users header .logout{
+        .users .header .logout{
             color:#fff;
             font-size: 17px;
             padding: 7px 15px;
@@ -262,11 +554,103 @@ $calendar = new Calendar();
             border-radius: 0 5px 5px 0;
         }
         .users-list{
-
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        :is(.users-list, .chat-box)::-webkit-scrollbar{
+            width: 0px;
+        }
+        .users-list a{
+            margin-bottom: 10px;
+            page-break-after: 10px;
+            padding-right: 15px;
+            border-bottom-color: #f1f1f1;
+        }
+        .users-list a:last-child{
+            border: none;
+            margin-bottom: 0px;
         }
         .users-list a .content img{
             height: 40px;
             width: 40px;
+        }
+        .users-list a .content p{
+            color: #67676a;
+        }
+        .users-list a .status-dot{
+            font-size: 12px;
+            color: #468669;
+            margin-left: 100px;
+        }
+        .users-list a .status-dot.offline{
+            color: #ccc;
+        }
+
+        /* Chat area CSS part */
+        .chat-area header {
+            display: flex;
+            align-items: center;
+            padding: 18px 30px;
+        }
+        .chat-area header .back-icon{
+            font-size: 18px;
+            color: #333;
+        }
+        .chat-area header img{
+            height: 45px;
+            width: 45px;
+            margin: 0 15px;
+        }
+        .chat-area header span{
+            font-size: 17px;
+            font-weight: 500;
+        }
+        .chat-box{
+            height: 600px;
+            overflow-y: auto;
+            background: #f7f7f7;
+            padding: 10px 30px 20px 30px;
+            box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
+                        inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
+        }
+        .chat-box .chat{
+            margin: 15px 0;
+        }
+        .chat-box .chat p{
+            word-wrap: break-word;
+            padding: 8px 16px;
+            box-shadow:  0 0 32px rgb(0 0 0 / 8%),
+                        0 16px 16px -16px rgb(0 0 0 / 10%);
+        }
+        .chat-box .outgoing{
+            display: flex;
+        }
+        .outgoing .details{
+            margin-left: auto;
+            max-width: calc(100% - 130px);
+        }
+        .outgoing .details p{
+            background: #333;
+            color: #fff;  
+            border-radius: 18px 18px 0 18px;
+        }
+        .chat-box .incoming{
+            display: flex;
+            align-items: flex-end;
+        }
+        .chat-box .incoming img{
+            height: 35px;
+            width: 35px;
+        }
+        .incoming .details{
+            margin-left: 10px;
+            margin-right: auto;
+            max-width: calc(100% - 130px);
+        }
+        .incoming .details p{
+            color: #333;
+            background: #fff;
+            border-radius: 18px 18px 18px 0;
         }
     </style>
 
