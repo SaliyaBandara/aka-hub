@@ -165,7 +165,7 @@ $calendar = new Calendar();
                 <div class=" wrapper-chat">
                     <section class="chat-area">
                         <header>
-                            <a href="#" class="back-icon"><i class="fas fa-arrow-left"></i></a>
+                            <!-- <a href="#" class="back-icon"><i class="fas fa-arrow-left"></i></a> -->
                             <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
                             <div class="details">
                                 <span>Virajith Dissanayaka</span>
@@ -251,6 +251,10 @@ $calendar = new Calendar();
                                 </div>
                             </div>
                         </div>
+                        <form action="#" class="typing-area">
+                            <input type="text" placeholder="Type a message here...">
+                            <button><i class='bx bxl-telegram'></i></button>
+                        </form>
                     </section>
                 </div>
             </div>
@@ -373,8 +377,10 @@ $calendar = new Calendar();
             display: flex;
             flex-direction: row; 
             background: #fff;
-            width: 100%;
+            width: 85%;
+            /* height: 199px ; */
             border-radius: 16px;
+            margin-left: 100px;
             box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
                         0 32px 64px -48px rgba(0,0,0,0.5);
         }
@@ -401,10 +407,10 @@ $calendar = new Calendar();
                         0 32px 64px -48px rgba(0,0,0,0.5);
         } */
         .wrapper-user{
-            width: 45%;
+            width: 50%;
         }
         .wrapper-chat{
-            width: 65%;
+            width: 60%;
         }
 
         /* SignUp form CSS code */
@@ -533,6 +539,11 @@ $calendar = new Calendar();
             font-size: 18px;
             font-weight: 500;
         }
+        :is(.users, .users-list) .details p{
+            font-size: 15px;
+            color: #666;
+            margin-top: 3px;
+        }
         .users .header .logout{
             color:#fff;
             font-size: 17px;
@@ -580,7 +591,7 @@ $calendar = new Calendar();
             border-radius: 0 5px 5px 0;
         }
         .users-list{
-            max-height: 550px;
+            max-height: 580px;
             overflow-y: auto;
         }
         :is(.users-list, .chat-box)::-webkit-scrollbar{
@@ -608,7 +619,7 @@ $calendar = new Calendar();
         .users-list a .status-dot{
             font-size: 12px;
             color: #468669;
-            margin-left: 100px;
+            margin-left: 50px;
         }
         .users-list a .status-dot.offline{
             color: #ccc;
@@ -619,6 +630,7 @@ $calendar = new Calendar();
             display: flex;
             align-items: center;
             padding: 18px 30px;
+            margin-left: -20px;
         }
         .chat-area header .back-icon{
             font-size: 18px;
@@ -634,9 +646,9 @@ $calendar = new Calendar();
             font-weight: 500;
         }
         .chat-box{
-            height: 600px;
+            height: 550px;
             overflow-y: auto;
-            background: #f7f7f7;
+            background: #f0f0f0;
             padding: 10px 30px 20px 30px;
             box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
                         inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
@@ -679,6 +691,30 @@ $calendar = new Calendar();
             color: #333;
             background: #fff;
             border-radius: 18px 18px 18px 0;
+        }
+        .chat-area .typing-area{
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .typing-area input{
+            height: 45px;
+            width: calc(100% - 58px);
+            font-size: 17px;
+            border: 1px solid #ccc;
+            padding: 0 13px;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        .typing-area button{
+            width: 55px;
+            border: none;
+            outline: none;
+            background: #333;
+            color: #fff;
+            font-size: 19px;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0 ;
         }
     </style>
 
