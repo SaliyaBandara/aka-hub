@@ -29,9 +29,9 @@ $calendar = new Calendar();
 
             <!-- ===VIRAJITH=== -->
 
-            
+
             <div class="main-container">
-                <div class="wrapper wrapper-user">
+                <div class="wrapper-user">
                     <section class="users">
                         <!-- <div class="header">
                                 <div class="content">
@@ -108,11 +108,61 @@ $calendar = new Calendar();
                                     <div class="status-dot"><i class='bx bxs-circle'></i></div>
                                 </div>
                             </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
                         </div>
                     </section>
                     
                 </div>
-                <div class="wrapper wrapper-chat">
+                <div class=" wrapper-chat">
                     <section class="chat-area">
                         <header>
                             <a href="#" class="back-icon"><i class="fas fa-arrow-left"></i></a>
@@ -204,43 +254,12 @@ $calendar = new Calendar();
                     </section>
                 </div>
             </div>
-            <!-- <div class="wrapper">
-                <section class="users">
-                    <header>
-                        <div class="content">
-                            <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="">
-                            <div class="details">
-                                <span>Virajith Dissanayaka</span>
-                                <p>Active now</p>
-                            </div>
-                        </div>
-                        <a href="#" class="logout">Logout</a>
-                    </header>
-                    <div class="search">
-                        <span class="text">Select an user to start chat</span>
-                        <input type="text" placeholder="Enter name to search...">
-                        <button><i class='bx bx-search-alt-2'></i></button>
-                    </div>
-                    <div class="users-list">
-                        <a href="#">
-                            <div class="content">
-                                <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="">
-                                <div class="details">
-                                    <span>Virajith Dissanayaka</span>
-                                    <p>This is test message</p>
-                                </div>
-                            </div>
-                            <div class="status-dot"><i class="fas fa-circle"></i></div>
-                        </a>
-                    </div>
-                </section>
-            </div> --> 
         </div>
         
         <div class="right">
-            <!-- <div class="calendarContainor">
+            <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
-            </div> -->
+            </div>
         </div>
     </div>
 
@@ -345,13 +364,19 @@ $calendar = new Calendar();
 
         .sub-container{
             display: flex;
-            flex-direction: row; 
+            flex-direction: row;
+            background: #fff; 
         }
     </style>
     <style>
         .main-container{
             display: flex;
-            flex-direction: row;
+            flex-direction: row; 
+            background: #fff;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+                        0 32px 64px -48px rgba(0,0,0,0.5);
         }
         *{
             margin: 0;
@@ -366,7 +391,7 @@ $calendar = new Calendar();
             min-height: 100vh;
             background: #f7f7f7;
         }
-        .wrapper {
+        /* .wrapper {
             display: flex;
             flex-direction: row; 
             background: #fff;
@@ -374,12 +399,12 @@ $calendar = new Calendar();
             border-radius: 16px;
             box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
                         0 32px 64px -48px rgba(0,0,0,0.5);
-        }
+        } */
         .wrapper-user{
-            width: 35%;
+            width: 45%;
         }
         .wrapper-chat{
-            width: 50%;
+            width: 65%;
         }
 
         /* SignUp form CSS code */
@@ -487,7 +512,8 @@ $calendar = new Calendar();
             text-decoration: none;
             border-bottom: 1px solid #e6e6e6;
         }
-        .wrapper img{
+        .wrapper-user img,
+        .wrapper-chat img{
             object-fit: cover;
             border-radius: 50%;
         }
@@ -554,13 +580,15 @@ $calendar = new Calendar();
             border-radius: 0 5px 5px 0;
         }
         .users-list{
-            max-height: 350px;
+            max-height: 550px;
             overflow-y: auto;
         }
         :is(.users-list, .chat-box)::-webkit-scrollbar{
             width: 0px;
+            display: flex;
         }
         .users-list a{
+            display: inline;
             margin-bottom: 10px;
             page-break-after: 10px;
             padding-right: 15px;
