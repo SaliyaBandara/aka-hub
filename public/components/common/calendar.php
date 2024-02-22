@@ -50,7 +50,8 @@ class Calendar
 
             .wrapper {
                 margin-top: 25px;
-                width: 275px;
+                width: 380px !important;
+                height: 385px;
                 width: 100%;
                 min-height: 275px;
                 background: #fff;
