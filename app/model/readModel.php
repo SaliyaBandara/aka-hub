@@ -27,6 +27,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllByColumn($table, $column, $value, $type = "s")
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE $column = ?", $type, [$value]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
