@@ -4,7 +4,7 @@ class Elections extends Controller
 
     public function redirect($redirect = "")
     {
-        header("Location: " . BASE_URL . "/courses");
+        header("Location: " . BASE_URL . "/elections");
         die();
     }
 
@@ -112,8 +112,67 @@ class Elections extends Controller
         $data["item_template"] = $this->model('readModel')->getEmptyElectionQuestion();
         $data["item"] = $data["item_template"]["empty"];
         $data["item_template"] = $data["item_template"]["template"];
+        $election = $this->model('readModel')->getOne("elections", $id);
+        if (!$election)
+            $this->redirect();
+
+        if (isset($_POST['modify'])) {
+            $values = $_POST["modify"];
+
+            $questions = [];
+            $valid_types = [1, 2, 3, 4];
+            // 1 - short answer
+            // 2 - multiple
+            // 3 - checkbox
+            // 4 - dropdown
+
+            foreach ($values["questions"] as $key => $value) {
+                $question["id"] = $value["id"];
+                $question["election_id"] = $id;
+                $question["question"] = $value["question"];
+                $question["question_type"] = $value["question_type"];
+                $question["question_options"] = "";
+
+                if (!in_array($question["question_type"], $valid_types))
+                    die(json_encode(array("status" => "400", "desc" => "Invalid Question Format")));
+
+                $this->validate_template($question, $data["item_template"]);
+
+                if ($question["question_type"] != 1) {
+                    if (count($value["options"]) <= 0)
+                        die(json_encode(array("status" => "400", "desc" => "Include at least 1 option")));
+
+                    // check if empty options
+                    foreach ($value["options"] as $key => $option) {
+                        if ($option["option"] == "")
+                            die(json_encode(array("status" => "400", "desc" => "Option cannot be empty")));
+                    }
+
+                    $question["question_options"] = json_encode($value['options']);
+                }
+
+                $questions[] = $question;
+            }
+
+            $result = $this->model('updateModel')->update_election_questions(
+                $questions,
+                $id,
+                $data["item_template"],
+                array_map('intval', $values["removed_questions"])
+            );
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+            die(json_encode(array("status" => "400", "desc" => "Error while modifying election")));
+        }
 
         $data["id"] = $id;
+        $data["questions"] = $this->model('readModel')->getAllByColumn("election_questions", "election_id", $id, "i");
+        if (!$data["questions"])
+            $data["questions"] = [];
+
+        // print_r($data["questions"]);
+        // die;
 
         $this->view->render('election/elections/modify', $data);
     }

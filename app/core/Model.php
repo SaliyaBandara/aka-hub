@@ -10,23 +10,74 @@ class Model extends Database
         $this->db_handle = new Database();
     }
 
-    // insert
-    public function insert_db($table, $data)
+    // transaction
+    public function start_transaction()
     {
-        $columns = $placeholders = $values = $valueTypes = [];
-        $placeholders = implode(", ", array_fill(0, count($data), "?"));
+        $this->db_handle->start_transaction();
+    }
 
-        foreach ($data as $name => [$value, $type]) {
-            $columns[] = $name;
-            $values[] = $value;
-            $valueTypes[] = $type;
+    public function commit_transaction()
+    {
+        $this->db_handle->commit_transaction();
+    }
+
+    public function rollback_transaction()
+    {
+        $this->db_handle->rollback_transaction();
+    }
+
+    // insert
+    public function insert_db($table, $data, $template = null)
+    {
+        if ($template == null) {
+            $columns = $placeholders = $values = $valueTypes = [];
+            $placeholders = implode(", ", array_fill(0, count($data), "?"));
+
+            foreach ($data as $name => [$value, $type]) {
+                $columns[] = $name;
+                $values[] = $value;
+                $valueTypes[] = $type;
+            }
+
+            $query = "INSERT INTO $table (" . implode(", ", $columns) . ") VALUES (" . $placeholders . ")";
+            $valueTypesString = implode('', $valueTypes);
+
+            $result = $this->db_handle->insert($query, $valueTypesString, $values);
+            return $result;
+        } else {
+            $columns = "";
+            $values = "";
+            $types = "";
+            $params = [];
+
+            foreach ($data as $key => $value) {
+                if ($value == "" || $value == null)
+                    continue;
+
+                if (!isset($template[$key]) || !isset($template[$key]["type"]))
+                    continue;
+
+                $columns .= $key . ",";
+                $values .= "?,";
+                // $types .= $value[1];
+                $types .= $template[$key]["type"] == "number" ? "i" : "s";
+
+                if (is_array($value))
+                    $value = implode(",", $value);
+                array_push($params, $value);
+            }
+
+            $columns = rtrim($columns, ",");
+            $values = rtrim($values, ",");
+
+            // print_r($columns);
+            // print_r($values);
+            // print_r($types);
+            // die;
+
+            $query = "INSERT INTO $table ($columns) VALUES ($values)";
+            return $this->db_handle->insert($query, $types, $params);
         }
-
-        $query = "INSERT INTO $table (" . implode(", ", $columns) . ") VALUES (" . $placeholders . ")";
-        $valueTypesString = implode('', $valueTypes);
-
-        $result = $this->db_handle->insert($query, $valueTypesString, $values);
-        return $result;
     }
 
     // update
@@ -67,6 +118,15 @@ class Model extends Database
 
         $result = $this->db_handle->runQuery($query, $valueTypesString, $values);
         return $result;
+    }
+
+    public function deleteOne($table, $id)
+    {
+        $result = $this->db_handle->insert("DELETE FROM $table WHERE id = ?", "i", [$id]);
+        if ($result)
+            return $result;
+
+        return false;
     }
 
     public function get($table, $where = [], $order = [], $limit = [])

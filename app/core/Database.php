@@ -28,6 +28,24 @@ class Database
         // echo "Connection closed";
     }
 
+    // create transaction
+    function start_transaction()
+    {
+        $this->conn->begin_transaction();
+    }
+
+    // commit transaction
+    function commit_transaction()
+    {
+        $this->conn->commit();
+    }
+
+    // rollback transaction
+    function rollback_transaction()
+    {
+        $this->conn->rollback();
+    }
+
     function connectDB()
     {
         $conn = mysqli_connect($this->host, $this->user, $this->password, $this->database);
@@ -62,7 +80,7 @@ class Database
                 $resultset[] = $row;
             }
         }
-        
+
         if ($result->num_rows == 0)
             return array();
 
