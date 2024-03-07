@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("reservationRequests");
+$sidebar = new Sidebar("upcomingReservations");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>

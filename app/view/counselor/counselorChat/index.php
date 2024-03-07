@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("counselorPanel");
+$sidebar = new Sidebar("counselorChat");
 $calendar = new Calendar();
 ?>
 <div id="sidebar-active" class="hideScrollbar">
@@ -158,6 +158,26 @@ $calendar = new Calendar();
                                     <div class="status-dot"><i class='bx bxs-circle'></i></div>
                                 </div>
                             </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="content">
+                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                    <div class="details">
+                                        <span>Virajith Dissanayaka</span>
+                                        <p>This is some message</p>
+                                    </div>
+                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
+                                </div>
+                            </a>
                         </div>
                     </section>
                     
@@ -173,6 +193,17 @@ $calendar = new Calendar();
                             </div>
                         </header>
                         <div class="chat-box">
+                            <div class="chat outgoing">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                            <div class="chat incoming">
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
                             <div class="chat outgoing">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>

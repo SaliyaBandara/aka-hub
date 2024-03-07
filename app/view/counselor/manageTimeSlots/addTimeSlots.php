@@ -2,7 +2,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+$sidebar = new Sidebar("manageTimeSlots");
 $calendar = new Calendar();
 ?>
 
