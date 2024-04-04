@@ -31,11 +31,7 @@ $calendar = new Calendar();
 
             <!-- ===VIRAJITH=== -->
 
-            <div class="card-container">
-                <div class="card">Card 1</div>
-                <div class="card">Card 2</div>
-                <div class="card">Card 3</div>
-            </div>
+            
         </div>
     </div>
     <style>
@@ -138,19 +134,6 @@ $calendar = new Calendar();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
-        .card-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  width: 200px;
-  height: 150px;
-  background-color: #f0f0f0;
-  margin: 10px;
-  padding: 20px;
-  box-sizing: border-box;
-}
         
     </style>
 
