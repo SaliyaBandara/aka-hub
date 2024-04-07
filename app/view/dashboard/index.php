@@ -38,21 +38,34 @@ $calendar = new Calendar();
                         <?php
                         $currentDate = new DateTime();
                         $endDate = new DateTime($main_events["end_date"]);
+
+                        $dateDiff = $currentDate->diff($endDate);
+                        $daysRemaining = $dateDiff->days;
                         
+                        // if ($currentDate <= $endDate) {
+                        //     if ($daysRemaining > 0) {
+                        //         echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                        //     }
+                        // }
+                        // else {
+                        //     echo '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
+                        // }
+
                         if ($currentDate <= $endDate) {
-                            $dateDiff = $currentDate->diff($endDate);
-                            $daysRemaining = $dateDiff->days;
-                            
-                            if ($daysRemaining === 0) {
-                                echo '<div class="todo_item_date flex align-center justify-center">0</div>';
-                            } elseif ($daysRemaining === 1) {
-                                echo '<div class="todo_item_date flex align-center justify-center">1</div>';
-                            } else {
-                            echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                            if ($daysRemaining > 0) {
+                                echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                            } elseif ($daysRemaining == 0) {
+                                $hoursRemaining = $endDate->diff($currentDate)->h;
+                                echo '<div class="todo_item_date_red flex align-center justify-center">' . $hoursRemaining . 'h</div>';
+                            }else{
+                                echo '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
                             }
-                        } else {
-                            echo '<div class="todo_item_date flex align-center justify-center">-1</div>';
                         }
+
+                        
+                        // echo ($currentDate <= $endDate && $daysRemaining > 0) ? '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>' 
+                        //                             : '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
+
                         ?>
                     </div>
 
@@ -106,6 +119,15 @@ $calendar = new Calendar();
                         height: 4.5rem;
                         border-radius: 50%;
                         border: 5px solid #bdd2f1;
+                        font-size: 2rem;
+                        font-weight: 500;
+                    }
+
+                    .todo_item_date_red {
+                        width: 4.5rem;
+                        height: 4.5rem;
+                        border-radius: 50%;
+                        border: 5px solid #FF2400;
                         font-size: 2rem;
                         font-weight: 500;
                     }

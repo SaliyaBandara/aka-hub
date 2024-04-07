@@ -144,7 +144,7 @@ class readModel extends Model
     public function getAllEvents($table)
     {
 
-        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND ?";
+        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND m.end_date >= NOW() AND ? ORDER BY m.end_date ASC";
         $result = $this->db_handle->runQuery($sql, "i", [1]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
