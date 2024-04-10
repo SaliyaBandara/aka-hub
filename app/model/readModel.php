@@ -173,6 +173,34 @@ class readModel extends Model
         return false;
     }
 
+    public function getOngoingElections($table)
+    {
+
+        $sql = "SELECT * from elections e where e.end_date >= NOW() AND e.start_date <= NOW() AND ? ORDER BY e.end_date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPreviousElections($table)
+    {
+
+        $sql = "SELECT * from elections e where e.end_date <= NOW() AND ? ORDER BY e.end_date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     // get all the posts of the counselor
     // public function getCounselorPosts()
     // {
