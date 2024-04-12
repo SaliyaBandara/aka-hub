@@ -16,7 +16,7 @@ class CounselorFeed extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["posts"] = $this->model('readModel')->getAll("posts");
+        $data["posts"] = $this->model('readModel')->getCounselorPosts($_SESSION["user_id"]);
 
         $this->view->render('counselor/counselorFeed/index', $data);
     }
@@ -39,8 +39,9 @@ class CounselorFeed extends Controller
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
 
-            $values["user_id"] = $_SESSION["user_role"];
-            $values["image"] = $values["image"];
+            $values["posted_by"] = $_SESSION["user_id"];
+            $values["post_image"] = $values["post_image"];
+            $values["type"] = '1';
 
             $this->validate_template($values, $data["post_template"]);
 

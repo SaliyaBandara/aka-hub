@@ -29,20 +29,20 @@ $sidebar = new Sidebar("counselorFeed");
             <!-- text area for description -->
             <div class="mb-1 form-group">
                 <label for="description" class="form-label">Description</label>
-                <textarea rows="10" cols="10" id="description" name="description" placeholder="Enter Description" data-validation="required" class="form-control"><?= $data["post"]["description"] ?></textarea>
+                <textarea rows="10" cols="10" id="description" name="description" placeholder="Enter Description" class="form-control"><?= $data["post"]["description"] ?></textarea>
             </div>
 
             <div class="mb-1">
-                <label class="form-label">Post Image</label>
+                <label for = "post_image" class="form-label">Post Image</label>
                 <p class="text-muted font-14">
                     Upload post image (Maximum 1 image)
                 </p>
-                <div action="/uploadFiles/img/course_cover" data-name="cover_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
+                <div action="/uploadFiles/img/post_image" data-name="post_image" data-maxFiles="1" class="dropzone imgDropZone"></div>
             </div>
 
             <div class="mb-1">
                 <div class="table-responsive">
-                    <table <?= ($data['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="cover_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
+                    <table <?= ($data['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="post_image" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
                         <thead class="cent">
                             <tr>
                                 <th class="text-center py-1">Image</th>
@@ -57,12 +57,12 @@ $sidebar = new Sidebar("counselorFeed");
                         </tfoot>
                         <tbody class="ui-sortable">
                             <?php
-                            if ($data['id'] != 0 && !empty($data['post']['image'])) {
-                                $img = USER_IMG_PATH . $data['post']['image'];
+                            if ($data['id'] != 0 && !empty($data['post']['post_image'])) {
+                                $img = USER_IMG_PATH . $data['post']['post_image'];
                             ?>
                                 <tr class='ui-sortable-handle'>
                                     <td>
-                                        <div class='preview-img preview-img-small' data-filename='<?= $data['post']['image'] ?>' data-fancybox='group' href='<?= $img ?>'>
+                                        <div class='preview-img preview-img-small' data-filename='<?= $data['post']['post_image'] ?>' data-fancybox='group' href='<?= $img ?>'>
                                             <img src='<?= $img ?>' class='' alt='..'>
                                         </div>
                                     </td>
@@ -79,7 +79,7 @@ $sidebar = new Sidebar("counselorFeed");
             </div>
 
             <div class="mt-1-5 form-group">
-                <a href="<?= BASE_URL ?>/courses" class="btn btn-info">Back</a>
+                <a href="<?= BASE_URL ?>/counselorFeed" class="btn btn-info">Back</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
 
@@ -172,14 +172,14 @@ $sidebar = new Sidebar("counselorFeed");
             }
 
             let completed = 0;
-            let tables = ["cover_img"];
+            let tables = ["post_image"];
             $.each(tables, function(i, name) {
                 let table = $(`.table-responsive .image-preview-table[data-name='${name}'] tbody`)
                 let images = get_preview_imgs(table)
-                if (images.length <= 0) {
-                    alertUser("warning", `Please upload at least one image for ${name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}`)
-                    return false
-                }
+                // if (images.length <= 0) {
+                //     alertUser("warning", `Please upload at least one image for ${name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}`)
+                //     return false
+                // }
                 values[`${name}`] = images;
                 completed++;
             });

@@ -2,14 +2,11 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("counselorFeed");
-$feedArea = new feedArea();
 ?>
 
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
-
-
     <div class="main-grid flex">
         <div class="left">
 
@@ -24,139 +21,43 @@ $feedArea = new feedArea();
             <h3 class="h3-CounselorFeed">Counselor Feed</h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
-
                     <div class="feedContainor">
 
-                        <!-- <div class="feed-post"> -->
-                        <!-- <div class="feed-text-div">
-                                <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt="">
-                                <p>Gratitude should be paid where it's due…</br>
-
-                                    Our sense of obligation extends towards our distinguished member speakers and the wonderful audience in making this event, a grand success.</br>
-
-                                    We sincerely thank the participants for valuing our efforts and for having been a great audience.</br>
-
-                                    Until we meet again, au revoir…</br>
-
-                                    #ACM #UCSC #ACMSCUCSC</p>
-                                <div class="editDeleteButton">
-                                    <div class="repEdit">
-                                        <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                    </div>
-                                    <div class="repDecline">
-                                        <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
-                                    </div>
-                                </div>
-                            </div> -->
-
-                        <?php
-
-
-                        // Array
-                        // (
-                        //     [0] => Array
-                        //         (
-                        //             [id] => 1
-                        //             [user_id] => 9
-                        //             [title] => 
-                        //             [description] => Test
-                        //             [image] => course_cover_202311010814186541bb820eba100603290016988066581345.jpg
-                        //             [created_at] => 2023-11-01 08:09:36
-                        //             [updated_at] => 2023-11-01 08:09:36
-                        //         )
-
-                        //     [1] => Array
-                        //         (
-                        //             [id] => 2
-                        //             [user_id] => 9
-                        //             [title] => 
-                        //             [description] => Gratitude should be paid where it's due…
-                        // Our sense of obligation extends towards our distinguished member speakers and the wonderful audience in making this event, a grand success.
-                        // We sincerely thank the participants for valuing our efforts and for having been a great audience.
-                        // Until we meet again, au revoir…
-                        // #ACM #UCSC #ACMSCUCSC test
-                        //             [image] => course_cover_202311010810426541baaa5932003653490016988064426534.png
-                        //             [created_at] => 2023-11-01 08:11:12
-                        //             [updated_at] => 2023-11-01 08:11:12
-                        //         )
-
-                        // )
-
-                        // if (is_array($data['posts'])) {
-
-                        //     foreach ($data['posts'] as $key => $value) {
-                        //         $description = $value['description'];
-                        //         // $description = substr($description, 0, 200);
-                        //         $img = BASE_URL . "/public/assets/user_uploads/img/" . $value['image'];
-
-                        // ?>
-                            <div class="feed-post">
+                        <?php 
+                            if (empty($data["posts"])) {
+                                echo '<div class = "emptyMessage"> There are no posts uploaded by you! </div>';
+                            } else {
+                                foreach ($data["posts"] as $posts) {
+                                $img_src = USER_IMG_PATH . $posts["post_image"];
+                        ?>
                                     <div class="feed-text-div">
-                                        <img class="eventPost" src="<?= $img ?>" alt="">
+                                        <img class="eventPost" src="<?= $img_src ?>" alt="">
                                         <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
                                         <p style="white-space: pre-line;">
-                                            <?= $description ?>
+                                            <?= $posts["description"] ?>
                                         </p>
                                         <div class="editDeleteButton">
-                                            <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $value['id'] ?>"
-                                            class="repEdit">
+                                            <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>"
+                                            class="repDecline">
                                                 <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
                                             </a>
-                                            <a class="repDecline delete-item" data-id="<?= $value['id'] ?>">
+                                            <a class="repDecline delete-item" data-id="<?= $posts['posted_by'] ?>">
                                                 <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
                                             </a>
                                         </div>
                                     </div>
-                            </div>
-
-                         <?php
-
-
-                        //     }
-                        // }
-
-
-                        ?>
-                        <!-- <img src="https://cdn-icons-png.flaticon.com/512/5508/5508714.png" alt=""> -->
+                                    <!-- <div class = "electionCard">
+                                        <div class = "electionCardTitle"><?= $posts["name"] ?> is happening now....</div>
+                                        <div class = "electionCardTime" class="text-muted" ></div>
+                                        <div class = "electionButton"><a href="<?= BASE_URL ?>/activeElection/index" class="mwb-form-submit-btn">Vote Now</a></div>
+                                        <div id = "electionButton"><input type = "button" value = "VOTE NOW!"><a href=""></a></div>
+                    
+                                    </div> -->
+                            <?php } ?>
+                        <?php } ?>
 
                     </div>
                     <style>
-                        .repEdit {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            width: 50px;
-                        }
-
-                        .repDecline {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            width: 50px;
-                        }
-
-                        .repEdit img {
-                            width: 35px;
-                            height: 35px;
-                        }
-
-                        .repDecline img {
-                            width: 35px;
-                            height: 35px;
-                        }
-
-                        .repEdit img:hover {
-                            width: 67px;
-                            height: 67px;
-                            cursor: pointer;
-                        }
-
-                        .repDecline img:hover {
-                            width: 37px;
-                            height: 37px;
-                            cursor: pointer;
-                        }
-
                         .editDeleteButton {
                             width: 100%;
                             height: 50px;
@@ -187,6 +88,16 @@ $feedArea = new feedArea();
                         .feed-text-div p {
                             text-align: justify;
                             padding: 20px;
+                        }
+
+                        .repDecline {
+                            width: 15%;
+                            height: 38px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-left: -10px;
+                            margin-right: 13px;
                         }
                     </style>
 
