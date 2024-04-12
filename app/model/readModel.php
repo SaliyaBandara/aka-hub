@@ -605,18 +605,14 @@ class readModel extends Model
     {
 
         $empty = [
+            "title" => "",
             "description" => "",
-            "image" => "",
-            "title" => ""
+            "post_image" => "",
+            "posted_by" => "",
+            "type" => "",
         ];
 
         $template = [
-            "posted_by" => [
-                "label" => "User",
-                "type" => "number",
-                "validation" => "required",
-                "skip" => true
-            ],
             "title" => [
                 "label" => "Post Title",
                 "type" => "text",
@@ -628,10 +624,22 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-            "image" => [
+            "post_image" => [
                 "label" => "Image",
                 "type" => "array",
-                "validation" => "",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "posted_by" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "type" => [
+                "label" => "Type",
+                "type" => "number",
+                "validation" => "required",
                 "skip" => true
             ],
         ];
