@@ -123,11 +123,7 @@ $calendar = new Calendar();
                                         </div> -->
                                         <div class="fields-container">
                                             <div class="form-line">
-                                                <label class="form-input3">Start Date :</label>
-                                                <input type="date" name="end_time"><br />
-                                            </div> 
-                                            <div class="form-line">
-                                                <label class="form-input4">End Date :</label>
+                                                <label class="form-input3">Date :</label>
                                                 <input type="date" name="end_time"><br />
                                             </div> 
                                             <div class="form-line">
@@ -497,10 +493,7 @@ $calendar = new Calendar();
         margin-right: 50px ;
     }
     .form-input3{
-        margin-right: 24px ;
-    }
-    .form-input4{
-        margin-right: 46px ;
+        margin-right: 93px ;
     }
     .form-line{
         margin-bottom: 20px;
