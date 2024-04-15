@@ -115,7 +115,7 @@ class readModel extends Model
 
     public function getCounselorPosts($posted_by)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM posts WHERE type = 1 AND posted_by = ?", "i", [$posted_by]);
+        $result = $this->db_handle->runQuery("SELECT * FROM posts WHERE type = 1 AND posted_by = ? ORDER BY posts.created_datetime DESC", "i", [$posted_by]);
         if (count($result) > 0)
             return $result;
 

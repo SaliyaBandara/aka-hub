@@ -9,7 +9,6 @@ $sidebar = new Sidebar("counselorFeed");
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
-
             <?php if ($_SESSION["user_role"] == 5) { ?>
                 <div class="mb-1 form-group">
                     <a href="<?= BASE_URL ?>/counselorFeed/add_edit/0/" class="btn btn-primary">
@@ -17,121 +16,197 @@ $sidebar = new Sidebar("counselorFeed");
                     </a>
                 </div>
             <?php } ?>
-
             <h3 class="h3-CounselorFeed">Counselor Feed</h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
-                    <div class="feedContainor">
+                    <div class="feedContainer">
 
                         <?php 
                             if (empty($data["posts"])) {
-                                echo '<div class = "emptyMessage"> There are no posts uploaded by you! </div>';
+                                echo "<div class='font-meidum text-muted'>You can publish an article using 'Add Post' button above!</div>";
                             } else {
                                 foreach ($data["posts"] as $posts) {
                                 $img_src = USER_IMG_PATH . $posts["post_image"];
+                                $img_src_profile = USER_IMG_PATH . $data["user"]["profile_img"];
                         ?>
-                                    <div class="feed-text-div">
-                                        <img class="eventPost" src="<?= $img_src ?>" alt="">
+                                    <div class="feedPost my-2">
+                                        <div class = "postDetails">
+                                            <div class = "detailsLeft">
+                                                <div class = "userImage">
+                                                    <img src="<?= $img_src_profile ?>" alt="">
+                                                </div>
+                                                <div class = "userDetails">
+                                                    <div class = "userName">
+                                                        <?= $_SESSION["user_name"] ?>
+                                                    </div>
+                                                    <div class = "publishedDate">
+                                                        <?= date('d/m/y H:i', strtotime($posts["created_datetime"])) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class = detailsRight>
+                                                <div class="editDeleteButton">
+                                                    <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
+                                                        <i class='bx bx-edit'></i>
+                                                    </a>
+                                                    <a class="repDecline delete-item" data-id="<?= $posts['posted_by'] ?>">
+                                                        <i class='bx bx-trash text-danger'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class = "postTitle my-1 font-medium"> <?= strtoupper($posts["title"]) ?></div> 
+                                        <img class="postImage" src="<?= $img_src ?>" alt="">
                                         <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
                                         <p style="white-space: pre-line;">
-                                            <?= $posts["description"] ?>
+                                            <?= substr($posts["description"], 0, 500) . (strlen($posts["description"]) > 500 ? '...' : '') ?>
                                         </p>
-                                        <div class="editDeleteButton">
-                                            <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>"
-                                            class="repDecline">
-                                                <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                            </a>
-                                            <a class="repDecline delete-item" data-id="<?= $posts['posted_by'] ?>">
-                                                <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
-                                            </a>
+                                        <div class = "postDetails">
+                                            <div class = "detailsLeft">
+                                                <div class="likeCommentButton">
+                                                    <a href="#">
+                                                        <i class='bx bx-heart text-danger'></i>
+                                                    </a>
+                                                    <label>10 Likes</label>
+                                                    <a href = "#">
+                                                        <i class='bx bx-message-rounded'></i>
+                                                    </a> 
+                                                    <label>2 Comments</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- <div class = "electionCard">
-                                        <div class = "electionCardTitle"><?= $posts["name"] ?> is happening now....</div>
-                                        <div class = "electionCardTime" class="text-muted" ></div>
-                                        <div class = "electionButton"><a href="<?= BASE_URL ?>/activeElection/index" class="mwb-form-submit-btn">Vote Now</a></div>
-                                        <div id = "electionButton"><input type = "button" value = "VOTE NOW!"><a href=""></a></div>
-                    
-                                    </div> -->
                             <?php } ?>
                         <?php } ?>
-
                     </div>
-                    <style>
-                        .editDeleteButton {
-                            width: 100%;
-                            height: 50px;
-                            display: flex;
-                            justify-content: right;
-                            align-items: center;
-                        }
-
-                        .eventPost {
-                            width: 100%;
-                            height: 570px;
-                        }
-
-                        .feed-post {
-                            background-color: white;
-                            width: 100%;
-                            height: 850px;
-                            border-radius: 5px;
-                            justify-content: center;
-                            display: flex;
-                            margin: 0 0 100px 0;
-                        }
-
-                        .feed-text-div {
-                            text-align: center;
-                        }
-
-                        .feed-text-div p {
-                            text-align: justify;
-                            padding: 20px;
-                        }
-
-                        .repDecline {
-                            width: 15%;
-                            height: 38px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            margin-left: -10px;
-                            margin-right: 13px;
-                        }
-                    </style>
-
                 </div>
-                <style>
-                    .feedContainor {
-                        width: 100%;
-                        height: 100%;
-                        justify-content: center;
-                    }
-                </style>
-
-                <?php
-                // $feedArea->render();
-                ?>
             </div>
         </div>
     </div>
 </div>
 
 <style>
+    .postDetails{
+        /* border: 1px solid black; */
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .detailsLeft{
+        /* border: 1px solid red; */
+        width: 70%;
+        display: flex;
+        flex-direction:row;
+        padding: 1rem;
+    }
+
+    .userDetails{
+        display: flex;
+        flex-direction: column;
+        padding-left: 1rem;
+        /* border: 1px solid red; */
+        justify-content: center;
+    }
+
+    .detailsRight{ width: 30%;}
+
+    .editDeleteButton {
+        display: flex;
+        justify-content: right;
+        /* border: 1px solid red; */
+        padding: 1rem;
+        font-size: 20px;
+    }
+
+    
+    .editDeleteButton a{
+        text-decoration: none;
+        color: inherit;
+        margin-left: 5px;
+    }
+
+    .likeCommentButton{
+        display: flex;
+        justify-content: right;
+        /* border: 1px solid red; */
+        font-size: 20px;
+    }
+
+    .likeCommentButton a{
+        font-size: 28px;
+        margin-right: 5px;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .likeCommentButton label{
+        font-size: 12px;
+        margin-right: 25px;
+        padding-top: 10px;
+    }
+
+    .userName , .publishedDate{
+        font-size: 12px;
+    }
+
+    .feedContainor {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .divFeed{
+        /* border: 1px solid red; */
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+
+
+    .postImage {
+        width: 100%;
+        height: auto;
+        /* border: 1px solid blue; */
+    }
+
+    .feedPost {
+        text-align: center;
+        /* border: 1px solid black; */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        border-radius : 20px;
+        /* margin: 25px; */
+    }
+
+    .feedPost p {
+        text-align: justify;
+        padding: 20px 20px 0 20px;
+    }
+
+    .postTitle{
+        padding-top: 15px;
+        padding-left: 15px;
+        text-align: left;
+        /* font-weight: bold; */
+    }
+
+    .repDecline {
+        width: 15%;
+        height: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: -10px;
+        margin-right: 13px;
+    }
     .delete-item {
         cursor: pointer;
     }
 
     .h3-CounselorFeed {
         text-align: center;
-    }
-
-    .divFeed {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
     }
 
     .divCounselorFeed {
@@ -141,21 +216,31 @@ $sidebar = new Sidebar("counselorFeed");
         justify-content: center;
     }
 
-    .main-grid {}
+    .userImage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 2px solid #bdd2f1;
+        width: 3rem;
+        height: 3rem;
+        overflow: hidden;
+    }
+
+    .userImage img{
+        width: 6rem;
+        height: 6rem;
+        display: block;
+    }
+
+    .main-grid {
+    }
 
     .main-grid .left {
         width: 100%;
         height: 3000px;
     }
-
-    /* .main-grid .right{
-            flex-grow: 1;
-            background-color: red;
-            height: 50vh;
-        } */
 </style>
-
-</div>
 
 <?php $HTMLFooter = new HTMLFooter(); ?>
 <script>

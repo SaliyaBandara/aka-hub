@@ -15,7 +15,7 @@ $calendar = new Calendar();
                 <div class = "ongoingTitle">Ongoing Elections</div>
                 <?php 
                     if (empty($data["electionsOngoing"])) {
-                        echo '<div class = "emptyMessage"> There are no ongoing elections or polls! </div>';
+                        echo '<div class="font-meidum text-muted"> There are no ongoing elections or polls! </div>';
                     } else {
                         foreach ($data["electionsOngoing"] as $electionsOngoing) {
                         ?>
@@ -151,15 +151,6 @@ $calendar = new Calendar();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             
         }
-
-        .emptyMessage {
-            padding : 10px 10px 5px 30px;
-            color: #FF2400;
-            font-family: Inter;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
 
     </style>
 
