@@ -17,6 +17,8 @@ class CounselorFeed extends Controller
         ];
 
         $data["posts"] = $this->model('readModel')->getCounselorPosts($_SESSION["user_id"]);
+        $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
+
 
         $this->view->render('counselor/counselorFeed/index', $data);
     }
