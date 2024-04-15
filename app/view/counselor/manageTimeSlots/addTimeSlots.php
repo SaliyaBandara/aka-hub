@@ -113,15 +113,38 @@ $calendar = new Calendar();
                             <a href="" class="close">&times;</a>
                             <div class="content">
                                 <div class="container">
-                                    <form class="form-1">
-                                        <div>
+                                    <form class="form-1" action="/controllerName/createTimeSlot" method="post">
+                                        <!-- <div>
                                             <div class="form-line"><label class="form-input1">Start Time :</label><input type="time"> </div>
                                             <div class="form-line"><label class="form-input2">End Time   :</label><input type="time"><br /></div>    
                                         </div>
                                         <div class="submit-form">
                                             <input type="submit" value="Create">
+                                        </div> -->
+                                        <div class="fields-container">
+                                            <div class="form-line">
+                                                <label class="form-input3">Start Date :</label>
+                                                <input type="date" name="end_time"><br />
+                                            </div> 
+                                            <div class="form-line">
+                                                <label class="form-input4">End Date :</label>
+                                                <input type="date" name="end_time"><br />
+                                            </div> 
+                                            <div class="form-line">
+                                                <label class="form-input1">Start Time :</label>
+                                                <input type="time" name="start_time">
+                                            </div>
+                                            <div class="form-line">
+                                                <label class="form-input2">End Time :</label>
+                                                <input type="time" name="end_time"><br />
+                                            </div>    
+                                        </div>
+                                        <div class="submit-form">
+                                            <input type="submit" value="Create">
                                         </div>
                                     </form>
+
+                                     
                                 </div>
                             </div>
                         </div>
@@ -453,6 +476,16 @@ $calendar = new Calendar();
         /* border-style: groove; */
         /* background-color: #fff; */
     }
+    .form-1 input[type="date"]{
+        margin: 0 auto; /* Center horizontally */
+        margin-right: 10px;
+        margin-left: -15px;
+        width: 150px;
+        padding: 5px;
+        border-radius: 8px;
+        /* border-style: groove; */
+        /* background-color: #fff; */
+    }
 
     .wrapper1 h2{
         text-align: center;
@@ -463,8 +496,17 @@ $calendar = new Calendar();
     .form-input2{
         margin-right: 50px ;
     }
+    .form-input3{
+        margin-right: 24px ;
+    }
+    .form-input4{
+        margin-right: 46px ;
+    }
     .form-line{
         margin-bottom: 20px;
+    }
+    .fields-container {
+        text-align: left;
     }
 </style>
 
