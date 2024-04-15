@@ -17,10 +17,6 @@ require_once '../public/components/common/calendar.php';
 //components for admin and superadmin to approve studentrepps and clubreps
 require_once '../public/components/common/approveByAdmin/approveArea.php';
 
-//components for feeds
-require_once '../public/components/common/feeds/feedPost.php';
-require_once '../public/components/common/feeds/feedArea.php';
-
 // Components for elections
 require_once '../public/components/common/elections/candidateCard.php';
 
