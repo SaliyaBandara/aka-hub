@@ -16,9 +16,11 @@ class CounselorFeed extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        // $post_id = 5;
         $data["posts"] = $this->model('readModel')->getCounselorPosts($_SESSION["user_id"]);
         $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
-
+        // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
+        // print_r($data["comments"]);
 
         $this->view->render('counselor/counselorFeed/index', $data);
     }
@@ -90,5 +92,48 @@ class CounselorFeed extends Controller
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting post")));
+    }
+
+    public function like($id = 0)
+    {
+
+        $this->requireLogin();
+        // if ($_SESSION["user_role"] != 5)
+        //     $this->redirect();
+        $data["likes_template"] = $this->model('readModel')->getEmptyPostLikes();
+        $data["likes"] = $data["likes_template"]["empty"];
+        $data["likes_template"] = $data["likes_template"]["template"];
+        // print_r($data["likes_template"]);
+        // if ( isset($_POST['like'])) {
+
+            // $values = $_POST["like"];
+            // print_r($values);
+        
+        $values["user_id"] = $_SESSION["user_id"];
+        $values["post_id"] = $id;
+
+        $existingLike = $this->model('readModel')->getPostLikes($id,$_SESSION["user_id"]);
+        print_r($existingLike);
+
+        if ($existingLike) {
+            die(json_encode(array("status" => "400", "desc" => "You have already liked this post")));
+        }
+
+        // print_r($values);
+
+        $this->validate_template($values, $data["likes_template"]);
+
+        // if ($id == 0)
+        $result = $this->model('createModel')->insert_db("post_likes", $values, $data["likes_template"]);
+        // else
+        //     $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
+
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+        die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
+        // }
+
+        // print_r("HI");
     }
 }

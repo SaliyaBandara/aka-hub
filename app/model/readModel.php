@@ -114,13 +114,52 @@ class readModel extends Model
     }
 
     public function getCounselorPosts($posted_by)
-    {
-        $result = $this->db_handle->runQuery("SELECT * FROM posts WHERE type = 1 AND posted_by = ? ORDER BY posts.created_datetime DESC", "i", [$posted_by]);
+    {   
+        $sql = "
+        SELECT p.*, 
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p 
+            WHERE p.type = 1 
+            AND p.posted_by = ? 
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "i", [$posted_by]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
+
+    public function getPostComments($post_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?" , "i" , [$post_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPostLikes($post_id, $user_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?" , "ii" ,[$post_id,$user_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    // public function getPostLikesCount($post_id)
+    // {
+    //     $result = $this->db_handle->runQuery("SELECT COUNT(l.id) as likesCount FROM posts p, post_likes l WHERE p.id = l.post_id AND p.id = ? GROUP BY l.post_id" , "i" ,[$post_id] );
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
 
     public function getEvent($event_id)
     {
@@ -642,6 +681,71 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyPostComments()
+    {
+
+        $empty = [
+            "comment" => "",
+            "post_id" => "",
+            "user_id" => ""
+        ];
+
+        $template = [
+            "comment" => [
+                "label" => "Comment",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "post_id" => [
+                "label" => "Post ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyPostLikes()
+    {
+
+        $empty = [
+            "post_id" => "",
+            "user_id" => ""
+        ];
+
+        $template = [
+            "post_id" => [
+                "label" => "Post ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ]
         ];
 
         return [
