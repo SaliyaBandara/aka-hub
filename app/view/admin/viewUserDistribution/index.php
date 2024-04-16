@@ -135,60 +135,6 @@ $calendar = new Calendar();
                         $("#products-datatable_length label").addClass("form-label");
                 },
             });
-
-
-            $(document).on("click", ".delete-item", function() {
-                let id = $(this).attr("data-id");
-                let $this = $(this);
-
-                // confirm delete
-                if (!confirm("Are you sure you want to delete this item?"))
-                    return;
-
-                $.ajax({
-                    url: `${BASE_URL}/elections/delete/${id}`,
-                    type: 'post',
-                    data: {
-                        delete: true
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response['status'] == 200) {
-                            alertUser("success", response['desc'])
-                            $this.closest(".todo_item").remove();
-                        } else if (response['status'] == 403)
-                            alertUser("danger", response['desc'])
-                        else
-                            alertUser("warning", response['desc'])
-                    },
-                    error: function(ajaxContext) {
-                        alertUser("danger", "Something Went Wrong")
-                    }
-                });
-            });
-
-            $(document).on("click", ".teachingRequestButton", function() {
-                $.ajax({
-                    url: `${BASE_URL}/Courses/clickToBeRole/teaching_student`,
-                    type: 'post',
-                    data: {
-                        request: true
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response['status'] == 200) {
-                            alertUser("success", response['desc'])
-                        } else if (response['status'] == 403)
-                            alertUser("danger", response['desc'])
-                        else
-                            alertUser("warning", response['desc'])
-                    },
-                    error: function(ajaxContext) {
-                        alertUser("danger", "Something Went Wrong")
-                    }
-                });
-            });
-
         });
     </script>
     <script>
