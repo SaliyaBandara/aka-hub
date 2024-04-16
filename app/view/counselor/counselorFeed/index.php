@@ -49,7 +49,7 @@ $sidebar = new Sidebar("counselorFeed");
                                                     <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
                                                         <i class='bx bx-edit'></i>
                                                     </a>
-                                                    <a class="repDecline delete-item" data-id="<?= $posts['posted_by'] ?>">
+                                                    <a class="repDecline delete-item" data-id="<?= $posts['id'] ?>">
                                                         <i class='bx bx-trash text-danger'></i>
                                                     </a>
                                                 </div>
@@ -64,16 +64,32 @@ $sidebar = new Sidebar("counselorFeed");
                                         <div class = "postDetails">
                                             <div class = "detailsLeft">
                                                 <div class="likeCommentButton">
-                                                    <a href="#">
-                                                        <i class='bx bx-heart text-danger'></i>
+                                                    <a href="./counselorFeed/like/<?= $posts["id"] ?>">
+                                                        <i class='bx bx-heart text-danger likeButton' data-post-id="<?= $posts['id'] ?>"></i>
                                                     </a>
-                                                    <label>10 Likes</label>
-                                                    <a href = "#">
+                                                    <label>
+                                                        <?= ($posts['likesCount'] === null) ? '0 Likes' : $posts['likesCount'] . ' Likes' ?>
+                                                    </label>
+                                                    <a href = "#" class="commentsToggle">
                                                         <i class='bx bx-message-rounded'></i>
                                                     </a> 
-                                                    <label>2 Comments</label>
+                                                    <label>
+                                                        <!-- <?= count($data["comments"]) ?>  -->
+                                                        2 Comments
+                                                    </label>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="commentsSection" style="display: none;">
+                                            <?php 
+                                                if (empty($data["comments"])) {
+                                                    echo "<div class='font-meidum text-muted'></div>";
+                                                } else {
+                                                    foreach ($data["comments"] as $comments) {
+                                            ?>
+                                                <p><?= $comments["comment"] ?></p>
+                                                <?php } ?>
+                                            <?php } ?>
                                         </div>
                                     </div>
                             <?php } ?>
@@ -246,6 +262,25 @@ $sidebar = new Sidebar("counselorFeed");
 <script>
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Select all elements with the class 'commentsToggle'
+        const toggleButtons = document.querySelectorAll(".commentsToggle");
+
+        // Iterate over each toggle button
+        toggleButtons.forEach(function(toggleButton) {
+            // Add click event listener to each toggle button
+            toggleButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                // Find the corresponding comments section based on the button's parent element
+                const commentsSection = toggleButton.closest(".postDetails").nextElementSibling;
+                // Toggle the display style of the comments section
+                commentsSection.style.display = commentsSection.style.display === "none" ? "block" : "none";
+            });
+        });
+    });
+
+</script> -->
 <script>
     $(document).ready(function() {
         $(document).on("click", ".delete-item", function() {
@@ -253,7 +288,7 @@ $sidebar = new Sidebar("counselorFeed");
             let $this = $(this);
 
             // confirm delete
-            if (!confirm("Are you sure you want to delete this counselor?"))
+            if (!confirm("Are you sure you want to delete this post?"))
                 return;
 
             $.ajax({
