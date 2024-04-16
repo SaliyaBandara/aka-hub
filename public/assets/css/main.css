@@ -422,6 +422,16 @@
   background-color: var(--secondary-color);
   color: #fff;
 }
+.btn--blue{
+  background-color:#2684ff;
+  color: #ffffff;
+  border: none;
+}
+.btn--orange{
+  background-color: #ff812d;
+  color: #ffffff;
+  border: none;
+}
 
 a.btn {
   display: inline-block;
