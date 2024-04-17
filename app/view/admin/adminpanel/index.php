@@ -43,15 +43,15 @@ $calendar = new Calendar();
             <div class="fourGraphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <?php echo $chartFive->render(); ?>
+                        <div id="chartContainer1" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                     <div class="graphContainor">
-                        <?php echo $chartTwo->render(); ?>
+                        <div id="chartContainer2" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <?php echo $chartThree->render(); ?>
+                        <div id="chartContainer3" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                     <div class="graphContainor">
                         <?php echo $chartFour->render(); ?>
@@ -59,10 +59,7 @@ $calendar = new Calendar();
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainorFive">
-                        <?php
-                        print_r($data["chartOne"]);
-                        ?>
-                        <div id="chartContainer1" style="height: 220px; width: 100%; padding:20px"></div>
+                        <?php echo $chartFive->render(); ?>
                     </div>
                 </div>
             </div>
@@ -192,27 +189,18 @@ $calendar = new Calendar();
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var chartOneData = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
-        var convertedDataPoints = [];
-        for (var i = 0; i < chartOneData.length; i++) {
-            var dataPoint = chartOneData[i];
-            convertedDataPoints.push({
-                x: dataPoint.x,
-                y: dataPoint.y
-            });
-        }
+        var dataPoints = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
         var chart1 = new CanvasJS.Chart("chartContainer1", {
             animationEnabled: true,
             axisY: {
                 title: "Yearly Users",
-                valueFormatString: "#0,,.",
             },
             data: [{
                 type: "spline",
                 markerSize: 5,
                 xValueFormatString: "DD",
                 xValueType: "dateTime",
-                dataPoints = <?php echo json_encode($convertedDataPoints, JSON_NUMERIC_CHECK); ?>;
+                dataPoints: dataPoints
             }]
         });
 
@@ -221,19 +209,19 @@ $calendar = new Calendar();
 </script>
 
 <script>
-    // Initialize chart2 when the document is ready
     document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartTwo"], JSON_NUMERIC_CHECK); ?>;
         var chart2 = new CanvasJS.Chart("chartContainer2", {
             animationEnabled: true,
             exportEnabled: true,
             data: [{
                 type: "pie",
-                showInLegend: "true",
+                // showInLegend: "true",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
                 indexLabel: "{label} - #percent%",
                 yValueFormatString: "฿#,##0",
-                dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+                dataPoints: dataPoints
             }]
         });
 
