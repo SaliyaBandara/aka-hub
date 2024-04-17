@@ -371,6 +371,20 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllClubs()
+    {
+
+        $sql = "SELECT * from clubs WHERE ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     // get all the posts of the counselor
     // public function getCounselorPosts()
     // {
@@ -885,6 +899,33 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyClub()
+    {
+
+        $empty = [
+            "id" => "",
+            "name" => ""
+        ];
+
+        $template = [
+            "id" => [
+                "label" => "Club ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "name" => [
+                "label" => "Club Name",
+                "type" => "text",
+                "validation" => "required"
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     /**
      * Student Profile Model
@@ -1057,7 +1098,7 @@ class readModel extends Model
             "created_datetime" => "",
             "posted_by" => "",
             "title" => "",
-            "updatds_datetime" => "",
+            "updated_datetime" => "",
         ];
 
         $template = [
