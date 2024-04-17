@@ -19,33 +19,39 @@ $calendar = new Calendar();
 
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        1200 Total Users
-                    </div>
+                    <?php if ($data["count_total_users"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_total_users"] ?> Total Users
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        1000 Active Users
-                    </div>
+                    <?php if ($data["count_role_users"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_role_users"] ?> Roled Users
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        200 New Users
-                    </div>
+                    <?php if ($data["count_new_users"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_new_users"] ?> New Users
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="fourGraphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <?php echo $chartFive->render(); ?>
+                        <div id="chartContainer1" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                     <div class="graphContainor">
-                        <?php echo $chartTwo->render(); ?>
+                        <div id="chartContainer2" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <?php echo $chartThree->render(); ?>
+                        <div id="chartContainer3" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                     <div class="graphContainor">
                         <?php echo $chartFour->render(); ?>
@@ -53,7 +59,7 @@ $calendar = new Calendar();
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainorFive">
-                        <?php echo $chartOne->render(); ?>
+                        <?php echo $chartFive->render(); ?>
                     </div>
                 </div>
             </div>
@@ -180,3 +186,142 @@ $calendar = new Calendar();
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
+        var chart1 = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            axisY: {
+                title: "Yearly Users",
+            },
+            data: [{
+                type: "spline",
+                markerSize: 5,
+                xValueFormatString: "DD",
+                xValueType: "dateTime",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart1.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartTwo"], JSON_NUMERIC_CHECK); ?>;
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: true,
+            exportEnabled: true,
+            data: [{
+                type: "pie",
+                // showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 10,
+                indexLabel: "{label} - #percent%",
+                yValueFormatString: "฿#,##0",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart2.render();
+    });
+</script>
+
+<script>
+    // Initialize chart when the document is ready
+    document.addEventListener("DOMContentLoaded", function() {
+        var yearlyStudentData = <?php echo json_encode($yearlyStudentData, JSON_NUMERIC_CHECK); ?>;
+
+        var chart = new CanvasJS.Chart("chartContainer3", {
+            animationEnabled: true,
+            theme: "light2",
+            axisY: {
+                title: "Number of Students"
+            },
+            data: [{
+                type: "column",
+                dataPoints: yearlyStudentData
+            }]
+        });
+
+        chart.render();
+    });
+</script>
+<script>
+    // Initialize chart1 when the document is ready
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = [];
+
+        var chart = new CanvasJS.Chart("chartContainer4", {
+            animationEnabled: true,
+            theme: "light2",
+            zoomEnabled: true,
+            axisY: {
+                title: "Post Sharing For Months",
+            },
+            data: [{
+                type: "line",
+                yValueFormatString: "$#,##0.00",
+                dataPoints: dataPoints
+            }]
+        });
+
+        function addData(data) {
+            var dps = data.price_usd;
+            for (var i = 0; i < dps.length; i++) {
+                dataPoints.push({
+                    x: new Date(dps[i][0]),
+                    y: dps[i][1]
+                });
+            }
+            chart.render();
+        }
+
+        $.getJSON("https://canvasjs.com/data/gallery/php/bitcoin-price.json", addData);
+    });
+</script>
+<script>
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("chartContainer5", {
+            animationEnabled: true,
+            legend: {
+                cursor: "pointer",
+                itemclick: toggleDataSeries
+            },
+            toolTip: {
+                shared: true
+            },
+            data: [{
+                    type: "area",
+                    showInLegend: true,
+                    xValueType: "dateTime",
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "₹#,##0.##",
+                    dataPoints: <?php echo json_encode($dataPoints1); ?>
+                },
+                {
+                    type: "area",
+                    showInLegend: true,
+                    xValueType: "dateTime",
+                    xValueFormatString: "MMM YYYY",
+                    yValueFormatString: "₹#,##0.##",
+                    dataPoints: <?php echo json_encode($dataPoints2); ?>
+                }
+            ]
+        });
+
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+    }
+</script>

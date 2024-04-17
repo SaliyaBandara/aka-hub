@@ -2,584 +2,315 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("approveRepresentatives");
+$calendar = new Calendar();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
-        <div class="left">
-            <div class="approveDivContainor">
-                <div class="containorForcardArea">
-                    <div class="tableContainor">
-                        <div class="cardContainor">
-                            <h3 class="h3-RepApprove">Representatives Approving Area</h3>
-                            <div class="searchBarContainor">
-                                <label>Search</label>
-                                <div class="searchBar">
-                                    <input class="searchText" type="text" name="search" id="search">
-                                </div>
-                            </div>
-                            <div class="div-tableHeader">
-                                <div id="nameHeader" class="tableHeaderItem">
-                                    Student Name
-                                </div>
-                                <div id="mailHeader" class="tableHeaderItem">
-                                    University Email
-                                </div>
-                                <div id="indexNumberHeader" class="tableHeaderItem">
-                                    Reg Number
-                                </div>
-                                <div id="repTypeHeader" class="tableHeaderItem">
-                                    Rep Type
-                                </div>
-                                <div id="actionHeader" class="tableHeaderItem">
-                                    Action to Perform
-                                </div>
-                            </div>
-                            <div class="scrollableContainer">
+        <div class="left w-100">
+
+            <!-- section header -->
+            <section>
+                <div class="section_header mb-1 flex">
+                    <div class="title font-1-5 font-semibold flex align-center">
+                        <i class='bx bxs-calendar-check me-0-5'></i> Approve Student/Club Representatives
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Uni Email</th>
+                                    <th>Reg Number</th>
+                                    <th>Rep Type</th>
+                                    <th>Action</th>
+                                    <th>Preview</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
                                 <?php
-                                if (is_array($data["approveRequests"])) {
+
+                                if (isset($data["approveRequests"])) {
+                                    $i = 1;
                                     foreach ($data["approveRequests"] as $card) {
                                         if ($card['student_rep'] == 2 && $card['club_rep'] == 2) {
                                 ?>
-                                            <div class="approve-card">
-                                                <div class="approve-card-div">
-                                                    <div id="repName">
-                                                        <?php echo isset($card['name']) ? $card['name'] : ''; ?>
+                                            <tr>
+                                                <td><?= $i++ ?></td>
+                                                <td><?= $card["name"] ?></td>
+                                                <td><?= $card["email"] ?></td>
+                                                <td><?= $card["student_id"] ?></td>
+                                                <td>Student Rep</td>
+                                                <td>
+                                                    <div class="action-list">
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-blue repAcceptButonStudentRep">Approve</a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-orange repDeclineButonStudentRep">Decline</a>
                                                     </div>
-                                                    <div id="repMail">
-                                                        <?php echo isset($card['email']) ? $card['email'] : ''; ?>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><?= $i++ ?></td>
+                                                <td><?= $card["name"] ?></td>
+                                                <td><?= $card["email"] ?></td>
+                                                <td><?= $card["student_id"] ?></td>
+                                                <td>Club Rep</td>
+                                                <td>
+                                                    <div class="action-list">
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-blue repAcceptButonClubRep">Approve</a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-orange repDeclineButonClubRep">Decline</a>
                                                     </div>
-                                                    <div id="repIndex">
-                                                        <?php echo isset($card['student_id']) ? $card['student_id'] : ''; ?>
-                                                    </div>
-                                                    <div id="repType">
-                                                        <?php echo 'Student Rep'; ?>
-                                                    </div>
-                                                    <div class="repAccept">
-                                                        <div class="repAcceptButonStudentRep" data-role="representativeAcceptStudentRep" data-id="<?php echo $card['id']; ?>">
-                                                            <div class="acceptButton">Accept</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="repDecline">
-                                                        <div class="repDeclineButonStudentRep" data-role="representativeDeclineStudentRep" data-id="<?php echo $card['id']; ?>">
-                                                            <div class="declineButton">Decline</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="repPreview">
-                                                        <div class="previewButton">
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="approve-card">
-                                                <div class="approve-card-div">
-                                                    <div id="repName">
-                                                        <?php echo isset($card['name']) ? $card['name'] : ''; ?>
-                                                    </div>
-                                                    <div id="repMail">
-                                                        <?php echo isset($card['email']) ? $card['email'] : ''; ?>
-                                                    </div>
-                                                    <div id="repIndex">
-                                                        <?php echo isset($card['student_id']) ? $card['student_id'] : ''; ?>
-                                                    </div>
-                                                    <div id="repType">
-                                                        <?php echo 'Student Rep'; ?>
-                                                    </div>
-                                                    <div class="repAccept">
-                                                        <div class="repAcceptButonClubRep" data-role="representativeAcceptClubRep" data-id="<?php echo $card['id']; ?>">
-                                                            <div class="acceptButton">Accept</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="repDecline">
-                                                        <div class="repDeclineButonClubRep" data-role="representativeDeclineClubRep" data-id="<?php echo $card['id']; ?>">
-                                                            <div class="declineButton">Decline</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="repPreview">
-                                                        <div class="previewButton">
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                </td>
+                                            </tr>
                                         <?php
                                         } else {
                                         ?>
-                                            <div class="approve-card">
-                                                <div class="approve-card-div">
-                                                    <div id="repName">
-                                                        <?php echo isset($card['name']) ? $card['name'] : ''; ?>
-                                                    </div>
-                                                    <div id="repMail">
-                                                        <?php echo isset($card['email']) ? $card['email'] : ''; ?>
-                                                    </div>
-                                                    <div id="repIndex">
-                                                        <?php echo isset($card['student_id']) ? $card['student_id'] : ''; ?>
-                                                    </div>
-                                                    <div id="repType">
+                                            <tr>
+                                                <td><?= $i++ ?></td>
+                                                <td><?= $card["name"] ?></td>
+                                                <td><?= $card["email"] ?></td>
+                                                <td><?= $card["student_id"] ?></td>
+                                                <td><?php
+                                                    if (isset($card['student_rep']) && $card['student_rep'] == 2) {
+                                                        echo 'Student Rep';
+                                                    } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
+                                                        echo 'Club Rep';
+                                                    }
+                                                    ?></td>
+                                                <td>
+                                                    <div class="action-list">
                                                         <?php
                                                         if (isset($card['student_rep']) && $card['student_rep'] == 2) {
-                                                            echo 'Student Rep';
-                                                        } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
-                                                            echo 'Club Rep';
-                                                        }
                                                         ?>
-                                                    </div>
-                                                    <div class="repAccept">
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-blue repAcceptButonStudentRep">Approve</a>
                                                         <?php
-                                                        if (isset($card['student_rep']) && $card['student_rep'] == 2) {
-                                                            echo '<div class="repAcceptButonStudentRep" data-role="representativeAcceptStudentRep" data-id="' . $card['id'] . '">';
-                                                            echo '<div class="acceptButton">Accept</div>';
-                                                            echo '</div>';
                                                         } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
-                                                            echo '<div class="repAcceptButonClubRep" data-role="representativeAcceptClubRep" data-id="' . $card['id'] . '">';
-                                                            echo '<div class="acceptButton">Accept</div>';
-                                                            echo '</div>';
+                                                        ?>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-blue repAcceptButonClubRep">Approve</a>
+                                                        <?php                                                                             } else {
+                                                        ?>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-blue repAcceptButonStudentRep">Approve</a>
+                                                        <?php
+                                                        }
+                                                        if (isset($card['student_rep']) && $card['student_rep'] == 2) {
+                                                        ?>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-orange repDeclineButonStudentRep">Decline</a>
+                                                        <?php
+                                                        } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
+                                                        ?>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-orange repDeclineButonClubRep">Decline</a>
+                                                        <?php
                                                         } else {
-                                                            echo '<div class="repAcceptButon" data-role="representativeAcceptStudentRep" data-id="' . $card['id'] . '">';
-                                                            echo '<div class="acceptButton">Accept</div>';
-                                                            echo '</div>';
-                                                        }
                                                         ?>
-                                                    </div>
-                                                    <div class="repDecline">
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-orange repDeclineButonClubRep">Decline</a>
                                                         <?php
-                                                        if (isset($card['student_rep']) && $card['student_rep'] == 2) {
-                                                            echo '<div class="repDeclineButonStudentRep" data-role="representativeDeclineStudentRep" data-id="' . $card['id'] . '">';
-                                                            echo '<div class="declineButton">Decline</div>';
-                                                            echo '</div>';
-                                                        } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
-                                                            echo '<div class="repDeclineButonClubRep" data-role="representativeDeclineClubRep" data-id="' . $card['id'] . '">';
-                                                            echo '<div class="declineButton">Decline</div>';
-                                                            echo '</div>';
-                                                        } else {
-                                                            echo '<div class="repAcceptButon" data-role="representativeAcceptStudentRep" data-id="' . $card['id'] . '">';
-                                                            echo '<div class="previewButton">Preview</div>';
-                                                            echo '</div>';
                                                         }
                                                         ?>
                                                     </div>
-                                                    <div class="repPreview">
-                                                        <div class="previewButton">
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                </td>
+                                            </tr>
                                 <?php
+
                                         }
                                     }
                                 }
+
                                 ?>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
+
+                <style>
+                    .btn-blue {
+                        background-color: #2d7bf4;
+                        color: white !important;
+                    }
+
+                    .btn-orange {
+                        background-color: #ff9b2d;
+                        color: white !important;
+                    }
+
+                    .table .table-img-preview {
+                        width: 70px;
+                        cursor: pointer;
+                    }
+
+                    .table .action-list a {
+                        color: inherit;
+                        font-size: 1rem;
+                        margin-right: 5px;
+                    }
+
+                    .table .action-list {
+                        text-align: center;
+                    }
+                </style>
+
+
+            </section>
+
         </div>
-        <!-- Your right content goes here -->
+
+        <!-- <div class="right">
+            <div style="width: 30vh;"></div>
+        </div> -->
+
     </div>
-</div>
-</div>
 
-<style>
-    .previewButton a {
-        text-decoration: none;
-        color: white;
-    }
+    <?php $HTMLFooter = new HTMLFooter(); ?>
 
-    .repPreview {
-        width: 10%;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 13px;
-    }
+    <!-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css -->
+    <!-- //cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js -->
 
-    .repPreview div {
-        text-decoration: none;
-        color: white;
-        background-color: #2684FF;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 0px 5px 0px #2684FF;
-        border-radius: 5px;
-    }
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.js"></script> -->
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script> -->
 
-    .repPreview div:hover {
-        background-color: #2684FF;
-        cursor: pointer;
-    }
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script>
 
-    .approveDivContainor {
-        width: 100%;
-        height: 100vh;
-    }
-
-    .approveDivContainor h3 {
-        text-align: center;
-    }
-
-    .main-grid {}
-
-    .main-grid .left {
-        width: 100% !important;
-        height: 1350px;
-        padding: 0 150px 0 150px;
-    }
-
-    .scrollableContainer {
-        height: 430px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    .h3-RepApprove {
-        text-align: center;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    #nameHeader {
-        width: 18%;
-        height: 65px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #mailHeader {
-        width: 25%;
-        height: 65px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #indexNumberHeader {
-        width: 25%;
-        height: 65px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #repTypeHeader {
-        width: 18%;
-        height: 65px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #actionHeader {
-        width: 30%;
-        height: 65px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .tableContainor {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 50px;
-    }
-
-    .searchText {
-        width: 100%;
-        height: 100%;
-        border: none;
-        outline: none;
-        border-radius: 10px;
-        padding: 1rem 1.25rem;
-        font-size: 0.6rem;
-        font-weight: 500;
-        background-color: #f1f1f1;
-    }
-
-    .searchBar {
-        height: 30px;
-        margin-left: 5px;
-    }
-
-    .searchBarContainor {
-        width: 100%;
-        height: 30px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-bottom: 15px;
-        padding-right: 95px;
-    }
-
-    .div-tableHeader {
-        width: 100%;
-        height: 65px;
-        background-color: #2684FF;
-        opacity: 1;
-        display: flex;
-    }
-
-    .cardContainor {
-        width: 100%;
-        height: 100%;
-        /* padding-left: 100px; */
-        justify-content: center;
-        align-items: center;
-    }
-
-    .containorForcardArea {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .notificationContainor h3 {
-        text-align: center;
-        width: 92%;
-    }
-
-    #repName {
-        width: 16%;
-        height: 20%;
-    }
-
-    #repMail {
-        width: 25%;
-        height: 20%;
-    }
-
-    #repIndex {
-        width: 25%;
-        height: 20%;
-    }
-
-    #repType {
-        width: 20%;
-        height: 20%;
-    }
-
-    .repAccept {
-        width: 15%;
-        height: 65px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .repAccept div {
-        text-decoration: none;
-        color: white;
-        background-color: #2684FF;
-        width: 65%;
-        height: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 0px 5px 0px #2684FF;
-        border-radius: 5px;
-    }
-
-    .repAccept div:hover {
-        background-color: #2684FF;
-        cursor: pointer;
-    }
-
-    .repDecline {
-        width: 15%;
-        height: 38px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: -10px;
-        margin-right: 13px;
-    }
-
-    .repDecline div {
-        text-decoration: none;
-        color: white;
-        background-color: #ff9b2d;
-        width: 65%;
-        height: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 0px 5px 0px #ff9b2d;
-        border-radius: 5px;
-    }
-
-    .repDecline div:hover {
-        background-color: #ff9b2d;
-        cursor: pointer;
-    }
-
-    .acceptIcon {
-        width: 65px;
-        height: 65px;
-    }
-
-    .declineIcon {
-        width: 35px;
-        height: 35px;
-    }
-
-    .acceptIcon:hover {
-        width: 67px;
-        height: 67px;
-        cursor: pointer;
-    }
-
-    .declineIcon:hover {
-        width: 37px;
-        height: 37px;
-        cursor: pointer;
-    }
-
-    .approve-card {
-        background-color: white;
-        width: 100%;
-        height: 55px;
-        justify-content: space-between;
-        align-items: center;
-        margin: 0px 0 0 3px;
-        display: flex;
-    }
-
-    .approve-card-div {
-        text-align: center;
-        align-items: center;
-        display: flex;
-        width: 100%;
-    }
-</style>
-
-<?php $HTMLFooter = new HTMLFooter(); ?>
-<script>
-    let BASE_URL = "<?= BASE_URL ?>";
-</script>
-
-<script>
-    $(document).ready(function() {
-        $(document).on("click", ".repAcceptButonStudentRep", function(event) {
-            event.preventDefault();
-            let id = $(this).attr("data-id");
-            let approveCard = $(this).closest('.approve-card');
-
-            $.ajax({
-                url: `${BASE_URL}/approveRepresentatives/acceptRole/${id}/student_rep`,
-                type: 'post',
-                dataType: 'json',
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", `Accepted successfully.`);
-                        approveCard.remove();
-                        // window.location.reload();
-
-                    } else {
-                        alertUser("warning", response['desc']);
-                    }
+    <script>
+        let BASE_URL = "<?= BASE_URL ?>";
+    </script>
+    <script>
+        $(document).ready(function() {
+            let col_count = $("#products-datatable thead th").length;
+            $("#products-datatable").DataTable({
+                language: {
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>",
+                    },
+                    info: "Showing records _START_ to _END_ of _TOTAL_",
+                    lengthMenu: 'Display <select class=\'form-select form-select-sm\'><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="-1">All</option></select> records',
                 },
-                error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong");
-                }
+                responsive: true,
+                pageLength: 10,
+                columns: Array(col_count).fill({
+                    orderable: !0
+                }),
+                select: {
+                    style: "multi"
+                },
+                order: [
+                    [0, "asc"]
+                ],
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"),
+                        $("#products-datatable_length label").addClass("form-label");
+                },
+            });
+            $(document).on("click", ".repAcceptButonStudentRep", function(event) {
+                event.preventDefault();
+                let button = $(this);
+                let urlParts = $(this).attr("href").split('/');
+                let id = urlParts[urlParts.length - 2];
+                $.ajax({
+                    url: `${BASE_URL}/approveRepresentatives/acceptRole/${id}/student_rep`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Accepted successfully.`);
+                            button.closest("tr").remove();
+
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+            });
+
+            $(document).on("click", ".repAcceptButonClubRep", function(event) {
+                event.preventDefault();
+                let button = $(this);
+                let urlParts = $(this).attr("href").split('/');
+                let id = urlParts[urlParts.length - 2];
+                $.ajax({
+                    url: `${BASE_URL}/approveRepresentatives/acceptRole/${id}/club_rep`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Accepted successfully.`);
+                            button.closest("tr").remove();
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+            });
+
+            $(document).on("click", ".repDeclineButonStudentRep", function(event) {
+                event.preventDefault();
+                let button = $(this);
+                let urlParts = $(this).attr("href").split('/');
+                let id = urlParts[urlParts.length - 2];
+                $.ajax({
+                    url: `${BASE_URL}/approveRepresentatives/declineRole/${id}/student_rep`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Denied successfully.`);
+                            button.closest("tr").remove();
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+            });
+
+            $(document).on("click", ".repDeclineButonClubRep", function(event) {
+                event.preventDefault();
+                let button = $(this);
+                let urlParts = $(this).attr("href").split('/');
+                let id = urlParts[urlParts.length - 2];
+                $.ajax({
+                    url: `${BASE_URL}/approveRepresentatives/declineRole/${id}/club_rep`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Denied successfully.`);
+                            button.closest("tr").remove();
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
             });
         });
+    </script>
+    <script>
 
-        $(document).on("click", ".repAcceptButonClubRep", function(event) {
-            event.preventDefault();
-            let id = $(this).attr("data-id");
-            let approveCard = $(this).closest('.approve-card');
-
-            $.ajax({
-                url: `${BASE_URL}/approveRepresentatives/acceptRole/${id}/club_rep`,
-                type: 'post',
-                dataType: 'json',
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", `Accepted successfully.`);
-                        // $(this).closest("tr").remove();
-                        approveCard.remove();
-                        // buttonElement.closest("tr").remove();
-                        // window.location.reload();
-                    } else {
-                        alertUser("warning", response['desc']);
-                    }
-                },
-                error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong");
-                }
-            });
-        });
-
-        $(document).on("click", ".repDeclineButonStudentRep", function(event) {
-            event.preventDefault();
-            let id = $(this).attr("data-id");
-            let approveCard = $(this).closest('.approve-card');
-
-            $.ajax({
-                url: `${BASE_URL}/approveRepresentatives/declineRole/${id}/student_rep`,
-                type: 'post',
-                dataType: 'json',
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", `Denied successfully.`);
-                        // $(this).closest("tr").remove();
-                        approveCard.remove();
-                        // buttonElement.closest("tr").remove();
-                        // window.location.reload();
-                    } else {
-                        alertUser("warning", response['desc']);
-                    }
-                },
-                error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong");
-                }
-            });
-        });
-
-        $(document).on("click", ".repDeclineButonClubRep", function(event) {
-            event.preventDefault();
-            let id = $(this).attr("data-id");
-            let approveCard = $(this).closest('.approve-card');
-
-            $.ajax({
-                url: `${BASE_URL}/approveRepresentatives/declineRole/${id}/club_rep`,
-                type: 'post',
-                dataType: 'json',
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", `Denied successfully.`);
-                        // $(this).closest("tr").remove();
-                        approveCard.remove();
-                    } else {
-                        alertUser("warning", response['desc']);
-                    }
-                },
-                error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong");
-                }
-            });
-        });
-    });
-</script>
-</div>
+    </script>

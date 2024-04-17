@@ -45,6 +45,114 @@ class readModel extends Model
         return false;
     }
 
+    public function getCountAllUsers()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as total_users FROM user WHERE ?", "i", [1]);
+        if ($result !== null && isset($result[0]['total_users'])) {
+            return $result[0]['total_users'];
+        }
+        return false;
+    }
+
+
+    public function getCountRoleUsers()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as role_users FROM user WHERE role = ? OR role =? OR student_rep = ? OR club_rep = ? OR teaching_student = ?", "iiiii", [1, 5, 1, 1, 1]);
+        if ($result && count($result) > 0) {
+            return $result[0]['role_users'];
+        }
+        return false;
+    }
+
+
+    public function getCountNewUsers()
+    {
+        $currentYear = date('Y');
+
+        $startDate = "{$currentYear}-01-01 00:00:00";
+        $endDate = "{$currentYear}-12-31 23:59:59";
+
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as new_users_count FROM user WHERE created_at BETWEEN ? AND ?", "ss", [$startDate, $endDate]);
+
+        if ($result && count($result) > 0) {
+            return $result[0]['new_users_count'];
+        }
+
+        return 0;
+    }
+
+    public function getChartOne()
+    {
+        $dataPoints = array();
+        $currentTimestamp = time();
+        for ($i = 0; $i < 48; $i++) {
+            $timestamp = strtotime("-{$i} months", $currentTimestamp);
+            $startOfMonth = strtotime('first day of', $timestamp);
+            $endOfMonth = strtotime('last day of', $timestamp);
+            $startDate = date('Y-m-d', $startOfMonth);
+            $endDate = date('Y-m-d', $endOfMonth);
+            $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM user WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            if ($result === false) {
+                error_log("Error executing SQL query for period: $startDate to $endDate");
+                continue;
+            }
+            if (count($result) > 0) {
+                $userCount = (int) $result[0]['user_count'];
+                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $userCount);
+            } else {
+                error_log("No user creation records found for period: $startDate to $endDate");
+            }
+        }
+        $dataPoints = array_reverse($dataPoints);
+        return $dataPoints;
+    }
+
+
+
+    public function getChartTwo()
+    {
+        $dataPoints = array(
+            array("label" => "Admin", "y" => 0),
+            array("label" => "Super Admin", "y" => 0),
+            array("label" => "Club Rep", "y" => 0),
+            array("label" => "Student Rep", "y" => 0),
+            array("label" => "Counselor", "y" => 0),
+            array("label" => "Teaching_Student", "y" => 0)
+        );
+        $resultAdmin = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [1]);
+        $resultSuperAdmin = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [2]);
+        $resultClubRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE club_rep = ?", "i", [1]);
+        $resultStudentRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE student_rep = ?", "i", [1]);
+        $resultCounselor = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [5]);
+        $resultTeachingStudent = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE teaching_student = ?", "i", [1]);
+        
+        $dataPoints[0]["y"] = ($resultAdmin ? (int) $resultAdmin[0]['count'] : 0);
+        $dataPoints[1]["y"] = ($resultSuperAdmin ? (int) $resultSuperAdmin[0]['count'] : 0);
+        $dataPoints[2]["y"] = ($resultClubRep ? (int) $resultClubRep[0]['count'] : 0);
+        $dataPoints[3]["y"] = ($resultStudentRep ? (int) $resultStudentRep[0]['count'] : 0);
+        $dataPoints[4]["y"] = ($resultCounselor ? (int) $resultCounselor[0]['count'] : 0);
+        $dataPoints[5]["y"] = ($resultTeachingStudent ? (int) $resultTeachingStudent[0]['count'] : 0);
+        
+        return $dataPoints;
+    }
+
+
+    public function getChartFive()
+    {
+        $dataPoints = array();
+        $currentTimestamp = time();
+        $fourMonthsAgo = strtotime("-4 months", $currentTimestamp);
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count, DATE(created_at) as creation_date FROM user WHERE created_at >= ? GROUP BY creation_date", "s", [date('Y-m-d', $fourMonthsAgo)]);
+        foreach ($result as $row) {
+            $timestamp = strtotime($row['creation_date']);
+            $dataPoints[] = array("x" => $timestamp * 1000, "y" => $row['user_count']);
+        }
+
+        return $dataPoints;
+    }
+
+
+
     public function getUserSettings($id)
     {
         $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
@@ -159,7 +267,7 @@ class readModel extends Model
 
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?" , "i" , [$post_id]);
+        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?", "i", [$post_id]);
         if (count($result) > 0)
             return $result;
 
@@ -168,7 +276,7 @@ class readModel extends Model
 
     public function getPostLikes($post_id, $user_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?" , "ii" ,[$post_id,$user_id]);
+        $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?", "ii", [$post_id, $user_id]);
         if (count($result) > 0)
             return $result;
 
