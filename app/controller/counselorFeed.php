@@ -17,8 +17,14 @@ class CounselorFeed extends Controller
         ];
 
         // $post_id = 5;
-        $data["posts"] = $this->model('readModel')->getCounselorPosts($_SESSION["user_id"]);
-        $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
+        if($_SESSION["user_role"] != 5){
+            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(1);
+        }
+        else{
+            $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$_SESSION["user_id"]);
+        }
+
+        // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
         // print_r($data["comments"]);
 

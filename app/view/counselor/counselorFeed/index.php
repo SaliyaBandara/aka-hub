@@ -27,7 +27,7 @@ $sidebar = new Sidebar("counselorFeed");
                             } else {
                                 foreach ($data["posts"] as $posts) {
                                 $img_src = USER_IMG_PATH . $posts["post_image"];
-                                $img_src_profile = USER_IMG_PATH . $data["user"]["profile_img"];
+                                $img_src_profile = USER_IMG_PATH . $posts["profile_img"];
                         ?>
                                     <div class="feedPost my-2">
                                         <div class = "postDetails">
@@ -37,7 +37,7 @@ $sidebar = new Sidebar("counselorFeed");
                                                 </div>
                                                 <div class = "userDetails">
                                                     <div class = "userName">
-                                                        <?= $_SESSION["user_name"] ?>
+                                                        <?= $posts["name"] ?>
                                                     </div>
                                                     <div class = "publishedDate">
                                                         <?= date('d/m/y H:i', strtotime($posts["created_datetime"])) ?>
@@ -45,14 +45,16 @@ $sidebar = new Sidebar("counselorFeed");
                                                 </div>
                                             </div>
                                             <div class = detailsRight>
-                                                <div class="editDeleteButton">
-                                                    <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
-                                                        <i class='bx bx-edit'></i>
-                                                    </a>
-                                                    <a class="repDecline delete-item" data-id="<?= $posts['id'] ?>">
-                                                        <i class='bx bx-trash text-danger'></i>
-                                                    </a>
-                                                </div>
+                                                <?php if ($_SESSION["user_role"] == 5) { ?>
+                                                    <div class="editDeleteButton">
+                                                        <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
+                                                            <i class='bx bx-edit'></i>
+                                                        </a>
+                                                        <a class="repDecline delete-item" data-id="<?= $posts['id'] ?>">
+                                                            <i class='bx bx-trash text-danger'></i>
+                                                        </a>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class = "postTitle my-1 font-medium"> <?= strtoupper($posts["title"]) ?></div> 
