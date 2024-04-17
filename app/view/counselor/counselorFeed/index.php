@@ -64,10 +64,11 @@ $sidebar = new Sidebar("counselorFeed");
                                         <div class = "postDetails">
                                             <div class = "detailsLeft">
                                                 <div class="likeCommentButton">
-                                                    <a href="./counselorFeed/like/<?= $posts["id"] ?>">
-                                                        <i class='bx bx-heart text-danger likeButton' data-post-id="<?= $posts['id'] ?>"></i>
+                                                    <!-- <a href="./counselorFeed/like/<?= $posts["id"] ?>"> -->
+                                                    <a class = "likePost" data-id = "<?= $posts["id"] ?>">
+                                                        <i class='bx bx-heart text-danger likeButton'></i>
                                                     </a>
-                                                    <label>
+                                                    <label class = "likeCountLabel">
                                                         <?= ($posts['likesCount'] === null) ? '0 Likes' : $posts['likesCount'] . ' Likes' ?>
                                                     </label>
                                                     <a href = "#" class="commentsToggle">
@@ -217,7 +218,7 @@ $sidebar = new Sidebar("counselorFeed");
         margin-left: -10px;
         margin-right: 13px;
     }
-    .delete-item {
+    .delete-item, .likePost{
         cursor: pointer;
     }
 
@@ -301,7 +302,7 @@ $sidebar = new Sidebar("counselorFeed");
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        $this.closest(".feed-post").remove();
+                        $this.closest(".feedPost").remove();
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
@@ -309,6 +310,38 @@ $sidebar = new Sidebar("counselorFeed");
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
+        $(document).on("click", ".likePost", function() {
+            let id = $(this).attr("data-id");
+            let $this = $(this);
+
+            // // confirm delete
+            // if (!confirm("Are you sure you want to delete this post?"))
+            //     return;
+
+            $.ajax({
+                url: `${BASE_URL}/counselorFeed/like/${id}`,
+                type: 'post',
+                data: {
+                    like: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("danger", response['desc'])
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500);
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "You have already liked this post")
                 }
             });
         });

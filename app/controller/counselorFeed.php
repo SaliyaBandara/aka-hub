@@ -119,21 +119,15 @@ class CounselorFeed extends Controller
             die(json_encode(array("status" => "400", "desc" => "You have already liked this post")));
         }
 
-        // print_r($values);
-
         $this->validate_template($values, $data["likes_template"]);
 
-        // if ($id == 0)
         $result = $this->model('createModel')->insert_db("post_likes", $values, $data["likes_template"]);
-        // else
-        //     $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
 
         if ($result)
-            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            die(json_encode(array("status" => "200", "desc" => "Liked")));
 
         die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
         // }
 
-        // print_r("HI");
     }
 }
