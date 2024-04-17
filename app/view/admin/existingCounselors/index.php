@@ -17,6 +17,9 @@ $sidebar = new Sidebar("existingCounselors");
                     if (is_array($data["counselors"])) {
                         
                         foreach ($data["counselors"] as $key => $value) {
+                            
+                            $img_src_profile = USER_IMG_PATH . $value["profile_img"];
+
                             if ($value["role"] == 5) {
                                 echo "<div class='counselorCard'>";
                                 if($value["type"] == 1){
@@ -26,32 +29,31 @@ $sidebar = new Sidebar("existingCounselors");
                                     echo "<h4>Student Counselor</h4>";
                                 }
                                 echo "<div class='counselor-image-containor'>";
-                                echo "<img src='" . BASE_URL . "/public/assets/img/counselors/counselorImage.jpg' alt='' id = 'counselorPhoto'>";
+                                echo "<img src='$img_src_profile' alt='' id = 'counselorPhoto'>";
                                 echo "</div>";
                                 echo "<h5>" . $value["name"] . "</h5>";
                                 echo "<h5>" . $value["email"] . "</h5>";
                                 echo "<h5> 0" . $value["contact"] . "</h5>";
 
                                 //if user is a student 
-                                if($data["role"] != 1){
-                                    echo "<div class = 'detailsButtonArea'>";
-                                    echo "<a href='./counselorView/index/{$value['id']}'>";
-                                    echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
-                                    echo "View Details";
-                                    echo "</div>";
-                                    echo "</a>";
-                                    echo "</div>";
-                                }
+                                echo "<div class = 'detailsButtonArea'>";
+                                echo "<a href='./counselorView/index/{$value['id']}'>";
+                                echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
+                                echo "View Details";
+                                echo "</div>";
+                                echo "</a>";
+                                echo "</div>";
+                                
 
                                 // echo "<p>".$value["description"]."</p>";
                                 //if user is an admin
                                 if($data["role"] == 1) {
                                     echo "<div class='edit-delete-containor'>";
                                     echo "<a href='" . BASE_URL . "/addCounselors/index/" . $value["id"] . "' class='block iconContainor'>";
-                                    echo "<img src='" . BASE_URL . "/public/assets/img/icons/edit.png' alt=''>";
+                                    echo "<i class='bx bx-edit'></i>";
                                     echo "</a>";
                                     echo "<div class='iconContainor delete-item' data-id='" . $value["id"] . "'>";
-                                    echo "<img src='" . BASE_URL . "/public/assets/img/icons/rejected.png' alt=''>";
+                                    echo "<i class='bx bx-trash text-danger'></i>";
                                     echo "</div>";
                                     echo "</div>";
                                     
@@ -192,6 +194,13 @@ $sidebar = new Sidebar("existingCounselors");
             padding-right: 20px;
         }
 
+        .edit-delete-containor a , .delete-item{
+            text-decoration: none;
+            color: inherit;
+            margin-left: 5px;
+            font-size: 20px;
+        }
+
         .iconContainor img {
             width: 30px;
             height: 30px;
@@ -205,8 +214,9 @@ $sidebar = new Sidebar("existingCounselors");
             width: 28%;
             min-width: 150px;
             height: 100%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
             margin: 25px;
+            border-radius:10px;
         }
 
         .counselor-image-containor {

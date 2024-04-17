@@ -13,9 +13,14 @@ $calendar = new Calendar();
 
             <!-- section header -->
             <section>
-                <div class="section_header mb-1 flex">
-                    <div class="title font-1-5 font-semibold flex align-center">
+                <div class="section_header mb-1 flex title_bar">
+                    <div class="title font-1-5 font-semibold left_side">
                         <i class='bx bxs-calendar-check me-0-5'></i> Approve Student/Club Representatives
+                    </div>
+                    <div class="mb-1 form-group right_side">
+                        <a href="<?= BASE_URL ?>/clubs/index" class="btn btn-primary">
+                            <i class='bx bx-show'></i>  View Clubs and Societies
+                        </a>
                     </div>
                 </div>
 
@@ -161,6 +166,23 @@ $calendar = new Calendar();
                     .table .action-list {
                         text-align: center;
                     }
+
+                    .title_bar{
+                        flex-direction: row;
+                        /* border: 1px solid red; */
+                    }
+
+                    .left_side{
+                        width: 70%;
+                        /* border: 1px solid red; */
+                    }
+
+                    .right_side{
+                        width: 30%;
+                        /* justify-content: center;
+                        border: 1px solid red; */
+                    }
+
                 </style>
 
 
