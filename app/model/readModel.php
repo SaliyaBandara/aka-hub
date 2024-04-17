@@ -113,21 +113,44 @@ class readModel extends Model
         return false;
     }
 
-    public function getCounselorPosts($posted_by)
+    public function getCounselorPosts($type,$posted_by)
     {   
         $sql = "
-        SELECT p.*, 
+        SELECT p.*, u.profile_img, u.name,
             (SELECT COUNT(l.id) 
             FROM post_likes l 
             WHERE l.post_id = p.id
             GROUP BY l.post_id) AS likesCount 
 
-            FROM posts p 
-            WHERE p.type = 1 
+            FROM posts p, user u
+            WHERE p.type = ? 
+            AND p.posted_by = u.id
             AND p.posted_by = ? 
             ORDER BY p.created_datetime DESC
         ";
-        $result = $this->db_handle->runQuery($sql, "i", [$posted_by]);
+        $result = $this->db_handle->runQuery($sql, "ii", [$type,$posted_by]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getAllCounselorPosts($type)
+    {   
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u
+            WHERE p.type = ? 
+            AND p.posted_by = u.id
+            AND ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "ii" , [$type,1]);
         if (count($result) > 0)
             return $result;
 
