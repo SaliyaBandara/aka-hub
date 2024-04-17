@@ -89,13 +89,50 @@ class readModel extends Model
             $timestamp = strtotime("-{$i} months", $currentTimestamp);
             $startOfMonth = strtotime('first day of', $timestamp);
             $endOfMonth = strtotime('last day of', $timestamp);
-            $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM user WHERE created_at >= ? AND created_at <= ?", "ss", [date('Y-m-d', $startOfMonth), date('Y-m-d', $endOfMonth)]);
-            $dataPoints[] = array("x" => $timestamp * 1000, "y" => ($result ? (int)$result[0]['user_count'] : 0));
+            $startDate = date('Y-m-d', $startOfMonth);
+            $endDate = date('Y-m-d', $endOfMonth);
+            $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM user WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            if ($result === false) {
+                error_log("Error executing SQL query for period: $startDate to $endDate");
+                continue;
+            }
+            if (count($result) > 0) {
+                $userCount = (int) $result[0]['user_count'];
+                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $userCount);
+            } else {
+                error_log("No user creation records found for period: $startDate to $endDate");
+            }
         }
-
-        // Reverse the data points array to have the data in ascending order of time
         $dataPoints = array_reverse($dataPoints);
+        return $dataPoints;
+    }
 
+
+
+    public function getChartTwo()
+    {
+        $dataPoints = array(
+            array("label" => "Admin", "y" => 0),
+            array("label" => "Super Admin", "y" => 0),
+            array("label" => "Club Rep", "y" => 0),
+            array("label" => "Student Rep", "y" => 0),
+            array("label" => "Counselor", "y" => 0),
+            array("label" => "Teaching_Student", "y" => 0)
+        );
+        $resultAdmin = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [1]);
+        $resultSuperAdmin = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [2]);
+        $resultClubRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE club_rep = ?", "i", [1]);
+        $resultStudentRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE student_rep = ?", "i", [1]);
+        $resultCounselor = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [5]);
+        $resultTeachingStudent = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE teaching_student = ?", "i", [1]);
+        
+        $dataPoints[0]["y"] = ($resultAdmin ? (int) $resultAdmin[0]['count'] : 0);
+        $dataPoints[1]["y"] = ($resultSuperAdmin ? (int) $resultSuperAdmin[0]['count'] : 0);
+        $dataPoints[2]["y"] = ($resultClubRep ? (int) $resultClubRep[0]['count'] : 0);
+        $dataPoints[3]["y"] = ($resultStudentRep ? (int) $resultStudentRep[0]['count'] : 0);
+        $dataPoints[4]["y"] = ($resultCounselor ? (int) $resultCounselor[0]['count'] : 0);
+        $dataPoints[5]["y"] = ($resultTeachingStudent ? (int) $resultTeachingStudent[0]['count'] : 0);
+        
         return $dataPoints;
     }
 

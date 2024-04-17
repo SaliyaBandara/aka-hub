@@ -12,7 +12,7 @@ class AdminPanel extends Controller
         $data["count_role_users"] = $this->model('readModel')->getCountRoleUsers();
         $data["count_new_users"] = $this->model('readModel')->getCountNewUsers();
         $data["chartOne"] = $this->model('readModel')->getChartOne();
-        
+        $data["chartTwo"] = $this->model('readModel')->getChartTwo();
 
         $this->view->render('admin/adminpanel/index', $data);
     }
