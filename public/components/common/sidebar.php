@@ -18,6 +18,8 @@ class Sidebar
                 $studentPages = [
                     'dashboard' => ['Dashboard', 'bxs-dashboard'],
                     'courses' => ['Courses', 'bxs-book'],
+                    'eventFeed' => ['Events', 'bxs-calendar-star'],
+                    'counselorFeed' => ['Counselor Articles', 'bxs-donate-heart'],
                     'chat' => ['Forum', 'bxs-chat'],
                     'electionDashboard' => ['Elections', 'bxs-check-square'],
                     'studentProfile' => ['Settings', 'bxs-cog'],
@@ -75,7 +77,6 @@ class Sidebar
             if ($club_rep == 1) { //ClubRep
                 $clubrepPages = [
                     'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
                     'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $clubrepPages);

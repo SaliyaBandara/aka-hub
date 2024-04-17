@@ -16,7 +16,7 @@ class CounselorView extends Controller
         // if (!$data["counselor"])
         //     $this->redirect();
         $data["counselor"] = $this->model('readModel')->getOneCounselor($id);
-        $data["posts"] = $this->model('readModel')->getCounselorPosts($id);
+        $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$id);
         $this->view->render('student/counselor/view', $data);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("counselorFeed");
+$sidebar = new Sidebar("eventFeed");
 ?>
 
 
@@ -9,21 +9,21 @@ $sidebar = new Sidebar("counselorFeed");
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
-            <?php if ($_SESSION["user_role"] == 5) { ?>
+            <?php if ($_SESSION["club_rep"]) { ?>
                 <div class="mb-1 form-group">
-                    <a href="<?= BASE_URL ?>/counselorFeed/add_edit/0/" class="btn btn-primary">
+                    <a href="<?= BASE_URL ?>/eventFeed/add_edit/0/" class="btn btn-primary">
                         <i class='bx bx-plus'></i> Add Post
                     </a>
                 </div>
             <?php } ?>
-            <h3 class="h3-CounselorFeed">Counselor Feed</h3>
+            <h3 class="h3-CounselorFeed">Club Events Feed</h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
                     <div class="feedContainer">
 
                         <?php 
                             if (empty($data["posts"])) {
-                                echo "<div class='font-meidum text-muted'>You can publish an article using 'Add Post' button above!</div>";
+                                echo "<div class='font-meidum text-muted'>You can publish a post using 'Add Post' button above!</div>";
                             } else {
                                 foreach ($data["posts"] as $posts) {
                                 $img_src = USER_IMG_PATH . $posts["post_image"];
@@ -45,9 +45,9 @@ $sidebar = new Sidebar("counselorFeed");
                                                 </div>
                                             </div>
                                             <div class = detailsRight>
-                                                <?php if ($_SESSION["user_role"] == 5) { ?>
+                                                <?php if ($_SESSION["club_rep"]) { ?>
                                                     <div class="editDeleteButton">
-                                                        <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
+                                                        <a href="<?= BASE_URL ?>/eventFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
                                                             <i class='bx bx-edit'></i>
                                                         </a>
                                                         <a class="repDecline delete-item" data-id="<?= $posts['id'] ?>">
@@ -295,7 +295,7 @@ $sidebar = new Sidebar("counselorFeed");
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/counselorFeed/delete/${id}`,
+                url: `${BASE_URL}/eventFeed/delete/${id}`,
                 type: 'post',
                 data: {
                     delete: true
@@ -325,7 +325,7 @@ $sidebar = new Sidebar("counselorFeed");
             //     return;
 
             $.ajax({
-                url: `${BASE_URL}/counselorFeed/like/${id}`,
+                url: `${BASE_URL}/eventFeed/like/${id}`,
                 type: 'post',
                 data: {
                     like: true

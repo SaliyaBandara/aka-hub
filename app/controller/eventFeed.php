@@ -1,10 +1,10 @@
 <?php
-class CounselorFeed extends Controller
+class eventFeed extends Controller
 {
 
     public function redirect($redirect = "")
     {
-        header("Location: " . BASE_URL . "/counselorFeed");
+        header("Location: " . BASE_URL . "/eventFeed");
         die();
     }
 
@@ -12,29 +12,29 @@ class CounselorFeed extends Controller
     {
         $this->requireLogin();
         $data = [
-            'title' => 'Counselor Feed',
+            'title' => 'Event Feed',
             'message' => 'Welcome to Aka Hub!'
         ];
 
         // $post_id = 5;
-        if($_SESSION["user_role"] != 5){
-            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(1);
+        if(!($_SESSION["club_rep"])){
+            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(2);
         }
         else{
-            $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$_SESSION["user_id"]);
+            $data["posts"] = $this->model('readModel')->getCounselorPosts(2,$_SESSION["user_id"]);
         }
 
         // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
         // print_r($data["comments"]);
 
-        $this->view->render('counselor/counselorFeed/index', $data);
+        $this->view->render('clubRep/eventFeed/index', $data);
     }
 
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if (!($_SESSION["club_rep"]))
             $this->redirect();
 
         $data = [
@@ -51,7 +51,7 @@ class CounselorFeed extends Controller
 
             $values["posted_by"] = $_SESSION["user_id"];
             $values["post_image"] = $values["post_image"];
-            $values["type"] = '1';
+            $values["type"] = '2';
 
             $this->validate_template($values, $data["post_template"]);
 
@@ -75,7 +75,7 @@ class CounselorFeed extends Controller
                 $this->redirect();
         }
 
-        $this->view->render('counselor/counselorFeed/add_edit', $data);
+        $this->view->render('clubRep/eventFeed/add_edit', $data);
 
 
         // getEmptyCounselorPost
@@ -85,7 +85,7 @@ class CounselorFeed extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if (!($_SESSION["club_rep"]))
             $this->redirect();
 
         if ($id == 0)
