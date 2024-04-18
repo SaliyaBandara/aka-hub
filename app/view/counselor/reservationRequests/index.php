@@ -47,7 +47,22 @@ $calendar = new Calendar();
                             <div class="img"><img src="<?= $img_src ?>"></div>
                             <div class="details">
                                 <span class="name"><?= $reservation_request["name"] ?></span>
-                                <p><?= $reservation_request["year"] ?> year Undergraduate</p>
+                                <?php
+                                // Assuming $reservation_request["year"] contains the year value (e.g., 1, 2, 3, ...)
+                                $year = $reservation_request["year"];
+
+                                // Define an array of suffixes
+                                $suffixes = array("st", "nd", "rd");
+                                // Determine the suffix based on the year value
+                                if ($year >= 1 && $year <= 3) {
+                                    $suffix = $suffixes[$year - 1];
+                                } else {
+                                    $suffix = "th";
+                                }
+
+                                // Output the formatted string
+                                echo "<p>{$year} {$suffix} year Undergraduate</p>";
+                                ?>
                             </div>
                         </div>
                         <div id="popup-button">

@@ -22,7 +22,25 @@
                     
                     <div class="f1">
                         <label>Year:</label>
-                        <label><?php echo $dataArray['year']; ?> year</label><br/>
+                        <label>
+                        <div style="display: inline-block;">
+                                <?php
+                                    // Assuming $reservation_request["year"] contains the year value (e.g., 1, 2, 3, ...)
+                                    $year = $dataArray["year"];
+
+                                    // Define an array of suffixes
+                                    $suffixes = array("st", "nd", "rd");
+                                    // Determine the suffix based on the year value
+                                    if ($year >= 1 && $year <= 3) {
+                                        $suffix = $suffixes[$year - 1];
+                                    } else {
+                                        $suffix = "th";
+                                    }
+
+                                    // Output the formatted string
+                                    echo "<label>{$year} {$suffix} year</label>";
+                                ?>
+                        </div> 
                     </div>
                     <div class="f1">
                         <label>Reservation Date:</label>
