@@ -144,6 +144,14 @@ class readModel extends Model
             return $result;
     }
 
+    public function getUserDetails($id)
+    {
+        $sql = "SELECT * from user u, student s WHERE u.id = s.id AND s.id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+    }
+
     public function getUser($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
@@ -1035,6 +1043,54 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyStudent()
+    {
+
+        $empty = [
+            "id" => "",
+            "index_number" => "",
+            "faculty" => "",
+            "degree" => "",
+            "year" => "",
+        ];
+
+        $template = [
+            "id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "index_number" => [
+                "label" => "Index Number",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "faculty" => [
+                "label" => "Faculty",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "degree" => [
+                "label" => "Degree",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "year" => [
+                "label" => "Year",
+                "type" => "number",
+                "validation" => "required"
+            ]
+
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
 
     /**

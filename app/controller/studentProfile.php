@@ -18,7 +18,7 @@ class StudentProfile extends Controller{
 
         $id = $_SESSION["user_id"];
         // print_r($id);
-        $data["student_details"] = $this->model('readModel')->getUserSettings($id);
+        $data["student_details"] = $this->model('readModel')->getUserDetails($id);
         $this->view->render('student/studentProfile/index', $data);
     }
 
@@ -37,50 +37,51 @@ class StudentProfile extends Controller{
     //     $this->view->render('student/studentProfile/view', $data);
     // }
 
-    // public function add_edit($id = 0, $action = "create")
-    // {
-    //     $this->requireLogin();
-    //     if ($_SESSION["user_role"] != 0)
-    //         $this->redirect();
+    public function add_edit($id)
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 0)
+            $this->redirect();
 
-    //     $data = [
-    //         'title' => ($action == "create") ? 'Student Profile' : 'Edit Profile',
-    //         'message' => 'Welcome to Aka Hub!'
-    //     ];
+        $data = [
+            'title' => 'Edit Profile',
+            'message' => 'Welcome to Aka Hub!'
+        ];
 
-    //     $data["student_profile_template"] = $this->model('readModel')->getEmptyNotificationSetting();
-    //     $data["student_profile"] = $data["student_profile_template"]["empty"];
-    //     $data["student_profile_template"] = $data["student_profile_template"]["template"];
+        $data["student_profile_template"] = $this->model('readModel')->getEmptyStudent();
+        $data["student_profile"] = $data["student_profile_template"]["empty"];
+        $data["student_profile_template"] = $data["student_profile_template"]["template"];
 
-    //     if (isset($_POST['add_edit'])) {
-    //         $values = $_POST["add_edit"];
-    //         $this->validate_template($values, $data["student_profile_template"]);
+        // print_r($data["student_profile_template"]);
 
-    //         if ($id == 0)
-    //             $result = $this->model('createModel')->insert_db("notification_settings", $values, $data["student_profile_template"]);
-    //         else
-    //             $result = $this->model('updateModel')->update_one("notification_settings", $values, $data["student_profile_template"], "id", $id, "i");
+        if (isset($_POST['add_edit'])) {
+            $values = $_POST["add_edit"];
+            $this->validate_template($values, $data["student_profile_template"]);
 
-    //         if ($result)
-    //             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            if ($id == 0)
+                $result = $this->model('createModel')->insert_db("student", $values, $data["student_profile_template"]);
+            else
+                $result = $this->model('updateModel')->update_one("student", $values, $data["student_profile_template"], "id", $id, "i");
 
-    //         die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
-    //     }
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
-    //     $data["id"] = $id;
-    //     $data["action"] = $action;
+            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
+        }
 
-    //     if ($id != 0) {
-    //         $data["student_profile"] = $this->model('readModel')->getOne("notification_settings", $id);
-    //         if (!$data["student_profile"])
-    //             $this->redirect();
-    //     }
+        $data["id"] = $id;
 
-    //     // print params
-    //     // print_r($id);
-    //     // print_r($action);
+        if ($id != 0) {
+            $data["student_profile"] = $this->model('readModel')->getOne("student", $id);
+            if (!$data["student_profile"])
+                $this->redirect();
+        }
 
-    //     $this->view->render('student/studentProfile/add_edit', $data);
-    // }
+        // print params
+        // print_r($id);
+        // print_r($action);
+
+        $this->view->render('student/studentProfile/add_edit', $data);
+    }
 
 }
