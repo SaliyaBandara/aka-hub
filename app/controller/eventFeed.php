@@ -24,9 +24,9 @@ class eventFeed extends Controller
             $data["posts"] = $this->model('readModel')->getCounselorPosts(2,$_SESSION["user_id"]);
         }
 
-        // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
+        $data["clubs"] = $this->model('readModel')->getAllClubs();
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
-        // print_r($data["comments"]);
+        // print_r($data["clubs"]);
 
         $this->view->render('clubRep/eventFeed/index', $data);
     }
@@ -135,5 +135,42 @@ class eventFeed extends Controller
         die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
         // }
 
+    }
+
+    public function clickToBeClubRep($club_id)
+    {
+        $this->requireLogin();
+
+        $data["clubRep_template"] = $this->model('readModel')->getEmptyClubReps();
+        $data["clubRep"] = $data["clubRep_template"]["empty"];
+        $data["clubRep_template"] = $data["clubRep_template"]["template"];
+
+        // print_r($_SESSION["club_rep"] );
+
+        if ($_SESSION["club_rep"] == 1) {
+            die(json_encode(array("status" => "400", "desc" => "You are already a Club Representative")));
+        } else if ($_SESSION["club_rep"] == 2) {
+            die(json_encode(array("status" => "400", "desc" => "Already requested")));
+        } else if ($_SESSION["club_rep"] == 0) {
+
+            $resultUpdate = $this->model('updateModel')->to_get_role(
+                "user",
+                "club_rep",
+                $_SESSION["user_id"],
+                2
+            );
+
+            $values['club_id'] = $club_id;
+            $values['user_id'] = $_SESSION["user_id"];
+            $values['status'] = 0;
+
+            $resultCreate = $this->model('createModel')->insert_db("club_representative", $values, $data["clubRep_template"]);
+
+            if ($resultUpdate && $resultCreate )
+                die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
+            else {
+                die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
+            }
+        }
     }
 }

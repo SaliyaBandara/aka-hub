@@ -101,6 +101,46 @@ $sidebar = new Sidebar("eventFeed");
                 </div>
             </div>
         </div>
+        <div class = "right">
+            <div class = "flex-column justify-center align-center divButtonSection">
+                <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
+                    Are you engaged in any club/society in the university?
+                </div>
+                <div class = "title font-1 font-medium flex align-left justify-center requestDescription">
+                    Become a Representative for your club/society and spread the word abuot your events!
+                </div>
+                <div class="mb-1 form-group">
+                    <div>
+                        <form action="" method="post" class="form">
+                            <div class="mb-1 form-group">
+                                <label for="name" class="form-label">
+                                    Club Name
+                                </label>
+                                <select id="name" name="name" placeholder="Select Your Club/Society" data-validation="required" class="form-control">
+                                <?php 
+                                    if (empty($data["clubs"])) {
+                                        echo "<option value='' class='font-medium text-muted'>No clubs available</option>";
+                                    } else {
+                                        echo "<option selected value=''> Select your club/society </option>";
+                                        foreach ($data["clubs"] as $club) {        
+                                            echo "<option value='{$club['id']}'>{$club['name']}</option>";
+                                        }
+                                    }
+                                ?>
+                                </select>
+                            </div>
+
+                            <div href="#">
+                                <div class = "btn btn-primary mb-1 form form-group clubRequestButton justify-center align-center">
+                                    Send Request
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
     </div>
 </div>
 
@@ -229,10 +269,12 @@ $sidebar = new Sidebar("eventFeed");
     }
 
     .divCounselorFeed {
-        width: 65%;
+        width: 80%;
         height: 100%;
         display: flex;
         justify-content: center;
+        /* margin: 0 !important;
+        border: 1px solid red; */
     }
 
     .userImage{
@@ -256,8 +298,45 @@ $sidebar = new Sidebar("eventFeed");
     }
 
     .main-grid .left {
-        width: 100%;
+        width: 65% !important;
         height: 3000px;
+    }
+
+    .main-grid .right {
+        width: 35% !important;
+        height: 3000px;
+        margin-top: 6rem !important;
+        /* border: 1px solid red; */
+    }
+
+    .divButtonSection{
+        border-radius: 10px;
+        margin:1rem;
+        /* border: 1px solid red; */
+        justify-content: center;
+        padding:1rem;
+    }
+
+
+    .teachingRequestButton{
+        border: 1px solid #2684ff;
+        background-color: var(--secondary-color);
+        color: white;
+        width: 100%;
+        text-align:center;
+        text-decoration: none !important;
+    }
+
+    .divButtonSection a{
+        text-decoration: none !important;
+    }
+    
+    .requestDescription{
+        text-align: center;
+        width : 100%;
+        /* border:1px solid red; */
+        padding-bottom: 1rem;
+        color: black;
     }
 </style>
 
@@ -344,6 +423,31 @@ $sidebar = new Sidebar("eventFeed");
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "You have already liked this post")
+                }
+            });
+        });
+
+        $(document).on("click", ".clubRequestButton", function() {
+
+            let selectedValue = $("#name").val();
+
+            $.ajax({
+                url: `${BASE_URL}/eventFeed/clickToBeClubRep/${selectedValue}`,
+                type: 'post',
+                data: {
+                    request: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
                 }
             });
         });

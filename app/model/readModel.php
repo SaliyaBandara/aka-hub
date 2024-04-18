@@ -927,6 +927,43 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyClubReps()
+    {
+
+        $empty = [
+            "club_id" => "",
+            "user_id" => "",
+            "status" => ""
+        ];
+
+        $template = [
+            "club_id" => [
+                "label" => "Club ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "status" => [
+                "label" => "Status",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     /**
      * Student Profile Model
      */
