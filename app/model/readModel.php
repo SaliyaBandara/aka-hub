@@ -136,6 +136,79 @@ class readModel extends Model
         return $dataPoints;
     }
 
+    public function getChartThree()
+    {
+        $dataPoints = array(
+            array("label" => "First Year", "y" => 0),
+            array("label" => "Second Year", "y" => 0),
+            array("label" => "Third Year", "y" => 0),
+            array("label" => "Fourth Year", "y" => 0),
+        );
+        $resultFirstYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [1]);
+        $resultSecondYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [2]);
+        $resultThirdYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [3]);
+        $resultFourthYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [4]);
+
+        $dataPoints[0]["y"] = ($resultFirstYear ? (int) $resultFirstYear[0]['count'] : 0);
+        $dataPoints[1]["y"] = ($resultSecondYear ? (int) $resultSecondYear[0]['count'] : 0);
+        $dataPoints[2]["y"] = ($resultThirdYear ? (int) $resultThirdYear[0]['count'] : 0);
+        $dataPoints[3]["y"] = ($resultFourthYear ? (int) $resultFourthYear[0]['count'] : 0);
+
+        return $dataPoints;
+    }
+
+    public function getChartFour()
+    {
+        $dataPoints = array(
+            array("label" => "Club Events", "y" => 0),
+            array("label" => "Main Events", "y" => 0),
+            array("label" => "Clubs", "y" => 0),
+            array("label" => "Courses", "y" => 0),
+            array("label" => "Course Materials", "y" => 0),
+            array("label" => "Elections", "y" => 0),
+            array("label" => "Posts", "y" => 0),
+            array("label" => "Reservation Requests", "y" => 0),
+            array("label" => "Timeslots", "y" => 0),
+        );
+        $resultClubEvents = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM club_events WHERE ?", "i", [1]);
+        $resultMainEvents = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM main_events WHERE ?", "i", [1]);
+        $resultClubs = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM clubs WHERE ?", "i", [1]);
+        $resultCourses = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM courses WHERE ?", "i", [1]);
+        $resultCourseMaterials = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM course_materials WHERE ?", "i", [1]);
+        $resultElections = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM elections WHERE ?", "i", [1]);
+        $resultPosts = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM posts WHERE ?", "i", [1]);
+        $resultReservationRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE ?", "i", [1]);
+        $resultTimeslots = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM timeslots WHERE ?", "i", [1]);
+
+        $dataPoints[0]["y"] = ($resultClubEvents ? (int) $resultClubEvents[0]['counts'] : 0);
+        $dataPoints[1]["y"] = ($resultMainEvents ? (int) $resultMainEvents[0]['counts'] : 0);
+        $dataPoints[2]["y"] = ($resultClubs ? (int) $resultClubs[0]['counts'] : 0);
+        $dataPoints[3]["y"] = ($resultCourses ? (int) $resultCourses[0]['counts'] : 0);
+        $dataPoints[4]["y"] = ($resultCourseMaterials ? (int) $resultCourseMaterials[0]['counts'] : 0);
+        $dataPoints[5]["y"] = ($resultElections ? (int) $resultElections[0]['counts'] : 0);
+        $dataPoints[6]["y"] = ($resultPosts ? (int) $resultPosts[0]['counts'] : 0);
+        $dataPoints[7]["y"] = ($resultReservationRequests ? (int) $resultReservationRequests[0]['counts'] : 0);
+        $dataPoints[8]["y"] = ($resultTimeslots ? (int) $resultTimeslots[0]['counts'] : 0);
+
+        return $dataPoints;
+    }
+
+    public function getChartFive()
+    {
+        $dataPoints = array(
+            array("label" => "Accepted Reservation Requests", "y" => 0),
+            array("label" => "Denied Reservation Requests", "y" => 0),
+        );
+        $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE accepted = ?", "i", [1]);
+        $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE declined = ?", "i", [1]);
+
+        $dataPoints[0]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
+        $dataPoints[1]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
+
+        return $dataPoints;
+    }
+
+
     public function getUserSettings($id)
     {
         $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
@@ -212,8 +285,8 @@ class readModel extends Model
         return false;
     }
 
-    public function getCounselorPosts($type,$posted_by)
-    {   
+    public function getCounselorPosts($type, $posted_by)
+    {
         $sql = "
         SELECT p.*, u.profile_img, u.name,
             (SELECT COUNT(l.id) 
@@ -227,7 +300,7 @@ class readModel extends Model
             AND p.posted_by = ? 
             ORDER BY p.created_datetime DESC
         ";
-        $result = $this->db_handle->runQuery($sql, "ii", [$type,$posted_by]);
+        $result = $this->db_handle->runQuery($sql, "ii", [$type, $posted_by]);
         if (count($result) > 0)
             return $result;
 
@@ -235,7 +308,7 @@ class readModel extends Model
     }
 
     public function getAllCounselorPosts($type)
-    {   
+    {
         $sql = "
         SELECT p.*,u.profile_img, u.name,
             (SELECT COUNT(l.id) 
@@ -249,7 +322,7 @@ class readModel extends Model
             AND ?
             ORDER BY p.created_datetime DESC
         ";
-        $result = $this->db_handle->runQuery($sql, "ii" , [$type,1]);
+        $result = $this->db_handle->runQuery($sql, "ii", [$type, 1]);
         if (count($result) > 0)
             return $result;
 
@@ -1320,21 +1393,21 @@ class readModel extends Model
                 "label" => "Date",
                 "type" => "date",
                 "validation" => "required",
-                
+
             ],
 
             "start_time" => [
                 "label" => "Start Time",
                 "type" => "time",
                 "validation" => "required",
-    
+
             ],
 
             "end_time" => [
                 "label" => "End Time",
                 "type" => "time",
                 "validation" => "required",
-                
+
             ],
 
         ];
@@ -1344,6 +1417,4 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
-
 }

@@ -13,6 +13,9 @@ class AdminPanel extends Controller
         $data["count_new_users"] = $this->model('readModel')->getCountNewUsers();
         $data["chartOne"] = $this->model('readModel')->getChartOne();
         $data["chartTwo"] = $this->model('readModel')->getChartTwo();
+        $data["chartThree"] = $this->model('readModel')->getChartThree();
+        $data["chartFour"] = $this->model('readModel')->getChartFour();
+        $data["chartFive"] = $this->model('readModel')->getChartFive();
 
         $this->view->render('admin/adminpanel/index', $data);
     }
