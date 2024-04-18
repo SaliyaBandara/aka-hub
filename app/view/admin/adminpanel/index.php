@@ -2,10 +2,6 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("adminpanel");
-$chartOne = new AdminPanelChartOne();
-$chartTwo = new AdminPanelChartTwo();
-$chartThree = new AdminPanelChartThree();
-$chartFour = new AdminPanelChartFour();
 $chartFive = new AdminPanelChartFive();
 $calendar = new Calendar();
 ?>
@@ -43,23 +39,23 @@ $calendar = new Calendar();
             <div class="fourGraphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <div id="chartContainer1" style="height: 220px; width: 100%; padding:20px"></div>
+                        <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
-                        <div id="chartContainer2" style="height: 220px; width: 100%; padding:20px"></div>
+                        <div id="chartContainer2" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <div id="chartContainer3" style="height: 220px; width: 100%; padding:20px"></div>
+                        <div id="chartContainer4" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
-                        <?php echo $chartFour->render(); ?>
+                        <div id="chartContainer3" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainorFive">
-                        <?php echo $chartFive->render(); ?>
+                        <div id="chartContainer5" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
             </div>
@@ -168,6 +164,7 @@ $calendar = new Calendar();
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .graphContainorFive {
@@ -192,6 +189,7 @@ $calendar = new Calendar();
         var dataPoints = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
         var chart1 = new CanvasJS.Chart("chartContainer1", {
             animationEnabled: true,
+            exportEnabled: true,
             axisY: {
                 title: "Yearly Users",
             },
@@ -232,96 +230,68 @@ $calendar = new Calendar();
 <script>
     // Initialize chart when the document is ready
     document.addEventListener("DOMContentLoaded", function() {
-        // var dataPoints = <?php echo json_encode($data["chartThree"], JSON_NUMERIC_CHECK); ?>;
-        var yearlyStudentData = <?php echo json_encode($yearlyStudentData, JSON_NUMERIC_CHECK); ?>;
-        var chart = new CanvasJS.Chart("chartContainer3", {
+        var dataPoints = <?php echo json_encode($data["chartThree"], JSON_NUMERIC_CHECK); ?>;
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
             animationEnabled: true,
+            exportEnabled: true,
             theme: "light2",
             axisY: {
                 title: "Number of Students"
             },
             data: [{
                 type: "column",
-                dataPoints: yearlyStudentData
-            }]
-        });
-
-        chart.render();
-    });
-</script>
-<script>
-    // Initialize chart1 when the document is ready
-    document.addEventListener("DOMContentLoaded", function() {
-        var dataPoints = [];
-
-        var chart = new CanvasJS.Chart("chartContainer4", {
-            animationEnabled: true,
-            theme: "light2",
-            zoomEnabled: true,
-            axisY: {
-                title: "Post Sharing For Months",
-            },
-            data: [{
-                type: "line",
-                yValueFormatString: "$#,##0.00",
                 dataPoints: dataPoints
             }]
         });
 
-        function addData(data) {
-            var dps = data.price_usd;
-            for (var i = 0; i < dps.length; i++) {
-                dataPoints.push({
-                    x: new Date(dps[i][0]),
-                    y: dps[i][1]
-                });
-            }
-            chart.render();
-        }
-
-        $.getJSON("https://canvasjs.com/data/gallery/php/bitcoin-price.json", addData);
+        chart3.render();
     });
 </script>
 <script>
-    window.onload = function() {
-
-        var chart = new CanvasJS.Chart("chartContainer5", {
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartFour"], JSON_NUMERIC_CHECK); ?>;
+        var chart4 = new CanvasJS.Chart("chartContainer4", {
             animationEnabled: true,
-            legend: {
-                cursor: "pointer",
-                itemclick: toggleDataSeries
-            },
-            toolTip: {
-                shared: true
-            },
+            exportEnabled: true,
             data: [{
-                    type: "area",
-                    showInLegend: true,
-                    xValueType: "dateTime",
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "₹#,##0.##",
-                    dataPoints: <?php echo json_encode($dataPoints1); ?>
-                },
-                {
-                    type: "area",
-                    showInLegend: true,
-                    xValueType: "dateTime",
-                    xValueFormatString: "MMM YYYY",
-                    yValueFormatString: "₹#,##0.##",
-                    dataPoints: <?php echo json_encode($dataPoints2); ?>
-                }
-            ]
+                type: "pie",
+                // showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 10,
+                indexLabel: "{label} - #percent%",
+                yValueFormatString: "฿#,##0",
+                dataPoints: dataPoints
+            }]
         });
 
-        chart.render();
+        chart4.render();
+    });
+</script>
 
-        function toggleDataSeries(e) {
-            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                e.dataSeries.visible = false;
-            } else {
-                e.dataSeries.visible = true;
-            }
-            chart.render();
-        }
-    }
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartFive"], JSON_NUMERIC_CHECK); ?>;
+        var chart5 = new CanvasJS.Chart("chartContainer5", {
+            animationEnabled: true,
+            exportEnabled: true,
+            theme: "light2",
+            subtitles: [{
+                backgroundColor: "#2eacd1",
+                fontSize: 16,
+                fontColor: "white",
+                padding: 5
+            }],
+            legend: {
+                fontFamily: "calibri",
+                fontSize: 14,
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 90,
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart5.render();
+    });
 </script>
