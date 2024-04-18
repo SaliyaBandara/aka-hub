@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("reservationRequests");
+$sidebar = new Sidebar("upcomingReservations");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>
@@ -30,12 +30,26 @@ $calendar = new Calendar();
             </div> -->
 
             <!-- ===VIRAJITH=== -->
+            <div class="main-container">
+                <div class="slide-container">
+                    <div class="slide-content">
+                        <div class="card-wrapper">
+                            <div class="card">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
 
-            <div class="card-container">
-                <div class="card">Card 1</div>
-                <div class="card">Card 2</div>
-                <div class="card">Card 3</div>
+                                    <div class="card-image">
+                                        <img src="https://i.pinimg.com/736x/f8/66/8e/f8668e5328cfb4938903406948383cf6.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+
+            
         </div>
     </div>
     <style>
@@ -138,19 +152,6 @@ $calendar = new Calendar();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
-        .card-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  width: 200px;
-  height: 150px;
-  background-color: #f0f0f0;
-  margin: 10px;
-  padding: 20px;
-  box-sizing: border-box;
-}
         
     </style>
 
@@ -300,6 +301,29 @@ $calendar = new Calendar();
             color: #155724;
             background-color: #d4edda;
             border-color: #c3e6cb;
+        }
+    </style>
+    <style>
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card-image{
+            position: relative;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: #FFF;
+            padding: 3px;
+        }
+        .card-image .card-img{
+            height: 100;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #4070F4;
         }
     </style>
 

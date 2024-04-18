@@ -1188,4 +1188,123 @@ class readModel extends Model
             "template" => $template
         ];
     }
+
+    //Virajith
+
+    public function getEmptyReservation()
+    {
+
+        $empty = [
+            "id" => "",
+            "name" => "",
+            "year" => "",
+            "date" => "",
+            "start_time" => "",
+            "end_time" => "",
+            "cover_img" => "",
+            "accepted" => "",
+            "declined" => "",
+        ];
+
+        $template = [
+            "name" => [
+                "label" => "Name of the reservation",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "year" => [
+                "label" => "Year of the student",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "date" => [
+                "label" => "Reservation date",
+                "type" => "date",
+                "validation" => "required",
+                "skip" => true
+            ],
+
+            "start_time" => [
+                "label" => "Start Time",
+                "type" => "time",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "end_time" => [
+                "label" => "End Time",
+                "type" => "time",
+                "validation" => "required",
+                "skip" => true
+            ],
+
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "",
+                "skip" => true
+            ],
+            "accepted" => [
+                "label" => "Accepted",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "declined" => [
+                "label" => "Cover Image",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyTimeSlot()
+    {
+
+        $empty = [
+            "id" => "",
+            "date" => "",
+            "start_time" => "",
+            "end_time" => "",
+        ];
+
+        $template = [
+            "date" => [
+                "label" => "Date",
+                "type" => "date",
+                "validation" => "required",
+                
+            ],
+
+            "start_time" => [
+                "label" => "Start Time",
+                "type" => "time",
+                "validation" => "required",
+    
+            ],
+
+            "end_time" => [
+                "label" => "End Time",
+                "type" => "time",
+                "validation" => "required",
+                
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
 }

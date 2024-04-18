@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+$sidebar = new Sidebar("manageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -34,14 +34,24 @@ $calendar = new Calendar();
             <div class="calender-main">
                 <div class="calendarContainor">
                     <?php echo $calendar->render(); ?>
+                    <h2>Please select a Date or Date Range</h2>
+                    <!-- <form action="index.php?controller=calendar&action=filterDates" method="post">
+                        <div class="date-range">
+                            <p class="p1">
+                                <input type="date" name="start_date"> to 
+                                <input type="date" name="end_date">
+                                <button type="submit">Filter</button>
+                            </p>
+                        </div>
+                    </form> -->
+                    <div class="date-range">
+                        <p class="p1"><input type="date"> to <input type="date"></p>
+                    </div>
+                    <div class="manage-time-slots">
+                        <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
+                    </div>
                 </div>
-                <h2>Please select a Date or Date Range</h2>
-                <div class="date-range">
-                    <p class="p1"><input type="date"> to <input type="date"></p>
-                </div>
-                <div class="manage-time-slots">
-                    <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
-                </div>
+                
             </div>
             
 
@@ -148,6 +158,7 @@ $calendar = new Calendar();
             align-items: center;
             display: flex;
             flex-direction: column;
+            text-align: center;
         }
         .date-range{
             margin-top: 20px;

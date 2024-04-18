@@ -2,7 +2,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+$sidebar = new Sidebar("manageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -36,14 +36,14 @@ $calendar = new Calendar();
                                 <div class="content">
                                     <div class="details">
                                         <i class='bx bxs-time'></i>
-                                        <span class="name"><?= date("H:i", strtotime($timeslot["start_time"])) ?> to <?= date("H:i", strtotime($timeslot["end_time"])) ?></span>
+                                        <span class="name"><?= date("Y.m.d", strtotime($timeslot["date"])) ?> - <?= date("H:i", strtotime($timeslot["start_time"])) ?> to <?= date("H:i", strtotime($timeslot["end_time"])) ?></span>
                                     </div>
                                 </div>
                                 <div class="buttons">
                                     <a href="#" class="button-add">Add</a>
                                     <a href="#" class="button-delete">Delete</a>
                                 </div>      
-                        </div>    
+                        </div> 
                         <!-- <div class="card card-not-added" >
                                 <div class="content">
                                     <div class="details">
@@ -113,15 +113,41 @@ $calendar = new Calendar();
                             <a href="" class="close">&times;</a>
                             <div class="content">
                                 <div class="container">
-                                    <form class="form-1">
-                                        <div>
-                                            <div class="form-line"><label class="form-input1">Start Time :</label><input type="time"> </div>
-                                            <div class="form-line"><label class="form-input2">End Time   :</label><input type="time"><br /></div>    
-                                        </div>
-                                        <div class="submit-form">
-                                            <input type="submit" value="Create">
-                                        </div>
+                                    <form class="form" action="" method="post">
+
+                                        <?php
+                                            foreach ($data["timeSlot_template"] as $key => $value) {
+                                                if (isset($value["skip"]) && $value["skip"] == true)
+                                                    continue;
+                                            ?>
+                                                <div class="fields-container">
+                                                    <label for="name" class="form-label"><?= $value["label"] ?></label>
+                                                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["timeSlot"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                                                </div>
+                                            <?php
+                                            }
+                                        ?>
+                                            <!-- <div class="fields-container">
+                                                <div class="form-line">
+                                                    <label class="form-input3">Date :</label>
+                                                    <input type="date" name="end_time"><br />
+                                                </div> 
+                                                <div class="form-line">
+                                                    <label class="form-input1">Start Time :</label>
+                                                    <input type="time" name="start_time">
+                                                </div>
+                                                <div class="form-line">
+                                                    <label class="form-input2">End Time :</label>
+                                                    <input type="time" name="end_time"><br />
+                                                </div>    
+                                            </div> -->
+                                            <div class="submit-form">
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                            
                                     </form>
+
+                                     
                                 </div>
                             </div>
                         </div>
@@ -358,7 +384,7 @@ $calendar = new Calendar();
         transition: opacity 500ms;
         visibility: hidden;
         opacity: 0;
-        z-index: 9999;
+        z-index: 1001;
     }
     .overlay:target{
         visibility: visible;
@@ -429,7 +455,7 @@ $calendar = new Calendar();
         letter-spacing: 3px;
     }
     .popup-form{
-        width: 30%;
+        width: 23%;
         padding: 8px;
         border-radius: 8px;
         border-style: groove;
@@ -453,6 +479,16 @@ $calendar = new Calendar();
         /* border-style: groove; */
         /* background-color: #fff; */
     }
+    .form-1 input[type="date"]{
+        margin: 0 auto; /* Center horizontally */
+        margin-right: 10px;
+        margin-left: -15px;
+        width: 150px;
+        padding: 5px;
+        border-radius: 8px;
+        /* border-style: groove; */
+        /* background-color: #fff; */
+    }
 
     .wrapper1 h2{
         text-align: center;
@@ -463,10 +499,79 @@ $calendar = new Calendar();
     .form-input2{
         margin-right: 50px ;
     }
+    .form-input3{
+        margin-right: 93px ;
+    }
     .form-line{
         margin-bottom: 20px;
     }
+    .fields-container {
+        text-align: left;
+        align-items: center;
+    }
 </style>
+
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+                event.preventDefault();
+                var input = $(this);
+                // var $inputs = $('form :input');
+                var $inputs = $(this).find(':input');
+
+                var values = {};
+                let empty_fields = []
+                $inputs.each(function() {
+                    values[this.name] = $(this).val();
+                    if ($(this).attr("data-validation") != undefined && $(this).is("input") && $(this).val() === "" ||
+                        $(this).is("select") && $(this).val() === "0") {
+                        empty_fields.push($(this));
+                        $(this).addClass("border-danger");
+                    } else {
+                        $(this).removeClass("border-danger");
+                    }
+                });
+
+                setTimeout(() => {
+                    empty_fields.forEach(element => element.removeClass("border-danger"));
+                }, 6000);
+
+                if (empty_fields.length > 0) {
+                    empty_fields[0].focus();
+                    return alertUser("warning", `Please fill all the fields`);
+                }
+
+                $.ajax({
+                    // url: url,
+                    type: 'post',
+                    data: {
+                        addtimeslots: values //methana ******
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", response['desc'])
+                            setTimeout(function() {
+                                history.go(-1);
+                                window.close();
+                            }, 2000);
+
+                        } else if (response['status'] == 403)
+                            alertUser("danger", response['desc'])
+                        else
+                            alertUser("warning", response['desc'])
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong")
+                    }
+                });
+            });        
+    });    
+</script>
 
 
 
