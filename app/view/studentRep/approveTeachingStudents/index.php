@@ -53,7 +53,7 @@ $calendar = new Calendar();
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/approveTeachingStudents/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-warning'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveTeachingStudents/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                         <?php

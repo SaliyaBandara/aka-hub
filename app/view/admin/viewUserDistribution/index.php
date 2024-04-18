@@ -45,7 +45,7 @@ $calendar = new Calendar();
                                             <td><?= $user["email"] ?></td>
                                             <td><?= $user["student_id"] ?></td>
                                             <td>
-                                                <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/viewUserDistribution/previewUser/<?php echo $user['id']; ?>">Preview</a>
+                                                <a href="<?= BASE_URL ?>/viewUserDistribution/previewUser/<?php echo $user['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                             </td>
                                         </tr>
                                 <?php
@@ -71,10 +71,12 @@ $calendar = new Calendar();
 
                     .table .action-list a {
                         color: inherit;
-                        font-size: 1rem;
                         margin-right: 5px;
                     }
 
+                    .icons{
+                        font-size: 24px !important;
+                    }
                     .table .action-list {
                         text-align: center;
                     }

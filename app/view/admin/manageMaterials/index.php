@@ -51,7 +51,7 @@ $calendar = new Calendar();
                                             <td><?= $material["user_name"] ?></td>
                                             <td><?= $material["student_id"] ?></td>
                                             <td>
-                                                <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/manageMaterials/view/<?php echo $material['material_ID']; ?>">View</a>
+                                                <a href="<?= BASE_URL ?>/manageMaterials/view/<?php echo $material['material_ID']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                             </td>
                                         </tr>
                                 <?php
@@ -75,10 +75,14 @@ $calendar = new Calendar();
                         cursor: pointer;
                     }
 
-                    .table .action-list a {
+                    /* .table .action-list a {
                         color: inherit;
-                        font-size: 1rem;
+                        font-size: 24px;
                         margin-right: 5px;
+                    } */
+
+                    .icons{
+                        font-size: 24px;
                     }
 
                     .table .action-list {
