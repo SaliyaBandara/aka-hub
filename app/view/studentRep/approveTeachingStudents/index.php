@@ -2,42 +2,224 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("approveTeachingStudents");
-$approveArea = new TeachingStudentApproveArea();
+$calendar = new Calendar();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
+
     <div class="main-grid flex">
-        <div class="left">
-            <div class="approveDivContainor">
-                <?php echo $approveArea->render(); ?>
-            </div>
+        <div class="left w-100">
+
+            <!-- section header -->
+            <section>
+                <div class="section_header mb-1 flex title_bar">
+                    <div class="title font-1-5 font-semibold left_side">
+                        <i class='bx bxs-calendar-check me-0-5'></i> Approve Teaching Students
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Uni Email</th>
+                                    <th>Reg Number</th>
+                                    <th>Action</th>
+                                    <th>Preview</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php
+
+                                if (isset($data["approveRequests"])) {
+                                    $i = 1;
+                                    foreach ($data["approveRequests"] as $card) {
+                                        if ($card['teaching_student'] == 2) {
+                                ?>
+                                            <tr>
+                                                <td><?= $i++ ?></td>
+                                                <td><?= $card["name"] ?></td>
+                                                <td><?= $card["email"] ?></td>
+                                                <td><?= $card["student_id"] ?></td>
+                                                <td>
+                                                    <div class="action-list">
+                                                        <a href="<?= BASE_URL ?>/approveTeachingStudents/acceptRole/<?= $card["id"] ?>/teaching_student" class="repAcceptButonTeachingStudent"><i class='bx bxs-user-check icons text-success'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveTeachingStudents/declineRole/<?= $card["id"] ?>/teaching_student" class="repDeclineButonTeachingStudent"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a href="<?= BASE_URL ?>/approveTeachingStudents/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-warning'></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        } ?>
+                                            
+                                <?php
+
+                                        }
+                                    }
+
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <style>
+                    .btn-blue {
+                        background-color: #2d7bf4;
+                        color: white !important;
+                    }
+
+                    .btn-orange {
+                        background-color: #ff9b2d;
+                        color: white !important;
+                    }
+
+                    .table .table-img-preview {
+                        width: 70px;
+                        cursor: pointer;
+                    }
+
+                    .table .action-list a {
+                        color: inherit;
+                        font-size: 1rem;
+                        margin-right: 10px;
+                    }
+
+                    .table .action-list {
+                        text-align: center;
+                    }
+
+                    .title_bar{
+                        flex-direction: row;
+                        /* border: 1px solid red; */
+                    }
+
+                    .left_side{
+                        width: 70%;
+                        /* border: 1px solid red; */
+                    }
+
+                    .right_side{
+                        width: 30%;
+                        /* justify-content: center;
+                        border: 1px solid red; */
+                    }
+
+                    .icons{
+                        font-size: 24px;
+                    }
+
+                </style>
+
+
+            </section>
+
         </div>
+
         <!-- <div class="right">
-            
+            <div style="width: 30vh;"></div>
         </div> -->
+
     </div>
 
-    <style>
-        .approveDivContainor{
-            width: 100%;
-            height: 500px;
-        }
-        .approveDivContainor h3{
-            text-align: center;
-        }
-        .main-grid{
+    <?php $HTMLFooter = new HTMLFooter(); ?>
 
-        }
+    <!-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css -->
+    <!-- //cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js -->
 
-        .main-grid .left{
-            width: 100%;
-            height: 1150px;
-        }
-        /* .main-grid .right{
-            flex-grow: 1;
-            height: 1000px;
-        } */
-    </style>
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.js"></script> -->
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script> -->
 
-</div>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script>
+
+    <script>
+        let BASE_URL = "<?= BASE_URL ?>";
+    </script>
+    <script>
+        $(document).ready(function() {
+            let col_count = $("#products-datatable thead th").length;
+            $("#products-datatable").DataTable({
+                language: {
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>",
+                    },
+                    info: "Showing records _START_ to _END_ of _TOTAL_",
+                    lengthMenu: 'Display <select class=\'form-select form-select-sm\'><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="-1">All</option></select> records',
+                },
+                responsive: true,
+                pageLength: 10,
+                columns: Array(col_count).fill({
+                    orderable: !0
+                }),
+                select: {
+                    style: "multi"
+                },
+                order: [
+                    [0, "asc"]
+                ],
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"),
+                        $("#products-datatable_length label").addClass("form-label");
+                },
+            });
+            $(document).on("click", ".repAcceptButonTeachingStudent", function(event) {
+                event.preventDefault();
+                let button = $(this);
+                let urlParts = $(this).attr("href").split('/');
+                let id = urlParts[urlParts.length - 2];
+                $.ajax({
+                    url: `${BASE_URL}/approveTeachingStudents/acceptRole/${id}/teaching_student`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Accepted successfully.`);
+                            button.closest("tr").remove();
+
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+            });
+
+            $(document).on("click", ".repDeclineButonTeachingStudent", function(event) {
+                event.preventDefault();
+                let button = $(this);
+                let urlParts = $(this).attr("href").split('/');
+                let id = urlParts[urlParts.length - 2];
+                $.ajax({
+                    url: `${BASE_URL}/approveTeachingStudents/declineRole/${id}/teaching_student`,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response['status'] == 200) {
+                            alertUser("success", `Denied successfully.`);
+                            button.closest("tr").remove();
+                        } else {
+                            alertUser("warning", response['desc']);
+                        }
+                    },
+                    error: function(ajaxContext) {
+                        alertUser("danger", "Something Went Wrong");
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+
+    </script>

@@ -334,6 +334,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getTeachingStudentsToApprove()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [2]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
     public function getPreviewRepresentative($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
