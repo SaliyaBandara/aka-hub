@@ -33,9 +33,12 @@ $calendar = new Calendar();
 
                 
 
-
             <?php
-                    foreach ($data["reservation_requests"] as $reservation_request) {
+                // Check if there are reservation requests
+            if (empty($data["reservation_requests"])) {
+                echo "<p>No Reservations</p>";
+            } else {
+                foreach ($data["reservation_requests"] as $reservation_request) {
                     $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
             ?>
                 <div class="wrapper">
@@ -53,7 +56,7 @@ $calendar = new Calendar();
                         <!-- <a href="#divone" class="view-button">View</a> -->
                     </div>
                 </div> 
-            <?php } ?>       
+            <?php }} ?>       
             </div>
             <div class="new">
                 <div class="overlay" id="divone"></div>

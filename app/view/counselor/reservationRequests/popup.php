@@ -30,7 +30,7 @@
                     </div>
                     <div class="f1">
                         <label>Time Slot:</label>
-                        <label><?php echo $dataArray['start_time']; ?> to <?php echo $dataArray['end_time']; ?></label><br/>
+                        <label><?php echo date('H.i', strtotime($dataArray['start_time'])); ?> to <?php echo date('H.i', strtotime($dataArray['end_time'])); ?></label><br/>
                     </div>
                     
                 </div>
