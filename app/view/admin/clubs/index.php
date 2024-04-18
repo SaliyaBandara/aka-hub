@@ -58,9 +58,9 @@ $sidebar = new Sidebar("approveRepresentatives");
                             ?>
                                     <tr class = "table_row">
                                         <td><?= $i++ ?></td>
-                                        <td><?= $club["name"] ?></td>
+                                        <td class = "name-cell"><?= $club["name"] ?></td>
                                         <td>
-                                            <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/clubs/add_edit/<?= $club['id'] ?>"><i class='bx bx-edit'></i></a>
+                                            <a class="btn btn-sm btn-blue edit-item" data-id="<?= $club['id'] ?>"><i class='bx bx-edit'></i></a>
                                             <a class="btn btn-sm btn-blue delete-item" data-id="<?= $club['id'] ?>"><i class='bx bx-trash text-danger'></i></a>
                                         </td>
                                     </tr>
@@ -72,7 +72,7 @@ $sidebar = new Sidebar("approveRepresentatives");
                         </tbody>
                     </table>
                 </div>
-                </div>
+            </div>
         </div>
         <div class="mb-1 form-group right">
             <!-- <a href="<?= BASE_URL ?>/clubs/add_edit/0/" class="btn btn-primary add_button" id="addClubBtn">
@@ -227,6 +227,84 @@ $sidebar = new Sidebar("approveRepresentatives");
                 }
             });
         });
+
+        $('.edit-item').click(function() {
+            event.preventDefault();
+            var $row = $(this).closest('tr'); // Get the closest table row
+            var $nameCell = $row.find('.name-cell'); // Get the cell containing the club name
+            var $editBtn = $row.find('.edit-item'); // Get the edit button
+
+            var $clubName = $nameCell.text().trim(); // Get the current club name
+
+            // Replace club name with an input field for editing
+            $nameCell.html('<input type="text" class="form-control" id = "name_input" value="' + $clubName + '">');
+
+            // Change edit button icon to save icon
+            $editBtn.html('<i class="bx bx-save "></i>');
+            $editBtn.removeClass('edit-item');
+            $editBtn.addClass('save-item');
+
+            // Change class to identify the row in edit mode
+            $row.addClass('editing');
+            console.log('came outside edit item function');
+
+        });
+
+        $(document).on('click', '.save-item', function() {
+            console.log('came inside save item function');
+            let id = $(this).attr("data-id");
+            let $this = $(this);
+            var values = {};
+
+            var $row = $(this).closest('tr'); // Get the closest table row
+            var $nameInput = $row.find('.name-input');
+            var newClubName = $nameInput.val().trim();// Get the edit button
+
+            // const newClubName = $row.find('.name-cell input').val();
+            console.log(newClubName);
+
+            values['name'] = newClubName;
+            values['id'] = id;
+
+            console.log(values)
+
+            // Replace input field with the new club name
+
+
+            $.ajax({
+                url: `${BASE_URL}/clubs/add_edit/${id}`,
+                type: 'post',
+                data: {
+                    add_edit: values
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                        $nameCell.html(newClubName);
+
+                        $saveBtn.html('<i class="bx bx-edit"></i>');
+                        $saveBtn.removeClass('save-item');
+                        $saveBtn.addClass('edit-item');
+
+                        $row.removeClass('editing');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+
+            return false;
+        });
+
 
         $('form').submit(function(event) {
             event.preventDefault();

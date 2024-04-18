@@ -67,8 +67,7 @@ class Sidebar
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
                     'elections' => ['Elections', 'bxs-chat'],
-                    'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
+                    'approveTeachingStudents' => ['Teaching Students', 'bxs-pen'],
                     'manageMaterials' => ['Materials', 'bxs-book'],
                 ];
                 $pages = array_merge($pages, $studentrepPages);

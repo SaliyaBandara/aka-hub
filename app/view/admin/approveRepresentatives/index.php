@@ -55,12 +55,12 @@ $calendar = new Calendar();
                                                 <td>Student Rep</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-blue repAcceptButonStudentRep">Approve</a>
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-orange repDeclineButonStudentRep">Decline</a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class=" repAcceptButonStudentRep"><i class='bx bxs-user-check icons text-success'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="brepDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -71,12 +71,12 @@ $calendar = new Calendar();
                                                 <td>Club Rep</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-blue repAcceptButonClubRep">Approve</a>
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-orange repDeclineButonClubRep">Decline</a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="repAcceptButonClubRep"><i class='bx bxs-user-check icons text-success'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                         <?php
@@ -99,34 +99,34 @@ $calendar = new Calendar();
                                                         <?php
                                                         if (isset($card['student_rep']) && $card['student_rep'] == 2) {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-blue repAcceptButonStudentRep">Approve</a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="repAcceptButonStudentRep"><i class='bx bxs-user-check icons text-success'></i></a>
                                                         <?php
                                                         } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-blue repAcceptButonClubRep">Approve</a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="repAcceptButonClubRep"><i class='bx bxs-user-check icons text-success'></i></a>
                                                         <?php                                                                             } else {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-blue repAcceptButonStudentRep">Approve</a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class="repAcceptButonStudentRep"><i class='bx bxs-user-check icons text-success'></i></a>
                                                         <?php
                                                         }
                                                         if (isset($card['student_rep']) && $card['student_rep'] == 2) {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="btn btn-sm btn-orange repDeclineButonStudentRep">Decline</a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="repDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
                                                         <?php
                                                         } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-orange repDeclineButonClubRep">Decline</a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="btn btn-sm btn-orange repDeclineButonClubRep">Decline</a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
                                                         <?php
                                                         }
                                                         ?>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>">Preview</a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                 <?php
@@ -181,6 +181,10 @@ $calendar = new Calendar();
                         width: 30%;
                         /* justify-content: center;
                         border: 1px solid red; */
+                    }
+
+                    .icons{
+                        font-size: 24px;
                     }
 
                 </style>
