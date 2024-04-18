@@ -31,13 +31,15 @@ $candidateCard = new CandidateCard();
                 <div class = "profileDetailArea">
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Name : </div><div class = "profileDetailCell"><?= $userDetails["name"] ?></div></div>
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Email Address : </div><div class = "profileDetailCell"><?= $userDetails["email"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Degree : </div><div class = "profileDetailCell">Computer Science</div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Index Number : </div><div class = "profileDetailCell">21001234</div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Degree : </div><div class = "profileDetailCell"><?= $userDetails["degree"] ?></div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Index Number : </div><div class = "profileDetailCell"><?= $userDetails["index_number"] ?></div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Study Year: </div><div class = "profileDetailCell"><?= $userDetails["year"] ?></div></div>
+                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Faculty : </div><div class = "profileDetailCell"><?= $userDetails["faculty"] ?></div></div>
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Alternative Email : </div><div class = "profileDetailCell"><?= $userDetails["alt_email"] ?></div></div>
                 </div>
             </div>
-            <hr></hr>
-            <div class ="notificationHeading">Notification Settings</div>
+            <!-- <hr></hr> -->
+            <!-- <div class ="notificationHeading">Notification Settings</div>
             <div class = "notificationDetailArea">
                 <div class = "notificationHeaders">
                     <div class ="notificationHeader">Preferred Email Address to receive Notifications</div>
@@ -48,11 +50,11 @@ $candidateCard = new CandidateCard();
                     <div class ="notificationHeader">Send New Material update Notifications</div>
                 </div>
                 <div class = "notificationInputs">
-                    <form>
-                        <div class = "notificationInputRow">
+                    <form> -->
+                        <!-- <div class = "notificationInputRow">
                             <select id="emailAddress" name="emailAddress" disabled>
-                                <!-- <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
-                                <option value="samudi@gmail.com" selected>samudi@gmail.com</option> -->
+                                <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
+                                <option value="samudi@gmail.com" selected>samudi@gmail.com</option>
                                 <?php
                                     if($userDetails["preferred_email"] === 1){
                                         echo '<option selected value="' . $userDetails["email"] . '">' . $userDetails["email"] . '</option>';
@@ -65,14 +67,14 @@ $candidateCard = new CandidateCard();
                                 ?>
                             </select>
                         </div>
-                        <div class = "notificationInputRow">
-                            <div class = "notificationInputCell">
-                                <!-- <input type="checkbox" id="type1" name="onsite" value="onsite"> -->
+                        <div class = "notificationInputRow"> -->
+                            <!-- <div class = "notificationInputCell">
+                                <input type="checkbox" id="type1" name="onsite" value="onsite">
                                 <input type="checkbox" id="type1" name="onsite" <?= $userDetails["exam_notify"] == 1 ? "checked" : "" ?> value="onsite">
                                 <label for="type1">Onsite Notifications</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <!-- <input type="checkbox" id="type2" name="email" value="email" checked> -->
+                            </div> -->
+                            <!-- <div class = "notificationInputCell">
+                                <input type="checkbox" id="type2" name="email" value="email" checked>
                                 <?php
                                     if($userDetails["exam_notify"] === 2){
                                         echo '<input type="checkbox" id="type2" name="email" value="email" checked disabled>';
@@ -84,7 +86,7 @@ $candidateCard = new CandidateCard();
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <!-- <input type="checkbox" id="type3" name="none" value="none"> -->
+                                <input type="checkbox" id="type3" name="none" value="none">
                                 <?php
                                     if($userDetails["exam_notify"] === 3){
                                         echo '<input type="checkbox" id="type3" name="none" value="none" checked>';
@@ -95,10 +97,10 @@ $candidateCard = new CandidateCard();
                                 ?>
                                 <label for="type3">None</label>
                             </div>
-                        </div>
-                        <div class = "notificationInputRow">
+                        </div> -->
+                        <!-- <div class = "notificationInputRow">
                             <div class = "notificationInputCell">
-                                <!-- <input type="checkbox" id="type4" name="onsite" value="onsite" checked> -->
+                                <input type="checkbox" id="type4" name="onsite" value="onsite" checked>
                                 <?php
                                     if($userDetails["reminder_notify"] === 1){
                                         echo '<input type="radio" name="reminder" value="onsite" checked disabled >';
@@ -110,7 +112,7 @@ $candidateCard = new CandidateCard();
                                 <label for="type1">Onsite Notifications</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <!-- <input type="checkbox" id="type5" name="email" value="email"> -->
+                                <input type="checkbox" id="type5" name="email" value="email">
                                 <?php
                                     if($userDetails["reminder_notify"] === 2){
                                         echo '<input type="radio" name="reminder" value="email" checked disabled >';
@@ -122,7 +124,7 @@ $candidateCard = new CandidateCard();
                                 <label for="type2">Emails</label>
                             </div>
                             <div class = "notificationInputCell">
-                                <!-- <input type="checkbox" id="type6" name="none" value="none"> -->
+                                <input type="checkbox" id="type6" name="none" value="none">
                                 <?php
                                     if($userDetails["reminder_notify"] === 3){
                                         echo '<input type="radio" name="reminder" value="none" checked disabled >';
@@ -169,12 +171,14 @@ $candidateCard = new CandidateCard();
                                 <input type="checkbox" id="type12" name="none" value="none" checked>
                                 <label for="type3">None</label>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                     <div class ="profileButtons">
-                        <div class = "saveButton"><input type = "button" class = "profileButton" value = "Save Changes"/></div>
-                        <div class = "editDetailButton"><input type = "button" class = "profileButton" value = "Edit Profile"/></div>
-                        <div class = "changePasswordButton"><input type = "button" class = "profileButton" value = "Change Password"/></div>
+                        <!-- <div class="btn btn-primary"><input type = "button" class = "profileButton" value = "Save Changes"/></div> -->
+                        <a href="<?= BASE_URL ?>/studentProfile/add_edit/<?= $userDetails["id"] ?>" class="btn btn-primary">
+                            Edit Details 
+                        </a>
+                        <!-- <div class="btn btn-primary"><input type = "button" class = "profileButton" value = "Change Password"/></div> -->
                     </div>
                 </div>
             </div>
