@@ -9,24 +9,7 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-            <!-- <div class="threeCardDiv">
-                <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
-                </div>
-                <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
-                </div>
-                <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        8 Total Requests in this week
-                    </div>
-                </div>
-            </div> -->
-
+            
             <!-- ===VIRAJITH=== -->
 
 
@@ -47,8 +30,8 @@ $calendar = new Calendar();
                             <input type="text" placeholder="Enter name to search...">
                             <button><i class='bx bx-search-alt-2' ></i></button>
                         </div>
-                        <div class="users-list">
-                            <a href="#">
+                        <div class="users-list">                           
+                            <!-- <a href="#">
                                 <div class="content">
                                     <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
                                     <div class="details">
@@ -167,17 +150,7 @@ $calendar = new Calendar();
                                     </div>
                                     <div class="status-dot"><i class='bx bxs-circle'></i></div>
                                 </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
+                            </a> -->
                         </div>
                     </section>
                     
@@ -432,7 +405,7 @@ $calendar = new Calendar();
             display: flex;
             flex-direction: row; 
             background: #fff;
-            /* width: 450px !important; */
+           
             border-radius: 16px;
             box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
                         0 32px 64px -48px rgba(0,0,0,0.5);
@@ -756,3 +729,56 @@ $calendar = new Calendar();
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<script>
+    const searchBar = document.querySelector(".users .search input"),
+    searchBtn = document.querySelector(".users .search button"),
+    usersList = document.querySelector(".users-list");
+
+    searchBtn.onclick = ()=>{
+        searchBar.classList.toggle("active");
+        searchBar.focus();
+        searchBtn.classList.toggle("active");
+        searchBar.value = "";
+    }
+
+    searchBar.onkeyup = ()=>{
+        let searchTerm = searchBar.value;
+        if(searchTerm != ""){
+            searchBar.classList.add("active");
+        }else{
+            searchBar.classList.remove("active");
+        }
+        let xhr = new XMLHttpRequest(); //Creating XML object
+        xhr.open("POST", "php/search.php", true);
+        xhr.onload = ()=>{
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
+                    let data = xhr.response;
+                    usersList.innerHTML = data;
+                }
+            }
+        }
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("searchTerm=" + searchTerm);
+    }
+
+    setInterval(()=>{
+        console.log("hello world!");
+        // Strating of the Ajax part
+        let xhr = new XMLHttpRequest(); //Creating XML object
+        xhr.open("GET", "php/users.php", true);
+        xhr.onload = ()=>{
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
+                    let data = xhr.response;
+                    console.log(data);
+                    if(!searchBar.classList.contains("active")){  //if active active not contains in search bar then add this
+                        usersList.innerHTML = data;
+                    }
+                }
+            }
+        } 
+        xhr.send();
+    }, 500); //this function will run frequently after 500ms
+</script>

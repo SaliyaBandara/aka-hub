@@ -43,15 +43,56 @@ class updateModel extends Model
         return $result;
     }
 
+    public function update_election_questions($questions, $election_id, $template = [], $removed_questions = [])
+    {
+        $this->start_transaction();
 
-    public function to_get_role($table, $role, $id, $num){
+        // delete removed questions
+        if (count($removed_questions) > 0) {
+            foreach ($removed_questions as $key => $question_id) {
+                $result = $this->deleteOne("election_questions", $question_id);
+                if (!$result) {
+                    $this->rollback_transaction();
+                    return false;
+                }
+            }
+        }
+
+        // update or insert questions
+        foreach ($questions as $key => $value) {
+            $question = $value;
+            $question_id = $question["id"];
+            unset($question["id"]);
+
+            if ($question_id == 0) {
+                $question["election_id"] = $election_id;
+                $result = $this->insert_db("election_questions", $question, $template);
+            } else {
+                $question["updated_at"] = date("Y-m-d H:i:s");
+                $result = $this->update_one("election_questions", $question, $template, "id", $question_id, "i");
+            }
+
+            if (!$result) {
+                $this->rollback_transaction();
+                return false;
+            }
+        }
+
+        // $this->rollback_transaction();
+        // return false;
+
+        $this->commit_transaction();
+        return true;
+    }
+
+    public function to_get_role($table, $role, $id, $num)
+    {
         $query = "UPDATE $table SET $role = $num WHERE id = ?";
         $values = [$id];
         $valueTypes = ["i"];
         $valueTypesString = implode('', $valueTypes);
-    
+
         $result = $this->db_handle->update($query, $valueTypesString, $values);
         return $result;
     }
-    
 }

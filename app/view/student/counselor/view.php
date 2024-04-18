@@ -16,7 +16,7 @@ $sidebar = new Sidebar("Settings");
                 <?php 
                 if (is_array($data["posts"])) {
                         foreach ($data["posts"] as $posts) {
-                        $img_src = USER_IMG_PATH . $posts["image"];
+                        $img_src = USER_IMG_PATH . $posts["post_image"];
                     ?>
                     <a class = "articleCard" href = "#">
                         <div class = "articleImage">

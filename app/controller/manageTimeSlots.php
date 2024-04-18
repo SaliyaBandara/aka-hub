@@ -11,43 +11,100 @@ class ManageTimeSlots extends Controller
 
         $this->view->render('counselor/manageTimeSlots/index', $data);
     }
-    public function addtimeslots()
+    public function addtimeslots($id = 0, $action = "create")
     {
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 5))
+            $this->redirect();
+
         $data = [
             'title' => 'Manage Time Slots',
             'message' => 'Welcome to Aka Hub!'
         ];
+
+        $data = [
+            'title' => ($action == "create") ? 'Create Timeslot' : 'Edit Timeslot',
+            'message' => 'Welcome to Aka Hub!'
+        ];
         
+        $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
+        $data["timeSlot"] = $data["timeSlot_data"]["empty"];
+        $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
+
+        if (isset($_POST['addtimeslots'])) {
+            $values = $_POST["addtimeslots"];
+            $this->validate_template($values, $data["timeSlot_template"]);
+
+            if ($id == 0)
+                $result = $this->model('createModel')->insert_db("timeslots", $values, $data["timeSlot_template"]);
+
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing timeSlot")));
+        }
+
+        $data["id"] = $id;
+        $data["action"] = $action;
+
+        if ($id != 0) {
+            $data["timeSlot"] = $this->model('readModel')->getOne("timeslots", $id);
+            if (!$data["timeSlot"])
+                $this->redirect();
+        }
+
+        // print params
+        // print_r($id);
+        // print_r($action);
+
         $data["timeslots"] = $this->model('readModel')->getAll("timeslots");
+
         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
     }
     
-    public function createTimeSlot()
-    {
-        // Assuming you're using some form of dependency injection or service container
-        $createModel = new createModel();
+//     public function add_time_slot($id = 0, $action = "create")
+//     {
+//         $this->requireLogin();
+//         if (($_SESSION["user_role"] != 5))
+//             $this->redirect();
 
-        // Get the start time and end time from the form submission
-        $start_time = $_POST['start_time'];
-        $end_time = $_POST['end_time'];
+//         $data = [
+//             'title' => ($action == "create") ? 'Create Timeslot' : 'Edit Timeslot',
+//             'message' => 'Welcome to Aka Hub!'
+//         ];
 
-        // Create an array with the data to be inserted
-        $data = [
-            'start_time' => $start_time,
-            'end_time' => $end_time,
-            // Add more fields if needed
-        ];
+//         $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
+//         $data["timeSlot"] = $data["timeSlot_data"]["empty"];
+//         $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
 
-        // Specify the template for validation if needed
-        $template = [
-            'start_time' => ['type' => 'string'], // Assuming start_time and end_time are strings
-            'end_time' => ['type' => 'string'],
-            // Add more fields if needed
-        ];
+//         if (isset($_POST['add_time_slot'])) {
+//             $values = $_POST["add_time_slot"];
+//             $this->validate_template($values, $data["timeSlot_template"]);
 
-        // Call the insert_db method from your createModel class
-        $createModel->insert_db('timeslots', $data, $template);
+//             if ($id == 0)
+//                 $result = $this->model('createModel')->insert_db("timeslots", $values, $data["timeSlot_template"]);
 
-        // Redirect or do something else after insertion
-    }
+//             if ($result)
+//                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+//             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing timeSlot")));
+//         }
+
+//         $data["id"] = $id;
+//         $data["action"] = $action;
+
+//         if ($id != 0) {
+//             $data["timeSlot"] = $this->model('readModel')->getOne("timeslots", $id);
+//             if (!$data["timeSlot"])
+//                 $this->redirect();
+//         }
+
+//         // print params
+//         // print_r($id);
+//         // print_r($action);
+
+//         $data["timeslots"] = $this->model('readModel')->getAll("timeslots");
+
+//         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
+//     }
 }

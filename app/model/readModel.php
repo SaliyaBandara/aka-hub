@@ -27,6 +27,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllByColumn($table, $column, $value, $type = "s")
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE $column = ?", $type, [$value]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
@@ -135,7 +144,7 @@ class readModel extends Model
     public function getAllEvents($table)
     {
 
-        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND ?";
+        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND m.end_date >= NOW() AND ? ORDER BY m.end_date ASC";
         $result = $this->db_handle->runQuery($sql, "i", [1]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
@@ -161,6 +170,34 @@ class readModel extends Model
         if ($result !== false) {
             return $result;
         }
+        return false;
+    }
+
+    public function getOngoingElections($table)
+    {
+
+        $sql = "SELECT * from elections e where e.end_date >= NOW() AND e.start_date <= NOW() AND ? ORDER BY e.end_date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPreviousElections($table)
+    {
+
+        $sql = "SELECT * from elections e where e.end_date <= NOW() AND ? ORDER BY e.end_date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
         return false;
     }
 
@@ -568,18 +605,14 @@ class readModel extends Model
     {
 
         $empty = [
+            "title" => "",
             "description" => "",
-            "image" => "",
-            "title" => ""
+            "post_image" => "",
+            "posted_by" => "",
+            "type" => "",
         ];
 
         $template = [
-            "posted_by" => [
-                "label" => "User",
-                "type" => "number",
-                "validation" => "required",
-                "skip" => true
-            ],
             "title" => [
                 "label" => "Post Title",
                 "type" => "text",
@@ -591,10 +624,22 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-            "image" => [
+            "post_image" => [
                 "label" => "Image",
                 "type" => "array",
-                "validation" => "",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "posted_by" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "type" => [
+                "label" => "Type",
+                "type" => "number",
+                "validation" => "required",
                 "skip" => true
             ],
         ];
@@ -821,4 +866,123 @@ class readModel extends Model
             "template" => $template
         ];
     }
+
+    //Virajith
+
+    public function getEmptyReservation()
+    {
+
+        $empty = [
+            "id" => "",
+            "name" => "",
+            "year" => "",
+            "date" => "",
+            "start_time" => "",
+            "end_time" => "",
+            "cover_img" => "",
+            "accepted" => "",
+            "declined" => "",
+        ];
+
+        $template = [
+            "name" => [
+                "label" => "Name of the reservation",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "year" => [
+                "label" => "Year of the student",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "date" => [
+                "label" => "Reservation date",
+                "type" => "date",
+                "validation" => "required",
+                "skip" => true
+            ],
+
+            "start_time" => [
+                "label" => "Start Time",
+                "type" => "time",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "end_time" => [
+                "label" => "End Time",
+                "type" => "time",
+                "validation" => "required",
+                "skip" => true
+            ],
+
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "",
+                "skip" => true
+            ],
+            "accepted" => [
+                "label" => "Accepted",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "declined" => [
+                "label" => "Cover Image",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyTimeSlot()
+    {
+
+        $empty = [
+            "id" => "",
+            "date" => "",
+            "start_time" => "",
+            "end_time" => "",
+        ];
+
+        $template = [
+            "date" => [
+                "label" => "Date",
+                "type" => "date",
+                "validation" => "required",
+                
+            ],
+
+            "start_time" => [
+                "label" => "Start Time",
+                "type" => "time",
+                "validation" => "required",
+    
+            ],
+
+            "end_time" => [
+                "label" => "End Time",
+                "type" => "time",
+                "validation" => "required",
+                
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
 }

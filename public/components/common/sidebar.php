@@ -132,7 +132,7 @@ class Sidebar
             </div>
 
             <div class="fixed__bottom">
-                <a class="logout" href="./logout">Logout <i class='bx bx-log-out'></i> </a>
+                <a class="logout" href="<?= BASE_URL ?>/logout">Logout <i class='bx bx-log-out'></i> </a>
             </div>
 
         </div>
