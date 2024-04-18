@@ -232,8 +232,8 @@ $calendar = new Calendar();
 <script>
     // Initialize chart when the document is ready
     document.addEventListener("DOMContentLoaded", function() {
+        // var dataPoints = <?php echo json_encode($data["chartThree"], JSON_NUMERIC_CHECK); ?>;
         var yearlyStudentData = <?php echo json_encode($yearlyStudentData, JSON_NUMERIC_CHECK); ?>;
-
         var chart = new CanvasJS.Chart("chartContainer3", {
             animationEnabled: true,
             theme: "light2",

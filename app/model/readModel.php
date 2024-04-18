@@ -125,33 +125,16 @@ class readModel extends Model
         $resultStudentRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE student_rep = ?", "i", [1]);
         $resultCounselor = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [5]);
         $resultTeachingStudent = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE teaching_student = ?", "i", [1]);
-        
+
         $dataPoints[0]["y"] = ($resultAdmin ? (int) $resultAdmin[0]['count'] : 0);
         $dataPoints[1]["y"] = ($resultSuperAdmin ? (int) $resultSuperAdmin[0]['count'] : 0);
         $dataPoints[2]["y"] = ($resultClubRep ? (int) $resultClubRep[0]['count'] : 0);
         $dataPoints[3]["y"] = ($resultStudentRep ? (int) $resultStudentRep[0]['count'] : 0);
         $dataPoints[4]["y"] = ($resultCounselor ? (int) $resultCounselor[0]['count'] : 0);
         $dataPoints[5]["y"] = ($resultTeachingStudent ? (int) $resultTeachingStudent[0]['count'] : 0);
-        
-        return $dataPoints;
-    }
-
-
-    public function getChartFive()
-    {
-        $dataPoints = array();
-        $currentTimestamp = time();
-        $fourMonthsAgo = strtotime("-4 months", $currentTimestamp);
-        $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count, DATE(created_at) as creation_date FROM user WHERE created_at >= ? GROUP BY creation_date", "s", [date('Y-m-d', $fourMonthsAgo)]);
-        foreach ($result as $row) {
-            $timestamp = strtotime($row['creation_date']);
-            $dataPoints[] = array("x" => $timestamp * 1000, "y" => $row['user_count']);
-        }
 
         return $dataPoints;
     }
-
-
 
     public function getUserSettings($id)
     {
