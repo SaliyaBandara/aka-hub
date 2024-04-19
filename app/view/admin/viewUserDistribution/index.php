@@ -2,267 +2,143 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("viewUserDistribution");
+$calendar = new Calendar();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
-
     <div class="main-grid flex">
-        <div class="leftViewUserDistribution">
-            <div class="approveDivContainor">
-                <div class="containorForcardArea">
-                    <div class="tableContainor">
-                        <div class="cardContainor">
-                            <h3 class="h3-RepApprove">User Distribution in the System</h3>
-                            <div class="searchBarContainor">
-                                <label>Search</label>
-                                <div class="searchBar">
-                                    <input class="searchText" type="text" name="search" id="search">
-                                </div>
-                            </div>
-                            <div class="div-tableHeader">
-                                <div id="nameHeader" class="tableHeaderItem">
-                                    Student Name
-                                </div>
-                                <div id="mailHeader" class="tableHeaderItem">
-                                    University Email
-                                </div>
-                                <div id="indexNumberHeader" class="tableHeaderItem">
-                                    Registration Number
-                                </div>
-                                <div id="roleHeader" class="tableHeaderItem">
-                                    Preview
-                                </div>
-                            </div>
+        <div class="left w-100">
 
-                            <?php
-                            foreach ($data["users"] as $user) {
-                            ?>
-                                <div class="approve-card">
-                                    <div class="approve-card-div">
-                                        <div id="roleName">
-                                            <?php echo $user['name']; ?>
-                                        </div>
-                                        <div id="roleMail">
-                                            <?php echo $user['email']; ?>
-                                        </div>
-                                        <div id="roleIndex">
-                                            <?php echo $user['student_id']; ?>
-                                        </div>
-                                        <div class="rolePreview">
-                                            <div class="previewButton">
-                                                <a href="<?= BASE_URL ?>/viewUserDistribution/previewUser/<?php echo $user['id']; ?>">Preview</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php
-                            }
-                            ?>
-                        </div>
+            <!-- section header -->
+            <section>
+                <div class="section_header mb-1 flex">
+                    <div class="title font-1-5 font-semibold flex align-center">
+                        <i class='bx bxs-calendar-check me-0-5'></i> Users in Platform
                     </div>
-
                 </div>
-            </div>
+
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Reg Number</th>
+                                    <th>Preview</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php
+
+                                if (isset($data["users"])) {
+                                    $i = 1;
+                                    foreach ($data["users"] as $user) {
+                                ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $user["name"] ?></td>
+                                            <td><?= $user["email"] ?></td>
+                                            <td><?= $user["student_id"] ?></td>
+                                            <td>
+                                                <a href="<?= BASE_URL ?>/viewUserDistribution/previewUser/<?php echo $user['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
+                                }
+
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <style>
+                    .btn-blue {
+                        background-color: #2d7bf4;
+                        color: white !important;
+                    }
+
+                    .table .table-img-preview {
+                        width: 70px;
+                        cursor: pointer;
+                    }
+
+                    .table .action-list a {
+                        color: inherit;
+                        margin-right: 5px;
+                    }
+
+                    .icons{
+                        font-size: 24px !important;
+                    }
+                    .table .action-list {
+                        text-align: center;
+                    }
+                </style>
+
+
+            </section>
+
         </div>
+
         <!-- <div class="right">
-            
+            <div style="width: 30vh;"></div>
         </div> -->
+
     </div>
 
-    <style>
-        .previewButton a {
-            text-decoration: none;
-            color: white;
-        }
+    <?php $HTMLFooter = new HTMLFooter(); ?>
 
-        .rolePreview {
-            width: 25%;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 13px;
-        }
+    <!-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css -->
+    <!-- //cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js -->
 
-        .rolePreview div {
-            text-decoration: none;
-            color: white;
-            background-color: #2684FF;
-            width: 40%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0px 0px 5px 0px #2684FF;
-            border-radius: 5px;
-        }
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.js"></script> -->
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script> -->
 
-        .rolePreview div:hover {
-            background-color: #2684FF;
-            cursor: pointer;
-        }
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script>
 
-        #roleName {
-            width: 25%;
-            height: 20%;
-        }
+    <script>
+        let BASE_URL = "<?= BASE_URL ?>";
+    </script>
+    <script>
+        $(document).ready(function() {
 
-        #roleMail {
-            width: 40%;
-            height: 20%;
-        }
+            let col_count = $("#products-datatable thead th").length;
+            $("#products-datatable").DataTable({
+                language: {
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>",
+                    },
+                    info: "Showing records _START_ to _END_ of _TOTAL_",
+                    lengthMenu: 'Display <select class=\'form-select form-select-sm\'><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="-1">All</option></select> records',
+                },
+                responsive: true,
+                pageLength: 5,
+                columns: Array(col_count).fill({
+                    orderable: !0
+                }),
+                select: {
+                    style: "multi"
+                },
+                order: [
+                    [0, "asc"]
+                ],
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"),
+                        $("#products-datatable_length label").addClass("form-label");
+                },
+            });
+        });
+    </script>
+    <script>
 
-        #roleIndex {
-            width: 30%;
-            height: 20%;
-        }
-
-        #roleType {
-            width: 25%;
-            height: 20%;
-        }
-
-        .approve-card {
-            background-color: white;
-            width: 100%;
-            height: 55px;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0px 0 0 3px;
-            display: flex;
-        }
-
-        .approve-card-div {
-            text-align: center;
-            align-items: center;
-            display: flex;
-            width: 100%;
-        }
-
-        .approveDivContainor {
-            width: 100%;
-            height: 500px;
-        }
-
-        .approveDivContainor h3 {
-            text-align: center;
-        }
-
-        .main-grid {}
-
-        .main-grid .leftViewUserDistribution {
-            width: 100%;
-            height: 850px;
-            padding: 0 140px 0 140px;
-        }
-
-        .h3-RepApprove {
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        #nameHeader {
-            width: 25%;
-            height: 55px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #mailHeader {
-            width: 40%;
-            height: 55px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #indexNumberHeader {
-            width: 25%;
-            height: 55px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #roleHeader {
-            width: 25%;
-            height: 60px;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tableContainor {
-            width: 100%;
-            height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        .searchText {
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            padding: 1rem 1.25rem;
-            font-size: 0.6rem;
-            font-weight: 500;
-            background-color: #f1f1f1;
-        }
-
-        .searchBar {
-            height: 30px;
-            margin-left: 5px;
-        }
-
-        .searchBarContainor {
-            width: 100%;
-            height: 30px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-right: 95px;
-        }
-
-        .div-tableHeader {
-            width: 100%;
-            height: 65px;
-            background-color: #2684FF;
-            opacity: 1;
-            display: flex;
-        }
-
-        .cardContainor {
-            width: 100%;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-        }
-
-        .containorForcardArea {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .notificationContainor h3 {
-            text-align: center;
-            width: 92%;
-        }
-    </style>
-
-</div>
+    </script>

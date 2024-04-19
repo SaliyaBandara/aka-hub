@@ -1,7 +1,7 @@
-<?php
+<!-- <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("adminAccount");
+$sidebar = new Sidebar("approveRepresentatives");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -10,49 +10,38 @@ $sidebar = new Sidebar("adminAccount");
 
     <div class="main-grid flex">
         <div class="left">
+
             <form action="" method="post" class="form">
-                <h3 class="text-muted"><?= $data["id"] == 0 ? "Create New Admin" : "Edit Admin Data" ?></h3>
+
+                <h3 class="text-muted"><?= $data["id"] == 0 ? "Add a new Club/Society" : "Edit a Club/Society" ?></h3>
 
                 <?php
 
-                $data["user"]["password"] = "";
-                foreach ($data["user_template"] as $key => $value) {
+                foreach ($data["club_template"] as $key => $value) {
                     if (isset($value["skip"]) && $value["skip"] == true)
                         continue;
+                    // print_r($data["club"][$key]);
                 ?>
                     <div class="mb-1 form-group">
                         <label for="name" class="form-label">
                             <?= $value["label"] ?>
-                            <?= $key == "password" ? "<span class='text-small text-muted'>(Leave blank if you don't want to change)</span>" : "" ?>
                         </label>
-                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
-                    </div>
-                <?php
-                }
-
-                foreach ($data["admin_template"] as $key => $value) {
-                    if (isset($value["skip"]) && $value["skip"] == true)
-                        continue;
-                ?>
-                    <div class="mb-1 form-group">
-                        <label for="name" class="form-label">
-                            <?= $value["label"] ?>
-                            <?= $key == "password" ? "<span class='text-small text-muted'>(Leave blank if you don't want to change)</span>" : "" ?>
-                        </label>
-                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["admin"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["club"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                     </div>
                 <?php
                 }
                 ?>
-
 
                 <div class="mt-1-5 form-group">
-                    <a href="<?= BASE_URL ?>/" class="btn btn-info">Back</a>
+                    <a href="<?= BASE_URL ?>/clubs" class="btn btn-info">Back</a>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
-                
+
+
             </form>
+
         </div>
+        
     </div>
 
     <style>
@@ -312,4 +301,4 @@ $sidebar = new Sidebar("adminAccount");
             });
         });
     });
-</script>
+</script> -->

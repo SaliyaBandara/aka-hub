@@ -1,10 +1,10 @@
 <?php
-class CounselorFeed extends Controller
+class eventFeed extends Controller
 {
 
     public function redirect($redirect = "")
     {
-        header("Location: " . BASE_URL . "/counselorFeed");
+        header("Location: " . BASE_URL . "/eventFeed");
         die();
     }
 
@@ -12,29 +12,29 @@ class CounselorFeed extends Controller
     {
         $this->requireLogin();
         $data = [
-            'title' => 'Counselor Feed',
+            'title' => 'Event Feed',
             'message' => 'Welcome to Aka Hub!'
         ];
 
         // $post_id = 5;
-        if($_SESSION["user_role"] != 5){
-            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(1);
+        if(!($_SESSION["club_rep"])){
+            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(2);
         }
         else{
-            $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$_SESSION["user_id"]);
+            $data["posts"] = $this->model('readModel')->getCounselorPosts(2,$_SESSION["user_id"]);
         }
 
-        // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
+        $data["clubs"] = $this->model('readModel')->getAllClubs();
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
-        // print_r($data["comments"]);
+        // print_r($data["clubs"]);
 
-        $this->view->render('counselor/counselorFeed/index', $data);
+        $this->view->render('clubRep/eventFeed/index', $data);
     }
 
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if (!($_SESSION["club_rep"]))
             $this->redirect();
 
         $data = [
@@ -51,7 +51,7 @@ class CounselorFeed extends Controller
 
             $values["posted_by"] = $_SESSION["user_id"];
             $values["post_image"] = $values["post_image"];
-            $values["type"] = '1';
+            $values["type"] = '2';
 
             $this->validate_template($values, $data["post_template"]);
 
@@ -75,7 +75,7 @@ class CounselorFeed extends Controller
                 $this->redirect();
         }
 
-        $this->view->render('counselor/counselorFeed/add_edit', $data);
+        $this->view->render('clubRep/eventFeed/add_edit', $data);
 
 
         // getEmptyCounselorPost
@@ -85,7 +85,7 @@ class CounselorFeed extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if (!($_SESSION["club_rep"]))
             $this->redirect();
 
         if ($id == 0)
@@ -135,5 +135,42 @@ class CounselorFeed extends Controller
         die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
         // }
 
+    }
+
+    public function clickToBeClubRep($club_id)
+    {
+        $this->requireLogin();
+
+        $data["clubRep_template"] = $this->model('readModel')->getEmptyClubReps();
+        $data["clubRep"] = $data["clubRep_template"]["empty"];
+        $data["clubRep_template"] = $data["clubRep_template"]["template"];
+
+        // print_r($_SESSION["club_rep"] );
+
+        if ($_SESSION["club_rep"] == 1) {
+            die(json_encode(array("status" => "400", "desc" => "You are already a Club Representative")));
+        } else if ($_SESSION["club_rep"] == 2) {
+            die(json_encode(array("status" => "400", "desc" => "Already requested")));
+        } else if ($_SESSION["club_rep"] == 0) {
+
+            $resultUpdate = $this->model('updateModel')->to_get_role(
+                "user",
+                "club_rep",
+                $_SESSION["user_id"],
+                2
+            );
+
+            $values['club_id'] = $club_id;
+            $values['user_id'] = $_SESSION["user_id"];
+            $values['status'] = 0;
+
+            $resultCreate = $this->model('createModel')->insert_db("club_representative", $values, $data["clubRep_template"]);
+
+            if ($resultUpdate && $resultCreate )
+                die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
+            else {
+                die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
+            }
+        }
     }
 }

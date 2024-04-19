@@ -110,6 +110,7 @@ class Database
         return false;
     }
 
+
     function update($query, $param_type, $param_value_array)
     {
         $sql = $this->conn->prepare($query);

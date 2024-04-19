@@ -25,6 +25,7 @@ class ApproveRepresentatives extends Controller
 
     public function acceptRole($id, $role)
     {
+        print_r($id, $role);
         $this->requireLogin();
         $result = $this->model('updateModel')->to_get_role(
             "user",
@@ -40,6 +41,7 @@ class ApproveRepresentatives extends Controller
     }
     public function declineRole($id = 0, $role = 0)
     {
+        print_r($id, $role);
         $this->requireLogin();
         $result = $this->model('updateModel')->to_get_role(
             "user",
