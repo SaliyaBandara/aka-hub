@@ -1,9 +1,8 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("addAdmin");
+$sidebar = new Sidebar("adminAccount");
 ?>
-
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
@@ -11,71 +10,52 @@ $sidebar = new Sidebar("addAdmin");
 
     <div class="main-grid flex">
         <div class="left">
-            <div class="divAddCounselors">
-                <h3>Admin Account Creation</h3>
-                <div class="divCounselorDetails">
-                    <div class="divFormContainor">
-                        <div class="mwb-form-main-wrapper">
-                            <div class="mwb-form-main-container">
-                                <form action="#">
-                                    <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder="Name*">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email" placeholder="Email*">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder="Password*">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email" placeholder="Re Enter Password*">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="text" class="mwb-form-control" value="" id="name" placeholder="Alternative Email">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <label>Gender : </label>
-                                        <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-gender" id="radio3">
-                                            <label for="radio3">Male</label>
-                                        </div>
-                                        <div class="mwb-form-radio">
-                                            <input type="radio" name="radio-gender" id="radio4">
-                                            <label for="radio4">Female</label>
-                                        </div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email" placeholder="Contact Number">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="email" class="mwb-form-control" id="email" placeholder="Enter More Details">
-                                        <div class="mwb-form-error">This Field Required*</div>
-                                    </div>
-                                    <div class="mwb-form-group">
-                                        <input type="Submit" class="mwb-form-submit-btn" value="Create Account">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+            <form action="" method="post" class="form">
+                <h3 class="text-muted"><?= $data["id"] == 0 ? "Create New Admin" : "Edit Admin Data" ?></h3>
+
+                <?php
+
+                $data["user"]["password"] = "";
+                foreach ($data["user_template"] as $key => $value) {
+                    if (isset($value["skip"]) && $value["skip"] == true)
+                        continue;
+                ?>
+                    <div class="mb-1 form-group">
+                        <label for="name" class="form-label">
+                            <?= $value["label"] ?>
+                            <?= $key == "password" ? "<span class='text-small text-muted'>(Leave blank if you don't want to change)</span>" : "" ?>
+                        </label>
+                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                     </div>
+                <?php
+                }
+
+                foreach ($data["admin_template"] as $key => $value) {
+                    if (isset($value["skip"]) && $value["skip"] == true)
+                        continue;
+                ?>
+                    <div class="mb-1 form-group">
+                        <label for="name" class="form-label">
+                            <?= $value["label"] ?>
+                            <?= $key == "password" ? "<span class='text-small text-muted'>(Leave blank if you don't want to change)</span>" : "" ?>
+                        </label>
+                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["admin"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                    </div>
+                <?php
+                }
+                ?>
+
+
+                <div class="mt-1-5 form-group">
+                    <a href="<?= BASE_URL ?>/" class="btn btn-info">Back</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
-            </div>
+                
+            </form>
         </div>
-        <!-- <div class="right">
-            
-        </div> -->
     </div>
 
     <style>
-        .main-grid {}
-
-
         .mwb-form-main-wrapper {
             font-family: 'Lato', sans-serif;
             line-height: 1.5;
@@ -84,10 +64,11 @@ $sidebar = new Sidebar("addAdmin");
         }
 
         .mwb-form-main-container {
-            background-color: #fff;
+            /* background-color: #fff; */
             color: #7b7878;
-            margin: 0 auto;
+            /* margin: 0 auto; */
             max-width: 85%;
+            max-width: 700px;
         }
 
         .mwb-form-main-container form {
@@ -144,7 +125,8 @@ $sidebar = new Sidebar("addAdmin");
             min-width: 200px;
             padding: 16px 10px;
         }
-        .mwb-form-submit-btn :hover{
+
+        .mwb-form-submit-btn :hover {
             background-color: white;
             border-radius: 4px;
             border: none;
@@ -155,6 +137,7 @@ $sidebar = new Sidebar("addAdmin");
             min-width: 200px;
             padding: 16px 10px;
         }
+
         .mwb-form-radio {
             display: inline-block;
             margin-right: 15px;
@@ -222,6 +205,7 @@ $sidebar = new Sidebar("addAdmin");
             display: flex;
             justify-content: center;
         }
+
         .divCounselorDetails {
             width: 100%;
             height: 80%;
@@ -231,23 +215,13 @@ $sidebar = new Sidebar("addAdmin");
         }
 
         .divAddCounselors h3 {
-            text-align: center;
+            /* text-align: center; */
         }
 
         .divAddCounselors {
             width: 100%;
             height: 100%;
         }
-
-        .main-grid .left {
-            width: 100%;
-            height: 900px;
-        }
-
-        /* .main-grid .right{
-            flex-grow: 1;
-            height: 1000px;
-        } */
     </style>
 
 </div>
@@ -274,5 +248,68 @@ $sidebar = new Sidebar("addAdmin");
             }
         });
 
+    });
+</script>
+
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    $(document).ready(function() {
+
+        $('form').submit(function(event) {
+            event.preventDefault();
+            var input = $(this);
+            // var $inputs = $('form :input');
+            var $inputs = $(this).find(':input');
+
+            var values = {};
+            let empty_fields = []
+            $inputs.each(function() {
+                values[this.name] = $(this).val();
+                if ($(this).attr("data-validation") != undefined && $(this).is("input") && $(this).val() === "" ||
+                    $(this).is("select") && $(this).val() === "0") {
+                    empty_fields.push($(this));
+                    $(this).addClass("border-danger");
+                } else {
+                    $(this).removeClass("border-danger");
+                }
+            });
+
+            setTimeout(() => {
+                empty_fields.forEach(element => element.removeClass("border-danger"));
+            }, 6000);
+
+            if (empty_fields.length > 0) {
+                empty_fields[0].focus();
+                return alertUser("warning", `Please fill all the fields`);
+            }
+
+            $.ajax({
+                // url: url,
+                type: 'post',
+                data: {
+                    add_edit: values
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                        setTimeout(function() {
+                            history.go(-1);
+                            window.close();
+                        }, 2000);
+
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
     });
 </script>

@@ -44,7 +44,8 @@ class Sidebar
 
             if ($role == 3) { //superadmin
                 $superAdminPages = [
-                    'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    // 'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
                     'commonProfile' => ['Admin Profile', 'bxs-home'],
                 ];

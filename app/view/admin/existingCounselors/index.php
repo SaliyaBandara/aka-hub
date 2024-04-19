@@ -10,22 +10,25 @@ $sidebar = new Sidebar("existingCounselors");
     <div class="main-grid flex">
         <!-- <div class="left"> -->
         <div class="divExistingCounselors">
-            <h3>Existing Counselors</h3>
+            <div class="section_header mb-1 flex">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-calendar-check me-0-5'></i> Existing Counselors
+                </div>
+            </div>
             <div class="divCounselorCards">
                 <div class="conunselorCardLine">
                     <?php
                     if (is_array($data["counselors"])) {
-                        
+
                         foreach ($data["counselors"] as $key => $value) {
-                            
+
                             $img_src_profile = USER_IMG_PATH . $value["profile_img"];
 
                             if ($value["role"] == 5) {
                                 echo "<div class='counselorCard'>";
-                                if($value["type"] == 1){
+                                if ($value["type"] == 1) {
                                     echo "<h4>Professional Counselor</h4>";
-                                }
-                                else{
+                                } else {
                                     echo "<h4>Student Counselor</h4>";
                                 }
                                 echo "<div class='counselor-image-containor'>";
@@ -43,11 +46,11 @@ $sidebar = new Sidebar("existingCounselors");
                                 echo "</div>";
                                 echo "</a>";
                                 echo "</div>";
-                                
+
 
                                 // echo "<p>".$value["description"]."</p>";
                                 //if user is an admin
-                                if($data["role"] == 1) {
+                                if ($data["role"] == 1) {
                                     echo "<div class='edit-delete-containor'>";
                                     echo "<a href='" . BASE_URL . "/addCounselors/index/" . $value["id"] . "' class='block iconContainor'>";
                                     echo "<i class='bx bx-edit'></i>";
@@ -56,7 +59,6 @@ $sidebar = new Sidebar("existingCounselors");
                                     echo "<i class='bx bx-trash text-danger'></i>";
                                     echo "</div>";
                                     echo "</div>";
-                                    
                                 }
                                 echo "</div>";
                             }
@@ -194,7 +196,8 @@ $sidebar = new Sidebar("existingCounselors");
             padding-right: 20px;
         }
 
-        .edit-delete-containor a , .delete-item{
+        .edit-delete-containor a,
+        .delete-item {
             text-decoration: none;
             color: inherit;
             margin-left: 5px;
@@ -216,7 +219,7 @@ $sidebar = new Sidebar("existingCounselors");
             height: 100%;
             box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
             margin: 25px;
-            border-radius:10px;
+            border-radius: 10px;
         }
 
         .counselor-image-containor {
@@ -237,7 +240,7 @@ $sidebar = new Sidebar("existingCounselors");
 
         .counselorCard h5 {
             text-align: center;
-            
+
         }
 
         .counselorCard p {
@@ -256,18 +259,19 @@ $sidebar = new Sidebar("existingCounselors");
             flex-wrap: wrap;
         }
 
-        .detailsButtonArea{
+        .detailsButtonArea {
             width: 100%;
             /* border: 1px solid red; */
-            justify-content: center ;
-            align-items: center ;
-            display:flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
         }
 
-        .detailsButtonArea a{
-            text-decoration : none;
+        .detailsButtonArea a {
+            text-decoration: none;
         }
-/* 
+
+        /* 
         .detailsButton{
             width: 50%;
             border: 1px solid red;
@@ -288,6 +292,7 @@ $sidebar = new Sidebar("existingCounselors");
         .divExistingCounselors {
             width: 100%;
             height: 100%;
+            padding: 31px;
         }
 
         .main-grid .left {
