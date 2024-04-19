@@ -45,13 +45,11 @@ class AddCounselors extends Controller
 
             if ($id == 0){
                 $result = false;
-                $result1Array = $this->model('createModel')->insert_db_return_id("user", $values, $data["user_template"]);
-                $whether_inserted = $result1Array[0];
-                $inserted_user_id = $result1Array[1];
-                if ($whether_inserted) {
-                    $values["id"] = $inserted_user_id;
+                $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
+                if ($result1) {
+                    $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
-                    $result = $whether_inserted && $result2;
+                    $result = $result1 && $result2;
                 }
             }else{
                 $result = false;

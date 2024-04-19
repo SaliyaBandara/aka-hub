@@ -45,7 +45,7 @@ class createModel extends Model
         return $this->db_handle->insert($query, $types, $params);
     }
 
-    public function insert_db_return_id($table, $data, $template = [])
+    public function insert_db_return_id($table, $data, $template = []) //not working properly
     {
         $columns = "";
         $values = "";
