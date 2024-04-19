@@ -26,8 +26,11 @@ $candidateCard = new CandidateCard();
             <div class = "profileArea">
                 <div class = "profileImageArea">
                     <div class = "profileImageContainer"><img src="<?= $img_src ?>" alt="" class = "profileImage"></div>
-                    <div class = "editImageButton"><input type = "button" class = "profileButton" value = "Change Picture"/></div>
+                    <a href="#" class="btn btn-primary">
+                            Change Profile Picture
+                    </a>
                 </div>
+
                 <div class = "profileDetailArea">
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Name : </div><div class = "profileDetailCell"><?= $userDetails["name"] ?></div></div>
                     <div class = "profileDetailRow"><div class = "profileDetailHeader">Email Address : </div><div class = "profileDetailCell"><?= $userDetails["email"] ?></div></div>
@@ -226,17 +229,16 @@ $candidateCard = new CandidateCard();
             
         }
 
-        .profileImageArea{
+        /* .profileImageArea{
             width : 35%;
             margin : 1%;
             padding : 4%;
-
-        }
+        } */
 
         .profileImageArea{
             width : 50%;
             margin : 10px;
-            padding : 4%;
+            /* padding : 4%; */
             margin-top : 0px;
         }
 
