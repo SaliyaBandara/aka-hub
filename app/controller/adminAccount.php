@@ -23,9 +23,9 @@ class AdminAccount extends Controller{
 
         if ($id == 0)
             $this->redirect();
-
-        $result = $this->model('deleteModel')->deleteOne("user", $id);
-        if ($result)
+        $resultOne = $this->model('deleteModel')->deleteOne("administrator", $id);
+        $resultTwo = $this->model('deleteModel')->deleteOne("user", $id);
+        if ($resultOne&&$resultTwo)
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
