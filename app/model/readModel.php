@@ -274,11 +274,31 @@ class readModel extends Model
 
         return false;
     }
+    public function getAdmin()
+    {
+        $sql = "SELECT * from user where role = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
 
     public function getOneCounselor($id)
     {
         $sql = "SELECT * from user u , counselor c where user_id = u.id AND id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getOneAdmin($id)
+    {
+        $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
+        $result = $this->db_handle->runQuery($sql, "ii", [1, $id]);
         if (count($result) > 0)
             return $result;
 
@@ -721,20 +741,38 @@ class readModel extends Model
         ];
     }
 
-    /**
-     * Elections Model
-     */
+    public function getEmptyAdmin()
+    {
 
-    // CREATE TABLE elections (
-    //     id INT AUTO_INCREMENT PRIMARY KEY,
-    //     user_id INT NOT NULL,
-    //     name VARCHAR(255) NOT NULL,
-    //     start_date DATETIME NOT NULL,
-    //     end_date DATETIME NOT NULL,
-    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    //     FOREIGN KEY (user_id) REFERENCES user(id)
-    // );
+        $empty = [
+            "contact_number" => "",
+            "whatsapp_number" => "",
+            "address" => "",
+        ];
+
+        $template = [
+            "contact_number" => [
+                "label" => "Contact Number",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "whatsapp_number" => [
+                "label" => "Whatsapp Number",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "address" => [
+                "label" => "Address",
+                "type" => "text",
+                "validation" => "required"
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     public function getEmptyElection()
     {
