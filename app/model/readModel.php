@@ -20,9 +20,9 @@ class readModel extends Model
 
     public function lastInsertedId($table , $key){
 
-        $result = $this->db_handle->runQuery("SELECT * FROM  $table ORDER BY $key DESC LIMIT 1 WHERE ?", "i", [1]);
+        $result = $this->db_handle->runQuery("SELECT * FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
         if(count($result)>0)
-            return $result[0]->key;
+            return $result[0]->$key;
         return 0;
     }
 
