@@ -15,18 +15,31 @@ class CounselorChat extends Controller
 
     public function chat_users()
     {
-        $data["messages"] = $this->model('readModel')->getAll("messages");
-        session_start();
-        include_once "config.php";
-        $outgoing_id = $_SESSION['unique_id'];                              
-        $sql = mysqli_query($conn, "SELECT * FROM users WHERE NOT unique_id = {$outgoing_id}");
-        $output = "";
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 5))
+            $this->redirect();
 
-        if(mysqli_num_rows($sql) == 1){
-            $output .= "No users are available to chat";
-        }elseif(mysqli_num_rows($sql) > 0){
-        include "data.php";
-        }
-        echo $output;
+        
+
+        
+        // $data["reservationRequest_data"] = $this->model('readModel')->getEmptyReservation();
+        // $data["reservationRequest"] = $data["reservationRequest_data"]["empty"];
+        // $data["reservationRequest_template"] = $data["reservationRequest_data"]["template"];
+
+        // $data["id"] = $id;
+
+        // if ($id != 0) {
+        //     $data["reservationRequest"] = $this->model('readModel')->getOne("reservation_requests", $id);
+        //     if (!$data["reservationRequest"])
+        //         $this->redirect();
+        // }
+
+        // $data["chat_users"] = $this->model('readModel')->getAllChatUsers("chat_users");
+        // $this->view->render('counselor/counselorChat/index', $data);
+
+        $chat_users = $this->model('readModel')->getAllChatUsers("chat_users");
+        // Return only the chat users data as JSON
+        header('Content-Type: application/json');
+        echo json_encode($chat_users);
     }
 }

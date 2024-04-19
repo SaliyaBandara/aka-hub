@@ -61,7 +61,7 @@ $calendar = new Calendar();
                                 }
 
                                 // Output the formatted string
-                                echo "<p>{$year} {$suffix} year Undergraduate</p>";
+                                echo "<p>{$year}{$suffix} year Undergraduate</p>";
                                 ?>
                             </div>
                         </div>

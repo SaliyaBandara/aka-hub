@@ -16,21 +16,12 @@ $calendar = new Calendar();
             <div class="main-container">
                 <div class="wrapper-user">
                     <section class="users">
-                        <!-- <div class="header">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>Active Now</p>
-                                    </div>
-                                </div>
-                        </div> -->
                         <div class="search">
                             <span class="text">Select an user to start chat</span>
                             <input type="text" placeholder="Enter name to search...">
                             <button><i class='bx bx-search-alt-2' ></i></button>
                         </div>
-                        <div class="users-list">                           
+                        <div class="users-list">                         
                             <!-- <a href="#">
                                 <div class="content">
                                     <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
@@ -158,7 +149,6 @@ $calendar = new Calendar();
                 <div class=" wrapper-chat">
                     <section class="chat-area">
                         <header>
-                            <!-- <a href="#" class="back-icon"><i class="fas fa-arrow-left"></i></a> -->
                             <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
                             <div class="details">
                                 <span>Virajith Dissanayaka</span>
@@ -620,10 +610,14 @@ $calendar = new Calendar();
         .users-list a .content p{
             color: #67676a;
         }
+        .users-list a .status-dot i{
+            margin-right: 30px;
+        }
         .users-list a .status-dot{
             font-size: 12px;
             color: #468669;
-            margin-left: 50px;
+            /* margin-left: 50px; */
+            margin-right: 30px;
         }
         .users-list a .status-dot.offline{
             color: #ccc;
@@ -731,6 +725,62 @@ $calendar = new Calendar();
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 <script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+
+<script>
+    // const searchBar = document.querySelector(".users .search input"),
+    // searchBtn = document.querySelector(".users .search button"),
+    // usersList = document.querySelector(".users-list");
+
+    // searchBtn.onclick = ()=>{
+    //     searchBar.classList.toggle("active");
+    //     searchBar.focus();
+    //     searchBtn.classList.toggle("active");
+    //     searchBar.value = "";
+    // }
+
+    // searchBar.onkeyup = ()=>{
+    //     let searchTerm = searchBar.value;
+    //     if(searchTerm != ""){
+    //         searchBar.classList.add("active");
+    //     }else{
+    //         searchBar.classList.remove("active");
+    //     }
+    //     let xhr = new XMLHttpRequest(); //Creating XML object
+    //     xhr.open("POST", "php/search.php", true);
+    //     xhr.onload = ()=>{
+    //         if(xhr.readyState === XMLHttpRequest.DONE){
+    //             if(xhr.status === 200){
+    //                 let data = xhr.response;
+    //                 usersList.innerHTML = data;
+    //             }
+    //         }
+    //     }
+    //     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //     xhr.send("searchTerm=" + searchTerm);
+    // }
+
+    // setInterval(()=>{
+    //     console.log("hello world!");
+    //     // Strating of the Ajax part
+    //     let xhr = new XMLHttpRequest(); //Creating XML object
+    //     xhr.open("GET", "php/users.php", true);
+    //     xhr.onload = ()=>{
+    //         if(xhr.readyState === XMLHttpRequest.DONE){
+    //             if(xhr.status === 200){
+    //                 let data = xhr.response;
+    //                 console.log(data);
+    //                 if(!searchBar.classList.contains("active")){  //if active active not contains in search bar then add this
+    //                     usersList.innerHTML = data;
+    //                 }
+    //             }
+    //         }
+    //     } 
+    //     xhr.send();
+    // }, 500); //this function will run frequently after 500ms
+</script>
+<script>
     const searchBar = document.querySelector(".users .search input"),
     searchBtn = document.querySelector(".users .search button"),
     usersList = document.querySelector(".users-list");
@@ -764,19 +814,43 @@ $calendar = new Calendar();
     }
 
     setInterval(()=>{
-        console.log("hello world!");
+        // console.log("hello world!");
         // Strating of the Ajax part
         let xhr = new XMLHttpRequest(); //Creating XML object
-        xhr.open("GET", "php/users.php", true);
+        xhr.open("GET", "counselorChat/chat_users", true);
         xhr.onload = ()=>{
             if(xhr.readyState === XMLHttpRequest.DONE){
                 if(xhr.status === 200){
-                    let data = xhr.response;
+                    let data = JSON.parse(xhr.responseText); // Parse JSON response
+                    // let data = xhr.response;
                     console.log(data);
-                    if(!searchBar.classList.contains("active")){  //if active active not contains in search bar then add this
-                        usersList.innerHTML = data;
+                    if (!searchBar.classList.contains("active")) {
+                    let userListHTML = '';
+                    if (data.length === 0) {
+                        // Display a message if no users are available
+                        userListHTML = '<div class="details"><p>No Users Available</p></div>';
+                    } else {
+                        data.forEach(user => {
+                            let img_src = "http://<?php echo $_SERVER['SERVER_NAME']; ?>/aka-hub/public/assets/user_uploads/img/" + user.image;
+                            console.log(img_src);
+                            userListHTML += `
+                            <a href="chat.php?user_id=${user.unique_id}">
+                                <div class="content">
+                                    <img src="${img_src}" alt="">
+                                    <div class="details">
+                                        <span>${user.fname} ${user.lname}</span>
+                                        <p>${user.user_role}</p>
+                                    </div>
+                                </div>
+                            </a>   
+                            `;
+                        });
                     }
+                    usersList.innerHTML = userListHTML;
                 }
+            } else {
+                console.error("Error fetching chat users: " + xhr.status);
+            }
             }
         } 
         xhr.send();

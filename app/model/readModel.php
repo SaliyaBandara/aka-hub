@@ -45,6 +45,17 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllChatUsers()
+    {
+        // session_start();
+        // $outgoing_id = $_SESSION['unique_id'];
+        $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getUserSettings($id)
     {
         $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";

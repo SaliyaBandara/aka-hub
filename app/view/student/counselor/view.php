@@ -64,6 +64,9 @@ $sidebar = new Sidebar("Settings");
                             Chat Now
                         </div>
                     </div>
+                    <div class = "bookingButtonContainer">
+                        <a class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center" href="counselorView/bookReservation">Book an appointment</a>
+                    </div>
                 </div>
                 <?php  } ?>
             </div>
@@ -197,6 +200,14 @@ $sidebar = new Sidebar("Settings");
         } */
 
         .chatButtonContainer{
+            width: 100%;
+            /* border: 1px solid red; */
+            justify-content: left ;
+            align-items: left ;
+            display:flex;
+            margin: 1rem 0 0 1rem;
+        }
+        .bookingButtonContainer{
             width: 100%;
             /* border: 1px solid red; */
             justify-content: left ;

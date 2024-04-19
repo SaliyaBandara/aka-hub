@@ -38,7 +38,7 @@
                                     }
 
                                     // Output the formatted string
-                                    echo "<label>{$year} {$suffix} year</label>";
+                                    echo "<label>{$year}{$suffix} year</label>";
                                 ?>
                         </div> 
                     </div>
