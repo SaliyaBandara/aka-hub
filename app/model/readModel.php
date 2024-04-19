@@ -774,6 +774,31 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyCounselor(){
+        $empty = [
+            "contact_number" => "",
+            "type" => "",
+        ];
+
+        $template = [
+            "contact_number" => [
+                "label" => "Contact Number",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "type" => [
+                "label" => "Type",
+                "type" => "number",
+                "validation" => "required"
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     public function getEmptyElection()
     {
 

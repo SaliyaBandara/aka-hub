@@ -48,6 +48,7 @@ class AddAdmin extends Controller
                 $result1Array = $this->model('createModel')->insert_db_return_id("user", $values, $data["user_template"]);
                 $whether_inserted = $result1Array[0];
                 $inserted_user_id = $result1Array[1];
+                print_r($result1Array);
 
                 if ($whether_inserted) {
                     $values["id"] = $inserted_user_id;

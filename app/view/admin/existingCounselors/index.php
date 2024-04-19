@@ -36,7 +36,7 @@ $sidebar = new Sidebar("existingCounselors");
                                 echo "</div>";
                                 echo "<h5>" . $value["name"] . "</h5>";
                                 echo "<h5>" . $value["email"] . "</h5>";
-                                echo "<h5> 0" . $value["contact"] . "</h5>";
+                                echo "<h5> 0" . $value["contact_number"] . "</h5>";
 
                                 //if user is a student 
                                 echo "<div class = 'detailsButtonArea'>";
@@ -66,42 +66,6 @@ $sidebar = new Sidebar("existingCounselors");
                     }
 
                     ?>
-
-
-                    <!-- <div class="counselorCard">
-                            <h4>Student Counselor</h4>
-                            <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
-                            </div>
-                            <h5>Dr. Lasanthi De Silva</h5>
-                            <h5>lnc@ucsc.cmb.ac.lk</h5>
-                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
-                            <div class="edit-delete-containor">
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                </div>
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="counselorCard">
-                            <h4>Student Counselor</h4>
-                            <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
-                            </div>
-                            <h5>Dr. Kasun Karunanayake</h5>
-                            <h5>ktk@ucsc.cmb.ac.lk</h5>
-                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
-                            <div class="edit-delete-containor">
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                </div>
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
-                                </div>
-                            </div>
-                        </div> -->
                 </div>
 
                 <?php if ($data["role"] == 1) { ?>
