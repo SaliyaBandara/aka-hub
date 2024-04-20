@@ -5,8 +5,8 @@ class CounselorView extends Controller
     public function index($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1)
-            $this->redirect();
+        // if ($_SESSION["user_role"] != 1)
+        //     $this->redirect();
 
         $data = [
             'title' => 'Counselor Details',
@@ -14,7 +14,6 @@ class CounselorView extends Controller
         ];
 
 
-        
         // if (!$data["counselor"])
         //     $this->redirect();
         $data["counselor"] = $this->model('readModel')->getOneCounselor($id);
