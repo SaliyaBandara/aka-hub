@@ -821,7 +821,7 @@ class readModel extends Model
             "type" => [
                 "label" => "Type",
                 "type" => "number",
-                "validation" => ""
+                "validation" => "required"
             ],
         ];
 
