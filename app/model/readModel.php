@@ -229,7 +229,7 @@ class readModel extends Model
 
     public function getUserSettings($id)
     {
-        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.id AND u.id = ?";
+        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.id AND n.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -1165,7 +1165,7 @@ class readModel extends Model
     {
 
         $empty = [
-            "user_id" => "",
+            "id" => "",
             "preferred_email" => "",
             "exam_notify" => "",
             "reminder_notify" => "",
@@ -1175,40 +1175,42 @@ class readModel extends Model
         ];
 
         $template = [
-            "user_id" => [
+            "id" => [
                 "label" => "Student ID",
-                "type" => "text",
+                "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
             "preferred_email" => [
                 "label" => "Preferred Email Address to receive Notifications",
                 "type" => "select",
+                "validation" => "",
                 "skip" => true
             ],
             "exam_notify" => [
                 "label" => "Send Exam and Assignment Notifications",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "reminder_notify" => [
                 "label" => "Send Reminder Notifications through",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "events_notify" => [
                 "label" => "Send New Club Event Post Notifications",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "materials_notify" => [
                 "label" => "Send New Material update Notifications",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "notify_duration" => [
                 "label" => "Send Reminder Notifications (No. of days before)",
                 "type" => "select",
+                "validation" => "",
                 "skip" => true
             ],
 
