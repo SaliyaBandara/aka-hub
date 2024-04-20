@@ -229,7 +229,7 @@ class readModel extends Model
 
     public function getUserSettings($id)
     {
-        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
+        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -718,13 +718,13 @@ class readModel extends Model
             "role" => [
                 "label" => "Role",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "status" => [
                 "label" => "Status",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "profile_img" => [
