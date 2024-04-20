@@ -20,9 +20,9 @@ class readModel extends Model
 
     public function lastInsertedId($table , $key){
 
-        $result = $this->db_handle->runQuery("SELECT * FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
+        $result = $this->db_handle->runQuery("SELECT id FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
         if(count($result)>0)
-            return $result[0]->$key;
+            return $result[0];
         return 0;
     }
 
@@ -64,7 +64,6 @@ class readModel extends Model
         return false;
     }
 
-=======
     public function getCountAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT COUNT(*) as total_users FROM user WHERE ?", "i", [1]);
@@ -286,7 +285,7 @@ class readModel extends Model
 
     public function getCounselors()
     {
-        $sql = "SELECT * from user u , counselor c where user_id = u.id AND ?";
+        $sql = "SELECT * from user u , counselor c where c.id = u.id AND ?";
         $result = $this->db_handle->runQuery($sql, "i", [5]);
         if (count($result) > 0)
             return $result;
@@ -306,7 +305,7 @@ class readModel extends Model
 
     public function getOneCounselor($id)
     {
-        $sql = "SELECT * from user u , counselor c where user_id = u.id AND id = ?";
+        $sql = "SELECT * from user u , counselor c where c.id = u.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -774,7 +773,7 @@ class readModel extends Model
             "id" => [
                 "label" => "User",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "contact_number" => [
@@ -803,7 +802,7 @@ class readModel extends Model
     public function getEmptyCounselor(){
         $empty = [
             "id" => "",
-            "contact_number" => "",
+            "contact" => "",
             "type" => "",
         ];
 
@@ -811,10 +810,10 @@ class readModel extends Model
             "id" => [
                 "label" => "User",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
-            "contact_number" => [
+            "contact" => [
                 "label" => "Contact Number",
                 "type" => "text",
                 "validation" => "required"
@@ -822,7 +821,7 @@ class readModel extends Model
             "type" => [
                 "label" => "Type",
                 "type" => "number",
-                "validation" => "required"
+                "validation" => ""
             ],
         ];
 

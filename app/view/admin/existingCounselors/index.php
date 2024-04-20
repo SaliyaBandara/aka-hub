@@ -36,7 +36,7 @@ $sidebar = new Sidebar("existingCounselors");
                                 echo "</div>";
                                 echo "<h5>" . $value["name"] . "</h5>";
                                 echo "<h5>" . $value["email"] . "</h5>";
-                                echo "<h5> 0" . $value["contact_number"] . "</h5>";
+                                echo "<h5> 0" . $value["contact"] . "</h5>";
 
                                 //if user is a student 
                                 echo "<div class = 'detailsButtonArea'>";

@@ -32,7 +32,29 @@ $sidebar = new Sidebar("existingCounselors");
                     </div>
                 <?php
                 }
+                
                 ?>
+                <div class="mb-1 form-group">
+                        <label for="name" class="form-label">
+                            Contact Number
+                        </label>
+                        <input type="text" id="contact" name="contact" placeholder="Enter Contact Number" value="<?= $data["counselor"]["contact"] ?>" data-validation="required" class="form-control">
+                </div>
+<!-- 
+                <div class="mb-1 form-group">
+                    <label for="name" class="form-label">
+                            Counselor Type
+                    </label>
+                    <select id="type" name="type" placeholder="Select counselor type" data-validation="required" class="form-control">
+                    <?php 
+                        $professionalSelected = ($data["counselor"]["type"] == 1) ? "selected" : "";
+                        $studentSelected = ($data["counselor"]["type"] == 2) ? "selected" : "";
+                    ?>
+                        <option value='<?= $data["counselor"]["type"] ?>' class='font-medium text-muted' <?= $professionalSelected ?>>Professional Counselor</option>
+                        <option value='<?= $data["counselor"]["type"] ?>' class='font-medium text-muted' <?= $studentSelected ?>>Student Counselor</option>
+                    </select>
+
+                </div> -->
 
                 <div class="mt-1-5 form-group">
                     <a href="<?= BASE_URL ?>/existingCounselors" class="btn btn-info">Back</a>
@@ -371,5 +393,6 @@ $sidebar = new Sidebar("existingCounselors");
                 }
             });
         });
+
     });
 </script>

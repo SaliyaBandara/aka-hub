@@ -22,10 +22,13 @@ class AddCounselors extends Controller
 
         $data["user_template"] = $this->model('readModel')->getEmptyUser();
         $data["counselor_template"] = $this->model('readModel')->getEmptyCounselor();
+
         $data["user"] = $data["user_template"]["empty"];
         $data["counselor"] = $data["counselor_template"]["empty"];
+
         $data["user_template"] = $data["user_template"]["template"];
         $data["counselor_template"] = $data["counselor_template"]["template"];
+
         $data["id"] = $id;
 
         if (isset($_POST['add_edit'])) {
@@ -47,7 +50,8 @@ class AddCounselors extends Controller
                 $result = false;
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
-                    $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
+                    $values["id"] = $this->model('readModel')->lastInsertedId("user" , "id");
+                    // print_r($values["id"]);
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
                     $result = $result1 && $result2;
                 }
