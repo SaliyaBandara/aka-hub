@@ -13,8 +13,25 @@ $sidebar = new Sidebar("settings");
 
         <form action="" method="post" class="form">
             <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" value = "<?= $data["user"]["name"] ?>">
+            </div>
+            <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Email Address</label>
+                    <input type="text" id="email" name="email" class="form-control" value = "<?= $data["user"]["email"] ?>" disabled>
+            </div>
+            <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Registration Number</label>
+                    <input type="text" id="student_id" name="student_id" class="form-control" value = "<?= $data["user"]["student_id"] ?>" disabled>
+            </div>
+            <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Alternative Email Address</label>
+                    <input type="text" id="alt_email" name="alt_email" class="form-control" value = "<?= $data["user"]["alt_email"] ?>">
+            </div>
+
+            <div class="mb-1 form-group">
                     <label for="name" class="form-label">Student ID</label>
-                    <input type="text" id="student_id" name="student_id" class="form-control" value = "<?= $data["student_profile"]["index_number"] ?>" disabled>
+                    <input type="text" id="index_number" name="index_number" class="form-control" value = "<?= $data["student_profile"]["index_number"] ?>" disabled>
             </div>
 
             <?php
@@ -30,6 +47,52 @@ $sidebar = new Sidebar("settings");
             <?php
             }
             ?>
+
+            <div class="mb-1">
+                <label class="form-label">Profile Image</label>
+                <p class="text-muted font-14">
+                    Upload profile image (Maximum 1 image)
+                </p>
+                <div action="/uploadFiles/img/profile_img" data-name="profile_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
+            </div>
+
+            <div class="mb-1">
+                <div class="table-responsive">
+                    <table <?= ($data["user"]['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="profile_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
+                        <thead class="cent">
+                            <tr>
+                                <th class="text-center py-1">Image</th>
+                                <th class="text-center py-1">Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot class="cent">
+                            <tr>
+                                <th class="text-center py-1">Image</th>
+                                <th class="text-center py-1">Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="ui-sortable">
+                            <?php
+                            if ($data["user"]['id'] != 0 && !empty($data["user"]['profile_img'])) {
+                                $img_src = USER_IMG_PATH . $data["user"]["profile_img"];
+                            ?>
+                                <tr class='ui-sortable-handle'>
+                                    <td>
+                                        <div class='preview-img preview-img-small' data-filename='<?= $data["user"]['profile_img'] ?>' data-fancybox='group' href='<?= $img_src ?>'>
+                                            <img src='<?= $img_src ?>' class='' alt='..'>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div title='Delete Image' target='_blank' class='action-icon custom-action-btn delete-preview-btn text-danger font-14'> <i class='mdi mdi-delete'></i> Delete</div>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <!-- <div class="mb-1 form-group">
                     <label for="name" class="form-label">Preferred Email Address to receive Notifications</label>
@@ -107,6 +170,50 @@ $sidebar = new Sidebar("settings");
     "use strict";
     Dropzone.autoDiscover = false;
     $(document).ready(function() {
+        let imgCount = 0;
+        let dropZoneImgsArr = [];
+        $('.dropzone.imgDropZone').each(function() {
+            let dropZonePath = $(this).attr('action')
+            let maxFiles = $(this).attr('data-maxFiles')
+            let name = $(this).attr('data-name')
+            let table = $(`.table-responsive .image-preview-table[data-name='${name}']`)
+
+            dropZoneImgsArr[name] = [];
+            dropZonePath = `${BASE_URL}${dropZonePath}`
+
+            let myDropzone = new Dropzone(this, {
+                url: dropZonePath,
+                parallelUploads: 1,
+                thumbnailHeight: 120,
+                thumbnailWidth: 120,
+                maxFilesize: 3,
+                // maxFiles: 3,
+                filesizeBase: 1000,
+                addRemoveLinks: true,
+                init: function() {
+                    this.on('addedfile', function(file) {
+                        if (++table.find("tbody tr").length > maxFiles) {
+                            alertUser("danger", `Only ${maxFiles} file(s) are allowed`)
+                            this.removeFile(this.files[0]);
+                        }
+
+                    });
+                },
+                success: function(file, response) {
+                    myDropzone.removeFile(file);
+                    if (++table.find("tbody tr").length > maxFiles)
+                        return (alertUser("danger", `Maximum number of files reached`));
+
+                    imgCount++;
+                    // dropzoneImgs.push([response['filename'], file.name])
+                    dropZoneImgsArr[name].push([response['filename'], file.name])
+                    let imgPath = `${BASE_URL}/public/assets/user_uploads/img/${response['filename']}`
+
+                    append_preview_table(table, imgPath, response['filename'])
+                }
+            });
+        })
+
     
         $('form').submit(function(event) {
             event.preventDefault();
@@ -130,6 +237,28 @@ $sidebar = new Sidebar("settings");
             setTimeout(() => {
                 empty_fields.forEach(element => element.removeClass("border-danger"));
             }, 6000);
+
+            if (values["year"] != 1 && values["year"] != 2 && values["year"] != 3 && values["year"] != 4) {
+                empty_fields.push($("#year"));
+                $("#year").addClass("border-danger");
+                return alertUser("warning", `Year should be 1, 2, 3 or 4`);
+            }
+
+            let completed = 0;
+            let tables = ["profile_img"];
+            $.each(tables, function(i, name) {
+                let table = $(`.table-responsive .image-preview-table[data-name='${name}'] tbody`)
+                let images = get_preview_imgs(table)
+                if (images.length <= 0) {
+                    alertUser("warning", `Please upload at least one image for ${name.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}`)
+                    return false
+                }
+                values[`${name}`] = images;
+                completed++;
+            });
+
+            if (completed < tables.length)
+                return;
 
             if (empty_fields.length > 0) {
                 empty_fields[0].focus();
