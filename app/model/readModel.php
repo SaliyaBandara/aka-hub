@@ -436,6 +436,14 @@ class readModel extends Model
         return false;
     }
 
+    public function getUsersToLimitAccess(){
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ? OR teaching_student = ?", "iii", [1, 1, 1]);
+        if($result !==false){
+            return $result;
+        }
+        return false;
+    }
+
     public function getTeachingStudentsToApprove()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [2]);
@@ -821,7 +829,8 @@ class readModel extends Model
             "type" => [
                 "label" => "Type",
                 "type" => "number",
-                "validation" => "required"
+                "validation" => "required",
+                "skip"=> true
             ],
         ];
 

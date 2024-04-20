@@ -30,38 +30,34 @@ $sidebar = new Sidebar("existingCounselors");
                         </label>
                         <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                     </div>
-                    <?php
+                <?php
                 }
                 foreach ($data["counselor_template"] as $key => $value) {
                     if (isset($value["skip"]) && $value["skip"] == true)
                         continue;
-
-                    if ($value["label"] == "type") {
-                        $professionalSelected = ($data["counselor"]["type"] == 'Professional Counselor') ? "selected" : "";
-                        $studentSelected = ($data["counselor"]["type"] == 'Student Counselor') ? "selected" : "";
-                    ?>
-                        <div class="mb-1 form-group">
-                            <label for="type" class="form-label">
-                                <?= $value["label"] ?>  
-                            </label>
-                            <select id="type" name="type" placeholder="Select counselor type" data-validation="required" class="form-control">
-                                <option value='1' class='font-medium text-muted' <?= $professionalSelected ?>>Professional Counselor</option>
-                                <option value='2' class='font-medium text-muted' <?= $studentSelected ?>>Student Counselor</option>
-                            </select>
-                        </div>
-                    <?php
-                    } else {
-                    ?>
-                        <div class="mb-1 form-group">
-                            <label for="<?= $key ?>" class="form-label">
-                                <?= $value["label"] ?>
-                            </label>
-                            <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["counselor"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
-                        </div>
-                <?php
-                    }
-                }
                 ?>
+                    <div class="mb-1 form-group">
+                        <label for="<?= $key ?>" class="form-label">
+                            <?= $value["label"] ?>
+                        </label>
+                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["counselor"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                    </div>
+                <?php
+
+                }
+                $professionalSelected = ($data["counselor"]["type"] == 'Professional Counselor') ? "selected" : "";
+                $studentSelected = ($data["counselor"]["type"] == 'Student Counselor') ? "selected" : "";
+                ?>
+                <div class="mb-1 form-group">
+                    <label for="type" class="form-label">
+                        <?= $value["label"] ?>
+                    </label>
+                    <select id="type" name="type" placeholder="Select counselor type" data-validation="required" class="form-control">
+                        <option value='1' class='font-medium text-muted' <?= $professionalSelected ?>>Professional Counselor</option>
+                        <option value='2' class='font-medium text-muted' <?= $studentSelected ?>>Student Counselor</option>
+                    </select>
+                </div>
+
                 <div class="mt-1-5 form-group">
                     <a href="<?= BASE_URL ?>/existingCounselors" class="btn btn-info">Back</a>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
