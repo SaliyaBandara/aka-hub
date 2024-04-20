@@ -99,6 +99,9 @@ class StudentProfile extends Controller{
     }
 
     public function add_edit_settings($id){
+
+        $this->requireLogin();
+        
         $data = [
             'title' => 'Edit Profile',
             'message' => 'Welcome to Aka Hub!'
@@ -108,10 +111,17 @@ class StudentProfile extends Controller{
         $data["settings"] = $data["settings_template"]["empty"];
         $data["settings_template"] = $data["settings_template"]["template"];
 
+        $data["settings_template"]["id"] = $id;
+
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
 
-            $this->validate_template($values, $data["settings_template"]);
+            $values['exam_notify'] = json_encode($values['exam_notify']);
+            $values['reminder_notify'] = json_encode($values['reminder_notify']);
+            $values['events_notify'] = json_encode($values['events_notify']);
+            $values['materials_notify'] = json_encode($values['materials_notify']);
+
+            // $this->validate_template($values, $data["settings_template"]);
 
             $result = $this->model('updateModel')->update_one("notification_settings", $values, $data["settings_template"], "id", $id, "i");
 
@@ -124,7 +134,8 @@ class StudentProfile extends Controller{
         $data["id"] = $id;
 
         if ($id != 0) {
-            $data["settings"] = $this->model('readModel')->getOne("notification_settings", $id);
+            $data["settings"] = $this->model('readModel')->getUserSettings($id);
+            // print_r($data["settings"]);
 
             if (!$data["settings"])
                 $this->redirect();
