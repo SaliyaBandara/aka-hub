@@ -63,8 +63,7 @@ class readModel extends Model
 
         return false;
     }
-
-=======
+    
     public function getCountAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT COUNT(*) as total_users FROM user WHERE ?", "i", [1]);
