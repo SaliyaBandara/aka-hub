@@ -18,6 +18,8 @@ class Sidebar
                 $studentPages = [
                     'dashboard' => ['Dashboard', 'bxs-dashboard'],
                     'courses' => ['Courses', 'bxs-book'],
+                    'eventFeed' => ['Events', 'bxs-calendar-star'],
+                    'counselorFeed' => ['Counselor Articles', 'bxs-donate-heart'],
                     'chat' => ['Forum', 'bxs-chat'],
                     'electionDashboard' => ['Elections', 'bxs-check-square'],
                     'studentProfile' => ['Settings', 'bxs-cog'],
@@ -42,7 +44,8 @@ class Sidebar
 
             if ($role == 3) { //superadmin
                 $superAdminPages = [
-                    'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    // 'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
                     'commonProfile' => ['Admin Profile', 'bxs-home'],
                 ];
@@ -65,8 +68,7 @@ class Sidebar
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
                     'elections' => ['Elections', 'bxs-chat'],
-                    'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
+                    'approveTeachingStudents' => ['Teaching Students', 'bxs-pen'],
                     'manageMaterials' => ['Materials', 'bxs-book'],
                 ];
                 $pages = array_merge($pages, $studentrepPages);
@@ -75,7 +77,6 @@ class Sidebar
             if ($club_rep == 1) { //ClubRep
                 $clubrepPages = [
                     'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
                     'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $clubrepPages);

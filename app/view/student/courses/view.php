@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("Settings");
+$sidebar = new Sidebar("courses");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">

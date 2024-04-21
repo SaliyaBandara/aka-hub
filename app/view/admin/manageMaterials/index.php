@@ -2,433 +2,151 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("manageMaterials");
+$calendar = new Calendar();
 ?>
-
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
-        <div class="leftManageMaterials">
-            <div class="addMaterialDiv">
-                
-            </div>
-            <div class="divSearchAndDisplayProducts">
-                <div class="divDisplayProductsPart"></div>
-                <div class="divSearchPart">
-                    <div class="searchBarContainor">
-                        <h4>Search</h4>
-                        <div class="searchBar">
-                            <input class="searchText" type="text" name="search" id="search">
-                        </div>
+        <div class="left w-100">
+
+            <!-- section header -->
+            <section>
+                <div class="section_header mb-1 flex">
+                    <div class="title font-1-5 font-semibold flex align-center">
+                        <i class='bx bxs-calendar-check me-0-5'></i> Manage Materials
                     </div>
                 </div>
-            </div>
-            <div class="tableArea">
-                <div class="divTableView">
-                    <div class="tableContainor">
-                        <div class="cardContainor">
-                            <div class="div-tableHeader">
-                                <div class="tableHeaderItem">
-                                    Course Code
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Subject
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Year
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Semester
-                                </div>
-                                <div class="tableHeaderItem">
-                                    User
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Reg Number
-                                </div>
-                                <div class="tableHeaderItem">
-                                    Action
-                                </div>
-                            </div>
 
-                            <div class="scrollableContainer">
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Course Code</th>
+                                    <th>Subject</th>
+                                    <th>Year</th>
+                                    <th>Semester</th>
+                                    <th>User</th>
+                                    <th>Reg Number</th>
+                                    <th>Preview</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
                                 <?php
-                                foreach ($data["materials"] as $material) {
+
+                                if (isset($data["materials"])) {
+                                    $i = 1;
+                                    foreach ($data["materials"] as $material) {
                                 ?>
-                                    <div class="materialCard">
-                                        <div class="tableItem">
-                                            <?php echo $material['course_code']; ?>
-                                        </div>
-                                        <div class="tableItem">
-                                            <?php echo $material['course_name']; ?>
-                                        </div>
-                                        <div class="tableItem">
-                                            <?php echo $material['year']; ?> year
-                                        </div>
-                                        <div class="tableItem">
-                                            SEM <?php echo $material['semester']; ?>
-                                        </div>
-                                        <div class="tableItem">
-                                            <?php echo $material['user_name']; ?>
-                                        </div>
-                                        <div class="tableItem">
-                                            <?php echo $material['student_id']; ?>
-                                        </div>
-                                        <div class="tableItem">
-                                            <div class="acceptButton"> <a href="<?= BASE_URL ?>/manageMaterials/view/<?php echo $material['material_ID']; ?>" class="btn btn-primary">View</a></div>
-                                        </div>
-                                    </div>
-
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $material["course_code"] ?></td>
+                                            <td><?= $material["course_name"] ?></td>
+                                            <td><?= $material["year"] ?></td>
+                                            <td><?= $material["semester"] ?></td>
+                                            <td><?= $material["user_name"] ?></td>
+                                            <td><?= $material["student_id"] ?></td>
+                                            <td>
+                                                <a href="<?= BASE_URL ?>/manageMaterials/view/<?php echo $material['material_ID']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                            </td>
+                                        </tr>
                                 <?php
+                                    }
                                 }
+
                                 ?>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
+
+                <style>
+                    .btn-blue {
+                        background-color: #2d7bf4;
+                        color: white !important;
+                    }
+
+                    .table .table-img-preview {
+                        width: 70px;
+                        cursor: pointer;
+                    }
+
+                    /* .table .action-list a {
+                        color: inherit;
+                        font-size: 24px;
+                        margin-right: 5px;
+                    } */
+
+                    .icons{
+                        font-size: 24px;
+                    }
+
+                    .table .action-list {
+                        text-align: center;
+                    }
+                </style>
+
+
+            </section>
+
         </div>
-    </div>
-</div>
-<div class="tableFoot">
-    <div class="tableFootLeft">
-        Showing Products 1 to 5 of 352
-    </div>
-    <div class="tableFootRight">
+
+        <!-- <div class="right">
+            <div style="width: 30vh;"></div>
+        </div> -->
 
     </div>
-</div>
-<style>
-    .scrollableContainer {
-        height: 550px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
 
-    .addMaterialDiv {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: left;
-    }
+    <?php $HTMLFooter = new HTMLFooter(); ?>
 
-    .tableFootLeft {
-        width: 50%;
-        height: 100%;
-    }
+    <!-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css -->
+    <!-- //cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js -->
 
-    .tableFootRight {
-        width: 50%;
-        height: 100%;
-    }
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.js"></script> -->
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script> -->
 
-    .tableFoot {
-        width: 100%;
-        height: 50px;
-        margin-top: 10px;
-        display: flex;
-    }
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script>
 
-    .tableArea {
-        width: 100%;
-        height: auto;
-        display: flex;
-        justify-content: center;
-    }
+    <script>
+        let BASE_URL = "<?= BASE_URL ?>";
+    </script>
+    <script>
+        $(document).ready(function() {
 
-    .acceptButton {
-        width: 48%;
-        height: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 0px 5px 0px #2684FF;
-        background-color: #2684FF;
-        color: white;
-        border-radius: 5px;
-        margin: 5px;
-    }
-
-    .declineButton {
-        width: 48%;
-        height: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0px 0px 5px 0px #ff9b2d;
-        background-color: #ff9b2d;
-        color: white;
-        border-radius: 5px;
-        margin: 5px;
-    }
-
-    .acceptButton:hover {
-        background-color: #2684FF;
-        opacity: 1;
-        cursor: pointer;
-        color: white;
-    }
-
-    .declineButton:hover {
-        background-color: #ff9b2d;
-        opacity: 1;
-        cursor: pointer;
-        color: white;
-    }
-
-    .tableItem {
-        width: 14.28%;
-        height: 100%;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .acceptIcon {
-        width: 65px;
-        height: 65px;
-        margin: 2px;
-    }
-
-    .declineIcon {
-        width: 35px;
-        height: 35px;
-    }
-
-    .acceptIcon:hover {
-        width: 67px;
-        height: 67px;
-        cursor: pointer;
-    }
-
-    .declineIcon:hover {
-        width: 37px;
-        height: 37px;
-        cursor: pointer;
-    }
-
-    .materialCard {
-        background-color: white;
-        width: 100%;
-        height: 55px;
-        justify-content: space-between;
-        align-items: center;
-        display: flex;
-    }
-
-
-
-
-
-    .main-grid {}
-
-    .h3-RepApprove {
-        text-align: center;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    .tableHeaderItem {
-        width: 14.28%;
-        height: 65px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .tableContainor {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 130px 0 130px;
-    }
-
-    .searchText {
-        width: 100%;
-        height: 100%;
-        border: none;
-        outline: none;
-        border-radius: 10px;
-        padding: 1rem 1.25rem;
-        font-size: 0.6rem;
-        font-weight: 500;
-        background-color: #f1f1f1;
-    }
-
-    .searchBar {
-        height: 30px;
-        margin-left: 5px;
-    }
-
-    .searchBarContainor {
-        width: 100%;
-        height: 30px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-bottom: 15px;
-        padding-right: 95px;
-    }
-
-    .div-tableHeader {
-        width: 100%;
-        height: 65px;
-        background-color: #2684FF;
-        opacity: 1;
-        display: flex;
-    }
-
-    .cardContainor {
-        width: 100%;
-        height: 100%;
-        margin: 50px 0 50px 0;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .containorForcardArea {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .notificationContainor h3 {
-        text-align: center;
-        width: 92%;
-    }
-
-    .divTableView {
-        margin-top: 15px;
-        width: 100%;
-        height: auto;
-    }
-
-    .noOfProductsToDisplay {
-        margin-top: 8px;
-        width: 50px;
-        height: 80%;
-        border: 0.5px solid black;
-        margin-right: 8px;
-        margin-left: 8px;
-    }
-
-    .searchText {
-        width: 100%;
-        height: 100%;
-        border: none;
-        outline: none;
-        border-radius: 10px;
-        padding: 1rem 1.25rem;
-        font-size: 0.6rem;
-        font-weight: 500;
-        background-color: #f1f1f1;
-    }
-
-    .searchBar {
-        height: 30px;
-        margin-left: 5px;
-    }
-
-    .searchBarContainor {
-        width: 100%;
-        height: 30px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-bottom: 15px;
-        padding-right: 95px;
-    }
-
-    .main-grid .leftManageMaterials {
-        width: 100%;
-        /* background-color: yellowgreen; */
-        height: auto;
-        padding: 2rem;
-    }
-
-    .buttonAddMaterials {
-        width: 200px;
-        height: 40px;
-        background-color: #2684FF;
-        border-radius: 5px;
-        color: white;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .buttonAddMaterials:hover {
-        cursor: pointer;
-        background-color: #1E6FF2;
-    }
-
-    .divSearchAndDisplayProducts {
-        margin-top: 20px;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .divSearchPart {
-        padding: 10px;
-        width: 50%;
-        height: 100%;
-    }
-
-    .divDisplayProductsPart {
-        padding-left: 100px;
-        width: 50%;
-        height: 100%;
-        display: flex;
-    }
-
-    .leftManageMaterials {
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-    }
-</style>
-
-</div>
-
-<?php $HTMLFooter = new HTMLFooter(); ?>
-
-<script>
-    $(document).ready(function() {
-
-        $(document).on("click", ".forget-password", function(event) {
-            event.preventDefault();
-            $('.fixed-model').fadeIn();
-            $('body').css('overflow', 'hidden');
-        });
-
-        // on click onsite_alert close_btn
-        $(document).on("click", ".onsite_alert .close_btn", function(event) {
-            event.preventDefault();
-
-            $(this).parent().animate({
-                opacity: 0
-            }, 300, function() {
-                $(this).slideUp(250, function() {
-                    $(this).remove();
-                });
+            let col_count = $("#products-datatable thead th").length;
+            $("#products-datatable").DataTable({
+                language: {
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>",
+                    },
+                    info: "Showing records _START_ to _END_ of _TOTAL_",
+                    lengthMenu: 'Display <select class=\'form-select form-select-sm\'><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="-1">All</option></select> records',
+                },
+                responsive: true,
+                pageLength: 5,
+                columns: Array(col_count).fill({
+                    orderable: !0
+                }),
+                select: {
+                    style: "multi"
+                },
+                order: [
+                    [0, "asc"]
+                ],
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"),
+                        $("#products-datatable_length label").addClass("form-label");
+                },
             });
-
-
         });
+    </script>
+    <script>
 
-    });
-</script>
+    </script>

@@ -1,64 +1,55 @@
 <?php
-class CounselorFeed extends Controller
+class Clubs extends Controller
 {
 
     public function redirect($redirect = "")
     {
-        header("Location: " . BASE_URL . "/counselorFeed");
+        header("Location: " . BASE_URL . "/approveRepresentatives");
         die();
     }
 
     public function index()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1)
+            $this->redirect();
+
         $data = [
-            'title' => 'Counselor Feed',
+            'title' => 'Clubs and Societies',
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        // $post_id = 5;
-        if($_SESSION["user_role"] != 5){
-            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(1);
-        }
-        else{
-            $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$_SESSION["user_id"]);
-        }
-
         // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
-        // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
-        // print_r($data["comments"]);
+        $data["clubs"] = $this->model('readModel')->getAllClubs();
+        // print_r($data["clubs"]);
 
-        $this->view->render('counselor/counselorFeed/index', $data);
+        $this->view->render('admin/clubs/index', $data);
     }
 
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
         $data = [
-            'title' => ($id == 0) ? 'Create Post' : 'Edit Post',
+            'title' => ($id == 0) ? 'Create Club' : 'Edit Club',
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["post_template"] = $this->model('readModel')->getEmptyCounselorPost();
-        $data["post"] = $data["post_template"]["empty"];
-        $data["post_template"] = $data["post_template"]["template"];
+        $data["club_template"] = $this->model('readModel')->getEmptyClub();
+        $data["club"] = $data["club_template"]["empty"];
+        $data["club_template"] = $data["club_template"]["template"];
 
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
 
-            $values["posted_by"] = $_SESSION["user_id"];
-            $values["post_image"] = $values["post_image"];
-            $values["type"] = '1';
-
-            $this->validate_template($values, $data["post_template"]);
+            $this->validate_template($values, $data["club_template"]);
 
             if ($id == 0)
-                $result = $this->model('createModel')->insert_db("posts", $values, $data["post_template"]);
+                $result = $this->model('createModel')->insert_db("clubs", $values, $data["club_template"]);
             else
-                $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
+                $result = $this->model('updateModel')->update_one("clubs", $values, $data["club_template"], "id", $id, "i");
 
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
@@ -70,12 +61,12 @@ class CounselorFeed extends Controller
         // $data["action"] = $action;
 
         if ($id != 0) {
-            $data["post"] = $this->model('readModel')->getOne("posts", $id);
-            if (!$data["post"])
+            $data["club"] = $this->model('readModel')->getOne("clubs", $id);
+            if (!$data["club"])
                 $this->redirect();
         }
 
-        $this->view->render('counselor/counselorFeed/add_edit', $data);
+        $this->view->render('admin/clubs/add_edit', $data);
 
 
         // getEmptyCounselorPost
@@ -85,14 +76,14 @@ class CounselorFeed extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if ($_SESSION["user_role"] != 1)
             $this->redirect();
 
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
 
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
-        $result = $this->model('deleteModel')->deleteOne("posts", $id);
+        $result = $this->model('deleteModel')->deleteOne("clubs", $id);
 
         if ($result)
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));

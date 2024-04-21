@@ -110,7 +110,25 @@ $sidebar = new Sidebar("manageMaterials");
                     echo "<div class='font-bold'>No Course Materials Found for this module</div>";
                 }
                 ?>
+
+                <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/manageMaterials">
+                    <input type="button" class="profileButton" value="Back To Table" />
+                </a>
+
                 <style>
+                    .profileButton{
+                        background-color: #2d7bf4;
+                        color: white !important;
+                        border:none;
+                    }
+                    .profileButton:hover{
+                        cursor: pointer;
+                    }
+                    .btn-blue {
+                        background-color: #2d7bf4;
+                        color: white !important;
+                    }
+
                     .material-item {
                         /* border: 1px solid var(--secondary-color-faded); */
                         border-radius: 15px;

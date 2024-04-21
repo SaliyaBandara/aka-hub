@@ -18,6 +18,14 @@ class readModel extends Model
         return false;
     }
 
+    public function lastInsertedId($table , $key){
+
+        $result = $this->db_handle->runQuery("SELECT * FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
+        if(count($result)>0)
+            return $result[0]->$key;
+        return 0;
+    }
+
     public function getAll($table)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE ?", "i", [1]);
@@ -56,6 +64,7 @@ class readModel extends Model
         return false;
     }
 
+<<<<<<< HEAD
     public function getAllChatMessages()
     {
         // session_start();
@@ -100,11 +109,183 @@ class readModel extends Model
             return $result;
 
         return false;
+=======
+=======
+    public function getCountAllUsers()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as total_users FROM user WHERE ?", "i", [1]);
+        if ($result !== null && isset($result[0]['total_users'])) {
+            return $result[0]['total_users'];
+        }
+        return false;
+    }
+
+
+    public function getCountRoleUsers()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as role_users FROM user WHERE role = ? OR role =? OR student_rep = ? OR club_rep = ? OR teaching_student = ?", "iiiii", [1, 5, 1, 1, 1]);
+        if ($result && count($result) > 0) {
+            return $result[0]['role_users'];
+        }
+        return false;
+    }
+
+
+    public function getCountNewUsers()
+    {
+        $currentYear = date('Y');
+
+        $startDate = "{$currentYear}-01-01 00:00:00";
+        $endDate = "{$currentYear}-12-31 23:59:59";
+
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as new_users_count FROM user WHERE created_at BETWEEN ? AND ?", "ss", [$startDate, $endDate]);
+
+        if ($result && count($result) > 0) {
+            return $result[0]['new_users_count'];
+        }
+
+        return 0;
+    }
+
+    public function getChartOne()
+    {
+        $dataPoints = array();
+        $currentTimestamp = time();
+        for ($i = 0; $i < 48; $i++) {
+            $timestamp = strtotime("-{$i} months", $currentTimestamp);
+            $startOfMonth = strtotime('first day of', $timestamp);
+            $endOfMonth = strtotime('last day of', $timestamp);
+            $startDate = date('Y-m-d', $startOfMonth);
+            $endDate = date('Y-m-d', $endOfMonth);
+            $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM user WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            if ($result === false) {
+                error_log("Error executing SQL query for period: $startDate to $endDate");
+                continue;
+            }
+            if (count($result) > 0) {
+                $userCount = (int) $result[0]['user_count'];
+                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $userCount);
+            } else {
+                error_log("No user creation records found for period: $startDate to $endDate");
+            }
+        }
+        $dataPoints = array_reverse($dataPoints);
+        return $dataPoints;
+    }
+
+
+
+    public function getChartTwo()
+    {
+        $dataPoints = array(
+            array("label" => "Admin", "y" => 0),
+            array("label" => "Super Admin", "y" => 0),
+            array("label" => "Club Rep", "y" => 0),
+            array("label" => "Student Rep", "y" => 0),
+            array("label" => "Counselor", "y" => 0),
+            array("label" => "Teaching_Student", "y" => 0)
+        );
+        $resultAdmin = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [1]);
+        $resultSuperAdmin = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [2]);
+        $resultClubRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE club_rep = ?", "i", [1]);
+        $resultStudentRep = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE student_rep = ?", "i", [1]);
+        $resultCounselor = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE role = ?", "i", [5]);
+        $resultTeachingStudent = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM user WHERE teaching_student = ?", "i", [1]);
+
+        $dataPoints[0]["y"] = ($resultAdmin ? (int) $resultAdmin[0]['count'] : 0);
+        $dataPoints[1]["y"] = ($resultSuperAdmin ? (int) $resultSuperAdmin[0]['count'] : 0);
+        $dataPoints[2]["y"] = ($resultClubRep ? (int) $resultClubRep[0]['count'] : 0);
+        $dataPoints[3]["y"] = ($resultStudentRep ? (int) $resultStudentRep[0]['count'] : 0);
+        $dataPoints[4]["y"] = ($resultCounselor ? (int) $resultCounselor[0]['count'] : 0);
+        $dataPoints[5]["y"] = ($resultTeachingStudent ? (int) $resultTeachingStudent[0]['count'] : 0);
+
+        return $dataPoints;
+    }
+
+    public function getChartThree()
+    {
+        $dataPoints = array(
+            array("label" => "First Year", "y" => 0),
+            array("label" => "Second Year", "y" => 0),
+            array("label" => "Third Year", "y" => 0),
+            array("label" => "Fourth Year", "y" => 0),
+        );
+        $resultFirstYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [1]);
+        $resultSecondYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [2]);
+        $resultThirdYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [3]);
+        $resultFourthYear = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [4]);
+
+        $dataPoints[0]["y"] = ($resultFirstYear ? (int) $resultFirstYear[0]['count'] : 0);
+        $dataPoints[1]["y"] = ($resultSecondYear ? (int) $resultSecondYear[0]['count'] : 0);
+        $dataPoints[2]["y"] = ($resultThirdYear ? (int) $resultThirdYear[0]['count'] : 0);
+        $dataPoints[3]["y"] = ($resultFourthYear ? (int) $resultFourthYear[0]['count'] : 0);
+
+        return $dataPoints;
+    }
+
+    public function getChartFour()
+    {
+        $dataPoints = array(
+            array("label" => "Club Events", "y" => 0),
+            array("label" => "Main Events", "y" => 0),
+            array("label" => "Clubs", "y" => 0),
+            array("label" => "Courses", "y" => 0),
+            array("label" => "Course Materials", "y" => 0),
+            array("label" => "Elections", "y" => 0),
+            array("label" => "Posts", "y" => 0),
+            array("label" => "Reservation Requests", "y" => 0),
+            array("label" => "Timeslots", "y" => 0),
+        );
+        $resultClubEvents = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM club_events WHERE ?", "i", [1]);
+        $resultMainEvents = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM main_events WHERE ?", "i", [1]);
+        $resultClubs = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM clubs WHERE ?", "i", [1]);
+        $resultCourses = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM courses WHERE ?", "i", [1]);
+        $resultCourseMaterials = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM course_materials WHERE ?", "i", [1]);
+        $resultElections = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM elections WHERE ?", "i", [1]);
+        $resultPosts = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM posts WHERE ?", "i", [1]);
+        $resultReservationRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE ?", "i", [1]);
+        $resultTimeslots = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM timeslots WHERE ?", "i", [1]);
+
+        $dataPoints[0]["y"] = ($resultClubEvents ? (int) $resultClubEvents[0]['counts'] : 0);
+        $dataPoints[1]["y"] = ($resultMainEvents ? (int) $resultMainEvents[0]['counts'] : 0);
+        $dataPoints[2]["y"] = ($resultClubs ? (int) $resultClubs[0]['counts'] : 0);
+        $dataPoints[3]["y"] = ($resultCourses ? (int) $resultCourses[0]['counts'] : 0);
+        $dataPoints[4]["y"] = ($resultCourseMaterials ? (int) $resultCourseMaterials[0]['counts'] : 0);
+        $dataPoints[5]["y"] = ($resultElections ? (int) $resultElections[0]['counts'] : 0);
+        $dataPoints[6]["y"] = ($resultPosts ? (int) $resultPosts[0]['counts'] : 0);
+        $dataPoints[7]["y"] = ($resultReservationRequests ? (int) $resultReservationRequests[0]['counts'] : 0);
+        $dataPoints[8]["y"] = ($resultTimeslots ? (int) $resultTimeslots[0]['counts'] : 0);
+
+        return $dataPoints;
+    }
+
+    public function getChartFive()
+    {
+        $dataPoints = array(
+            array("label" => "Accepted Reservation Requests", "y" => 0),
+            array("label" => "Denied Reservation Requests", "y" => 0),
+        );
+        $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE accepted = ?", "i", [1]);
+        $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE declined = ?", "i", [1]);
+
+        $dataPoints[0]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
+        $dataPoints[1]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
+
+        return $dataPoints;
+>>>>>>> 37538a245707dc3a613ab848004490c4614c7149
     }
 
     public function getUserSettings($id)
     {
         $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+    }
+
+    public function getUserDetails($id)
+    {
+        $sql = "SELECT * from user u, student s WHERE u.id = s.id AND s.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -159,6 +340,16 @@ class readModel extends Model
 
         return false;
     }
+    public function getAdmin()
+    {
+        $sql = "SELECT * from user where role = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
 
     public function getOneCounselor($id)
     {
@@ -170,14 +361,86 @@ class readModel extends Model
         return false;
     }
 
-    public function getCounselorPosts($posted_by)
+    public function getOneAdmin($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM posts WHERE type = 1 AND posted_by = ?", "i", [$posted_by]);
+        $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
+        $result = $this->db_handle->runQuery($sql, "ii", [1, $id]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
+
+    public function getCounselorPosts($type, $posted_by)
+    {
+        $sql = "
+        SELECT p.*, u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p, user u
+            WHERE p.type = ? 
+            AND p.posted_by = u.id
+            AND p.posted_by = ? 
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "ii", [$type, $posted_by]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getAllCounselorPosts($type)
+    {
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u
+            WHERE p.type = ? 
+            AND p.posted_by = u.id
+            AND ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "ii", [$type, 1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPostComments($post_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?", "i", [$post_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPostLikes($post_id, $user_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?", "ii", [$post_id, $user_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    // public function getPostLikesCount($post_id)
+    // {
+    //     $result = $this->db_handle->runQuery("SELECT COUNT(l.id) as likesCount FROM posts p, post_likes l WHERE p.id = l.post_id AND p.id = ? GROUP BY l.post_id" , "i" ,[$post_id] );
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
 
     public function getEvent($event_id)
     {
@@ -221,6 +484,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getTeachingStudentsToApprove()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [2]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
     public function getPreviewRepresentative($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
@@ -248,6 +520,20 @@ class readModel extends Model
     {
 
         $sql = "SELECT * from elections e where e.end_date <= NOW() AND ? ORDER BY e.end_date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getAllClubs()
+    {
+
+        $sql = "SELECT * from clubs WHERE ?";
         $result = $this->db_handle->runQuery($sql, "i", [1]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
@@ -521,20 +807,77 @@ class readModel extends Model
         ];
     }
 
-    /**
-     * Elections Model
-     */
+    public function getEmptyAdmin()
+    {
 
-    // CREATE TABLE elections (
-    //     id INT AUTO_INCREMENT PRIMARY KEY,
-    //     user_id INT NOT NULL,
-    //     name VARCHAR(255) NOT NULL,
-    //     start_date DATETIME NOT NULL,
-    //     end_date DATETIME NOT NULL,
-    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    //     FOREIGN KEY (user_id) REFERENCES user(id)
-    // );
+        $empty = [
+            "id" => "",
+            "contact_number" => "",
+            "whatsapp_number" => "",
+            "address" => "",
+        ];
+
+        $template = [
+            "id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "contact_number" => [
+                "label" => "Contact Number",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "whatsapp_number" => [
+                "label" => "Whatsapp Number",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "address" => [
+                "label" => "Address",
+                "type" => "text",
+                "validation" => "required"
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyCounselor(){
+        $empty = [
+            "id" => "",
+            "contact_number" => "",
+            "type" => "",
+        ];
+
+        $template = [
+            "id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "contact_number" => [
+                "label" => "Contact Number",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "type" => [
+                "label" => "Type",
+                "type" => "number",
+                "validation" => "required"
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     public function getEmptyElection()
     {
@@ -707,6 +1050,135 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyPostComments()
+    {
+
+        $empty = [
+            "comment" => "",
+            "post_id" => "",
+            "user_id" => ""
+        ];
+
+        $template = [
+            "comment" => [
+                "label" => "Comment",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "post_id" => [
+                "label" => "Post ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyPostLikes()
+    {
+
+        $empty = [
+            "post_id" => "",
+            "user_id" => ""
+        ];
+
+        $template = [
+            "post_id" => [
+                "label" => "Post ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyClub()
+    {
+
+        $empty = [
+            "id" => "",
+            "name" => ""
+        ];
+
+        $template = [
+            "id" => [
+                "label" => "Club ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "name" => [
+                "label" => "Club Name",
+                "type" => "text",
+                "validation" => "required"
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyClubReps()
+    {
+
+        $empty = [
+            "club_id" => "",
+            "user_id" => "",
+            "status" => ""
+        ];
+
+        $template = [
+            "club_id" => [
+                "label" => "Club ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "status" => [
+                "label" => "Status",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     /**
      * Student Profile Model
@@ -787,6 +1259,54 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyStudent()
+    {
+
+        $empty = [
+            "id" => "",
+            "index_number" => "",
+            "faculty" => "",
+            "degree" => "",
+            "year" => "",
+        ];
+
+        $template = [
+            "id" => [
+                "label" => "User ID",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "index_number" => [
+                "label" => "Index Number",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "faculty" => [
+                "label" => "Faculty",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "degree" => [
+                "label" => "Degree",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "year" => [
+                "label" => "Year",
+                "type" => "number",
+                "validation" => "required"
+            ]
+
+
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
 
     /**
@@ -879,7 +1399,7 @@ class readModel extends Model
             "created_datetime" => "",
             "posted_by" => "",
             "title" => "",
-            "updatds_datetime" => "",
+            "updated_datetime" => "",
         ];
 
         $template = [
@@ -1017,21 +1537,21 @@ class readModel extends Model
                 "label" => "Date",
                 "type" => "date",
                 "validation" => "required",
-                
+
             ],
 
             "start_time" => [
                 "label" => "Start Time",
                 "type" => "time",
                 "validation" => "required",
-    
+
             ],
 
             "end_time" => [
                 "label" => "End Time",
                 "type" => "time",
                 "validation" => "required",
-                
+
             ],
 
         ];
@@ -1041,6 +1561,7 @@ class readModel extends Model
             "template" => $template
         ];
     }
+<<<<<<< HEAD
     public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
@@ -1052,4 +1573,6 @@ class readModel extends Model
     }
 
 
+=======
+>>>>>>> 37538a245707dc3a613ab848004490c4614c7149
 }
