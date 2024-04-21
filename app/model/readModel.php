@@ -20,9 +20,9 @@ class readModel extends Model
 
     public function lastInsertedId($table , $key){
 
-        $result = $this->db_handle->runQuery("SELECT * FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
+        $result = $this->db_handle->runQuery("SELECT id FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
         if(count($result)>0)
-            return $result[0]->$key;
+            return $result[0];
         return 0;
     }
 
@@ -108,7 +108,20 @@ class readModel extends Model
             return $result;
 
         return false;
+<<<<<<< HEAD
     }    
+=======
+    }
+   public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
+        
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+>>>>>>> 59e8e96830b3f331b7567424426fa352e1b70fad
 
     public function getCountAllUsers()
     {
@@ -275,7 +288,7 @@ class readModel extends Model
 
     public function getUserSettings($id)
     {
-        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.user_id AND n.user_id = ?";
+        $sql = "SELECT * from user u, notification_settings n WHERE u.id = n.id AND n.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -331,7 +344,7 @@ class readModel extends Model
 
     public function getCounselors()
     {
-        $sql = "SELECT * from user u , counselor c where user_id = u.id AND ?";
+        $sql = "SELECT * from user u , counselor c where c.id = u.id AND ?";
         $result = $this->db_handle->runQuery($sql, "i", [5]);
         if (count($result) > 0)
             return $result;
@@ -351,7 +364,7 @@ class readModel extends Model
 
     public function getOneCounselor($id)
     {
-        $sql = "SELECT * from user u , counselor c where user_id = u.id AND id = ?";
+        $sql = "SELECT * from user u , counselor c where c.id = u.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -477,6 +490,14 @@ class readModel extends Model
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ?", "ii", [2, 2]);
         if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
+    public function getUsersToLimitAccess(){
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ? OR teaching_student = ?", "iii", [1, 1, 1]);
+        if($result !==false){
             return $result;
         }
         return false;
@@ -764,13 +785,13 @@ class readModel extends Model
             "role" => [
                 "label" => "Role",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "status" => [
                 "label" => "Status",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "profile_img" => [
@@ -819,7 +840,7 @@ class readModel extends Model
             "id" => [
                 "label" => "User",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "contact_number" => [
@@ -848,7 +869,7 @@ class readModel extends Model
     public function getEmptyCounselor(){
         $empty = [
             "id" => "",
-            "contact_number" => "",
+            "contact" => "",
             "type" => "",
         ];
 
@@ -856,10 +877,10 @@ class readModel extends Model
             "id" => [
                 "label" => "User",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
-            "contact_number" => [
+            "contact" => [
                 "label" => "Contact Number",
                 "type" => "text",
                 "validation" => "required"
@@ -867,7 +888,8 @@ class readModel extends Model
             "type" => [
                 "label" => "Type",
                 "type" => "number",
-                "validation" => "required"
+                "validation" => "required",
+                "skip"=> true
             ],
         ];
 
@@ -1202,7 +1224,7 @@ class readModel extends Model
     {
 
         $empty = [
-            "user_id" => "",
+            "id" => "",
             "preferred_email" => "",
             "exam_notify" => "",
             "reminder_notify" => "",
@@ -1212,40 +1234,42 @@ class readModel extends Model
         ];
 
         $template = [
-            "user_id" => [
+            "id" => [
                 "label" => "Student ID",
-                "type" => "text",
+                "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
             "preferred_email" => [
                 "label" => "Preferred Email Address to receive Notifications",
                 "type" => "select",
+                "validation" => "",
                 "skip" => true
             ],
             "exam_notify" => [
                 "label" => "Send Exam and Assignment Notifications",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "reminder_notify" => [
                 "label" => "Send Reminder Notifications through",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "events_notify" => [
                 "label" => "Send New Club Event Post Notifications",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "materials_notify" => [
                 "label" => "Send New Material update Notifications",
                 "type" => "checkbox",
-                "skip" => true
+                "validation" => "",
             ],
             "notify_duration" => [
                 "label" => "Send Reminder Notifications (No. of days before)",
                 "type" => "select",
+                "validation" => "",
                 "skip" => true
             ],
 
@@ -1559,4 +1583,8 @@ class readModel extends Model
             "template" => $template
         ];
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e8e96830b3f331b7567424426fa352e1b70fad
 }

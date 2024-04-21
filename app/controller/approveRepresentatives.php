@@ -27,17 +27,38 @@ class ApproveRepresentatives extends Controller
     {
         print_r($id, $role);
         $this->requireLogin();
-        $result = $this->model('updateModel')->to_get_role(
-            "user",
-            $role,
-            $id,
-            1
-        );
-        if ($result)
-            die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
-        else {
-            die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
+        if($role == "club_rep"){
+            $resultUserUpdate = $this->model('updateModel')->to_get_role(
+                "user",
+                $role,
+                $id,
+                1
+            );
+
+            $resultStatusUpdate = $this->model('updateModel')->to_update_status("club_representative",$id);
+
+            if ($resultUserUpdate && $resultStatusUpdate)
+                die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
+            else {
+                die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
+            }
         }
+        else{
+            $resultUserUpdate = $this->model('updateModel')->to_get_role(
+                "user",
+                $role,
+                $id,
+                1
+            );
+
+            if ($resultUserUpdate)
+                die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
+            else {
+                die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
+            }
+        }
+
+
     }
     public function declineRole($id = 0, $role = 0)
     {

@@ -32,87 +32,38 @@ $sidebar = new Sidebar("existingCounselors");
                     </div>
                 <?php
                 }
+                foreach ($data["counselor_template"] as $key => $value) {
+                    if (isset($value["skip"]) && $value["skip"] == true)
+                        continue;
                 ?>
+                    <div class="mb-1 form-group">
+                        <label for="<?= $key ?>" class="form-label">
+                            <?= $value["label"] ?>
+                        </label>
+                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["counselor"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                    </div>
+                <?php
+
+                }
+                $professionalSelected = ($data["counselor"]["type"] == 'Professional Counselor') ? "selected" : "";
+                $studentSelected = ($data["counselor"]["type"] == 'Student Counselor') ? "selected" : "";
+                ?>
+                <div class="mb-1 form-group">
+                    <label for="type" class="form-label">
+                        <?= $value["label"] ?>
+                    </label>
+                    <select id="type" name="type" placeholder="Select counselor type" data-validation="required" class="form-control">
+                        <option value='1' class='font-medium text-muted' <?= $professionalSelected ?>>Professional Counselor</option>
+                        <option value='2' class='font-medium text-muted' <?= $studentSelected ?>>Student Counselor</option>
+                    </select>
+                </div>
 
                 <div class="mt-1-5 form-group">
                     <a href="<?= BASE_URL ?>/existingCounselors" class="btn btn-info">Back</a>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
-
-
             </form>
-
         </div>
-        <!-- <div class="divAddCounselors">
-            <div class="divCounselorDetails">
-                <div class="divFormContainor">
-                    <div class="mwb-form-main-wrapper">
-                        <div class="mwb-form-main-container">
-                            <form action="#">
-                                <h3>Add Counselors</h3>
-                                <div class="mwb-form-group">
-                                    <input type="text" class="mwb-form-control" value="" id="name" placeholder="Name*">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="email" class="mwb-form-control" id="email" placeholder="Email*">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="text" class="mwb-form-control" value="" id="name" placeholder="Password*">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="email" class="mwb-form-control" id="email" placeholder="Re Enter Password*">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="text" class="mwb-form-control" value="" id="name" placeholder="Alternative Email">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <label>Counselor Type : </label>
-                                    <div class="mwb-form-radio">
-                                        <input type="radio" name="radio-counselor-type" id="radio1">
-                                        <label for="radio1">Professional Counselor</label>
-                                    </div>
-                                    <div class="mwb-form-radio">
-                                        <input type="radio" name="radio-counselor-type" id="radio2">
-                                        <label for="radio2">Student Counselor</label>
-                                    </div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <label>Gender : </label>
-                                    <div class="mwb-form-radio">
-                                        <input type="radio" name="radio-gender" id="radio3">
-                                        <label for="radio3">Male</label>
-                                    </div>
-                                    <div class="mwb-form-radio">
-                                        <input type="radio" name="radio-gender" id="radio4">
-                                        <label for="radio4">Female</label>
-                                    </div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="email" class="mwb-form-control" id="email" placeholder="Contact Number">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="email" class="mwb-form-control" id="email" placeholder="Enter More Details">
-                                    <div class="mwb-form-error">This Field Required*</div>
-                                </div>
-                                <div class="mwb-form-group">
-                                    <input type="Submit" class="mwb-form-submit-btn" value="Create Account">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- </div> -->
-        <!-- <div class="right">
-            
-        </div> -->
     </div>
 
     <style>
@@ -323,9 +274,9 @@ $sidebar = new Sidebar("existingCounselors");
             var input = $(this);
             // var $inputs = $('form :input');
             var $inputs = $(this).find(':input');
-
             var values = {};
             let empty_fields = []
+            let isValidType = true;
             $inputs.each(function() {
                 values[this.name] = $(this).val();
                 if ($(this).attr("data-validation") != undefined && $(this).is("input") && $(this).val() === "" ||
@@ -334,6 +285,13 @@ $sidebar = new Sidebar("existingCounselors");
                     $(this).addClass("border-danger");
                 } else {
                     $(this).removeClass("border-danger");
+                }
+                if ($(this).attr("name") === "type") {
+                    var typeValue = $(this).val();
+                    if (typeValue !== "1" && typeValue !== "2") {
+                        $(this).addClass("border-danger");
+                        isValidType = false;
+                    }
                 }
             });
 
@@ -344,6 +302,9 @@ $sidebar = new Sidebar("existingCounselors");
             if (empty_fields.length > 0) {
                 empty_fields[0].focus();
                 return alertUser("warning", `Please fill all the fields`);
+            }
+            if (!isValidType) {
+                return alertUser("warning", `Select 1 - Pro Counselor / 2 - Stu. Counselor`);
             }
 
             $.ajax({
@@ -371,5 +332,6 @@ $sidebar = new Sidebar("existingCounselors");
                 }
             });
         });
+
     });
 </script>
