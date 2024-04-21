@@ -31,21 +31,85 @@ $calendar = new Calendar();
 
             <!-- ===VIRAJITH=== -->
             <div class="main-container">
-                <div class="slide-container">
-                    <div class="slide-content">
-                        <div class="card-wrapper">
-                            <div class="card">
-                                <div class="image-content">
-                                    <span class="overlay"></span>
+                <?php
+                if (empty($data["reservation_requests"])) {
+                    echo "<p>NO RESERVATIONS AVAILABLE</p>";
+                } else {
+                        foreach ($data["reservation_requests"] as $reservation_requests) {
+                        $img_src = USER_IMG_PATH . $reservation_requests["cover_img"];
+                ?>
+                    
+                    <div class="card-content">
+                        <div class="card">
+                            <div class="image-content">
+                                <span class="overlay"></span>
 
-                                    <div class="card-image">
-                                        <img src="https://i.pinimg.com/736x/f8/66/8e/f8668e5328cfb4938903406948383cf6.jpg" alt="" class="card-img">
-                                    </div>
+                                <div class="card-image">
+                                    <img src="<?= $img_src ?>" alt="" class="card-img">
                                 </div>
+                            </div>
+                            <div class="card-content">
+                                <h2 class="name"><?= $reservation_requests["name"] ?></h2>
+                                <label class="description">Date: <?= date("Y/m/d", strtotime($reservation_requests["date"])) ?></label>
+                                <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["start_time"])) ?></label>
+                                <button class="button" data-id="<?= $timeslot["id"] ?>">Cancel</button>
                             </div>
                         </div>
                     </div>
+                   
+                <?php }} ?>
+                
+                <!-- <div class="card-content">
+                    <div class="card">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="https://i.pinimg.com/736x/f8/66/8e/f8668e5328cfb4938903406948383cf6.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">Virajith Dissanayaka</h2>
+                            <label class="description">Date: 2024-05-19</label>
+                            <label class="description">Time Slot: 04:30 to 05:30</label>
+                            <button class="button">Cancel</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="card-content">
+                    <div class="card">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="https://i.pinimg.com/736x/f8/66/8e/f8668e5328cfb4938903406948383cf6.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">Virajith Dissanayaka</h2>
+                            <label class="description">Date: 2024-05-19</label>
+                            <label class="description">Time Slot: 04:30 to 05:30</label>
+                            <button class="button">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="https://i.pinimg.com/736x/f8/66/8e/f8668e5328cfb4938903406948383cf6.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">Virajith Dissanayaka</h2>
+                            <label class="description">Date: 2024-05-19</label>
+                            <label class="description">Time Slot: 04:30 to 05:30</label>
+                            <button class="button">Cancel</button>
+                        </div>
+                    </div>
+                </div> -->
             </div>
             
 
@@ -307,8 +371,38 @@ $calendar = new Calendar();
         .main-container {
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-wrap: wrap;
+            /* align-items: center; */
+        }
+        .card-content{
+            margin: 10px 30px;
+        }
+        .card{
+            width: 300px;
+            border-radius: 25px;
+            background: #eeecec;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .image-content,
+        .card-content{
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            padding: 10px 14px;
+
+        }
+        .image-content{
+            position: relative;
+            row-gap: 5px;
+        }
+        .overlay{
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #4070F4;
+            border-radius: 25px 25px 0 25px;
         }
         .card-image{
             position: relative;
@@ -324,6 +418,30 @@ $calendar = new Calendar();
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid #4070F4;
+        }
+        .name{
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .description{
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+        .button{
+            border: none;
+            font-size: 18px;
+            color: #FFF;
+            padding: 8px 16px;
+            background-color: #ff2b2b;
+            border-radius: 6px;
+            margin: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .button:hover{
+            background-color: #b30b0b;
         }
     </style>
 

@@ -37,7 +37,7 @@ $calendar = new Calendar();
                             </div>
                         </header>
                         <div class="chat-box">
-                            <div class="chat outgoing">
+                            <!-- <div class="chat outgoing">
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
                                 </div>
@@ -124,7 +124,7 @@ $calendar = new Calendar();
                                 <div class="details">
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <form action="#" class="typing-area">
                             <input type="text" placeholder="Type a message here...">
@@ -474,11 +474,13 @@ $calendar = new Calendar();
             display: flex;
         }
         .users-list a{
-            display: inline;
-            margin-bottom: 10px;
+            /* display: inline; */
+            margin-bottom: 5px !important;
             page-break-after: 10px;
             padding-right: 15px;
-            border-bottom-color: #f1f1f1;
+            /* border-bottom-color: #f1f1f1; */
+            /* border-bottom:  1px solid #6c6c6c !important; */
+            position: relative;
         }
         .users-list a:last-child{
             border: none;
@@ -665,7 +667,7 @@ $calendar = new Calendar();
                             let img_src = "http://<?php echo $_SERVER['SERVER_NAME']; ?>/aka-hub/public/assets/user_uploads/img/" + user.image;
                             console.log(img_src);
                             userListHTML += `
-                            <a href="#">
+                            <a href="#" user-id="${user.unique_id}">
                                 <div class="content">
                                     <img src="${img_src}" alt="">
                                     <div class="details">
@@ -709,6 +711,34 @@ $calendar = new Calendar();
         xhr.send(formData); //Sending the form data to php
     }, 500); //this function will run frequently after 500ms
 
+    // function handleUserClick(event) {
+    //     event.preventDefault();
+    //     let userId = event.currentTarget.getAttribute('user-id');
+    //     console.log(userId);
+
+    //     // Make an AJAX request to fetch chat messages for the selected user
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.open("GET", `counselorChat/chat_messages/${userId}`, true);
+    //     xhr.onload = () => {
+    //         if (xhr.readyState === XMLHttpRequest.DONE) {
+    //             if (xhr.status === 200) {
+    //                 let data = JSON.parse(xhr.responseText);
+    //                 // Populate the chat-box with the retrieved messages
+    //                 chatBox.innerHTML = data;
+    //                 // Scroll to the bottom of the chat-box
+    //                 scrollToBottom();
+    //             } else {
+    //                 console.error("Error fetching chat messages: " + xhr.status);
+    //             }
+    //         }
+    //     };
+    //     xhr.send();
+    // }
+
+    // // Attach click event listener to each user
+    // document.querySelectorAll('.users-list a').forEach(user => {
+    //     user.addEventListener('click', handleUserClick);
+    // });
     function scrollToBottom(){
         chatBox.scrollTop = chatBox.scrollHeight;
     }

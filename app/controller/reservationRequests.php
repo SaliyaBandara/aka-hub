@@ -14,9 +14,6 @@ class ReservationRequests extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        // $data["reservationRequest_data"] = $this->model('readModel')->getEmptyReservation();
-        // $data["reservationRequest"] = $data["reservationRequest_data"]["empty"];
-        // $data["reservationRequest_template"] = $data["reservationRequest_data"]["template"];
 
         $data["reservation_requests"] = $this->model('readModel')->getAvailableReservationRequests("reservation_requests");
         $this->view->render('counselor/reservationrequests/index', $data);

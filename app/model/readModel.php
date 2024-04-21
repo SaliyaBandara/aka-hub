@@ -77,16 +77,14 @@ class readModel extends Model
     }
     public function getAllChatMessagesById($outgoing_id, $incoming_id)
     {
-        // $outgoing_id = $this->getAllChatMessages("outgoing_id");
-        // $incoming_id = $this->getAllChatMessages("incoming_id");
         $sql = "
         SELECT * FROM messages 
         LEFT JOIN chat_users ON chat_users.unique_id = messages.outgoing_msg_id
-        WHERE (outgoing_msg_id = {$outgoing_id} AND incoming_msg_id = {$incoming_id}) 
-        OR (outgoing_msg_id = {$incoming_id} AND incoming_msg_id = {$outgoing_id}) 
+        WHERE (outgoing_msg_id = ? AND incoming_msg_id = ?) 
+        OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         ORDER BY msg_id
         ";
-        $result = $this->db_handle->runQuery($sql, "iiii", [1]);
+        $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id,$incoming_id,$outgoing_id,$incoming_id]);
         if (count($result) > 0)
             return $result;
 
@@ -109,7 +107,17 @@ class readModel extends Model
             return $result;
 
         return false;
-    }
+    }    
+
+    public function getAcceptedReservationRequests()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ?", "ii", [1, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }   
+
    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
@@ -1582,5 +1590,4 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
 }
