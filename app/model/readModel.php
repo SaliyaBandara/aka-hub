@@ -64,7 +64,6 @@ class readModel extends Model
         return false;
     }
 
-<<<<<<< HEAD
     public function getAllChatMessages()
     {
         // session_start();
@@ -109,8 +108,8 @@ class readModel extends Model
             return $result;
 
         return false;
-=======
-=======
+    }    
+
     public function getCountAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT COUNT(*) as total_users FROM user WHERE ?", "i", [1]);
@@ -272,7 +271,6 @@ class readModel extends Model
         $dataPoints[1]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
 
         return $dataPoints;
->>>>>>> 37538a245707dc3a613ab848004490c4614c7149
     }
 
     public function getUserSettings($id)
@@ -1561,18 +1559,4 @@ class readModel extends Model
             "template" => $template
         ];
     }
-<<<<<<< HEAD
-    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
-    {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
-        
-        if (count($result) > 0)
-            return $result;
-
-        return false;
-    }
-
-
-=======
->>>>>>> 37538a245707dc3a613ab848004490c4614c7149
 }
