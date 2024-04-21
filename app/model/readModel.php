@@ -18,10 +18,11 @@ class readModel extends Model
         return false;
     }
 
-    public function lastInsertedId($table , $key){
+    public function lastInsertedId($table, $key)
+    {
 
         $result = $this->db_handle->runQuery("SELECT id FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
-        if(count($result)>0)
+        if (count($result) > 0)
             return $result[0];
         return 0;
     }
@@ -436,9 +437,10 @@ class readModel extends Model
         return false;
     }
 
-    public function getUsersToLimitAccess(){
+    public function getUsersToLimitAccess()
+    {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ? OR teaching_student = ?", "iii", [1, 1, 1]);
-        if($result !==false){
+        if ($result !== false) {
             return $result;
         }
         return false;
@@ -455,7 +457,7 @@ class readModel extends Model
 
     public function getPreviewRepresentative($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id=s.id AND u.id = ?", "i", [$id]);
         if ($result !== false) {
             return $result;
         }
@@ -807,7 +809,8 @@ class readModel extends Model
         ];
     }
 
-    public function getEmptyCounselor(){
+    public function getEmptyCounselor()
+    {
         $empty = [
             "id" => "",
             "contact" => "",
@@ -830,7 +833,7 @@ class readModel extends Model
                 "label" => "Type",
                 "type" => "number",
                 "validation" => "required",
-                "skip"=> true
+                "skip" => true
             ],
         ];
 
