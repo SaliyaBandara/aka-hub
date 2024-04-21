@@ -26,7 +26,7 @@ $calendar = new Calendar();
                     <a href="#divone" class="button-custom">Create a Custom time slot</a>
                 </div>
 
-                <div class="wrapper">
+                <div class="wrapper" id="wrapper1">
                       
                     <?php
                     if (empty($data["timeslots"])) {
@@ -36,7 +36,7 @@ $calendar = new Calendar();
                             // $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
                     ?>
                     
-                        <div class="card card-not-added" >
+                        <div class="card card-not-added timeslotcard" >
                                 <div class="content">
                                     <div class="details">
                                         <i class='bx bxs-time'></i>
@@ -44,33 +44,9 @@ $calendar = new Calendar();
                                     </div>
                                 </div>
                                 <div class="buttons">
-                                    <a href="#" class="button-add">Add</a>
-                                    <a href="#" class="button-delete">Delete</a>
+                                    <a href="#" class="button-add" data-id="<?= $timeslot["id"] ?>">Add</a>
+                                    <a href="#" class="button-delete delete-item" data-id="<?= $timeslot["id"] ?>">Delete</a>
                                 </div>
-                                <!-- <div class="card card-not-added" >
-                                        <div class="content">
-                                            <div class="details">
-                                                <i class='bx bxs-time'></i>
-                                                <span class="name">8am - 10am</span>
-                                            </div>
-                                        </div>
-                                        <div class="buttons">
-                                            <a href="google.com" class="button-add">Add</a>
-                                            <a href="google.com" class="button-delete">Delete</a>
-                                        </div>   
-                                </div>
-                                <div class="card card-added" >
-                                        <div class="content">
-                                            <div class="details">
-                                                <i class='bx bxs-time'></i>
-                                                <span class="name">10am - 12pm</span>
-                                            </div>
-                                        </div>
-                                        <div class="buttons">
-                                            <a href="google.com" class="button-remove">Remove</a>
-                                            <a href="google.com" class="button-delete">Delete</a>
-                                        </div>   
-                                </div>       -->
                         </div> 
                         <!-- <div class="card card-not-added" >
                                 <div class="content">
@@ -95,43 +71,8 @@ $calendar = new Calendar();
                                     <a href="google.com" class="button-remove">Remove</a>
                                     <a href="google.com" class="button-delete">Delete</a>
                                 </div>   
-                        </div>
-                        <div class="card card-not-added" >
-                                <div class="content">
-                                    <div class="details">
-                                        <i class='bx bxs-time'></i>
-                                        <span class="name">12pm - 01pm</span>
-                                    </div>
-                                </div>
-                                <div class="buttons">
-                                    <a href="google.com" class="button-add">Add</a>
-                                    <a href="google.com" class="button-delete">Delete</a>
-                                </div>   
-                        </div>
-                        <div class="card card-not-added" >
-                                <div class="content">
-                                    <div class="details">
-                                        <i class='bx bxs-time'></i>
-                                        <span class="name">01pm - 03pm</span>
-                                    </div>
-                                </div>
-                                <div class="buttons">
-                                    <a href="google.com" class="button-add">Add</a>
-                                    <a href="google.com" class="button-delete">Delete</a>
-                                </div>   
-                        </div>
-                        <div class="card card-not-added" >
-                                <div class="content">
-                                    <div class="details">
-                                        <i class='bx bxs-time'></i>
-                                        <span class="name">03pm - 05pm</span>
-                                    </div>
-                                </div>
-                                <div class="buttons">
-                                    <a href="google.com" class="button-add">Add</a>
-                                    <a href="google.com" class="button-delete">Delete</a>
-                                </div>   
                         </div> -->
+                       
                     <?php }} ?>
                 </div> 
                 <div class="new">
@@ -141,7 +82,7 @@ $calendar = new Calendar();
                             <a href="" class="close">&times;</a>
                             <div class="content">
                                 <div class="container">
-                                    <form class="form" action="" method="post">
+                                    <form class="form" action="" method="post" name="form1" onsubmit="return validateForm()">
 
                                         <?php
                                             foreach ($data["timeSlot_template"] as $key => $value) {
@@ -155,23 +96,9 @@ $calendar = new Calendar();
                                             <?php
                                             }
                                         ?>
-                                            <!-- <div class="fields-container">
-                                                <div class="form-line">
-                                                    <label class="form-input3">Date :</label>
-                                                    <input type="date" name="end_time"><br />
-                                                </div> 
-                                                <div class="form-line">
-                                                    <label class="form-input1">Start Time :</label>
-                                                    <input type="time" name="start_time">
-                                                </div>
-                                                <div class="form-line">
-                                                    <label class="form-input2">End Time :</label>
-                                                    <input type="time" name="end_time"><br />
-                                                </div>    
-                                            </div> -->
-                                            <div class="submit-form">
-                                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                                            </div>
+                                        <div class="submit-form">
+                                            <button type="submit" class="btn btn-primary" value="Submit" id="submitBtn">Save Changes</button>
+                                        </div>
                                             
                                     </form>
 
@@ -295,7 +222,7 @@ $calendar = new Calendar();
 
     .wrapper .card{
         
-        width: 80%;
+        width: 70%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -548,12 +475,12 @@ $calendar = new Calendar();
         $('form').submit(function(event) {
                 event.preventDefault();
                 var input = $(this);
-                // var $inputs = $('form :input');
-                var $inputs = $(this).find(':input');
+                var inputs = $(this).find(':input');
 
                 var values = {};
-                let empty_fields = []
-                $inputs.each(function() {
+                var empty_fields = [];
+
+                inputs.each(function() {
                     values[this.name] = $(this).val();
                     if ($(this).attr("data-validation") != undefined && $(this).is("input") && $(this).val() === "" ||
                         $(this).is("select") && $(this).val() === "0") {
@@ -577,7 +504,7 @@ $calendar = new Calendar();
                     // url: url,
                     type: 'post',
                     data: {
-                        addtimeslots: values //methana ******
+                        addtimeslots: values 
                     },
                     dataType: 'json',
                     success: function(response) {
@@ -597,9 +524,70 @@ $calendar = new Calendar();
                         alertUser("danger", "Something Went Wrong")
                     }
                 });
-            });        
-    });    
+             
+            }); 
+        });
+
+        $(document).on("click", ".delete-item", function() {
+            let id = $(this).attr("data-id");
+            let $this = $(this);
+
+            // confirm delete
+            if (!confirm("Are you sure you want to delete this time slot?"))
+                return;
+
+            $.ajax({
+                url: `${BASE_URL}/manageTimeSlots/delete/${id}`,
+                type: 'post',
+                data: {
+                    delete: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                        $this.closest(".timeslotcard").remove();
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });     
+        
+        $(document).on("click", ".button-add", function(event) {
+        // event.preventDefault(); 
+            let card = $(this).closest('.timeslotcard');
+            let id = $(this).attr("data-id"); 
+            console.log(id); 
+
+            $.ajax({
+                url: `${BASE_URL}/manageTimeSlots/addToTimeslot`, 
+                type: 'POST',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 200) {
+                        alertUser("success", response['desc'])
+                        card.removeClass('card-not-added').addClass('card-added');
+                
+                    } else {
+                        alertUser("warning", response['desc'])
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")       
+                }
+            });
+        });        
+      
 </script>
+
 
 
 

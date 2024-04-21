@@ -18,7 +18,7 @@ class ReservationRequests extends Controller
         // $data["reservationRequest"] = $data["reservationRequest_data"]["empty"];
         // $data["reservationRequest_template"] = $data["reservationRequest_data"]["template"];
 
-        $data["reservation_requests"] = $this->model('readModel')->getAll("reservation_requests");
+        $data["reservation_requests"] = $this->model('readModel')->getAvailableReservationRequests("reservation_requests");
         $this->view->render('counselor/reservationrequests/index', $data);
     }
 

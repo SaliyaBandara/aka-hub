@@ -42,4 +42,21 @@ class CounselorChat extends Controller
         header('Content-Type: application/json');
         echo json_encode($chat_users);
     }
+
+    public function chat_messages()
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 5) {
+            $this->redirect();
+        }
+
+        $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id");
+        $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id");
+
+        $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id, "messages");
+
+        // Return the chat messages as JSON
+        header('Content-Type: application/json');
+        echo json_encode($messages);
+    }
 }
