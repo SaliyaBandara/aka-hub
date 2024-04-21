@@ -21,133 +21,14 @@ $calendar = new Calendar();
                             <input type="text" placeholder="Enter name to search...">
                             <button><i class='bx bx-search-alt-2' ></i></button>
                         </div>
-                        <div class="users-list">                         
-                            <!-- <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="content">
-                                    <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                    <div class="details">
-                                        <span>Virajith Dissanayaka</span>
-                                        <p>This is some message</p>
-                                    </div>
-                                    <div class="status-dot"><i class='bx bxs-circle'></i></div>
-                                </div>
-                            </a> -->
+                        <div class="users-list" id="userList">                         
+
                         </div>
                     </section>
                     
                 </div>
                 <div class=" wrapper-chat">
-                    <section class="chat-area">
+                    <section class="chat-area" id="chat-area">
                         <header>
                             <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
                             <div class="details">
@@ -727,11 +608,13 @@ $calendar = new Calendar();
 <script>
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
-
 <script>
-    // const searchBar = document.querySelector(".users .search input"),
-    // searchBtn = document.querySelector(".users .search button"),
-    // usersList = document.querySelector(".users-list");
+    const searchBar = document.querySelector(".users .search input"),
+    searchBtn = document.querySelector(".users .search button"),
+    usersList = document.querySelector(".users-list"),
+    chatArea = document.querySelector('.chat-area'),
+    form = document.querySelector('.typing-area'),
+    chatBox = document.querySelector('.chat-box');
 
     // searchBtn.onclick = ()=>{
     //     searchBar.classList.toggle("active");
@@ -739,58 +622,6 @@ $calendar = new Calendar();
     //     searchBtn.classList.toggle("active");
     //     searchBar.value = "";
     // }
-
-    // searchBar.onkeyup = ()=>{
-    //     let searchTerm = searchBar.value;
-    //     if(searchTerm != ""){
-    //         searchBar.classList.add("active");
-    //     }else{
-    //         searchBar.classList.remove("active");
-    //     }
-    //     let xhr = new XMLHttpRequest(); //Creating XML object
-    //     xhr.open("POST", "php/search.php", true);
-    //     xhr.onload = ()=>{
-    //         if(xhr.readyState === XMLHttpRequest.DONE){
-    //             if(xhr.status === 200){
-    //                 let data = xhr.response;
-    //                 usersList.innerHTML = data;
-    //             }
-    //         }
-    //     }
-    //     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    //     xhr.send("searchTerm=" + searchTerm);
-    // }
-
-    // setInterval(()=>{
-    //     console.log("hello world!");
-    //     // Strating of the Ajax part
-    //     let xhr = new XMLHttpRequest(); //Creating XML object
-    //     xhr.open("GET", "php/users.php", true);
-    //     xhr.onload = ()=>{
-    //         if(xhr.readyState === XMLHttpRequest.DONE){
-    //             if(xhr.status === 200){
-    //                 let data = xhr.response;
-    //                 console.log(data);
-    //                 if(!searchBar.classList.contains("active")){  //if active active not contains in search bar then add this
-    //                     usersList.innerHTML = data;
-    //                 }
-    //             }
-    //         }
-    //     } 
-    //     xhr.send();
-    // }, 500); //this function will run frequently after 500ms
-</script>
-<script>
-    const searchBar = document.querySelector(".users .search input"),
-    searchBtn = document.querySelector(".users .search button"),
-    usersList = document.querySelector(".users-list");
-
-    searchBtn.onclick = ()=>{
-        searchBar.classList.toggle("active");
-        searchBar.focus();
-        searchBtn.classList.toggle("active");
-        searchBar.value = "";
-    }
 
     searchBar.onkeyup = ()=>{
         let searchTerm = searchBar.value;
@@ -834,7 +665,7 @@ $calendar = new Calendar();
                             let img_src = "http://<?php echo $_SERVER['SERVER_NAME']; ?>/aka-hub/public/assets/user_uploads/img/" + user.image;
                             console.log(img_src);
                             userListHTML += `
-                            <a href="chat.php?user_id=${user.unique_id}">
+                            <a href="#">
                                 <div class="content">
                                     <img src="${img_src}" alt="">
                                     <div class="details">
@@ -855,4 +686,30 @@ $calendar = new Calendar();
         } 
         xhr.send();
     }, 500); //this function will run frequently after 500ms
+
+    setInterval(()=>{
+        // console.log("hello world!");
+        // Strating of the Ajax part
+        let xhr = new XMLHttpRequest(); //Creating XML object
+        xhr.open("POST", "counselorChat/chat_messages", true);
+        xhr.onload = ()=>{
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
+                    let data = xhr.response;
+                    chatBox.innerHTML = data;
+                    if(!chatBox.classList.contains("active")){ //if active class is not in chat box then scroll to bottom
+                        scrollToBottom();
+                    }
+                }
+            }
+        } 
+
+        //we have to send the form data through ajax to php
+        let formData = new FormData(form); //Creating new formData object
+        xhr.send(formData); //Sending the form data to php
+    }, 500); //this function will run frequently after 500ms
+
+    function scrollToBottom(){
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 </script>

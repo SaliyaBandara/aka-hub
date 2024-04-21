@@ -21,7 +21,7 @@
                     </div>
                     
                     <div class="f1">
-                        <label>Year:</label>
+                        <label>Academic Year:</label>
                         <label>
                         <div style="display: inline-block;">
                                 <?php
@@ -106,7 +106,7 @@
         form label{
             text-transform: uppercase;
             font-weight: 500;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
         .container input[type="text"]{
             width: 100%;
