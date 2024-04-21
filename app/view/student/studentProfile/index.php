@@ -14,6 +14,12 @@ $candidateCard = new CandidateCard();
         $userDetails = $data["student_details"][0];
         // print_r($userDetails);
     }
+
+    if ($data["settings"]) {
+        $settings = $data["settings"][0];
+        // print_r($userDetails);
+    }
+
     ?>
 
     <?php
@@ -22,164 +28,162 @@ $candidateCard = new CandidateCard();
 
     <div class="main-grid flex">
         <div class="left">
-            <div class ="profileHeading">Your Profile</div>
+            <div class="title font-1-5 font-semibold flex align-center">
+                <i class='bx bxs-user-circle me-0-5'></i> Your Profile
+            </div>
             <div class = "profileArea">
-                <div class = "profileImageArea">
-                    <div class = "profileImageContainer"><img src="<?= $img_src ?>" alt="" class = "profileImage"></div>
-                    <div class = "editImageButton"><input type = "button" class = "profileButton" value = "Change Picture"/></div>
+                <div class = "profileImageArea profileRow">
+                    <div class = "profileImage"><img src="<?= $img_src ?>" alt=""></div>
                 </div>
-                <div class = "profileDetailArea">
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Name : </div><div class = "profileDetailCell"><?= $userDetails["name"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Email Address : </div><div class = "profileDetailCell"><?= $userDetails["email"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Degree : </div><div class = "profileDetailCell"><?= $userDetails["degree"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Index Number : </div><div class = "profileDetailCell"><?= $userDetails["index_number"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Study Year: </div><div class = "profileDetailCell"><?= $userDetails["year"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Faculty : </div><div class = "profileDetailCell"><?= $userDetails["faculty"] ?></div></div>
-                    <div class = "profileDetailRow"><div class = "profileDetailHeader">Alternative Email : </div><div class = "profileDetailCell"><?= $userDetails["alt_email"] ?></div></div>
+
+                <div class = "profileDetailNames profileRow font-medium">
+                    <div>Name:</div>
+                    <div>Email Address:</div>
+                    <div>Index Number:</div>
+                    <div>Registration Number:</div>
+                    <div>Faculty:</div>
+                    <div>Degree:</div>
+                    <div>Study Year:</div>
+                    <div>Alternative Email:</div>
+                </div>  
+
+                <div class = "profileDetailValues profileRow">
+                    <div><?= $userDetails["name"] ?></div>
+                    <div><?= $userDetails["email"] ?></div>
+                    <div><?= $userDetails["index_number"] ?></div>
+                    <div><?= $userDetails["student_id"] ?></div>
+                    <div><?= $userDetails["faculty"] ?></div>
+                    <div><?= $userDetails["degree"] ?></div>
+                    <div>Year <?= $userDetails["year"] ?></div>
+                    <div><?= $userDetails["alt_email"] ?></div>
+                </div>  
+            </div>
+            <div class = "flex notificationSettings">
+                <div>
+                    <a href="<?= BASE_URL ?>/studentProfile/add_edit/<?= $userDetails["id"] ?>" class="btn btn-primary">
+                        Edit Details 
+                    </a>
                 </div>
             </div>
-            <!-- <hr></hr> -->
-            <!-- <div class ="notificationHeading">Notification Settings</div>
-            <div class = "notificationDetailArea">
-                <div class = "notificationHeaders">
-                    <div class ="notificationHeader">Preferred Email Address to receive Notifications</div>
-                    <div class ="notificationHeader">Send Exam and Assignment Notifications</div>
-                    <div class ="notificationHeader">Send Reminder Notifications through</div>
-                    <div class ="notificationHeader">Send Reminder Notifications (No. of days before) </div>
-                    <div class ="notificationHeader">Send New Club Event Post Notifications</div>
-                    <div class ="notificationHeader">Send New Material update Notifications</div>
+            <div class="title font-1-5 font-semibold flex align-center">
+                <i class='bx bxs-bell-ring  me-0-5'></i> Notification settings
+            </div>
+            <div class = "notificationArea">
+                <div class = "notificationDetails notificationRow font-medium">
+                    <div>Preferred option for receiving exam notifications: </div>
+                    <div>Preferred option for receiving reminders: </div>
+                    <div>Preferred option for receiving event notifications: </div>
+                    <div>Preferred option for receiving material upload notifications: </div>
+                    <div class = "mb-1 mt-0-5">Preferred Email Address for receiving notifications: </div>
+                    <div>Receive notifications (Duration): </div>
                 </div>
-                <div class = "notificationInputs">
-                    <form> -->
-                        <!-- <div class = "notificationInputRow">
-                            <select id="emailAddress" name="emailAddress" disabled>
-                                <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
-                                <option value="samudi@gmail.com" selected>samudi@gmail.com</option>
-                                <?php
-                                    if($userDetails["preferred_email"] === 1){
-                                        echo '<option selected value="' . $userDetails["email"] . '">' . $userDetails["email"] . '</option>';
-                                    }
-                                    else{
-                                        echo '<option selected value="' . $userDetails["alt_email"] . '">' . $userDetails["alt_email"] . '</option>';
-
-                                    }
-                                        
-                                ?>
-                            </select>
-                        </div>
-                        <div class = "notificationInputRow"> -->
-                            <!-- <div class = "notificationInputCell">
-                                <input type="checkbox" id="type1" name="onsite" value="onsite">
-                                <input type="checkbox" id="type1" name="onsite" <?= $userDetails["exam_notify"] == 1 ? "checked" : "" ?> value="onsite">
-                                <label for="type1">Onsite Notifications</label>
-                            </div> -->
-                            <!-- <div class = "notificationInputCell">
-                                <input type="checkbox" id="type2" name="email" value="email" checked>
-                                <?php
-                                    if($userDetails["exam_notify"] === 2){
-                                        echo '<input type="checkbox" id="type2" name="email" value="email" checked disabled>';
-                                    }
-                                    else{
-                                        echo '<input type="checkbox" id="type2" name="email" value="email" disabled>';
-                                    }
-                                ?>
-                                <label for="type2">Emails</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type3" name="none" value="none">
-                                <?php
-                                    if($userDetails["exam_notify"] === 3){
-                                        echo '<input type="checkbox" id="type3" name="none" value="none" checked>';
-                                    }
-                                    else{
-                                        echo '<input type="checkbox" id="type3" name="none" value="none" disabled>';
-                                    }
-                                ?>
-                                <label for="type3">None</label>
-                            </div>
-                        </div> -->
-                        <!-- <div class = "notificationInputRow">
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type4" name="onsite" value="onsite" checked>
-                                <?php
-                                    if($userDetails["reminder_notify"] === 1){
-                                        echo '<input type="radio" name="reminder" value="onsite" checked disabled >';
-                                    }
-                                    else{
-                                        echo '<input type="radio" name="reminder" value="onsite" disabled>';
-                                    }
-                                ?>
-                                <label for="type1">Onsite Notifications</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type5" name="email" value="email">
-                                <?php
-                                    if($userDetails["reminder_notify"] === 2){
-                                        echo '<input type="radio" name="reminder" value="email" checked disabled >';
-                                    }
-                                    else{
-                                        echo '<input type="radio" name="reminder" value="email" disabled>';
-                                    }
-                                ?>
-                                <label for="type2">Emails</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type6" name="none" value="none">
-                                <?php
-                                    if($userDetails["reminder_notify"] === 3){
-                                        echo '<input type="radio" name="reminder" value="none" checked disabled >';
-                                    }
-                                    else{
-                                        echo '<input type="radio" name="reminder" value="none" disabled>';
-                                    }
-                                ?>
-                                <label for="type3">None</label>
-                            </div>
-                        </div>
-                        <div class = "notificationInputRow">
-                            <select id="daycount" name="daycount">
-                                <option value="2weeks" selected>Before 2 weeks</option>
-                                <option value="1week">Before 1 week</option>
-                                <option value="1day">Before 1 day</option>
-
-                            </select>
-                        </div>
-                        <div class = "notificationInputRow">
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type7" name="onsite" value="onsite" checked>
-                                <label for="type1">Onsite Notifications</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type8" name="email" value="email">
-                                <label for="type2">Emails</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type9" name="none" value="none">
-                                <label for="type3">None</label>
-                            </div>
-                        </div>
-                        <div class = "notificationInputRow">
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type10" name="onsite" value="onsite">
-                                <label for="type1">Onsite Notifications</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type11" name="email" value="email">
-                                <label for="type2">Emails</label>
-                            </div>
-                            <div class = "notificationInputCell">
-                                <input type="checkbox" id="type12" name="none" value="none" checked>
-                                <label for="type3">None</label>
-                            </div>
-                        </div> -->
-                    </form>
-                    <div class ="profileButtons">
-                        <!-- <div class="btn btn-primary"><input type = "button" class = "profileButton" value = "Save Changes"/></div> -->
-                        <a href="<?= BASE_URL ?>/studentProfile/add_edit/<?= $userDetails["id"] ?>" class="btn btn-primary">
-                            Edit Details 
-                        </a>
-                        <!-- <div class="btn btn-primary"><input type = "button" class = "profileButton" value = "Change Password"/></div> -->
+                <div class = "notificationValues notificationRow">
+                    <div>
+                        <!-- <input type="checkbox" id="type2" name="email" value="email" checked> -->
+                        <?php
+                            $exam_notify = json_decode($settings['exam_notify'], true);
+                            foreach ($exam_notify as $key => $value){
+                                $type = $value[0];
+                                $num = $value[1];
+                        ?>
+                                <input type="checkbox" id="<?= $type?>"  name="<?= $type?>" value="<?= $num?>" <?= $num == 1 ? "checked" : "" ?> disabled>
+                                <label for= "<?= $type?>"> <?= $type ?> Notifications </label>
+                        <?php } ?>
+                        <?php 
+                            if($exam_notify[0][1] == 0 && $exam_notify[1][1] == 0){
+                                echo '<div class = "warningNone text-danger font-bold">None</div>';
+                            }
+                        ?>
                     </div>
+                    <div>
+                        <!-- <input type="checkbox" id="type2" name="email" value="email" checked> -->
+                        <?php
+                            $reminder_notify = json_decode($settings['reminder_notify'], true);
+                            foreach ($reminder_notify as $key => $value){
+                                $type = $value[0];
+                                $num = $value[1];
+                        ?>
+                                <input type="checkbox" id="<?= $type?>"  name="<?= $type?>" value="<?= $num?>" <?= $num == 1 ? "checked" : "" ?> disabled>
+                                <label for= "<?= $type?>"> <?= $type ?> Notifications </label>
+                        <?php } ?>
+                        <?php 
+                            if($reminder_notify[0][1] == 0 && $reminder_notify[1][1] == 0){
+                                echo '<div class = "warningNone text-danger font-bold">None</div>';
+                            }
+                        ?>
+                    </div>
+                    <div>
+                        <!-- <input type="checkbox" id="type2" name="email" value="email" checked> -->
+                        <?php
+                            $events_notify = json_decode($settings['events_notify'], true);
+                            foreach ($events_notify as $key => $value){
+                                $type = $value[0];
+                                $num = $value[1];
+                        ?>
+                                <input type="checkbox" id="<?= $type?>"  name="<?= $type?>" value="<?= $num?>" <?= $num == 1 ? "checked" : "" ?> disabled>
+                                <label for= "<?= $type?>"> <?= $type ?> Notifications </label>
+                        <?php } ?>
+                        <?php 
+                            if($events_notify[0][1] == 0 && $events_notify[1][1] == 0){
+                                echo '<div class = "warningNone text-danger font-bold">None</div>';
+                            }
+                        ?>
+                    </div>
+                    <div>
+                        <!-- <input type="checkbox" id="type2" name="email" value="email" checked> -->
+                        <?php
+                            $materials_notify = json_decode($settings['materials_notify'], true);
+                            foreach ($materials_notify as $key => $value){
+                                $type = $value[0];
+                                $num = $value[1];
+                        ?>
+                                <input type="checkbox" id="<?= $type?>"  name="<?= $type?>" value="<?= $num?>" <?= $num == 1 ? "checked" : "" ?> disabled>
+                                <label for= "<?= $type?>"> <?= $type ?> Notifications </label>
+                        <?php } ?>
+                        <?php 
+                            if($materials_notify[0][1] == 0 && $materials_notify[1][1] == 0){
+                                echo '<div class = "warningNone text-danger font-bold">None</div>';
+                            }
+                        ?>
+                    </div>
+                    <div>
+                        <select id="emailAddress" name="emailAddress" disabled>
+                            <!-- <option value="21cs1234@ucsc.amb.ac.lk">21cs1234@ucsc.amb.ac.lk</option>
+                            <option value="samudi@gmail.com" selected>samudi@gmail.com</option> -->
+                            <?php
+                                if($settings["preferred_email"] === 1){
+                                    echo '<option selected value="' . $settings["email"] . '">' . $settings["email"] . '</option>';
+                                }
+                                else{
+                                    echo '<option selected value="' . $settings["alt_email"] . '">' . $settings["alt_email"] . '</option>';
+
+                                }
+                                    
+                            ?>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="daycount" name="daycount" disabled>
+                            <?php
+                                if($settings["notify_duration"] === 1){
+                                    echo '<option selected value="1"> Before 2 Weeks </option>';
+                                }
+                                else if($settings["notify_duration"] === 2){
+                                    echo '<option selected value="2">Before 1 Week</option>';
+                                }
+                                else{
+                                    echo '<option selected value="3">Before 1 Day</option>';
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class = "flex notificationSettings">
+                <div>
+                    <a href="<?= BASE_URL ?>/studentProfile/add_edit_settings/<?= $userDetails["id"] ?>" class="btn btn-primary">
+                        Edit Notification Settings
+                    </a>
                 </div>
             </div>
         </div>
@@ -189,137 +193,115 @@ $candidateCard = new CandidateCard();
         .main-grid {}
 
         .main-grid .left {
-            width: 100%;
+            width: 100% !important;
             height: 100vh;
             margin: 20px;
         }
 
-        .profileHeading {
-            margin-left : 20px;
-            font-weight : bold;
-        }
-
-        .notificationHeading{
-            margin-top : 20px;
-            margin-left : 20px;
-            font-weight : bold;
-        }
-
         .profileImage{
-            border-radius: 100px;
-            width: 200px;
-            height: 200px;
-            /* margin-left: 20px; */
+            border-radius: 200px;
+            width: 15rem;
+            height: 15rem;
             margin: 0 auto;
-            margin-bottom: 20px;
-            border : 5px solid rgba(38,132,255, 0.5)
-        }
-
-        .profileArea, .notificationDetailArea {
-            display : flex;
-            height : 45%;
-        }
-
-        .profileDetailArea{
-            width : 65%;
-            padding-top: 70px;
-            
-        }
-
-        .profileImageArea{
-            width : 35%;
-            margin : 1%;
-            padding : 4%;
-
-        }
-
-        .profileImageArea{
-            width : 50%;
-            margin : 10px;
-            padding : 4%;
-            margin-top : 0px;
-        }
-
-        .profileButton{
-            width: 150px;
-            height: 30px;
-            background-color: #2684FF;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
+            border : 5px solid rgba(38,132,255, 0.5);
+            overflow:hidden;
             display: flex;
-            align-items: center;
             justify-content: center;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            border : none;
-
+            align-items: center;
         }
 
-        .profileButton:hover {
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        .profileImage img{
+            display:block;
+            width: 30rem;
+            height: 30rem;
         }
 
-        .editImageButton{
+        .profileImageArea{
+            display:flex;
+            justify-content: center;
+            flex-direction: column;
+            width: 40% !important;
+            /* border: 1px solid red; */
+        }
+
+        .profileArea, .notificationArea {
             display : flex;
-            align-items : center;
-            justify-content : center;
+            flex-direction: row;
+            height : auto;
+            /* border: 1px solid red; */
+        }
+
+        .profileRow{
+            margin: 2rem 1rem 2rem 0 !important;
+            /* border: 1px solid red; */
+            width: 40%;
+        }
+
+        .profileRow div{
+            padding: 0.5rem;
+        }
+
+        .profileDetailNames{
+            justify-content: right;
+            text-align: left;
+            display:flex;
+            flex-direction:column;
+            width: 20% !important;
+        }
+
+        .notificationSettings{
+            margin: 2rem;
+            justify-content: flex-end;
+        }
+
+        .notificationRow{
+            margin: 2rem 0 2rem 0 !important;
+            /* border: 1px solid red; */
+            width: 47%;
+        }
+
+        .notificationRow div{
+            padding: 0.6rem;
+        }
+
+        .notificationDetails{
+            justify-content: right;
+            text-align: left;
+            display:flex;
+            flex-direction:column;
         }
         
-        .profileDetailRow{
-            display : flex;
-            margin-top : 2%;
+        .warningNone{
+            display: inline !important;
         }
 
-        .profileDetailCell{
-            justify-content: flex-start;
-            margin-left : 5%;
+        .notificationValues input[type="checkbox"] {
+            margin-right: 0.5rem;
+            width: 1rem;
+            height: 1rem;
         }
 
-        .profileDetailHeader{
-            width:25%;
+        .notificationValues label {
+            margin-right: 2rem;
+            font-size: 1rem;
         }
 
-        .notificationHeaders{
-            width:30%;
+        .notificationValues select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 20rem;
+            background-color: #f5f5f5;
         }
 
-        .notificationHeaders, .notificationInputs{
-            padding-left : 30px;
-            margin-top : 30px;
-            width: 50%
-        }
-
-        .notificationHeader{
-            margin: 2%;
-            margin: 3%;
-        }
-
-        .notificationInputRow{
-            display : flex;
-            margin : 2.7%
-        }
-
-        .notificationInputCell{
-            margin-right : 10px;
-        }
-
-        .profileButtons{
-            display :flex;
-            justify-content : flex-end;
-            margin-top : 30px;
-        }
-
-        .saveButton input{
-            margin-right : 20px;
-            
-        }
-
-        .changePasswordButton input{
-            width : 200px;
-            margin-left: 20px;
-        }
 
     </style>
 
 </div>
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+
+

@@ -22,10 +22,13 @@ class AddAdmin extends Controller
 
         $data["user_template"] = $this->model('readModel')->getEmptyUser();
         $data["admin_template"] = $this->model('readModel')->getEmptyAdmin();
+
         $data["user"] = $data["user_template"]["empty"];
         $data["admin"] = $data["admin_template"]["empty"];
+
         $data["user_template"] = $data["user_template"]["template"];
         $data["admin_template"] = $data["admin_template"]["template"];
+        
         $data["id"] = $id;
 
         if (isset($_POST['add_edit'])) {

@@ -38,6 +38,7 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-cog'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
+                    "adminAccesscontrol" => ["Access Control", "bxs-lock-open"],
                 ];
                 $pages = array_merge($pages, $adminPages);
             }
