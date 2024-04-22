@@ -56,8 +56,6 @@ class readModel extends Model
 
     public function getAllChatUsers()
     {
-        // session_start();
-        // $outgoing_id = $_SESSION['unique_id'];
         $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE ?", "i", [1]);
         if (count($result) > 0)
             return $result;
@@ -67,8 +65,6 @@ class readModel extends Model
 
     public function getAllChatMessages()
     {
-        // session_start();
-        // $outgoing_id = $_SESSION['unique_id'];
         $result = $this->db_handle->runQuery("SELECT * FROM messages WHERE ?", "i", [1]);
         if (count($result) > 0)
             return $result;
@@ -101,6 +97,16 @@ class readModel extends Model
 
         return false;
     }
+
+    public function getNotBookedTimeSlotsById($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND added = ? AND booked = ?", "iii", [$id, 1, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getNotBookedTimeSlots()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE added = ? AND booked = ?", "ii", [1, 0]);

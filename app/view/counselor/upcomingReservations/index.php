@@ -16,7 +16,7 @@ $calendar = new Calendar();
             <div class="main-container">
                 <?php
                 if (empty($data["reservation_requests"])) {
-                    echo "<p>NO RESERVATIONS AVAILABLE</p>";
+                    echo "NO RESERVATIONS AVAILABLE";
                 } else {
                         //sorting function to sort reservation requests by date and time
                         function sortByDateTime($a, $b) {

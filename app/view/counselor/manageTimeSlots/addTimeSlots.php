@@ -59,32 +59,7 @@ $calendar = new Calendar();
                                     <a href="#" class="<?= $buttonClass ?>" data-id="<?= $timeslot["id"] ?>"><?= $button ?></a>
                                     <a href="#" class="button-delete delete-item" data-id="<?= $timeslot["id"] ?>">Delete</a>
                                 </div>
-                        </div> 
-                        <!-- <div class="card card-not-added" >
-                                <div class="content">
-                                    <div class="details">
-                                        <i class='bx bxs-time'></i>
-                                        <span class="name">8am - 10am</span>
-                                    </div>
-                                </div>
-                                <div class="buttons">
-                                    <a href="google.com" class="button-add">Add</a>
-                                    <a href="google.com" class="button-delete">Delete</a>
-                                </div>   
                         </div>
-                        <div class="card card-added" >
-                                <div class="content">
-                                    <div class="details">
-                                        <i class='bx bxs-time'></i>
-                                        <span class="name">10am - 12pm</span>
-                                    </div>
-                                </div>
-                                <div class="buttons">
-                                    <a href="google.com" class="button-remove">Remove</a>
-                                    <a href="google.com" class="button-delete">Delete</a>
-                                </div>   
-                        </div> -->
-                       
                     <?php }} ?>
                 </div> 
                 <div class="new">
