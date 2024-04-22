@@ -84,7 +84,7 @@ class readModel extends Model
         OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         ORDER BY msg_id
         ";
-        $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id,$incoming_id,$outgoing_id,$incoming_id]);
+        $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id, $incoming_id, $outgoing_id, $incoming_id]);
         if (count($result) > 0)
             return $result;
 
@@ -107,7 +107,7 @@ class readModel extends Model
             return $result;
 
         return false;
-    }    
+    }
 
     public function getAcceptedReservationRequests()
     {
@@ -116,12 +116,12 @@ class readModel extends Model
             return $result;
 
         return false;
-    }   
+    }
 
-   public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
+    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
-        
+
         if (count($result) > 0)
             return $result;
 
@@ -310,6 +310,27 @@ class readModel extends Model
     public function getUser($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
+    public function getPreviewUser($id)
+    {
+
+        $userdata = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+
+        if ($userdata[0]['role'] == 1) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
+        } else if ($userdata[0]['role'] == 5) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
+        } else if ($userdata[0]['role'] == 3) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        } else {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+        }
+
         if (count($result) > 0)
             return $result[0];
 

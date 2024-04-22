@@ -56,9 +56,9 @@ $sidebar = new Sidebar("approveRepresentatives");
                                 $i = 1;
                                 foreach ($data["clubs"] as $club) {
                             ?>
-                                    <tr class = "table_row">
+                                    <tr class="table_row">
                                         <td><?= $i++ ?></td>
-                                        <td class = "name-cell"><?= $club["name"] ?></td>
+                                        <td class="name-cell"><?= $club["name"] ?></td>
                                         <td>
                                             <a class="btn btn-sm btn-blue edit-item" data-id="<?= $club['id'] ?>"><i class='bx bx-edit'></i></a>
                                             <a class="btn btn-sm btn-blue delete-item" data-id="<?= $club['id'] ?>"><i class='bx bx-trash text-danger'></i></a>
@@ -78,7 +78,7 @@ $sidebar = new Sidebar("approveRepresentatives");
             <!-- <a href="<?= BASE_URL ?>/clubs/add_edit/0/" class="btn btn-primary add_button" id="addClubBtn">
                 <i class='bx bx-plus'></i>  Add a new Club/Society
             </a> -->
-            <div class = "club_add_form">
+            <div class="club_add_form">
                 <form action="" method="post" class="form">
                     <div class="mb-1 form-group">
                         <label for="name" class="form-label">
@@ -92,38 +92,63 @@ $sidebar = new Sidebar("approveRepresentatives");
                         <!-- <a href="<?= BASE_URL ?>/clubs" class="btn btn-info">Back</a> -->
                         <button type="submit" class="btn btn-primary">Add New</button>
                     </div>
+                    <div class="editImageButton">
+                        <a href="<?= BASE_URL ?>/approveRepresentatives">
+                            <input type="button" class="profileButton" value="Back" />
+                        </a>
+                    </div>
                 </form>
             </div>
+
         </div>
 
     </div>
 </div>
 
 <style>
-    .main-grid {
+    .editImageButton a {
+        text-decoration: none;
     }
+
+    .editImageButton a input {
+        margin-top: 30px;
+        background-color: #2d7bf4 !important;
+        color: white;
+        border: none;
+        width: 95px;
+        height: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .editImageButton a input:hover {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .main-grid {}
 
     .main-grid .left {
         width: 70% !important;
         height: 3000px;
         /* border: 1px solid red; */
     }
-    .title_bar{
+
+    .title_bar {
         flex-direction: row;
         /* border: 1px solid red; */
     }
 
-    .left_side{
+    .left_side {
         width: 50%;
         /* border: 1px solid red; */
     }
 
-    .right{
+    .right {
         justify-content: center;
         /* border: 1px solid red; */
     }
 
-    .right .club_add_form{
+    .right .club_add_form {
         margin: 2rem;
         margin-top: 4rem !important;
     }
@@ -258,7 +283,7 @@ $sidebar = new Sidebar("approveRepresentatives");
 
             var $row = $(this).closest('tr'); // Get the closest table row
             var $nameInput = $row.find('.name-input');
-            var newClubName = $nameInput.val().trim();// Get the edit button
+            var newClubName = $nameInput.val().trim(); // Get the edit button
 
             // const newClubName = $row.find('.name-cell input').val();
             console.log(newClubName);
