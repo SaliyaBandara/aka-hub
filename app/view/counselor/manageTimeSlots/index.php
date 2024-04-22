@@ -10,27 +10,6 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-            <!-- <div class="threeCardDiv">
-                <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
-                </div>
-                <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
-                </div>
-                <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        8 Total Requests in this week
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div> -->
-            
             <div class="calender-main">
                 <div class="calendarContainor">
                     <?php echo $calendar->render(); ?>
@@ -57,9 +36,6 @@ $calendar = new Calendar();
 
         </div>
         <div class="right">
-            <!-- <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div> -->
         </div>
     </div>
 

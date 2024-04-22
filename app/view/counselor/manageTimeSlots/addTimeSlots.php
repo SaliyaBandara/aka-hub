@@ -33,10 +33,22 @@ $calendar = new Calendar();
                         echo "NO TIME SLOTS AVAILABLE";
                     } else {
                             foreach ($data["timeslots"] as $timeslot) {
-                            // $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
+                                $class = "card-not-added";
+                                $buttonClass = "button-add";
+                                $button = "Add"; 
+                                if ($timeslot["added"] == 1){
+                                    $class = "card-added";
+                                    $buttonClass = "button-remove";
+                                    $button = "Remove";
+                                }  
+                                // if ($timeslot["added"] == 0){
+                                //     $class = "card-not-added";
+                                //     $buttonClass = "button-add";
+                                //     $button = "Add";
+                                // }   
                     ?>
                     
-                        <div class="card card-not-added timeslotcard" >
+                        <div class="card timeslotcard <?= $class ?>" data-id="<?= $timeslot["id"] ?>">
                                 <div class="content">
                                     <div class="details">
                                         <i class='bx bxs-time'></i>
@@ -44,7 +56,7 @@ $calendar = new Calendar();
                                     </div>
                                 </div>
                                 <div class="buttons">
-                                    <a href="#" class="button-add" data-id="<?= $timeslot["id"] ?>">Add</a>
+                                    <a href="#" class="<?= $buttonClass ?>" data-id="<?= $timeslot["id"] ?>"><?= $button ?></a>
                                     <a href="#" class="button-delete delete-item" data-id="<?= $timeslot["id"] ?>">Delete</a>
                                 </div>
                         </div> 
@@ -111,9 +123,8 @@ $calendar = new Calendar();
             </div> 
                
         </div>
-        <!-- <div class="right">
-            
-        </div> -->
+        <div class="right">
+        </div>
 
 </div>
         
@@ -205,6 +216,23 @@ $calendar = new Calendar();
         align-items: center;
         text-align: center;
     }
+    .approveDivContainor {
+        width: 100%;
+        height: 500px;
+    }
+
+    .approveDivContainor h3 {
+        text-align: center;
+    }
+    .main-grid .left {
+        width: 100%;
+        height: 1150px;
+    }
+
+    .main-grid .right{
+        flex-grow: 1;
+        height: 1000px;
+    }
 
 </style>
 
@@ -290,7 +318,7 @@ $calendar = new Calendar();
         text-align: center;
     }
     .button-remove{
-        background: #2684FF;
+        background: #333;
         width: 100px;
         text-align: center;
     }
@@ -510,10 +538,11 @@ $calendar = new Calendar();
                     success: function(response) {
                         if (response['status'] == 200) {
                             alertUser("success", response['desc'])
+                            window.location.href = window.location.href.replace("#divone", "");
                             setTimeout(function() {
-                                history.go(-1);
-                                window.close();
-                            }, 2000);
+                                console.log(window.location.href.replace("#divone", ""));
+                                location.reload();
+                            }, 1000);
 
                         } else if (response['status'] == 403)
                             alertUser("danger", response['desc'])
@@ -559,13 +588,13 @@ $calendar = new Calendar();
         });     
         
         $(document).on("click", ".button-add", function(event) {
-        // event.preventDefault(); 
+            event.preventDefault(); 
             let card = $(this).closest('.timeslotcard');
             let id = $(this).attr("data-id"); 
-            console.log(id); 
+            // console.log(id); 
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/addToTimeslot`, 
+                url: `${BASE_URL}/manageTimeSlots/addToTimeslot/${id}`, 
                 type: 'POST',
                 data: {
                     id: id
@@ -575,6 +604,38 @@ $calendar = new Calendar();
                     if (response.status === 200) {
                         alertUser("success", response['desc'])
                         card.removeClass('card-not-added').addClass('card-added');
+                        card.find('.button-add').text('Remove');
+                        card.find('.button-add').removeClass('button-add').addClass('button-remove');
+                
+                    } else {
+                        alertUser("warning", response['desc'])
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")       
+                }
+            });
+        });        
+
+        $(document).on("click", ".button-remove", function(event) {
+            event.preventDefault(); 
+            let card = $(this).closest('.timeslotcard');
+            let id = $(this).attr("data-id"); 
+            console.log(id); 
+
+            $.ajax({
+                url: `${BASE_URL}/manageTimeSlots/removeTimeslot/${id}`, 
+                type: 'POST',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 200) {
+                        alertUser("success", response['desc'])
+                        card.removeClass('card-added').addClass('card-not-added');
+                        card.find('.button-remove').text('Add');
+                        card.find('.button-remove').removeClass('button-remove').addClass('button-add');
                 
                     } else {
                         alertUser("warning", response['desc'])

@@ -20,7 +20,7 @@ $sidebar = new Sidebar("Settings");
                             // echo($data["timeslots"])
                     ?>
                     
-                        <div class="card card-not-added" >
+                        <div class="card card-not-added" data-timeslot-id="<?= $timeslot['id'] ?>">
                                 <div class="content">
                                     <div class="details">
                                         <i class='bx bxs-time'></i>
@@ -319,22 +319,22 @@ $sidebar = new Sidebar("Settings");
             var timeslotId = $(this).data("timeslot-id");
             // console.log(timeslotId);
             $.ajax({
-                url: "update_timeslot.php",
-                method: "POST",
+                url:`<?= BASE_URL ?>/counselorView/bookReservation/${timeslotId}`,
+                type: 'post',
+                dataType: 'json',
                 data: {
                     timeslot_id: timeslotId
                 },
                 success: function(response) {
-                    if (response.status === 200) {
-                        alertUser("success", response['desc'])
-                        // console.log(response);
-                
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc']);
+
                     } else {
-                        alertUser("warning", response['desc'])
+                        alertUser("warning", response['desc']);
                     }
                 },
                 error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong")       
+                    alertUser("danger", "Something Went Wrong");
                 }
             });
         });

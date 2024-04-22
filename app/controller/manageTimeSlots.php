@@ -72,7 +72,7 @@ class ManageTimeSlots extends Controller
         // print_r($id);
         // print_r($action);
 
-        $data["timeslots"] = $this->model('readModel')->getAll("timeslots");
+        $data["timeslots"] = $this->model('readModel')->getAddedTimeSlots("timeslots");
 
         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
     }
@@ -107,19 +107,56 @@ class ManageTimeSlots extends Controller
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 
-    public function addToTimeslot($id) {
+    public function addToTimeslot($id ) {
         $this->requireLogin();
         if (($_SESSION["user_role"] != 5))
             $this->redirect();
-    
-        // Update the database column to set added = 1
-        $result = $this->model('updateModel')->updateOne("timeslots", $id, ["added" => 1], "id", $id, "i");
-        // $result = $this->model('updateModel')->update_one("timeslots", ["added" => 1], [], 'id', $id, 'i');
-    
+
+        $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
+        $data["timeSlot"] = $data["timeSlot_data"]["empty"];
+        $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
+
+        $data["values"] = $this->model('readModel')->getOne("timeslots", $id);
+        if($data["values"] == null) 
+            die(json_encode(["status" => 400, "desc" => "Time slot not found."]));
+        
+        $data["values"]["added"] = 1;
+
+        $result = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
+
         if ($result) {
-            die(json_encode(["status" => 200, "message" => "Time slot successfully added."]));
+            die(json_encode(["status" => 200, "desc" => "Time slot successfully Added."]));
         } else {
-            die(json_encode(["status" => 400, "message" => "Error adding time slot."]));
+            die(json_encode(["status" => 400, "desc" => "Error adding time slot."]));
+        }
+    }
+
+    public function removeTimeslot($id) {
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 5))
+            $this->redirect();
+
+        $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
+        $data["timeSlot"] = $data["timeSlot_data"]["empty"];
+        $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
+
+        $data["values"] = $this->model('readModel')->getOne("timeslots", $id);
+        if($data["values"] == null) 
+            die(json_encode(["status" => 400, "desc" => "Time slot not found."]));
+        // print_r($data["values"]);
+        // die;
+        
+        $data["values"]["added"] = 0;
+
+        // print_r($data["values"]);
+        // die;
+
+        $result = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
+
+        if ($result) {
+            die(json_encode(["status" => 200, "desc" => "Time slot successfully Removed."]));
+        } else {
+            die(json_encode(["status" => 400, "desc" => "Error removing time slot."]));
         }
     }
 }
