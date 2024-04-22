@@ -471,7 +471,7 @@ class readModel extends Model
 
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?", "i", [$post_id]);
+        $result = $this->db_handle->runQuery("SELECT * FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? ", "i", [$post_id]);
         if (count($result) > 0)
             return $result;
 
@@ -481,6 +481,15 @@ class readModel extends Model
     public function getPostLikes($post_id, $user_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?", "ii", [$post_id, $user_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getClubRep($user_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM club_representative cr, clubs c WHERE cr.club_id = c.id AND status = 1 AND user_id = ? ", "i", [$user_id]);
         if (count($result) > 0)
             return $result;
 

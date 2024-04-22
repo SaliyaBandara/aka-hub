@@ -262,7 +262,7 @@ $sidebar = new Sidebar("approveRepresentatives");
             var $clubName = $nameCell.text().trim(); // Get the current club name
 
             // Replace club name with an input field for editing
-            $nameCell.html('<input type="text" class="form-control" id = "name_input" value="' + $clubName + '">');
+            $nameCell.html('<input type="text" class="form-control name_input" value="' + $clubName + '">');
 
             // Change edit button icon to save icon
             $editBtn.html('<i class="bx bx-save "></i>');
@@ -282,7 +282,9 @@ $sidebar = new Sidebar("approveRepresentatives");
             var values = {};
 
             var $row = $(this).closest('tr'); // Get the closest table row
+            console.log($row);
             var $nameInput = $row.find('.name-input');
+
             var newClubName = $nameInput.val().trim(); // Get the edit button
 
             // const newClubName = $row.find('.name-cell input').val();
