@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("adminAccessControl");
-$candidateCard = new CandidateCard();
+$calendar = new Calendar();
 ?>
 
 
@@ -24,7 +24,7 @@ $candidateCard = new CandidateCard();
                         <img class="profileImage" src="<?= BASE_URL ?>/public/assets/img/common/candidateImage.jpg" alt="">
                     </div>
                     <div class="editImageButton">
-                        <a href="<?= BASE_URL ?>/approveRepresentatives/">
+                        <a href="<?= BASE_URL ?>/adminAccessControl/index">
                             <input type="button" class="profileButton" value="Back To Table" />
                         </a>
                     </div>
