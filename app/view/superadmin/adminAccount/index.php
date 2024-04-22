@@ -10,10 +10,19 @@ $sidebar = new Sidebar("adminAccount");
     <div class="main-grid flex">
         <!-- <div class="left"> -->
         <div class="divExistingCounselors">
-            <div class="section_header mb-1 flex">
+            <div class="section_header mb-1 flex title_bar">
                 <div class="title font-1-5 font-semibold flex align-center">
                     <i class='bx bxs-calendar-check me-0-5'></i> Existing Admin
                 </div>
+                <?php if ($data["role"] == 3) { ?>
+                    <div class="adminAddButtonRow">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/addAdmin/index/0" class="btn btn-primary">
+                                <i class='bx bxs-lock-open'></i> Add Counselors
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
             <div class="divCounselorCards">
                 <div class="conunselorCardLine">
@@ -62,15 +71,6 @@ $sidebar = new Sidebar("adminAccount");
                     }
                     ?>
                 </div>
-                <?php if ($data["role"] == 3) { ?>
-                    <div class="buttonDivToAddCounselors">
-                        <div class="gotoAddCounselor btn btn-primary">
-                            <div>
-                                <a href="<?= BASE_URL ?>/addAdmin/index/0" class="mwb-form-submit-btn btn btn-primary">Add Admin</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
             </div>
         </div>
         <!-- </div> -->
@@ -80,7 +80,13 @@ $sidebar = new Sidebar("adminAccount");
     </div>
 
     <style>
-        .main-grid {}
+        .adminAddButtonRow {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 75%;
+            padding-top: 5px;
+        }
 
         .delete-item {
             cursor: pointer;

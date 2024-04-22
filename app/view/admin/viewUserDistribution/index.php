@@ -38,11 +38,25 @@ $calendar = new Calendar();
                                 if (isset($data["users"])) {
                                     $i = 1;
                                     foreach ($data["users"] as $user) {
+                                        if ($user["role"] == 1) {
+                                            $user["role"] = "Admin";
+                                        } else if ($user["role"] == 3) {
+                                            $user["role"] = "SuperAdmin";
+                                        } else if ($user["role"] == 5) {
+                                            $user["role"] = "Counselor";
+                                        }
                                 ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $user["name"] ?></td>
                                             <td><?= $user["email"] ?></td>
+                                            <?php
+                                            if ($user["student_id"] == null) {
+                                                $user["student_id"] = $user["role"];
+                                            } else {
+                                                $user["student_id"] = $user["student_id"];
+                                            }
+                                            ?>
                                             <td><?= $user["student_id"] ?></td>
                                             <td>
                                                 <a href="<?= BASE_URL ?>/viewUserDistribution/previewUser/<?php echo $user['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
@@ -74,9 +88,10 @@ $calendar = new Calendar();
                         margin-right: 5px;
                     }
 
-                    .icons{
+                    .icons {
                         font-size: 24px !important;
                     }
+
                     .table .action-list {
                         text-align: center;
                     }
