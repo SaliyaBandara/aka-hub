@@ -31,7 +31,7 @@ $sidebar = new Sidebar("settings");
 
             <div class="mb-1 form-group">
                     <label for="name" class="form-label">Student ID</label>
-                    <input type="text" id="index_number" name="index_number" class="form-control" value = "<?= $data["student_profile"]["index_number"] ?>" disabled>
+                    <input type="text" id="index_number" name="index_number" class="form-control" value = "<?= $data["student_profile"]["index_number"] ?>">
             </div>
 
             <?php

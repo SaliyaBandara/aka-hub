@@ -50,12 +50,26 @@ $candidateCard = new CandidateCard();
                 <div class = "profileDetailValues profileRow">
                     <div><?= $userDetails["name"] ?></div>
                     <div><?= $userDetails["email"] ?></div>
-                    <div><?= $userDetails["index_number"] ?></div>
+                    <?php 
+                        if($userDetails["index_number"] == " "){
+                            echo '<div class = "text-danger" > Not Specified </div>';
+                        }
+                        else{
+                            echo '<div>'. $userDetails["index_number"].'</div>';
+                        }
+                    ?>
                     <div><?= $userDetails["student_id"] ?></div>
                     <div><?= $userDetails["faculty"] ?></div>
                     <div><?= $userDetails["degree"] ?></div>
                     <div>Year <?= $userDetails["year"] ?></div>
-                    <div><?= $userDetails["alt_email"] ?></div>
+                    <?php 
+                        if($userDetails["alt_email"] == NULL){
+                            echo '<div class = "text-danger" > Not Specified </div>';
+                        }
+                        else{
+                            echo '<div>'. $userDetails["alt_email"].'</div>';
+                        }
+                    ?>
                 </div>  
             </div>
             <div class = "flex notificationSettings">

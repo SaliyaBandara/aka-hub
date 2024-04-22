@@ -30,8 +30,54 @@ class authModel extends Model
             "name" => [$data["fname"] . " " . $data["lname"], "s"]
         ];
 
+        // print_r($data);
+
         $result = $this->insert_db("user", $data);
-        if ($result) {
+
+        if($result){
+
+            $newID = $this->db_handle->runQuery("SELECT id FROM  user WHERE ? ORDER BY id DESC LIMIT 1", "i", [1]);
+            // print_r($newID);
+
+            $email = $data["email"][0];
+            $emailParts = explode('@', $email);
+            if (count($emailParts) === 2) {
+                $firstHalf = $emailParts[0];
+                $containsCS = strpos($firstHalf, 'cs') !== false;
+                $containsIS = strpos($firstHalf, 'is') !== false;
+                if ($containsCS) {
+                    $degree = "Computer Systems";
+                } elseif ($containsIS) {
+                    $degree = "Information Systems";
+                }
+            }
+
+            $yearFromEmail = substr($email, 0, 4);
+            $currentYear = date("Y");
+            $studentYear = $currentYear - $yearFromEmail;
+
+            $dataStudent = [
+                "id" => [$newID[0]['id'], "i"],
+                "degree" => [$degree, "s"],
+                "index_number" => [" ", "s"],
+                "year" => [$studentYear, "i"]
+            ];
+
+            // print_r($dataStudent);
+
+            $dataNotification = [
+                "id" => [$newID[0]['id'], "i"]
+            ];
+
+            // print_r($dataNotification);
+
+            $resultStudent = $this->insert_db("student", $dataStudent);
+            $resultNotification = $this->insert_db("notification_settings", $dataNotification);
+
+        }
+
+
+        if ($result && $resultStudent && $resultNotification) {
             // echo $data["email"][0];
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$data["email"][0]]);
             // print_r($result);

@@ -21,6 +21,7 @@ class StudentProfile extends Controller{
         $data["student_details"] = $this->model('readModel')->getUserDetails($id);
         $data["settings"] = $this->model('readModel')->getUserSettings($id);
 
+
         $this->view->render('student/studentProfile/index', $data);
     }
 
