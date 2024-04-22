@@ -46,7 +46,6 @@ class Sidebar
                 $superAdminPages = [
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
-                    'commonProfile' => ['Admin Profile', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
             }
