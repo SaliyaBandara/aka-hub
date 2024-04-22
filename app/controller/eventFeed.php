@@ -17,16 +17,42 @@ class eventFeed extends Controller
         ];
 
         // $post_id = 5;
-        if(!($_SESSION["club_rep"])){
-            $data["posts"] = $this->model('readModel')->getAllCounselorPosts(2);
-        }
-        else{
+        $data["posts"] = $this->model('readModel')->getAllCounselorPosts(2);
+
+        $data["clubs"] = $this->model('readModel')->getAllClubs();
+
+        $data["buttonValue"] = "My Uploads";
+        $data["link"] = "viewOwnPosts";
+        $data["iClass"] = "bx-image-add";
+        $data["topic"] = "Club Event Feed";
+
+        // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
+        // print_r($data["clubs"]);
+
+        $this->view->render('clubRep/eventFeed/index', $data);
+    }
+
+    public function viewOwnPosts()
+    {
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        // $post_id = 5;
+        if(($_SESSION["club_rep"])){
             $data["posts"] = $this->model('readModel')->getCounselorPosts(2,$_SESSION["user_id"]);
         }
-
+        
         $data["clubs"] = $this->model('readModel')->getAllClubs();
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
         // print_r($data["clubs"]);
+
+        $data["buttonValue"] = "All Uploads";
+        $data["link"] = "index";
+        $data["iClass"] = "bx-image";
+        $data["topic"] = "My Uploads";
 
         $this->view->render('clubRep/eventFeed/index', $data);
     }

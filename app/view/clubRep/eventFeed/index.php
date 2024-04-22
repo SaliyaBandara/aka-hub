@@ -10,13 +10,18 @@ $sidebar = new Sidebar("eventFeed");
     <div class="main-grid flex">
         <div class="left">
             <?php if ($_SESSION["club_rep"]) { ?>
-                <div class="mb-1 form-group">
+                <div class="mb-1 form-group switchButton">
                     <a href="<?= BASE_URL ?>/eventFeed/add_edit/0/" class="btn btn-primary">
                         <i class='bx bx-plus'></i> Add Post
                     </a>
                 </div>
+                <div class="mb-1 form-group switchButton">
+                    <a href="<?= BASE_URL ?>/eventFeed/<?= $data["link"]?>" class="btn btn-primary">
+                        <i class='bx <?= $data["iClass"] ?>'></i> <?= $data["buttonValue"]?>
+                    </a>
+                </div>
             <?php } ?>
-            <h3 class="h3-CounselorFeed">Club Events Feed</h3>
+            <h3 class="h3-CounselorFeed"><?= $data["topic"] ?></h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
                     <div class="feedContainer">
@@ -45,7 +50,7 @@ $sidebar = new Sidebar("eventFeed");
                                                 </div>
                                             </div>
                                             <div class = detailsRight>
-                                                <?php if ($_SESSION["club_rep"]) { ?>
+                                                <?php if ($_SESSION["club_rep"] && ($posts['posted_by'] == $_SESSION["user_id"])) { ?>
                                                     <div class="editDeleteButton">
                                                         <a href="<?= BASE_URL ?>/eventFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
                                                             <i class='bx bx-edit'></i>
@@ -158,6 +163,11 @@ $sidebar = new Sidebar("eventFeed");
         display: flex;
         flex-direction:row;
         padding: 1rem;
+    }
+
+    .switchButton{
+        display: inline !important;
+        margin-right: 1rem !important;
     }
 
     .userDetails{
