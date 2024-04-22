@@ -87,10 +87,20 @@ class readModel extends Model
         if (count($result) > 0)
             return $result;
 
+        return "$outgoing_id $incoming_id";
+
         return false;
     }
 
     public function getAddedTimeSlots()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE booked = ?", "i", [0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+    public function getNotBookedTimeSlots()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE added = ? AND booked = ?", "ii", [1, 0]);
         if (count($result) > 0)
@@ -98,6 +108,7 @@ class readModel extends Model
 
         return false;
     }
+    
 
     public function getAvailableReservationRequests()
     {
@@ -110,7 +121,7 @@ class readModel extends Model
 
     public function getAcceptedReservationRequests()
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ?", "ii", [1, 0]);
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         if (count($result) > 0)
             return $result;
 
@@ -1477,20 +1488,28 @@ class readModel extends Model
 
         $empty = [
             "id" => "",
-            "name" => "",
+            "timeslot_id" => "",
+            "student_id" => "",
             "year" => "",
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "cover_img" => "",
             "accepted" => "",
             "declined" => "",
+            "cancelled" => "",
+            "completed" => "",
         ];
 
         $template = [
-            "name" => [
-                "label" => "Name of the reservation",
-                "type" => "text",
+            "timeslot_id" => [
+                "label" => "Time Slot",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "student_id" => [
+                "label" => "Student ID",
+                "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
@@ -1519,13 +1538,6 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-
-            "cover_img" => [
-                "label" => "Cover Image",
-                "type" => "array",
-                "validation" => "",
-                "skip" => true
-            ],
             "accepted" => [
                 "label" => "Accepted",
                 "type" => "number",
@@ -1538,7 +1550,18 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-
+            "cancelled" => [
+                "label" => "Cancelled",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "completed" => [
+                "label" => "Completed",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
         ];
 
         return [
@@ -1556,6 +1579,8 @@ class readModel extends Model
             "date" => "",
             "start_time" => "",
             "end_time" => "",
+            "added" => "",
+            "booked" => "",
         ];
 
         $template = [
@@ -1578,6 +1603,18 @@ class readModel extends Model
                 "type" => "time",
                 "validation" => "required",
 
+            ],
+            "added" => [
+                "label" => "Added",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "booked" => [
+                "label" => "Booked",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
             ],
 
         ];

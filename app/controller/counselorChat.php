@@ -32,20 +32,22 @@ class CounselorChat extends Controller
         if ($_SESSION["user_role"] != 5) {
             $this->redirect();
         }
-        $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id");
-        $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id");
+        // print_r($this->model('readModel')->getAllChatMessages("outgoing_id"));
+        $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id")[0]['outgoing_msg_id'];
+        $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id")[0]['incoming_msg_id'];
 
         $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id);
+        // print_r($messages);
 
-        if(isset($_SESSION['unique_id'])){
+        if(isset($_SESSION['user_id'])){
             // $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id");
             // $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id");
             $output = "";
 
-            // $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id);
+            $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id);
     
-            if(mysqli_num_rows($messages) > 0){
-                while($row = mysqli_fetch_assoc($messages)){
+            if(count($messages) > 0){
+                foreach($messages as $row){ 
                     if($row['outgoing_msg_id'] === $outgoing_id){ // if this is equal to then he is a msg sender
                         $output .= '<div class="chat outgoing">
                                         <div class="details">
@@ -61,15 +63,15 @@ class CounselorChat extends Controller
                                     </div>';
                     }
                 }
-                // // Return the chat messages as JSON
-                // header('Content-Type: application/json');
-                // echo json_encode($output);
-            } 
-            // Return the chat messages as JSON
-            header('Content-Type: application/json');
-            echo json_encode($messages);
-
+                // Return the chat messages as JSON
+                header('Content-Type: application/json');
+                echo ($output);
+            }   
+           
         }
+        //  // Return the chat messages as JSON
+        //  header('Content-Type: application/json');
+        //  echo json_encode($messages);
 
     }
 }

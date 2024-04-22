@@ -65,7 +65,7 @@ $sidebar = new Sidebar("existingCounselors");
                         </div>
                     </div>
                     <div class = "bookingButtonContainer">
-                        <a class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center" href="counselorView/bookReservation">Book an appointment</a>
+                        <a class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center" href="<?= BASE_URL ?>/counselorView/bookReservation">Book an appointment</a>
                     </div>
                 </div>
                 <?php  } ?>
