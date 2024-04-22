@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("adminAccessControl");
+$sidebar = new Sidebar("approveRepresentatives");
 $calendar = new Calendar();
 ?>
 
@@ -50,11 +50,11 @@ $calendar = new Calendar();
                                                 <td>Student Rep</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/adminAccessControl/removeAccess/<?= $card["id"] ?>/Student_Rep" class="removeAccessButtonStudentRep"><i class='bx bxs-user-x icons text-danger'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Student_Rep" class="removeAccessButtonStudentRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/adminAccessControl/preview/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                         <?php
@@ -71,11 +71,11 @@ $calendar = new Calendar();
                                                 <td>Club Rep</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/adminAccessControl/removeAccess/<?= $card["id"] ?>/Club_Rep" class="removeAccessButtonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Club_Rep" class="removeAccessButtonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/adminAccessControl/preview/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                         <?php
@@ -91,11 +91,11 @@ $calendar = new Calendar();
                                                 <td>Teaching Student</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/adminAccessControl/removeAccess/<?= $card["id"] ?>/Teaching_Student" class="removeAccessButtonTeachingStudent"><i class='bx bxs-user-x icons text-danger'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Teaching_Student" class="removeAccessButtonTeachingStudent"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/adminAccessControl/preview/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                 <?php
@@ -108,8 +108,30 @@ $calendar = new Calendar();
                         </table>
                     </div>
                 </div>
-
+                <div class="editImageButton">
+                    <a href="<?= BASE_URL ?>/approveRepresentatives">
+                        <input type="button" class="profileButton" value="Back" />
+                    </a>
+                </div>
                 <style>
+                    .editImageButton a {
+                        text-decoration: none;
+                    }
+
+                    .editImageButton a input {
+                        margin-top: 30px;
+                        background-color: #2d7bf4 !important;
+                        color: white;
+                        border: none;
+                        width: 150px;
+                        height: 30px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+
+                    .editImageButton a input:hover {
+                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                    }
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;
@@ -216,7 +238,7 @@ $calendar = new Calendar();
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/adminAccessControl/removeAccess/${id}/student_rep`,
+                    url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/student_rep`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
@@ -240,7 +262,7 @@ $calendar = new Calendar();
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/adminAccessControl/removeAccess/${id}/club_rep`,
+                    url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/club_rep`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
@@ -263,7 +285,7 @@ $calendar = new Calendar();
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/adminAccessControl/removeAccess/${id}/teaching_student`,
+                    url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/teaching_student`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {

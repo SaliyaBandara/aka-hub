@@ -18,7 +18,7 @@ class ViewUserDistribution extends Controller{
             'title' => 'User Distribution',
             'message' => 'Welcome to Aka Hub!'
         ];
-        $data["user"] = $this->model('readModel')->getUser($id);
+        $data["user"] = $this->model('readModel')->getPreviewUser($id);
         // print_r($data["user"]);
         $this->view->render('admin/viewUserDistribution/previewUser', $data);
     }
