@@ -325,6 +325,8 @@ class readModel extends Model
             $result = $this->db_handle->runQuery("SELECT * FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
         } else if ($userdata[0]['role'] == 5) {
             $result = $this->db_handle->runQuery("SELECT * FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
+        } else if ($userdata[0]['role'] == 3) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
         } else {
             $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
         }
