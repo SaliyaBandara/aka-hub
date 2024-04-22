@@ -79,7 +79,7 @@ class StudentProfile extends Controller{
             if ($result1 && $result2)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
-            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
+            die(json_encode(array("status" => "400", "desc" => "Error while editing profile")));
         }
 
         $data["id"] = $id;
