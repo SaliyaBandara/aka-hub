@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("adminAccessControl");
+$sidebar = new Sidebar("approveRepresentatives");
 $calendar = new Calendar();
 ?>
 
@@ -50,11 +50,11 @@ $calendar = new Calendar();
                                                 <td>Student Rep</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="brepDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Student_Rep" class="removeAccessButtonStudentRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                         <?php
@@ -71,11 +71,11 @@ $calendar = new Calendar();
                                                 <td>Club Rep</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Club_Rep" class="removeAccessButtonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                         <?php
@@ -91,11 +91,11 @@ $calendar = new Calendar();
                                                 <td>Teaching Student</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Teaching_Student" class="removeAccessButtonTeachingStudent"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
                                 <?php
@@ -108,8 +108,30 @@ $calendar = new Calendar();
                         </table>
                     </div>
                 </div>
-
+                <div class="editImageButton">
+                    <a href="<?= BASE_URL ?>/approveRepresentatives">
+                        <input type="button" class="profileButton" value="Back" />
+                    </a>
+                </div>
                 <style>
+                    .editImageButton a {
+                        text-decoration: none;
+                    }
+
+                    .editImageButton a input {
+                        margin-top: 30px;
+                        background-color: #2d7bf4 !important;
+                        color: white;
+                        border: none;
+                        width: 150px;
+                        height: 30px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+
+                    .editImageButton a input:hover {
+                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                    }
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;
@@ -210,18 +232,18 @@ $calendar = new Calendar();
                         $("#products-datatable_length label").addClass("form-label");
                 },
             });
-            $(document).on("click", ".repAcceptButonStudentRep", function(event) {
+            $(document).on("click", ".removeAccessButtonStudentRep", function(event) {
                 event.preventDefault();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/approveRepresentatives/acceptRole/${id}/student_rep`,
+                    url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/student_rep`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
                         if (response['status'] == 200) {
-                            alertUser("success", `Accepted successfully.`);
+                            alertUser("success", `Removed Access successfully.`);
                             button.closest("tr").remove();
 
                         } else {
@@ -234,18 +256,18 @@ $calendar = new Calendar();
                 });
             });
 
-            $(document).on("click", ".repAcceptButonClubRep", function(event) {
+            $(document).on("click", ".removeAccessButtonClubRep", function(event) {
                 event.preventDefault();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/approveRepresentatives/acceptRole/${id}/club_rep`,
+                    url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/club_rep`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
                         if (response['status'] == 200) {
-                            alertUser("success", `Accepted successfully.`);
+                            alertUser("success", `Removed Access successfully.`);
                             button.closest("tr").remove();
                         } else {
                             alertUser("warning", response['desc']);
@@ -257,41 +279,18 @@ $calendar = new Calendar();
                 });
             });
 
-            $(document).on("click", ".repDeclineButonStudentRep", function(event) {
+            $(document).on("click", ".removeAccessButtonTeachingStudent", function(event) {
                 event.preventDefault();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/approveRepresentatives/declineRole/${id}/student_rep`,
+                    url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/teaching_student`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
                         if (response['status'] == 200) {
-                            alertUser("success", `Denied successfully.`);
-                            button.closest("tr").remove();
-                        } else {
-                            alertUser("warning", response['desc']);
-                        }
-                    },
-                    error: function(ajaxContext) {
-                        alertUser("danger", "Something Went Wrong");
-                    }
-                });
-            });
-
-            $(document).on("click", ".repDeclineButonClubRep", function(event) {
-                event.preventDefault();
-                let button = $(this);
-                let urlParts = $(this).attr("href").split('/');
-                let id = urlParts[urlParts.length - 2];
-                $.ajax({
-                    url: `${BASE_URL}/approveRepresentatives/declineRole/${id}/club_rep`,
-                    type: 'post',
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response['status'] == 200) {
-                            alertUser("success", `Denied successfully.`);
+                            alertUser("success", `Removed Access successfully.`);
                             button.closest("tr").remove();
                         } else {
                             alertUser("warning", response['desc']);

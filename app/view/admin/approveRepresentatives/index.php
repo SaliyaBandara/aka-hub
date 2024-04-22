@@ -17,10 +17,17 @@ $calendar = new Calendar();
                     <div class="title font-1-5 font-semibold left_side">
                         <i class='bx bxs-calendar-check me-0-5'></i> Approve Student/Club Representatives
                     </div>
-                    <div class="mb-1 form-group right_side">
-                        <a href="<?= BASE_URL ?>/clubs/index" class="btn btn-primary">
-                            <i class='bx bx-show'></i>  View Clubs and Societies
-                        </a>
+                    <div class="approveRepresentativesButtonsLine">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/approveRepresentatives/adminAccessControlView" class="btn btn-primary">
+                                <i class='bx bxs-lock-open'></i> Access Control
+                            </a>
+                        </div>
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/clubs/index" class="btn btn-primary">
+                                <i class='bx bx-show'></i> View Clubs
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -56,7 +63,7 @@ $calendar = new Calendar();
                                                 <td>
                                                     <div class="action-list">
                                                         <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Student_Rep" class=" repAcceptButonStudentRep"><i class='bx bxs-user-check icons text-success'></i></a>
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="brepDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="brepDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -72,7 +79,7 @@ $calendar = new Calendar();
                                                 <td>
                                                     <div class="action-list">
                                                         <a href="<?= BASE_URL ?>/approveRepresentatives/acceptRole/<?= $card["id"] ?>/Club_Rep" class="repAcceptButonClubRep"><i class='bx bxs-user-check icons text-success'></i></a>
-                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -111,15 +118,15 @@ $calendar = new Calendar();
                                                         }
                                                         if (isset($card['student_rep']) && $card['student_rep'] == 2) {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="repDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Student_Rep" class="repDeclineButonStudentRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                         <?php
                                                         } elseif (isset($card['club_rep']) && $card['club_rep'] == 2) {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                            <a href="<?= BASE_URL ?>/approveRepresentatives/declineRole/<?= $card["id"] ?>/Club_Rep" class="repDeclineButonClubRep"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                         <?php
                                                         }
                                                         ?>
@@ -142,6 +149,19 @@ $calendar = new Calendar();
                 </div>
 
                 <style>
+                    .section_header {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .approveRepresentativesButtonsLine {
+                        display: flex;
+                        justify-content: right;
+                        align-items: center;
+                        width: 350px;
+                    }
+
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;
@@ -167,26 +187,32 @@ $calendar = new Calendar();
                         text-align: center;
                     }
 
-                    .title_bar{
+                    .title_bar {
                         flex-direction: row;
                         /* border: 1px solid red; */
                     }
 
-                    .left_side{
+                    .left_side {
                         width: 70%;
                         /* border: 1px solid red; */
                     }
 
-                    .right_side{
+                    .right_side {
                         width: 30%;
                         /* justify-content: center;
                         border: 1px solid red; */
                     }
 
-                    .icons{
+                    .icons {
                         font-size: 24px;
                     }
 
+                    .form-group {
+                        width: 45%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: right;
+                    }
                 </style>
 
 

@@ -38,17 +38,14 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-cog'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
-                    "adminAccesscontrol" => ["Access Control", "bxs-lock-open"],
                 ];
                 $pages = array_merge($pages, $adminPages);
             }
 
             if ($role == 3) { //superadmin
                 $superAdminPages = [
-                    // 'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
-                    'commonProfile' => ['Admin Profile', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
             }

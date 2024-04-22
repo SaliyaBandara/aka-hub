@@ -18,10 +18,11 @@ class readModel extends Model
         return false;
     }
 
-    public function lastInsertedId($table , $key){
+    public function lastInsertedId($table, $key)
+    {
 
         $result = $this->db_handle->runQuery("SELECT id FROM  $table  WHERE ? ORDER BY $key DESC LIMIT 1", "i", [1]);
-        if(count($result)>0)
+        if (count($result) > 0)
             return $result[0];
         return 0;
     }
@@ -55,9 +56,89 @@ class readModel extends Model
 
     public function getAllChatUsers()
     {
-        // session_start();
-        // $outgoing_id = $_SESSION['unique_id'];
         $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getAllChatMessages()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM messages WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+    public function getAllChatMessagesById($outgoing_id, $incoming_id)
+    {
+        $sql = "
+        SELECT * FROM messages 
+        LEFT JOIN chat_users ON chat_users.unique_id = messages.outgoing_msg_id
+        WHERE (outgoing_msg_id = ? AND incoming_msg_id = ?) 
+        OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
+        ORDER BY msg_id
+        ";
+        $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id, $incoming_id, $outgoing_id, $incoming_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return "$outgoing_id $incoming_id";
+
+        return false;
+    }
+
+    public function getAddedTimeSlots()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE booked = ?", "i", [0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getNotBookedTimeSlotsById($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND added = ? AND booked = ?", "iii", [$id, 1, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getNotBookedTimeSlots()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE added = ? AND booked = ?", "ii", [1, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+    
+
+    public function getAvailableReservationRequests()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND declined = ?", "ii", [0, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getAcceptedReservationRequests()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
+
         if (count($result) > 0)
             return $result;
 
@@ -246,6 +327,27 @@ class readModel extends Model
     public function getUser($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
+    public function getPreviewUser($id)
+    {
+
+        $userdata = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+
+        if ($userdata[0]['role'] == 1) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
+        } else if ($userdata[0]['role'] == 5) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
+        } else if ($userdata[0]['role'] == 3) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        } else {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+        }
+
         if (count($result) > 0)
             return $result[0];
 
@@ -445,9 +547,10 @@ class readModel extends Model
         return false;
     }
 
-    public function getUsersToLimitAccess(){
+    public function getUsersToLimitAccess()
+    {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE student_rep = ? OR club_rep = ? OR teaching_student = ?", "iii", [1, 1, 1]);
-        if($result !==false){
+        if ($result !== false) {
             return $result;
         }
         return false;
@@ -464,7 +567,7 @@ class readModel extends Model
 
     public function getPreviewRepresentative($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id=s.id AND u.id = ?", "i", [$id]);
         if ($result !== false) {
             return $result;
         }
@@ -816,7 +919,8 @@ class readModel extends Model
         ];
     }
 
-    public function getEmptyCounselor(){
+    public function getEmptyCounselor()
+    {
         $empty = [
             "id" => "",
             "contact" => "",
@@ -839,7 +943,7 @@ class readModel extends Model
                 "label" => "Type",
                 "type" => "number",
                 "validation" => "required",
-                "skip"=> true
+                "skip" => true
             ],
         ];
 
@@ -1423,20 +1527,28 @@ class readModel extends Model
 
         $empty = [
             "id" => "",
-            "name" => "",
+            "timeslot_id" => "",
+            "student_id" => "",
             "year" => "",
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "cover_img" => "",
             "accepted" => "",
             "declined" => "",
+            "cancelled" => "",
+            "completed" => "",
         ];
 
         $template = [
-            "name" => [
-                "label" => "Name of the reservation",
-                "type" => "text",
+            "timeslot_id" => [
+                "label" => "Time Slot",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "student_id" => [
+                "label" => "Student ID",
+                "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
@@ -1465,13 +1577,6 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-
-            "cover_img" => [
-                "label" => "Cover Image",
-                "type" => "array",
-                "validation" => "",
-                "skip" => true
-            ],
             "accepted" => [
                 "label" => "Accepted",
                 "type" => "number",
@@ -1484,7 +1589,18 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-
+            "cancelled" => [
+                "label" => "Cancelled",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "completed" => [
+                "label" => "Completed",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
         ];
 
         return [
@@ -1498,9 +1614,12 @@ class readModel extends Model
 
         $empty = [
             "id" => "",
+            "counselor_id" => "",
             "date" => "",
             "start_time" => "",
             "end_time" => "",
+            "added" => "",
+            "booked" => "",
         ];
 
         $template = [
@@ -1523,6 +1642,18 @@ class readModel extends Model
                 "type" => "time",
                 "validation" => "required",
 
+            ],
+            "added" => [
+                "label" => "Added",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "booked" => [
+                "label" => "Booked",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
             ],
 
         ];

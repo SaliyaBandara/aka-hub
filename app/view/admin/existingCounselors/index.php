@@ -10,10 +10,19 @@ $sidebar = new Sidebar("existingCounselors");
     <div class="main-grid flex">
         <!-- <div class="left"> -->
         <div class="divExistingCounselors">
-            <div class="section_header mb-1 flex">
+            <div class="section_header mb-1 flex title_bar">
                 <div class="title font-1-5 font-semibold flex align-center">
                     <i class='bx bxs-calendar-check me-0-5'></i> Existing Counselors
                 </div>
+                <?php if ($data["role"] == 1) { ?>
+                    <div class="counselorsAddButtonRow">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/addCounselors/index/0" class="btn btn-primary">
+                                <i class='bx bxs-lock-open'></i> Add Counselors
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
             <div class="divCounselorCards">
                 <div class="conunselorCardLine">
@@ -68,23 +77,6 @@ $sidebar = new Sidebar("existingCounselors");
                     ?>
                 </div>
 
-                <?php if ($data["role"] == 1) { ?>
-                    <div class="buttonDivToAddCounselors">
-                        <div class="gotoAddCounselor">
-                            <div>
-                                <a href="<?= BASE_URL ?>/addCounselors/index/0" class="mwb-form-submit-btn">Add Counselor</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-                <!-- <div class="buttonDivToAddCounselors">
-                    <div class="gotoAddCounselor">
-                        <div>
-                            <a href="<?= BASE_URL ?>/addCounselors/index/0" class="mwb-form-submit-btn">Add Counselor</a>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
         </div>
         <!-- </div> -->
@@ -94,8 +86,13 @@ $sidebar = new Sidebar("existingCounselors");
     </div>
 
     <style>
-        .main-grid {}
-
+        .counselorsAddButtonRow{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 75%;
+            padding-top: 5px;
+        }
         .delete-item {
             cursor: pointer;
         }
