@@ -73,26 +73,92 @@ $sidebar = new Sidebar("counselorFeed");
                                                     <label class = "likeCountLabel">
                                                         <?= ($posts['likesCount'] === null) ? '0 Likes' : $posts['likesCount'] . ' Likes' ?>
                                                     </label>
-                                                    <a href = "#" class="commentsToggle">
+                                                    <a href = "#" id="commentsToggle">
                                                         <i class='bx bx-message-rounded'></i>
                                                     </a> 
-                                                    <label>
-                                                        <!-- <?= count($data["comments"]) ?>  -->
-                                                        2 Comments
-                                                    </label>
+                                                    <?php
+                                                        $postIdToFind = $posts['id'];
+                                                        $hasComments = false; // Flag to track if comments exist for the post
+                                                        $count = 0;
+
+                                                        foreach ($data['comments'] as $comment) {
+                                                            if ($comment['post_id'] == $postIdToFind) {
+                                                                // Output the comment content directly
+                                                                $count = $count + 1;
+                                                            }
+                                                        }
+
+                                                        // If no comments were found, display a message
+                                                    ?>
+                                                    <label id = "commentCount">
+                                                        <?= $count ?> Comments
+                                                    </label> 
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="commentsSection" style="display: none;">
-                                            <?php 
-                                                if (empty($data["comments"])) {
-                                                    echo "<div class='font-meidum text-muted'></div>";
-                                                } else {
-                                                    foreach ($data["comments"] as $comments) {
+                                        <div id="commentsSection" style="display: none;" class = "my-2">
+                                            <div class = "font-medium font-1 text-left mx-1"> Comments </div>
+                                            
+                                            <?php
+                                                
+                                                $postIdToFind = $posts['id'];
+                                                $hasComments = false; // Flag to track if comments exist for the post
+
+                                                foreach ($data['comments'] as $comment) {
+                                                    if ($comment['post_id'] == $postIdToFind) {
+                                                        // Output the comment content directly
+                                                    $img_src_comment = USER_IMG_PATH . $comment["profile_img"];
                                             ?>
-                                                <p><?= $comments["comment"] ?></p>
-                                                <?php } ?>
-                                            <?php } ?>
+                                                    
+                                                    <div class = "commentContent flex flex-row">
+                                                        <div class = "userImageComment">
+                                                            <img src="<?= $img_src_comment ?>" alt="">
+                                                        </div>
+                                                        <div class = "flex flex-column justify-center">
+                                                            <div class = "text-medium mx-0-5 flex" style = "font-size: 9px;"><?= $comment['name']?></div>
+                                                            <div class = "text-medium font-1 mx-0-5 flex"> <?= $comment['comment']?> </div>
+                                                        </div>
+                                                        
+                                                        <?php 
+                                                            if($comment["user_id"] == $_SESSION["user_id"] || $comment["posted_by"] == $_SESSION["user_id"]){
+                                                                // echo '<div class = "text-medium font-1 mx-1 my-1"> <i class="bx bx-edit"></i> </div>';
+                                                                echo '<div class = "text-medium mx-0-5 text-danger flex justify-center align-center deleteComment" style = "font-size: 18px; cursor: pointer;" data-id = "'.$comment['id'].'"> <i class="bx bx-trash"></i> </div>';
+                                                            }
+                                                        ?>
+                                                        
+                                                    </div>
+                                                        
+                                            <?php        
+                                                        $hasComments = true; // Set flag to true as comments exist
+                                                    }
+                                                }
+
+                                                // If no comments were found, display a message
+                                                if (!$hasComments) {
+                                                    echo '<div class = "text-muted font-medium mx-1 my-1 font-1" style = "text-align: left;">No comments to show</div>';
+                                                }
+                                            ?>                                                           
+                                        </div>
+                                        <hr></hr>
+                                        <div class = "addCommentSection my-1 form-group">
+                                            <div>
+                                                <form action="" method="post" class="form">
+                                                    <div class= "flex flex-row">
+                                                        <div class="mb-1 ms-1 form-group">
+                                                            <label for="name" class="form-label" style = "text-align: left !important;">
+                                                                Add new comment
+                                                            </label>
+                                                            <input type="text" id="newComment" name="newComment" class="form-control textBox" placeholder="Enter comment" value = ""  data-validation="required">
+                                                        </div>
+
+                                                        <div href="#" class="my-0-5">
+                                                            <div class = "btn btn-primary mb-1 mx-1 my-1 addCommentButton" id = <?= $posts["id"]?>>
+                                                                Post
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                             <?php } ?>
@@ -252,6 +318,41 @@ $sidebar = new Sidebar("counselorFeed");
         display: block;
     }
 
+    .userImageComment{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 2.25rem;
+        height: 2.25rem;
+        overflow: hidden;
+        margin-right: 0.5rem;
+    }
+
+    .userImageComment img{
+        width: 4rem;
+        height: 4rem;
+        display: block;
+    }
+
+    #commentsSection {
+        /* border: 1px solid red; */
+        padding-bottom: 2rem !important;
+    }
+
+    .commentContent {
+        margin: 0.5rem 0 0 2rem;
+        padding: 8px;
+        border-radius: 20px; /* Use Arial font or fallback to sans-serif */
+        color: #333; /* Dark text color */
+        /* background-color: #ffffff; */
+        /* border: 1px solid black; */
+        /* opacity: 70%; */
+        width: 50%;
+        /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); */
+        text-align: left;
+    }
+
     .main-grid {
     }
 
@@ -344,6 +445,77 @@ $sidebar = new Sidebar("counselorFeed");
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "You have already liked this post")
+                }
+            });
+        });
+
+        $(document).on("click","#commentsToggle",function() {
+
+            var $postContainer = $(this).closest('.feedPost');
+            var $commentsSection = $postContainer.find('#commentsSection');
+            $commentsSection.toggle();
+
+        });
+
+        $(document).on("click", ".addCommentButton", function() {
+
+            var postId = $(this).attr("id");
+            var comment = $(this).closest(".feedPost").find(".textBox").val();
+            console.log(comment);
+
+            // comment = encodeURIComponent(comment);
+
+            $.ajax({
+                url: `${BASE_URL}/counselorFeed/postComment/${postId}/${comment}`,
+                type: 'post',
+                data: {
+                    request: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500);
+
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
+        $(document).on("click", ".deleteComment", function() {
+            let id = $(this).attr("data-id");
+            let $this = $(this);
+
+            // confirm delete
+            if (!confirm("Are you sure you want to delete this comment?"))
+                return;
+
+            $.ajax({
+                url: `${BASE_URL}/counselorFeed/deleteComment/${id}`,
+                type: 'post',
+                data: {
+                    delete: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                        $this.closest(".commentContent").remove();
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
                 }
             });
         });
