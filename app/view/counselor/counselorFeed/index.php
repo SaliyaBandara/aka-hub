@@ -17,7 +17,7 @@ $sidebar = new Sidebar("counselorFeed");
                 </div>
             <?php } ?>
             <h3 class="h3-CounselorFeed">Counselor Feed</h3>
-            <div class="divFeed">
+            <div class="divFeed flex justify-center">
                 <div class="divCounselorFeed">
                     <div class="feedContainer">
 
@@ -29,6 +29,7 @@ $sidebar = new Sidebar("counselorFeed");
                                 $img_src = USER_IMG_PATH . $posts["post_image"];
                                 $img_src_profile = USER_IMG_PATH . $posts["profile_img"];
                         ?>
+                                
                                     <div class="feedPost my-2">
                                         <div class = "postDetails">
                                             <div class = "detailsLeft">
@@ -59,16 +60,33 @@ $sidebar = new Sidebar("counselorFeed");
                                         </div>
                                         <div class = "postTitle my-1 font-medium"> <?= strtoupper($posts["title"]) ?></div> 
                                         <img class="postImage" src="<?= $img_src ?>" alt="">
-                                        <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
+                                        
                                         <p style="white-space: pre-line;">
                                             <?= substr($posts["description"], 0, 500) . (strlen($posts["description"]) > 500 ? '...' : '') ?>
                                         </p>
+                                        <a href = "<?= BASE_URL ?>/counselorFeed/postView/<?= $posts['id']?>" style = "text-decoration: none !important; color: inherit;"> 
+                                            <div class = "flex justify-left mx-1 font-bold text-secondary"> <em> Read More... </em> </div>
+                                        </a>
                                         <div class = "postDetails">
                                             <div class = "detailsLeft">
                                                 <div class="likeCommentButton">
-                                                    <!-- <a href="./counselorFeed/like/<?= $posts["id"] ?>"> -->
+
+                                                    <?php 
+                                                        $likedToPost = false;
+
+                                                        foreach($data['liked'] as $liked){
+                                                            if($liked['post_id'] == $posts['id']){
+                                                                $likedToPost = true;
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        $heartIconClass = $likedToPost ? "bx bxs-heart text-danger likeButton" : "bx bx-heart likeButton text-danger likeButton";
+
+                                                    ?>
+                                                   
                                                     <a class = "likePost" data-id = "<?= $posts["id"] ?>">
-                                                        <i class='bx bx-heart text-danger likeButton'></i>
+                                                        <i class= "<?= $heartIconClass ?>"></i>
                                                     </a>
                                                     <label class = "likeCountLabel">
                                                         <?= ($posts['likesCount'] === null) ? '0 Likes' : $posts['likesCount'] . ' Likes' ?>
@@ -161,6 +179,7 @@ $sidebar = new Sidebar("counselorFeed");
                                             </div>
                                         </div>
                                     </div>
+                                
                             <?php } ?>
                         <?php } ?>
                     </div>
@@ -357,7 +376,7 @@ $sidebar = new Sidebar("counselorFeed");
     }
 
     .main-grid .left {
-        width: 100%;
+        width: 100% !important;
         height: 3000px;
     }
 </style>

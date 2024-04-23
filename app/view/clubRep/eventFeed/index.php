@@ -83,9 +83,23 @@ $sidebar = new Sidebar("eventFeed");
                                         <div class = "postDetails">
                                             <div class = "detailsLeft">
                                                 <div class="likeCommentButton">
-                                                    <!-- <a href="./counselorFeed/like/<?= $posts["id"] ?>"> -->
+                                                    
+                                                    <?php 
+                                                        $likedToPost = false;
+
+                                                        foreach($data['liked'] as $liked){
+                                                            if($liked['post_id'] == $posts['id']){
+                                                                $likedToPost = true;
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        $heartIconClass = $likedToPost ? "bx bxs-heart text-danger likeButton" : "bx bx-heart likeButton text-danger likeButton";
+
+                                                    ?>
+                                                   
                                                     <a class = "likePost" data-id = "<?= $posts["id"] ?>">
-                                                        <i class='bx bx-heart text-danger likeButton'></i>
+                                                        <i class= "<?= $heartIconClass ?>"></i>
                                                     </a>
                                                     <label class = "likeCountLabel">
                                                         <?= ($posts['likesCount'] === null) ? '0 Likes' : $posts['likesCount'] . ' Likes' ?>
