@@ -110,7 +110,7 @@ $calendar = new Calendar();
                 </div>
                 <div class="editImageButton">
                     <a href="<?= BASE_URL ?>/approveRepresentatives">
-                        <input type="button" class="profileButton" value="Back" />
+                        <input type="button" class="btn btn-primary" value="Back To Table" />
                     </a>
                 </div>
                 <style>
@@ -120,7 +120,6 @@ $calendar = new Calendar();
 
                     .editImageButton a input {
                         margin-top: 30px;
-                        background-color: #2d7bf4 !important;
                         color: white;
                         border: none;
                         width: 150px;
@@ -128,20 +127,6 @@ $calendar = new Calendar();
                         border-radius: 5px;
                         cursor: pointer;
                     }
-
-                    .editImageButton a input:hover {
-                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-                    }
-                    .btn-blue {
-                        background-color: #2d7bf4;
-                        color: white !important;
-                    }
-
-                    .btn-orange {
-                        background-color: #ff9b2d;
-                        color: white !important;
-                    }
-
                     .table .table-img-preview {
                         width: 70px;
                         cursor: pointer;
