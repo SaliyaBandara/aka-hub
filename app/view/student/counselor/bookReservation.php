@@ -311,6 +311,10 @@ $sidebar = new Sidebar("Settings");
             e.preventDefault();
             var timeslotId = $(this).data("timeslot-id");
             // console.log(timeslotId);
+
+            if (!confirm("Are you sure you want to make this Reservation?"))
+                return;
+
             $.ajax({
                 url:`<?= BASE_URL ?>/counselorView/bookReservation/${timeslotId}`,
                 type: 'post',
@@ -321,7 +325,6 @@ $sidebar = new Sidebar("Settings");
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc']);
-                        //reload page
                         location.reload();
 
                     } else {

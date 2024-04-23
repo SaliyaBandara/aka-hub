@@ -29,6 +29,11 @@ class ManageTimeSlots extends Controller
         if (isset($_POST['addtimeslots'])) {
             $values = $_POST["addtimeslots"];
 
+            $values["counselor_id"] = $_SESSION["user_id"];
+
+            // print_r($values);
+            // die;
+
             $today = new DateTime(); 
             $todayDate = $today->format('Y-m-d');
 
@@ -41,7 +46,7 @@ class ManageTimeSlots extends Controller
             }
 
             // // Check for overlapping time slots
-            // $counselor_id = $_SESSION['counselor_id'];
+            // $counselor_id = $_SESSION['user_id'];
             // $overlapping_slots = $this->model('readModel')->checkForOverlappingTimeSlots($counselor_id, $values['start_time'], $values['end_time']);
 
             // if (!empty($overlapping_slots)) {
@@ -49,6 +54,8 @@ class ManageTimeSlots extends Controller
             // }
 
             $this->validate_template($values, $data["timeSlot_template"]);
+
+            
 
             if ($id == 0)
                 $result = $this->model('createModel')->insert_db("timeslots", $values, $data["timeSlot_template"]);
@@ -71,8 +78,11 @@ class ManageTimeSlots extends Controller
         // print params
         // print_r($id);
         // print_r($action);
+        $user_id = $_SESSION["user_id"];    
 
-        $data["timeslots"] = $this->model('readModel')->getAddedTimeSlots("timeslots");
+        $data["timeslots"] = $this->model('readModel')->getTimeSlotsByCounselorId($user_id);
+
+        // $data["timeslots"] = $this->model('readModel')->getAddedTimeSlots("timeslots");
 
         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
     }
@@ -83,7 +93,9 @@ class ManageTimeSlots extends Controller
         if (($_SESSION["user_role"] != 5))
             $this->redirect();
 
-        $data["timeslots"] = $this->model('readModel')->getAll("timeslots");
+        $user_id = $_SESSION["user_id"];    
+
+        $data["timeslots"] = $this->model('readModel')->getTimeSlotsByCounselorId($user_id); 
 
         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
     }
@@ -120,7 +132,15 @@ class ManageTimeSlots extends Controller
         if($data["values"] == null) 
             die(json_encode(["status" => 400, "desc" => "Time slot not found."]));
         
-        $data["values"]["added"] = 1;
+        
+
+        //status = 0 => created
+        //status = 1 => added
+        //status = 2 => removed
+        //status = 3 => booked
+
+        $data["values"]["status"] = 1;
+        // $data["values"]["counselor_id"] = $_SESSION["user_id"];
 
         $result = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
 
@@ -146,7 +166,12 @@ class ManageTimeSlots extends Controller
         // print_r($data["values"]);
         // die;
         
-        $data["values"]["added"] = 0;
+
+        //status = 0 => created
+        //status = 1 => added
+        //status = 2 => removed
+
+        $data["values"]["status"] = 2;
 
         // print_r($data["values"]);
         // die;

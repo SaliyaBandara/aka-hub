@@ -35,8 +35,13 @@ $calendar = new Calendar();
                             foreach ($data["timeslots"] as $timeslot) {
                                 $class = "card-not-added";
                                 $buttonClass = "button-add";
-                                $button = "Add"; 
-                                if ($timeslot["added"] == 1){
+                                $button = "Add";
+                                
+                                //status = 0 => created
+                                //status = 1 => added
+                                //status = 2 => removed
+                                //status = 3 => booked
+                                if ($timeslot["status"] == 1){
                                     $class = "card-added";
                                     $buttonClass = "button-remove";
                                     $button = "Remove";
@@ -551,10 +556,12 @@ $calendar = new Calendar();
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
                         $this.closest(".timeslotcard").remove();
+                        location.reload();
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
                         alertUser("warning", response['desc'])
+                    
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
@@ -596,7 +603,10 @@ $calendar = new Calendar();
             event.preventDefault(); 
             let card = $(this).closest('.timeslotcard');
             let id = $(this).attr("data-id"); 
-            console.log(id); 
+            // console.log(id); 
+
+            if (!confirm("Are you sure you want to Remove this time slot?"))
+                return;
 
             $.ajax({
                 url: `${BASE_URL}/manageTimeSlots/removeTimeslot/${id}`, 
