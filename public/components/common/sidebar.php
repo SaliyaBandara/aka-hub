@@ -18,7 +18,7 @@ class Sidebar
                     'dashboard' => ['Dashboard', 'bxs-dashboard'],
                     'courses' => ['Courses', 'bxs-book'],
                     'chat' => ['Forum', 'bxs-chat'],
-                    'electionDashboard' => ['Elections', 'bxs-check-square'],
+                    'elections' => ['Elections', 'bxs-chat'],
                     'studentProfile' => ['Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $studentPages);
@@ -63,7 +63,6 @@ class Sidebar
 
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
-                    'elections' => ['Elections', 'bxs-chat'],
                     'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
                     'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
                     'manageMaterials' => ['Materials', 'bxs-book'],

@@ -8,6 +8,24 @@ class Elections extends Controller
         die();
     }
 
+    public function checkAdmin()
+    {
+        if ($_SESSION["student_rep"] != 1 && $_SESSION["club_rep"] != 1)
+            $this->redirect();
+    }
+
+    public function checkAccess($election)
+    {
+        // if student rep type should be 1
+        // if club rep type should be 0
+        if ($_SESSION["student_rep"] == 1)
+            return true;
+
+        if ($_SESSION["club_rep"] == 1 && $election["type"] == 0)
+            return true;
+
+        return false;
+    }
     public function index()
     {
         $this->requireLogin();
@@ -17,17 +35,184 @@ class Elections extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["teaching_student"] = $_SESSION["teaching_student"];
         $data["student_rep"] = $_SESSION["student_rep"];
+        $data["club_rep"] = $_SESSION["club_rep"];
+
+        $data["edit_access"] = false;
+        if ($_SESSION["student_rep"] == 1 || $_SESSION["club_rep"] == 1)
+            $data["edit_access"] = true;
+
         $data["items"] = $this->model('readModel')->getAll("elections");
-        $this->view->render('election/elections/index', $data);
+        $this->view->render('election/view/index', $data);
+    }
+
+    public function dashboard()
+    {
+        $this->requireLogin();
+        $this->checkAdmin();
+
+        $data = [
+            'title' => 'Elections',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["student_rep"] = $_SESSION["student_rep"];
+        $data["club_rep"] = $_SESSION["club_rep"];
+
+        $data["items"] = $this->model('readModel')->getAll("elections");
+        $this->view->render('election/dashboard/index', $data);
+    }
+
+    public function view($id = 0)
+    {
+        $this->requireLogin();
+
+        $data = [
+            'title' => 'Election',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["item"] = $this->model('readModel')->getOne("elections", $id);
+        if (!$data["item"])
+            $this->redirect();
+
+        $data["questions"] = $this->model('readModel')->getAllByColumn("election_questions", "election_id", $id, "i");
+        if (!$data["questions"])
+            $data["questions"] = [];
+
+        // values.push({
+        //     question_id: question_id,
+        //     question_type: question_type,
+        //     question_answer: question_answers
+        // });
+
+        if (isset($_POST["vote"])) {
+            $values = $_POST["vote"];
+            // print_r($values);
+            // die;
+
+            // Array
+            // (
+            //     [0] => Array
+            //         (
+            //             [question_id] => 7
+            //             [question_type] => 2
+            //             [question_answer] => Array
+            //                 (
+            //                     [0] => 1
+            //                 )
+
+            //         )
+
+            //     [1] => Array
+            //         (
+            //             [question_id] => 10
+            //             [question_type] => 3
+            //             [question_answer] => Array
+            //                 (
+            //                     [0] => 2
+            //                     [1] => 4
+            //                 )
+
+            //         )
+
+            // CREATE TABLE election_votes (
+            //     id INT AUTO_INCREMENT PRIMARY KEY,
+            //     election_id INT NOT NULL,
+            //     user_id INT NOT NULL,
+            //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     FOREIGN KEY (election_id) REFERENCES elections(id),
+            //     FOREIGN KEY (user_id) REFERENCES user(id)
+            // );
+
+            // -- election responses table
+
+            // CREATE TABLE election_responses (
+            //     id INT AUTO_INCREMENT PRIMARY KEY,
+            //     election_id INT NOT NULL,
+            //     question_id INT NOT NULL,
+            //     response_option VARCHAR(255) DEFAULT NULL,
+            //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     FOREIGN KEY (election_id) REFERENCES elections(id),
+            //     FOREIGN KEY (user_id) REFERENCES user(id),
+            //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
+            // );
+
+            $data["election_response"] = $this->model('readModel')->getEmptyElectionResponse();
+            $data["election_response_template"] = $data["election_response"]["template"];
+
+            $election_id = $id;
+            $user_id = $_SESSION["user_id"];
+            $questions = $this->model('readModel')->getAllByColumn("election_questions", "election_id", $election_id, "i");
+            if (!$questions)
+                die(json_encode(array("status" => "400", "desc" => "No questions found for this election")));
+
+            // check if already voted
+            $already_voted = $this->model('readModel')->getOneByColumns("election_votes", ["election_id", "user_id"], [$election_id, $user_id], ["i", "i"]);
+            if ($already_voted)
+                die(json_encode(array("status" => "400", "desc" => "You have already voted for this election")));
+
+            // check if the count of questions and answers match
+            if (count($questions) != count($values))
+                die(json_encode(array("status" => "400", "desc" => "Invalid number of answers")));
+
+            // sort both arrays by question id
+            usort($questions, function ($a, $b) {
+                return $a["id"] - $b["id"];
+            });
+
+            usort($values, function ($a, $b) {
+                return $a["question_id"] - $b["question_id"];
+            });
+
+            $answers = [];
+            foreach ($values as $key => $value) {
+                $question_id = $value["question_id"];
+                $question = $questions[$key];
+                if ($question_id != $question["id"])
+                    die(json_encode(array("status" => "400", "desc" => "Invalid question id " . $question_id)));
+
+                $question_type = $question["question_type"];
+                $question_answers = $value["question_answer"];
+
+                if ($question_type != 1) {
+                    if (count($question_answers) <= 0)
+                        die(json_encode(array("status" => "400", "desc" => "Invalid answer for question id " . $question_id)));
+
+                    foreach ($question_answers as $key => $answer) {
+                        $answers[] = [
+                            "election_id" => $election_id,
+                            "user_id" => $user_id,
+                            "question_id" => $question_id,
+                            "answer" => $answer
+                        ];
+                    }
+                }
+            }
+
+            // print_r($answers);
+            // die;
+
+            $result = $this->model('createModel')->insert_election_answers($id, $answers, $data["election_response_template"]);
+            if ($result)
+                die(json_encode(array("status" => "200", "desc" => "Votes Cast Successfully")));
+
+            die(json_encode(array("status" => "400", "desc" => "Error while voting")));
+        }
+
+        $this->view->render('election/view/view', $data);
     }
 
     public function add_edit($id = 0, $action = "create")
     {
         $this->requireLogin();
-        if (($_SESSION["student_rep"] != 1))
-            $this->redirect();
+        $this->checkAdmin();
+
+        if ($id != 0) {
+            $election = $this->model('readModel')->getOne("elections", $id);
+            if (!$election || !$this->checkAccess($election))
+                $this->redirect();
+        }
 
         $data = [
             'title' => ($action == "create") ? 'Create Election' : 'Edit Election',
@@ -52,12 +237,17 @@ class Elections extends Controller
             //     cover_img VARCHAR(255) DEFAULT NULL,
             //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     type TINYINT(1) NOT NULL DEFAULT 0,
             //     FOREIGN KEY (user_id) REFERENCES user(id)
             // );
 
             // validate dates
             $start_date = new DateTime($values["start_date"]);
             $end_date = new DateTime($values["end_date"]);
+
+            $values["type"] = 0;
+            if ($id == 0 && $_SESSION["student_rep"] == 1)
+                $values["type"] = 1;
 
             if ($start_date == false)
                 die(json_encode(array("status" => "400", "desc" => "Invalid start date")));
@@ -95,14 +285,13 @@ class Elections extends Controller
         // print_r($id);
         // print_r($action);
 
-        $this->view->render('election/elections/add_edit', $data);
+        $this->view->render('election/dashboard/add_edit', $data);
     }
 
     public function modify($id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["student_rep"] != 1))
-            $this->redirect();
+        $this->checkAdmin();
 
         $data = [
             'title' => 'Modify Election',
@@ -113,7 +302,7 @@ class Elections extends Controller
         $data["item"] = $data["item_template"]["empty"];
         $data["item_template"] = $data["item_template"]["template"];
         $election = $this->model('readModel')->getOne("elections", $id);
-        if (!$election)
+        if (!$election || !$this->checkAccess($election))
             $this->redirect();
 
         if (isset($_POST['modify'])) {
@@ -148,17 +337,33 @@ class Elections extends Controller
                             die(json_encode(array("status" => "400", "desc" => "Option cannot be empty")));
                     }
 
+                    $has_images = false;
+                    $img_count = 0;
+                    foreach ($value["options"] as $option) {
+                        if (isset($option["cover_img"])) {
+                            $has_images = true;
+                            $img_count++;
+                        }
+                    }
+
+                    if ($has_images && $img_count != count($value["options"]))
+                        die(json_encode(array("status" => "400", "desc" => "Upload images for all options if any")));
+
                     $question["question_options"] = json_encode($value['options']);
                 }
 
                 $questions[] = $question;
             }
 
+            $removed_questions = [];
+            if (isset($values["removed_questions"]) && count($values["removed_questions"]) > 0)
+                $removed_questions = $values["removed_questions"];
+
             $result = $this->model('updateModel')->update_election_questions(
                 $questions,
                 $id,
                 $data["item_template"],
-                array_map('intval', $values["removed_questions"])
+                array_map('intval', $removed_questions)
             );
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
@@ -174,15 +379,15 @@ class Elections extends Controller
         // print_r($data["questions"]);
         // die;
 
-        $this->view->render('election/elections/modify', $data);
+        $this->view->render('election/dashboard/modify', $data);
     }
 
     public function delete($id = 0)
     {
-
         $this->requireLogin();
-        if ($_SESSION["student_rep"] != 1)
-            $this->redirect();
+        $election = $this->model('readModel')->getOne("elections", $id);
+        if (!$election || !$this->checkAccess($election))
+            die(json_encode(array("status" => "403", "desc" => "Access denied")));
 
         die(json_encode(array("status" => "403", "desc" => "Still in development")));
 
