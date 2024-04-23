@@ -27,11 +27,13 @@ class eventFeed extends Controller
 
         $data["comments"] = [];
         $data["clubReps"] = [];
+        $data["liked"] = [];
 
         foreach ($data["posts"] as $post) {
 
             $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
             $club = $this->model('readModel')->getClubRep($post['posted_by']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
 
             if(!empty($commentsForPost)){
                 // print_r($commentsForPost);
@@ -41,6 +43,11 @@ class eventFeed extends Controller
             if(!empty($club)){
                 // print_r($commentsForPost);
                 $data['clubReps'] = array_merge($data['clubReps'], $club);
+            }
+
+            if(!empty($liked)){
+                $data['liked'] = array_merge($data['liked'], $liked);
+                
             }
         }
 
@@ -74,11 +81,13 @@ class eventFeed extends Controller
 
         $data["comments"] = [];
         $data["clubReps"] = [];
+        $data["liked"] = [];
 
         foreach ($data["posts"] as $post) {
 
             $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
             $club = $this->model('readModel')->getClubRep($post['posted_by']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
 
             if(!empty($commentsForPost)){
                 // print_r($commentsForPost);
@@ -88,6 +97,11 @@ class eventFeed extends Controller
             if(!empty($club)){
                 // print_r($commentsForPost);
                 $data['clubReps'] = array_merge($data['clubReps'], $club);
+            }
+
+            if(!empty($liked)){
+                $data['liked'] = array_merge($data['liked'], $liked);
+                
             }
         }
 

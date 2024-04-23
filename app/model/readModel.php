@@ -482,6 +482,21 @@ class readModel extends Model
         return false;
     }
 
+    public function getOnePost($post_id)
+    {
+        $result = $this->db_handle->runQuery("
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+        FROM posts p, user u WHERE p.posted_by = u.id AND p.id = ? ", "i", [$post_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getPostComments($post_id)
     {
         $result = $this->db_handle->runQuery("

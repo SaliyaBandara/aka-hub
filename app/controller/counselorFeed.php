@@ -25,21 +25,28 @@ class CounselorFeed extends Controller
         }
 
         $data["comments"] = [];
+        $data["liked"] = [];
 
         foreach ($data["posts"] as $post) {
 
             $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
 
             if(!empty($commentsForPost)){
                 // print_r($commentsForPost);
                 $data['comments'] = array_merge($data['comments'], $commentsForPost);
+            }
+
+            if(!empty($liked)){
+                $data['liked'] = array_merge($data['liked'], $liked);
+                
             }
         }
 
         // print_r($data["comments"]);
         // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
-        // print_r($data["comments"]);
+        // print_r($data["liked"]);
 
         $this->view->render('counselor/counselorFeed/index', $data);
     }
@@ -193,6 +200,26 @@ class CounselorFeed extends Controller
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting the comment")));
+    }
+
+    public function postView($id){
+
+        $this->requireLogin();
+
+        $data = [
+            'title' => 'Counselor Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
+
+        $data["postDetails"] = $this->model('readModel')->getOnePost($id);
+        $data["liked"] = $this->model('readModel')->getPostLikes($id,$_SESSION['user_id']);
+        // print_r($data["postDetails"]);
+
+        $this->view->render('counselor/counselorFeed/postView', $data);
+
     }
     
 }
