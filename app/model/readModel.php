@@ -119,7 +119,7 @@ class readModel extends Model
 
         return false;
     }
-    
+
     public function getNotBookedTimeSlotsByCounselorId($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status = ?", "ii", [$id, 1]);
@@ -137,7 +137,7 @@ class readModel extends Model
 
         return false;
     }
-  
+
     public function getAvailableReservationRequestsByCounselorId($id)
     {
         $result = $this->db_handle->runQuery("
@@ -153,7 +153,7 @@ class readModel extends Model
 
         return false;
     }
-    
+
     public function getOneReservationRequest($counselor_id, $id)
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE id = ?", "i", [$id]);
@@ -182,7 +182,7 @@ class readModel extends Model
             JOIN student s ON r.student_id = s.id
             WHERE r.status = ?
             AND r.counselor_id = ?
-        ", "ii", [ 1, $id]);
+        ", "ii", [1, $id]);
         if (count($result) > 0)
             return $result;
 
@@ -353,12 +353,18 @@ class readModel extends Model
         $dataPoints = array(
             array("label" => "Accepted Reservation Requests", "y" => 0),
             array("label" => "Denied Reservation Requests", "y" => 0),
+            array("label" => "Completed Reservation Requests", "y" => 0),
+            array("label" => "Canceled Reservation Requests", "y" => 0),
         );
-        $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE accepted = ?", "i", [1]);
-        $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE declined = ?", "i", [1]);
+        $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [1]);
+        $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [2]);
+        $resultCompletedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [3]);
+        $resultCanceledRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [4]);
 
         $dataPoints[0]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
         $dataPoints[1]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
+        $dataPoints[2]["y"] = ($resultCompletedRequests ? (int) $resultCompletedRequests[0]['counts'] : 0);
+        $dataPoints[3]["y"] = ($resultCanceledRequests ? (int) $resultCanceledRequests[0]['counts'] : 0);
 
         return $dataPoints;
     }
