@@ -16,7 +16,6 @@ class eventFeed extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        // $post_id = 5;
         $data["posts"] = $this->model('readModel')->getAllCounselorPosts(2);
 
         $data["clubs"] = $this->model('readModel')->getAllClubs();
@@ -26,8 +25,34 @@ class eventFeed extends Controller
         $data["iClass"] = "bx-image-add";
         $data["topic"] = "Club Event Feed";
 
-        // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
-        // print_r($data["clubs"]);
+        $data["comments"] = [];
+        $data["clubReps"] = [];
+        $data["liked"] = [];
+
+        foreach ($data["posts"] as $post) {
+
+            $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+            $club = $this->model('readModel')->getClubRep($post['posted_by']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
+
+            if(!empty($commentsForPost)){
+                // print_r($commentsForPost);
+                $data['comments'] = array_merge($data['comments'], $commentsForPost);
+            }
+
+            if(!empty($club)){
+                // print_r($commentsForPost);
+                $data['clubReps'] = array_merge($data['clubReps'], $club);
+            }
+
+            if(!empty($liked)){
+                $data['liked'] = array_merge($data['liked'], $liked);
+                
+            }
+        }
+
+        // print_r($data['comments']);
+        // print_r($data['clubReps']);
 
         $this->view->render('clubRep/eventFeed/index', $data);
     }
@@ -53,6 +78,32 @@ class eventFeed extends Controller
         $data["link"] = "index";
         $data["iClass"] = "bx-image";
         $data["topic"] = "My Uploads";
+
+        $data["comments"] = [];
+        $data["clubReps"] = [];
+        $data["liked"] = [];
+
+        foreach ($data["posts"] as $post) {
+
+            $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+            $club = $this->model('readModel')->getClubRep($post['posted_by']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
+
+            if(!empty($commentsForPost)){
+                // print_r($commentsForPost);
+                $data['comments'] = array_merge($data['comments'], $commentsForPost);
+            }
+
+            if(!empty($club)){
+                // print_r($commentsForPost);
+                $data['clubReps'] = array_merge($data['clubReps'], $club);
+            }
+
+            if(!empty($liked)){
+                $data['liked'] = array_merge($data['liked'], $liked);
+                
+            }
+        }
 
         $this->view->render('clubRep/eventFeed/index', $data);
     }
@@ -198,5 +249,49 @@ class eventFeed extends Controller
                 die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
             }
         }
+    }
+
+    public function postComment($post_id,$comment)
+    {
+        $this->requireLogin();
+
+        $data["comment_template"] = $this->model('readModel')->getEmptyPostComments();
+        $data["commentContent"] = $data["comment_template"]["empty"];
+        $data["comment_template"] = $data["comment_template"]["template"];
+
+        $comment = str_replace('%20', ' ', $comment);
+
+        $values['post_id'] = $post_id;
+        $values['user_id'] = $_SESSION["user_id"];
+        $values['comment'] = $comment;
+
+        // print_r($comment);
+
+        $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Comment Posted")));
+        else {
+            die(json_encode(array("status" => "400", "desc" => "Failed to post the comment")));
+        }
+    }
+
+    public function deleteComment($id = 0)
+    {
+
+        $this->requireLogin();
+        // if ($_SESSION["user_role"] != 1)
+        //     $this->redirect();
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Invalid comment id")));
+
+        // $result = $this->model('deleteModel')->deleteOne("courses", $id);
+        $result = $this->model('deleteModel')->deleteOne("post_comments", $id);
+
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting the comment")));
     }
 }

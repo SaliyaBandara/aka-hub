@@ -14,13 +14,11 @@ $calendar = new Calendar();
             <!-- section header -->
             <section>
 
-                <?php if ($data["student_rep"]) { ?>
-                    <div class="mb-1 form-group">
-                        <a href="<?= BASE_URL ?>/elections/add_edit/0/create" class="btn btn-primary">
-                            <i class='bx bx-plus'></i> Add Election
-                        </a>
-                    </div>
-                <?php } ?>
+                <div class="mb-1 form-group">
+                    <a href="<?= BASE_URL ?>/elections/add_edit/0/create" class="btn btn-primary">
+                        <i class='bx bx-plus'></i> Add Election
+                    </a>
+                </div>
 
                 <div class="section_header mb-1 flex">
                     <div class="title font-1-5 font-semibold flex align-center">

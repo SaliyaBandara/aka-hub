@@ -80,7 +80,7 @@ class Clubs extends Controller
             $this->redirect();
 
         if ($id == 0)
-            die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
+            die(json_encode(array("status" => "400", "desc" => "Invalid club id")));
 
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
         $result = $this->model('deleteModel')->deleteOne("clubs", $id);

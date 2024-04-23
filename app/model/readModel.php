@@ -18,6 +18,19 @@ class readModel extends Model
         return false;
     }
 
+    public function getOneByColumns($table, $columns, $values, $types)
+    {
+        $query = "SELECT * FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
     public function lastInsertedId($table, $key)
     {
 
@@ -457,6 +470,7 @@ class readModel extends Model
         return false;
     }
 
+
     public function getOneAdmin($id)
     {
         $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
@@ -511,9 +525,26 @@ class readModel extends Model
         return false;
     }
 
+    public function getOnePost($post_id)
+    {
+        $result = $this->db_handle->runQuery("
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+        FROM posts p, user u WHERE p.posted_by = u.id AND p.id = ? ", "i", [$post_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?", "i", [$post_id]);
+        $result = $this->db_handle->runQuery("
+        SELECT p.post_id as post_id,u.profile_img as profile_img, u.name as name, p.comment as comment, p.user_id as user_id, ps.posted_by as posted_by, p.id as id FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? "
+        , "i", [$post_id]);
         if (count($result) > 0)
             return $result;
 
@@ -523,6 +554,15 @@ class readModel extends Model
     public function getPostLikes($post_id, $user_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?", "ii", [$post_id, $user_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getClubRep($user_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM club_representative cr, clubs c WHERE cr.club_id = c.id AND status = 1 AND user_id = ? ", "i", [$user_id]);
         if (count($result) > 0)
             return $result;
 
@@ -801,6 +841,61 @@ class readModel extends Model
         ];
     }
 
+    // CREATE TABLE election_responses (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     user_id INT NOT NULL,
+    //     question_id INT NOT NULL,
+    //     response_option VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id),
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
+    // );
+
+    public function getEmptyElectionResponse()
+    {
+
+        $empty = [
+            "election_id" => "",
+            "user_id" => "",
+            "question_id" => "",
+            "response_option" => ""
+        ];
+
+        $template = [
+            "election_id" => [
+                "label" => "Election",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question_id" => [
+                "label" => "Question",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "response_option" => [
+                "label" => "Response Option",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     /**
      * User Model
      */
@@ -951,7 +1046,7 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
+    
     public function getEmptyCounselor()
     {
         $empty = [
@@ -992,8 +1087,10 @@ class readModel extends Model
         $empty = [
             "user_id" => "",
             "name" => "",
+            "description" => "",
             "start_date" => "",
-            "end_date" => ""
+            "end_date" => "",
+            "type" => "",
         ];
 
         $template = [
@@ -1007,6 +1104,11 @@ class readModel extends Model
                 "label" => "Election Name",
                 "type" => "text",
                 "validation" => "required"
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => ""
             ],
             "start_date" => [
                 "label" => "Start Date",
@@ -1022,6 +1124,12 @@ class readModel extends Model
                 "label" => "Cover Image",
                 "type" => "array",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "type" => [
+                "label" => "Election Type",
+                "type" => "number",
+                "validation" => "",
                 "skip" => true
             ],
         ];

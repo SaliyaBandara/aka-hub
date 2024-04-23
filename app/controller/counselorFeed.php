@@ -24,9 +24,29 @@ class CounselorFeed extends Controller
             $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$_SESSION["user_id"]);
         }
 
+        $data["comments"] = [];
+        $data["liked"] = [];
+
+        foreach ($data["posts"] as $post) {
+
+            $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
+
+            if(!empty($commentsForPost)){
+                // print_r($commentsForPost);
+                $data['comments'] = array_merge($data['comments'], $commentsForPost);
+            }
+
+            if(!empty($liked)){
+                $data['liked'] = array_merge($data['liked'], $liked);
+                
+            }
+        }
+
+        // print_r($data["comments"]);
         // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
         // $data["comments"] = $this->model('readModel')->getPostComments($post_id);
-        // print_r($data["comments"]);
+        // print_r($data["liked"]);
 
         $this->view->render('counselor/counselorFeed/index', $data);
     }
@@ -136,4 +156,70 @@ class CounselorFeed extends Controller
         // }
 
     }
+
+    public function postComment($post_id,$comment)
+    {
+        $this->requireLogin();
+
+        $data["comment_template"] = $this->model('readModel')->getEmptyPostComments();
+        $data["commentContent"] = $data["comment_template"]["empty"];
+        $data["comment_template"] = $data["comment_template"]["template"];
+
+        $comment = str_replace('%20', ' ', $comment);
+
+        $values['post_id'] = $post_id;
+        $values['user_id'] = $_SESSION["user_id"];
+        $values['comment'] = $comment;
+
+        // print_r($comment);
+
+        $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Comment Posted")));
+        else {
+            die(json_encode(array("status" => "400", "desc" => "Failed to post the comment")));
+        }
+    }
+
+    public function deleteComment($id = 0)
+    {
+
+        $this->requireLogin();
+        // if ($_SESSION["user_role"] != 1)
+        //     $this->redirect();
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Invalid comment id")));
+
+        // $result = $this->model('deleteModel')->deleteOne("courses", $id);
+        $result = $this->model('deleteModel')->deleteOne("post_comments", $id);
+        // print_r($result);
+
+        if ($result)
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting the comment")));
+    }
+
+    public function postView($id){
+
+        $this->requireLogin();
+
+        $data = [
+            'title' => 'Counselor Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
+
+        $data["postDetails"] = $this->model('readModel')->getOnePost($id);
+        $data["liked"] = $this->model('readModel')->getPostLikes($id,$_SESSION['user_id']);
+        // print_r($data["postDetails"]);
+
+        $this->view->render('counselor/counselorFeed/postView', $data);
+
+    }
+    
 }
