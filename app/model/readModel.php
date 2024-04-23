@@ -351,20 +351,23 @@ class readModel extends Model
     public function getChartFive()
     {
         $dataPoints = array(
+            array("label" => "Created Reservation Requests", "y" => 0),
             array("label" => "Accepted Reservation Requests", "y" => 0),
             array("label" => "Denied Reservation Requests", "y" => 0),
             array("label" => "Completed Reservation Requests", "y" => 0),
             array("label" => "Canceled Reservation Requests", "y" => 0),
         );
+        $resultCreatedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [0]);
         $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [1]);
         $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [2]);
         $resultCompletedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [3]);
         $resultCanceledRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [4]);
 
-        $dataPoints[0]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
-        $dataPoints[1]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
-        $dataPoints[2]["y"] = ($resultCompletedRequests ? (int) $resultCompletedRequests[0]['counts'] : 0);
-        $dataPoints[3]["y"] = ($resultCanceledRequests ? (int) $resultCanceledRequests[0]['counts'] : 0);
+        $dataPoints[0]["y"] = ($resultCreatedRequests ? (int) $resultCreatedRequests[0]['counts'] : 0);
+        $dataPoints[1]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
+        $dataPoints[2]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
+        $dataPoints[3]["y"] = ($resultCompletedRequests ? (int) $resultCompletedRequests[0]['counts'] : 0);
+        $dataPoints[4]["y"] = ($resultCanceledRequests ? (int) $resultCanceledRequests[0]['counts'] : 0);
 
         return $dataPoints;
     }
