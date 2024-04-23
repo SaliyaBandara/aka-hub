@@ -8,7 +8,7 @@ class Sidebar
 
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
             $role = $_SESSION["user_role"];
-          
+
             $student_rep = $_SESSION["student_rep"];
             $club_rep = $_SESSION["club_rep"];
             $teaching_student = $_SESSION["teaching_student"];
@@ -38,7 +38,7 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-cog'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
-                    'adminProfileAndSettings'=> ['Admin Settings', 'bxs-cog'],
+                    'adminProfileAndSettings' => ['Admin Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $adminPages);
             }
@@ -92,9 +92,34 @@ class Sidebar
 
         <div id="sidebar">
             <div class="sidebar__logo">
-                <a href="<?= BASE_URL ?>/">
-                    <img src="<?= BASE_URL ?>/public/assets/img/logo/logo.png" alt="logo">
-                </a>
+                <?php
+                if ($role == 1) {
+                ?>
+                    <a href="<?= BASE_URL ?>/adminpanel">
+                        <img src="<?= BASE_URL ?>/public/assets/img/logo/logo.png" alt="logo">
+                    </a>
+                <?php
+                } else if ($role == 3) {
+                ?>
+                    <a href="<?= BASE_URL ?>/adminpanel">
+                        <img src="<?= BASE_URL ?>/public/assets/img/logo/logo.png" alt="logo">
+                    </a>
+                <?php
+                } else if ($role == 5) {
+                ?>
+                    <a href="<?= BASE_URL ?>/counselorPanel">
+                        <img src="<?= BASE_URL ?>/public/assets/img/logo/logo.png" alt="logo">
+                    </a>
+                <?php
+                } else {
+                ?>
+                    <a href="<?= BASE_URL ?>/dashboard">
+                        <img src="<?= BASE_URL ?>/public/assets/img/logo/logo.png" alt="logo">
+
+                    </a>
+                <?php
+                }
+                ?>
             </div>
             <div class="sidebar__list">
                 <ul>

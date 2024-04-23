@@ -37,7 +37,16 @@ class Auth extends Controller
                 $_SESSION["club_rep"] = $result["club_rep"];
                 $_SESSION["teaching_student"] = $result["teaching_student"];
 
-                die(json_encode(array("status" => "200", "desc" => "Successfully logged in")));
+
+                if ($result["role"] == "1") {
+                    die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/adminpanel")));
+                } else if ($result["role"] == "3") {
+                    die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/adminpanel")));
+                } else if ($result["role"] == "5") {
+                    die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/counselorPanel")));
+                } else {
+                    die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/dashboard")));
+                }
             }
 
             die(json_encode(array("status" => "400", "desc" => "Invalid email or password")));
@@ -83,7 +92,7 @@ class Auth extends Controller
                 $_SESSION["club_rep"] = $result["club_rep"];
                 $_SESSION["teaching_student"] = $result["teaching_student"];
 
-                die(json_encode(array("status" => "200", "desc" => "Successfully registered")));
+                die(json_encode(array("status" => "200", "desc" => "Successfully Registered", "redirect" => "/aka-hub/dashboard")));
             }
 
             die(json_encode(array("status" => "400", "desc" => "Email already exists")));
