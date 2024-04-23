@@ -1,8 +1,6 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
-// $header = new header();
-$sidebar = new Sidebar("courses");
-// print_r($data);
+$sidebar = new Sidebar("elections");
 ?>
 
 <div class="floating-modal floating-upload-modal" style="display: none;">
@@ -209,7 +207,7 @@ $sidebar = new Sidebar("courses");
             </div>
 
             <div class="mt-1-5 form-group">
-                <a href="<?= BASE_URL ?>/elections" class="btn btn-info">Back</a>
+                <a href="<?= BASE_URL ?>/elections/dashboard" class="btn btn-info">Back</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
 
@@ -327,6 +325,7 @@ $sidebar = new Sidebar("courses");
 
             // reset options
             questionItem.find(".input-group").not(":first").remove();
+            questionItem.attr("data-id", 0)
 
             // append before .add-question
             $(this).before(questionItem)

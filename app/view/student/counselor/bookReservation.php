@@ -10,17 +10,20 @@ $sidebar = new Sidebar("Settings");
     <div class="main-grid flex">
         <div class="left">
             <div class="main-div">
+                <div class="header-topic">
+                    <h1>Book an Appoinment for your counselor</h1>
+                    <p class="p1">These are the time-slots added by your counselor</p>
+                </div>
+                
                 <div class="wrapper">
                 <?php
                     if (empty($data["timeslots"])) {
                         echo "NO TIME SLOTS AVAILABLE FOR THIS COUNSELOR";
                     } else {
                             foreach ($data["timeslots"] as $timeslot) {
-                            // $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
-                            // echo($data["timeslots"])
                     ?>
                     
-                        <div class="card card-not-added" >
+                        <div class="card card-not-added" data-timeslot-id="<?= $timeslot['id'] ?>">
                                 <div class="content">
                                     <div class="details">
                                         <i class='bx bxs-time'></i>
@@ -32,17 +35,6 @@ $sidebar = new Sidebar("Settings");
                                 </div>
                         </div> 
                     <?php }} ?>
-                    <!-- <div class="card card-not-added" >
-                            <div class="content">
-                                <div class="details">
-                                    <i class='bx bxs-time'></i>
-                                    <span class="name">12pm - 01pm</span>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <a href="#" class="button-bookNow">Book Now</a>
-                            </div>   
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -273,6 +265,7 @@ $sidebar = new Sidebar("Settings");
         }
         .header-topic{
             text-align: center;
+            margin-bottom: 80px;
         }
         .button-select{
             text-decoration: none;
@@ -319,22 +312,24 @@ $sidebar = new Sidebar("Settings");
             var timeslotId = $(this).data("timeslot-id");
             // console.log(timeslotId);
             $.ajax({
-                url: "update_timeslot.php",
-                method: "POST",
+                url:`<?= BASE_URL ?>/counselorView/bookReservation/${timeslotId}`,
+                type: 'post',
+                dataType: 'json',
                 data: {
                     timeslot_id: timeslotId
                 },
                 success: function(response) {
-                    if (response.status === 200) {
-                        alertUser("success", response['desc'])
-                        // console.log(response);
-                
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc']);
+                        //reload page
+                        location.reload();
+
                     } else {
-                        alertUser("warning", response['desc'])
+                        alertUser("warning", response['desc']);
                     }
                 },
                 error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong")       
+                    alertUser("danger", "Something Went Wrong");
                 }
             });
         });

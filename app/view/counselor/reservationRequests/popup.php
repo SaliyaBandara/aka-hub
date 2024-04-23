@@ -1,6 +1,6 @@
 <?php
-
-// print_r($data["reservationRequest"]);
+    // $HTMLHead = new HTMLHead($data['title']);
+    // print_r($data["reservationRequest"]);
 ?>
 
 <div class="wrapper1 popup-form">
@@ -9,15 +9,16 @@
     <div class="content">
         <div class="container">
             <?php
-                $dataArray = $data["reservationRequest"];
-                $img_src = USER_IMG_PATH . $dataArray["cover_img"];
+                $reservation_request = $data["reservationRequest"];
+                // $dataArray = $data["reservationRequest"];
+                $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
             ?>
             <div class="img1"><img src="<?= $img_src ?>" class="center-top"></div>
             <form class="form-1">
                 <div class="label-container">
                     <div class="f1">
                         <label>Name:</label>
-                        <label><?php echo $dataArray['name']; ?></label><br/>
+                        <label><?= $reservation_request["name"] ?> </label><br/>
                     </div>
                     
                     <div class="f1">
@@ -26,7 +27,7 @@
                         <div style="display: inline-block;">
                                 <?php
                                     // Assuming $reservation_request["year"] contains the year value (e.g., 1, 2, 3, ...)
-                                    $year = $dataArray["year"];
+                                    $year = $reservation_request["year"];
 
                                     // Define an array of suffixes
                                     $suffixes = array("st", "nd", "rd");
@@ -44,18 +45,18 @@
                     </div>
                     <div class="f1">
                         <label>Reservation Date:</label>
-                        <label><?php echo $dataArray['date']; ?></label><br/>
+                        <label><?php echo $reservation_request['date']; ?></label><br/>
                     </div>
                     <div class="f1">
                         <label>Time Slot:</label>
-                        <label><?php echo date('H.i', strtotime($dataArray['start_time'])); ?> to <?php echo date('H.i', strtotime($dataArray['end_time'])); ?></label><br/>
+                        <label><?php echo date('H.i', strtotime($reservation_request['start_time'])); ?> to <?php echo date('H.i', strtotime($reservation_request['end_time'])); ?></label><br/>
                     </div>
                     
                 </div>
                 
                 <div class="input-buttons">
-                    <input type="submit" value="Accept" class="accept">
-                    <input type="submit" value="Decline" class="decline"> 
+                    <a href="#" class="accept accept-request" data-id="<?= $reservation_request['id'] ?>">Accept</a>
+                    <a href="#" class="decline" data-id="<?= $reservation_request['id'] ?>">Decline</a>
                 </div>
             </form>
         </div>
@@ -105,20 +106,15 @@
         }
         form label{
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 2px;
         }
-        .container input[type="text"]{
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-top: 6px;
-            margin-bottom: 16px;
-            resize: vertical;
+        .input-buttons{
+            margin-top: 30px !important;
+            margin-bottom: 20px !important;
         }
-        .container input[type="submit"]{
+        .input-buttons .accept{
+            text-decoration: none;
             background-color: #2684FF;
             color: #fff;
             padding: 15px 50px;
@@ -126,11 +122,22 @@
             border-radius: 50px;
             cursor: pointer;
             font-size: 15px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
         }
-        .container input[type="submit"]:hover{
+        .input-buttons .accept:hover{
             background-color: #4070F4;
+        }
+        .input-buttons .decline{
+            text-decoration: none;
+            background-color: #ff2b2b;
+            color: #fff;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .input-buttons .decline:hover{
+            background-color: #b30b0b;
         }
         .popup-form{
             width: 40%;
@@ -180,3 +187,43 @@
             margin-bottom: 10px;
         }
 </style>
+
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+
+<script>
+    $(document).on("click", ".accept-request", function(event) {
+        event.preventDefault(); 
+        // let card = $(this).closest('.timeslotcard');
+        let id = $(this).attr("data-id"); 
+        console.log(id); 
+
+        $.ajax({
+            url: `${BASE_URL}/reservationRequests/acceptReservation/${id}`, 
+            type: 'POST',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 200) {
+                    alertUser("success", response['desc'])
+                    // card.removeClass('card-not-added').addClass('card-added');
+                    // card.find('.button-add').text('Remove');
+                    // card.find('.button-add').removeClass('button-add').addClass('button-remove');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+            
+                } else {
+                    alertUser("warning", response['desc'])
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong")       
+            }
+        });
+    });        
+</script>

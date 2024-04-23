@@ -18,7 +18,7 @@ $sidebar = new Sidebar("existingCounselors");
                     <div class="counselorsAddButtonRow">
                         <div class="mb-1 form-group right_side">
                             <a href="<?= BASE_URL ?>/addCounselors/index/0" class="btn btn-primary">
-                                <i class='bx bxs-lock-open'></i> Add Counselors
+                                <i class='bx bx-plus'></i> Add Counselors
                             </a>
                         </div>
                     </div>

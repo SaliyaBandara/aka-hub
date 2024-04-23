@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("courses");
+$sidebar = new Sidebar("elections");
 // print_r($data);
 ?>
 
@@ -25,6 +25,11 @@ $sidebar = new Sidebar("courses");
             <?php
             }
             ?>
+
+            <div class="mb-1 form-group">
+                <label class="form-label">Description</label>
+                <textarea name="description" id="description" class="form-control" placeholder="Enter Description" data-validation="required"><?= $data["item"]["description"] ?></textarea>
+            </div>
 
             <div class="mb-1">
                 <label class="form-label">Cover Image</label>
@@ -73,7 +78,7 @@ $sidebar = new Sidebar("courses");
             </div>
 
             <div class="mt-1-5 form-group">
-                <a href="<?= BASE_URL ?>/elections" class="btn btn-info">Back</a>
+                <a href="<?= BASE_URL ?>/elections/dashboard" class="btn btn-info">Back</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
 

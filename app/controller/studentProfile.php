@@ -81,10 +81,11 @@ class StudentProfile extends Controller
                 $result1 = $this->model('updateModel')->update_one("student", $values, $data["student_profile_template"], "id", $id, "i");
                 $result2 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
-                if ($result1 && $result2)
+                if ($result1 && $result2){
                     die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
-                die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));
+                }else{
+                    die(json_encode(array("status" => "400", "desc" => "Error while editing profile")));
+                }
             }
         }
 

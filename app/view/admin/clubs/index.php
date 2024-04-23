@@ -92,10 +92,9 @@ $sidebar = new Sidebar("approveRepresentatives");
                         <!-- <a href="<?= BASE_URL ?>/clubs" class="btn btn-info">Back</a> -->
                         <button type="submit" class="btn btn-primary">Add New</button>
                     </div>
-                    <div class="editImageButton">
-                        <a href="<?= BASE_URL ?>/approveRepresentatives">
-                            <input type="button" class="profileButton" value="Back" />
-                        </a>
+                    <div class="mt-1-5 form-group">
+                        <!-- <a href="<?= BASE_URL ?>/clubs" class="btn btn-info">Back</a> -->
+                        <a href="<?= BASE_URL ?>/approveRepresentatives" class="btn btn-info">Back</a>
                     </div>
                 </form>
             </div>
@@ -253,23 +252,23 @@ $sidebar = new Sidebar("approveRepresentatives");
             });
         });
 
-        $('.edit-item').click(function() {
+        $(document).on('click', '.edit-item', function() {
             event.preventDefault();
-            var $row = $(this).closest('tr'); // Get the closest table row
-            var $nameCell = $row.find('.name-cell'); // Get the cell containing the club name
-            var $editBtn = $row.find('.edit-item'); // Get the edit button
+            var $row = $(this).closest('tr');
+            var $nameCell = $row.find('.name-cell'); 
+            var $editBtn = $row.find('.edit-item'); 
 
-            var $clubName = $nameCell.text().trim(); // Get the current club name
+            var $clubName = $nameCell.text().trim();
+            console.log("Club Name");
+            console.log($clubName);
+            
+            $nameCell.html('<input type="text" class="form-control name_input" id="clubValue" value="' + $clubName + '">');
 
-            // Replace club name with an input field for editing
-            $nameCell.html('<input type="text" class="form-control" id = "name_input" value="' + $clubName + '">');
-
-            // Change edit button icon to save icon
+            
             $editBtn.html('<i class="bx bx-save "></i>');
             $editBtn.removeClass('edit-item');
             $editBtn.addClass('save-item');
 
-            // Change class to identify the row in edit mode
             $row.addClass('editing');
             console.log('came outside edit item function');
 
@@ -280,15 +279,20 @@ $sidebar = new Sidebar("approveRepresentatives");
             let id = $(this).attr("data-id");
             let $this = $(this);
             var values = {};
+            
 
-            var $row = $(this).closest('tr'); // Get the closest table row
-            var $nameInput = $row.find('.name-input');
-            var newClubName = $nameInput.val().trim(); // Get the edit button
+            var $row = $(this).closest('tr'); 
+            var $saveBtn = $row.find('.save-item'); // Get the closest table row
+            console.log($row);
+            var $nameInput = $row.find('#clubValue');
+            
+            console.log($nameInput);
 
+            var $newClubName = $nameInput.val().trim(); // Get the edit button
+            console.log("New Name"+$newClubName);
             // const newClubName = $row.find('.name-cell input').val();
-            console.log(newClubName);
 
-            values['name'] = newClubName;
+            values['name'] = $newClubName;
             values['id'] = id;
 
             console.log(values)
@@ -306,7 +310,7 @@ $sidebar = new Sidebar("approveRepresentatives");
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        $nameCell.html(newClubName);
+                        $nameInput.html($newClubName);
 
                         $saveBtn.html('<i class="bx bx-edit"></i>');
                         $saveBtn.removeClass('save-item');

@@ -18,6 +18,19 @@ class readModel extends Model
         return false;
     }
 
+    public function getOneByColumns($table, $columns, $values, $types)
+    {
+        $query = "SELECT * FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
     public function lastInsertedId($table, $key)
     {
 
@@ -56,8 +69,6 @@ class readModel extends Model
 
     public function getAllChatUsers()
     {
-        // session_start();
-        // $outgoing_id = $_SESSION['unique_id'];
         $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE ?", "i", [1]);
         if (count($result) > 0)
             return $result;
@@ -67,8 +78,6 @@ class readModel extends Model
 
     public function getAllChatMessages()
     {
-        // session_start();
-        // $outgoing_id = $_SESSION['unique_id'];
         $result = $this->db_handle->runQuery("SELECT * FROM messages WHERE ?", "i", [1]);
         if (count($result) > 0)
             return $result;
@@ -88,10 +97,30 @@ class readModel extends Model
         if (count($result) > 0)
             return $result;
 
+        return "$outgoing_id $incoming_id";
+
         return false;
     }
 
     public function getAddedTimeSlots()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE booked = ?", "i", [0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getNotBookedTimeSlotsById($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND added = ? AND booked = ?", "iii", [$id, 1, 0]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getNotBookedTimeSlots()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE added = ? AND booked = ?", "ii", [1, 0]);
         if (count($result) > 0)
@@ -99,6 +128,7 @@ class readModel extends Model
 
         return false;
     }
+    
 
     public function getAvailableReservationRequests()
     {
@@ -111,7 +141,7 @@ class readModel extends Model
 
     public function getAcceptedReservationRequests()
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ?", "ii", [1, 0]);
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         if (count($result) > 0)
             return $result;
 
@@ -453,9 +483,26 @@ class readModel extends Model
         return false;
     }
 
+    public function getOnePost($post_id)
+    {
+        $result = $this->db_handle->runQuery("
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+        FROM posts p, user u WHERE p.posted_by = u.id AND p.id = ? ", "i", [$post_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_comments WHERE post_id = ?", "i", [$post_id]);
+        $result = $this->db_handle->runQuery("
+        SELECT p.post_id as post_id,u.profile_img as profile_img, u.name as name, p.comment as comment, p.user_id as user_id, ps.posted_by as posted_by, p.id as id FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? "
+        , "i", [$post_id]);
         if (count($result) > 0)
             return $result;
 
@@ -465,6 +512,15 @@ class readModel extends Model
     public function getPostLikes($post_id, $user_id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?", "ii", [$post_id, $user_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getClubRep($user_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM club_representative cr, clubs c WHERE cr.club_id = c.id AND status = 1 AND user_id = ? ", "i", [$user_id]);
         if (count($result) > 0)
             return $result;
 
@@ -743,6 +799,61 @@ class readModel extends Model
         ];
     }
 
+    // CREATE TABLE election_responses (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     user_id INT NOT NULL,
+    //     question_id INT NOT NULL,
+    //     response_option VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id),
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
+    // );
+
+    public function getEmptyElectionResponse()
+    {
+
+        $empty = [
+            "election_id" => "",
+            "user_id" => "",
+            "question_id" => "",
+            "response_option" => ""
+        ];
+
+        $template = [
+            "election_id" => [
+                "label" => "Election",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question_id" => [
+                "label" => "Question",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "response_option" => [
+                "label" => "Response Option",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     /**
      * User Model
      */
@@ -934,8 +1045,10 @@ class readModel extends Model
         $empty = [
             "user_id" => "",
             "name" => "",
+            "description" => "",
             "start_date" => "",
-            "end_date" => ""
+            "end_date" => "",
+            "type" => "",
         ];
 
         $template = [
@@ -949,6 +1062,11 @@ class readModel extends Model
                 "label" => "Election Name",
                 "type" => "text",
                 "validation" => "required"
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => ""
             ],
             "start_date" => [
                 "label" => "Start Date",
@@ -964,6 +1082,12 @@ class readModel extends Model
                 "label" => "Cover Image",
                 "type" => "array",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "type" => [
+                "label" => "Election Type",
+                "type" => "number",
+                "validation" => "",
                 "skip" => true
             ],
         ];
@@ -1502,20 +1626,28 @@ class readModel extends Model
 
         $empty = [
             "id" => "",
-            "name" => "",
+            "timeslot_id" => "",
+            "student_id" => "",
             "year" => "",
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "cover_img" => "",
             "accepted" => "",
             "declined" => "",
+            "cancelled" => "",
+            "completed" => "",
         ];
 
         $template = [
-            "name" => [
-                "label" => "Name of the reservation",
-                "type" => "text",
+            "timeslot_id" => [
+                "label" => "Time Slot",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "student_id" => [
+                "label" => "Student ID",
+                "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
@@ -1544,13 +1676,6 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-
-            "cover_img" => [
-                "label" => "Cover Image",
-                "type" => "array",
-                "validation" => "",
-                "skip" => true
-            ],
             "accepted" => [
                 "label" => "Accepted",
                 "type" => "number",
@@ -1563,7 +1688,18 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ],
-
+            "cancelled" => [
+                "label" => "Cancelled",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "completed" => [
+                "label" => "Completed",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
         ];
 
         return [
@@ -1581,6 +1717,8 @@ class readModel extends Model
             "date" => "",
             "start_time" => "",
             "end_time" => "",
+            "added" => "",
+            "booked" => "",
         ];
 
         $template = [
@@ -1603,6 +1741,18 @@ class readModel extends Model
                 "type" => "time",
                 "validation" => "required",
 
+            ],
+            "added" => [
+                "label" => "Added",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "booked" => [
+                "label" => "Booked",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
             ],
 
         ];

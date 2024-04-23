@@ -65,7 +65,7 @@ $sidebar = new Sidebar("existingCounselors");
                         </div>
                     </div>
                     <div class = "bookingButtonContainer">
-                        <a class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center" href="counselorView/bookReservation">Book an appointment</a>
+                        <a class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center load-timeslots" href="#" user-id="<?= $counselor['id'] ?>">Book an appointment</a>
                     </div>
                 </div>
                 <?php  } ?>
@@ -226,4 +226,23 @@ $sidebar = new Sidebar("existingCounselors");
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var BookApoinment = document.querySelectorAll('.load-timeslots');
+
+        BookApoinment.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var user_id = button.getAttribute('user-id');
+                console.log(user_id);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', BASE_URL + '/counselorView/bookReservation/' + user_id, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        window.location.href = BASE_URL + '/counselorView/bookReservation/' + user_id;
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });     
 </script>

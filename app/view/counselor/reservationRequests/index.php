@@ -66,7 +66,7 @@ $calendar = new Calendar();
                             </div>
                         </div>
                         <div id="popup-button">
-                            <a href="#" class="view-button" data-reservation-id="<?= $reservation_request['id'] ?>" onclick="changeClass()">View</a>
+                            <a href="#" class="view-button" data-reservation-id="<?= $reservation_request['id'] ?>">View <i class='bx bx-task'></i></a>
                         </div>
                         <!-- <a href="#divone" class="view-button">View</a> -->
                     </div>
@@ -274,18 +274,15 @@ $calendar = new Calendar();
         .approveDivContainor h3 {
             text-align: center;
         }
-
-        .main-grid {}
-
         .main-grid .left {
             width: 100%;
             height: 1150px;
         }
 
-        /* .main-grid .right{
+        .main-grid .right{
             flex-grow: 1;
             height: 1000px;
-        } */
+        }
     </style>
 
     <style>
