@@ -10,7 +10,6 @@ class AddCounselors extends Controller
 
     public function index($id = 0)
     {
-
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1)
             $this->redirect();
@@ -76,9 +75,7 @@ class AddCounselors extends Controller
             $data["counselor"] = $this->model('readModel')->getOne("counselor", $id);
             if (!($data["user"]) && ($data["counselor"]))
                 $this->redirect();
-            // print_r($data["user"]);
-            // die;
-            if ($data["counselor"]["role"] != 1) {
+            if ($data["user"]["role"] != 5) {
                 $this->redirect();
             }
         }
