@@ -50,25 +50,35 @@ class CounselorView extends Controller
             if($data["values"] == null) 
                 die(json_encode(["status" => 400, "desc" => "Time slot not found."]));
 
-            $data["values"]["booked"] = 1;    
+            $data["values"]["status"] = 3;    
 
             $result1 = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
 
             // print_r($data["timeslot"]);
             // print_r($data["student"]);
+            // print_r($data["values"]);
             // print_r($data["user_id"]);
+            // print_r($result1);
             // die;
+
+            $data["student_details"] = $this->model('readModel')->getOne("student", $data["user_id"]);
+            $data["academic_year"] = $data["student_details"]["year"];
 
             $data["values"] = [
                 "student_id" => $data["user_id"],
                 "timeslot_id" => $data["timeslot"]["id"],
-                "year" => "2", //meka passe balanna
+                "counselor_id" => $data["timeslot"]["counselor_id"],
                 "date" => $data["timeslot"]["date"],
                 "start_time" => $data["timeslot"]["start_time"],
                 "end_time" => $data["timeslot"]["end_time"],
-                "accepted" => 0,
-                "declined" => 0,
+                "status" => 0,
             ];
+
+            //status = 0 => created
+            //status = 1 => accepted
+            //status = 2 => declined
+            //status = 3 => accepted and completed
+            //status = 4 => accepted and canceled
 
             $values = $data["values"];
 
@@ -83,7 +93,7 @@ class CounselorView extends Controller
 
 
 
-        $data["timeslots"] = $this->model('readModel')->getNotBookedTimeSlotsById($id);
+        $data["timeslots"] = $this->model('readModel')->getNotBookedTimeSlotsByCounselorId($id);
         $this->view->render('student/counselor/bookReservation', $data);
     }
 }

@@ -10,7 +10,9 @@ class upcomingReservations extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["reservation_requests"] = $this->model('readModel')->getAcceptedReservationRequests("reservation_requests");
+        $counselor_id = $_SESSION["user_id"];
+
+        $data["reservation_requests"] = $this->model('readModel')->getAcceptedReservationRequests($counselor_id);
         $this->view->render('counselor/upcomingReservations/index', $data);
     }
 
@@ -28,8 +30,14 @@ class upcomingReservations extends Controller
         if($data["values"] == null) 
             die(json_encode(["status" => 400, "desc" => "Reservation not found."]));
 
+        
+        //status = 0 => created
+        //status = 1 => accepted
+        //status = 2 => declined
+        //status = 3 => accepted and completed
+        //status = 4 => accepted and canceled    
      
-        $data["values"]["completed"] = 1;
+        $data["values"]["status"] = 3;
 
         $result = $this->model('updateModel')->update_one("reservation_requests", $data["values"], $data["reservation_template"], "id", $id, "i");
 
@@ -54,8 +62,13 @@ class upcomingReservations extends Controller
         if($data["values"] == null) 
             die(json_encode(["status" => 400, "desc" => "Reservation not found."]));
 
+        //status = 0 => created
+        //status = 1 => accepted
+        //status = 2 => declined
+        //status = 3 => accepted and completed
+        //status = 4 => accepted and canceled   
      
-        $data["values"]["cancelled"] = 1;
+        $data["values"]["status"] = 4;
 
         $result = $this->model('updateModel')->update_one("reservation_requests", $data["values"], $data["reservation_template"], "id", $id, "i");
 
