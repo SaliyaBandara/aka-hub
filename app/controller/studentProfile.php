@@ -44,8 +44,8 @@ class StudentProfile extends Controller
     public function add_edit($id)
     {
         $this->requireLogin();
-        // if ($_SESSION["user_role"] != 0)
-        //     $this->redirect();
+        if ($_SESSION["user_id"] != $id)
+            $this->redirect();
 
         $data = [
             'title' => 'Edit Profile',
@@ -110,6 +110,8 @@ class StudentProfile extends Controller
     {
 
         $this->requireLogin();
+        if ($_SESSION["user_id"] != $id)
+            $this->redirect();
 
         $data = [
             'title' => 'Edit Profile',

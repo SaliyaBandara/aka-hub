@@ -15,14 +15,7 @@ $calendar = new Calendar();
             <section>
                 <div class="section_header mb-1 flex title_bar">
                     <div class="title font-1-5 font-semibold left_side">
-                        <i class='bx bxs-calendar-check me-0-5'></i> Approve Teaching Students
-                    </div>
-                    <div class="approveRepresentativesButtonsLine">
-                        <div class="mb-1 form-group">
-                            <a href="<?= BASE_URL ?>/approveTeachingStudents/studentRepAccessControlView" class="btn btn-primary">
-                                <i class='bx bxs-lock-open'></i> Access Control
-                            </a>
-                        </div>
+                        <i class='bx bxs-calendar-check me-0-5'></i> Access Control of Users and Roles
                     </div>
                 </div>
 
@@ -35,6 +28,7 @@ $calendar = new Calendar();
                                     <th>Name</th>
                                     <th>Uni Email</th>
                                     <th>Reg Number</th>
+                                    <th>Rep Type</th>
                                     <th>Action</th>
                                     <th>Preview</th>
                                 </tr>
@@ -43,41 +37,60 @@ $calendar = new Calendar();
 
                                 <?php
 
-                                if (isset($data["approveRequests"])) {
+                                if (isset($data["accessUsers"])) {
                                     $i = 1;
-                                    foreach ($data["approveRequests"] as $card) {
-                                        if ($card['teaching_student'] == 2) {
-                                ?>
+                                    foreach ($data["accessUsers"] as $card) {
+
+                                        if ($card["teaching_student"] == 1) {
+                                        ?>
                                             <tr>
                                                 <td><?= $i++ ?></td>
                                                 <td><?= $card["name"] ?></td>
                                                 <td><?= $card["email"] ?></td>
                                                 <td><?= $card["student_id"] ?></td>
+                                                <td>Teaching Student</td>
                                                 <td>
                                                     <div class="action-list">
-                                                        <a href="<?= BASE_URL ?>/approveTeachingStudents/acceptRole/<?= $card["id"] ?>/teaching_student" class="repAcceptButonTeachingStudent"><i class='bx bxs-user-check icons text-success'></i></a>
-                                                        <a href="<?= BASE_URL ?>/approveTeachingStudents/declineRole/<?= $card["id"] ?>/teaching_student" class="repDeclineButonTeachingStudent"><i class='bx bxs-user-x icons text-danger' ></i></a>
+                                                        <a href="<?= BASE_URL ?>/approveRepresentatives/removeAccess/<?= $card["id"] ?>/Teaching_Student" class="removeAccessButtonTeachingStudent"><i class='bx bxs-user-x icons text-danger'></i></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="<?= BASE_URL ?>/approveTeachingStudents/previewRepresentative/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                    <a href="<?= BASE_URL ?>/approveRepresentatives/previewAdminAccessControl/<?php echo $card['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                                 </td>
                                             </tr>
-                                        <?php
-                                        } ?>
-                                            
                                 <?php
-
                                         }
                                     }
+                                }
 
                                 ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
+                <div class="mt-1-5 form-group">
+                        <!-- <a href="<?= BASE_URL ?>/clubs" class="btn btn-info">Back</a> -->
+                        <a href="<?= BASE_URL ?>/approveTeachingStudents" class="btn btn-info">Back</a>
+                    </div>
                 <style>
+                    .editImageButton a {
+                        text-decoration: none;
+                    }
+
+                    .editImageButton a input {
+                        margin-top: 30px;
+                        background-color: #2d7bf4 !important;
+                        color: white;
+                        border: none;
+                        width: 150px;
+                        height: 30px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+
+                    .editImageButton a input:hover {
+                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                    }
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;
@@ -96,41 +109,32 @@ $calendar = new Calendar();
                     .table .action-list a {
                         color: inherit;
                         font-size: 1rem;
-                        margin-right: 10px;
+                        margin-right: 5px;
                     }
 
                     .table .action-list {
                         text-align: center;
                     }
 
-                    .title_bar{
+                    .title_bar {
                         flex-direction: row;
                         /* border: 1px solid red; */
                     }
 
-                    .left_side{
+                    .left_side {
                         width: 70%;
                         /* border: 1px solid red; */
                     }
 
-                    .right_side{
+                    .right_side {
                         width: 30%;
                         /* justify-content: center;
                         border: 1px solid red; */
                     }
 
-                    .icons{
+                    .icons {
                         font-size: 24px;
                     }
-
-                    .approveRepresentativesButtonsLine {
-                        display: flex;
-                        justify-content: right;
-                        align-items: center;
-                        width: 350px;
-                        /* border: 1px solid red; */
-                    }
-
                 </style>
 
 
@@ -187,42 +191,19 @@ $calendar = new Calendar();
                         $("#products-datatable_length label").addClass("form-label");
                 },
             });
-            $(document).on("click", ".repAcceptButonTeachingStudent", function(event) {
+
+            $(document).on("click", ".removeAccessButtonTeachingStudent", function(event) {
                 event.preventDefault();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
                 $.ajax({
-                    url: `${BASE_URL}/approveTeachingStudents/acceptRole/${id}/teaching_student`,
+                    url: `${BASE_URL}/approveTeachingStudents/removeAccess/${id}/teaching_student`,
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
                         if (response['status'] == 200) {
-                            alertUser("success", `Accepted successfully.`);
-                            button.closest("tr").remove();
-
-                        } else {
-                            alertUser("warning", response['desc']);
-                        }
-                    },
-                    error: function(ajaxContext) {
-                        alertUser("danger", "Something Went Wrong");
-                    }
-                });
-            });
-
-            $(document).on("click", ".repDeclineButonTeachingStudent", function(event) {
-                event.preventDefault();
-                let button = $(this);
-                let urlParts = $(this).attr("href").split('/');
-                let id = urlParts[urlParts.length - 2];
-                $.ajax({
-                    url: `${BASE_URL}/approveTeachingStudents/declineRole/${id}/teaching_student`,
-                    type: 'post',
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response['status'] == 200) {
-                            alertUser("success", `Denied successfully.`);
+                            alertUser("success", `Removed Access successfully.`);
                             button.closest("tr").remove();
                         } else {
                             alertUser("warning", response['desc']);

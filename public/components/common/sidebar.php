@@ -34,9 +34,8 @@ class Sidebar
                     'existingCounselors' => ['Counselor Acc', 'bx-body'],
                     'viewlogs' => ['User Logs', 'bxs-dashboard'],
                     'manageMaterials' => ['Manage Materials', 'bxs-book'],
-                    'electionsAndPolls' => ['Manage Elections', 'bxs-pie-chart-alt-2'],
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
-                    'forum' => ['Forum', 'bxs-cog'],
+                    'forum' => ['Forum', 'bxs-chat'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
                     'adminProfileAndSettings'=> ['Admin Settings', 'bxs-cog'],
                 ];
@@ -75,8 +74,6 @@ class Sidebar
 
             if ($club_rep == 1) { //ClubRep
                 $clubrepPages = [
-                    'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $clubrepPages);
             }

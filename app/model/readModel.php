@@ -629,6 +629,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getTeachingStudentsToLimitAccess()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [1]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
     public function getTeachingStudentsToApprove()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [2]);

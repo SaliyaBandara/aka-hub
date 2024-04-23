@@ -261,7 +261,7 @@ $sidebar = new Sidebar("studentProfile");
                         setTimeout(function() {
                             history.go(-1);
                             window.close();
-                        }, 6000);
+                        }, 2000);
 
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])

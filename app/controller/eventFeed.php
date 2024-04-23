@@ -95,7 +95,7 @@ class eventFeed extends Controller
             }
 
             if(!empty($club)){
-                // print_r($commentsForPost);
+                // print_r($club);
                 $data['clubReps'] = array_merge($data['clubReps'], $club);
             }
 
@@ -111,7 +111,7 @@ class eventFeed extends Controller
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if (!($_SESSION["club_rep"]))
+        if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) )
             $this->redirect();
 
         $data = [
@@ -162,7 +162,7 @@ class eventFeed extends Controller
     {
 
         $this->requireLogin();
-        if (!($_SESSION["club_rep"]))
+        if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) )
             $this->redirect();
 
         if ($id == 0)

@@ -21,7 +21,7 @@ $sidebar = new Sidebar("counselorFeed");
                 </div>
                 <div class = "postButtons flex flex-row">
                     <div class = editDelete>
-                        <?php if ($_SESSION["user_role"] == 5) { ?>
+                        <?php if ($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1) { ?>
                             <div class="editDeleteButton">
                                 <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $post['post_id'] ?>" class="repDecline">
                                     <i class='bx bx-edit'></i>
@@ -156,7 +156,7 @@ $sidebar = new Sidebar("counselorFeed");
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        $this.closest(".feedPost").remove();
+                        window.location.href = document.referrer;
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
