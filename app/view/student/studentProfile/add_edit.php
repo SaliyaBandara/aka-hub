@@ -6,32 +6,32 @@ $sidebar = new Sidebar("settings");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
+    <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="my-2 mx-2">
         <h3 class="text-muted">Edit Profile</h3>
 
 
         <form action="" method="post" class="form">
             <div class="mb-1 form-group">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" id="name" name="name" class="form-control" value = "<?= $data["user"]["name"] ?>">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="<?= $data["user"]["name"] ?>">
             </div>
             <div class="mb-1 form-group">
-                    <label for="name" class="form-label">Email Address</label>
-                    <input type="text" id="email" name="email" class="form-control" value = "<?= $data["user"]["email"] ?>" disabled>
+                <label for="name" class="form-label">Email Address</label>
+                <input type="text" id="email" name="email" class="form-control" value="<?= $data["user"]["email"] ?>" disabled>
             </div>
             <div class="mb-1 form-group">
-                    <label for="name" class="form-label">Registration Number</label>
-                    <input type="text" id="student_id" name="student_id" class="form-control" value = "<?= $data["user"]["student_id"] ?>" disabled>
+                <label for="name" class="form-label">Registration Number</label>
+                <input type="text" id="student_id" name="student_id" class="form-control" value="<?= $data["user"]["student_id"] ?>" disabled>
             </div>
             <div class="mb-1 form-group">
-                    <label for="name" class="form-label">Alternative Email Address</label>
-                    <input type="text" id="alt_email" name="alt_email" class="form-control" value = "<?= $data["user"]["alt_email"] ?>">
+                <label for="name" class="form-label">Alternative Email Address</label>
+                <input type="text" id="alt_email" name="alt_email" class="form-control" value="<?= $data["user"]["alt_email"] ?>">
             </div>
 
             <div class="mb-1 form-group">
-                    <label for="name" class="form-label">Student ID</label>
-                    <input type="text" id="index_number" name="index_number" class="form-control" value = "<?= $data["student_profile"]["index_number"] ?>">
+                <label for="name" class="form-label">Student ID</label>
+                <input type="text" id="index_number" name="index_number" class="form-control" value="<?= $data["student_profile"]["index_number"] ?>">
             </div>
 
             <?php
@@ -101,7 +101,7 @@ $sidebar = new Sidebar("settings");
                                 <option value="samudi@gmail.com">samudi@gmail.com</option>
                     </select>
             </div> -->
-            
+
             <!-- <div class="mb-1 form-group">
                     <label for="name" class="form-label">Send Exam and Assignment Notifications</label>
                     <label for="type1">Onsite Notifications</label>
@@ -214,7 +214,7 @@ $sidebar = new Sidebar("settings");
             });
         })
 
-    
+
         $('form').submit(function(event) {
             event.preventDefault();
             var input = $(this);

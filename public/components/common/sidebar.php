@@ -21,7 +21,7 @@ class Sidebar
                     'eventFeed' => ['Events', 'bxs-calendar-star'],
                     'counselorFeed' => ['Counselor Articles', 'bxs-donate-heart'],
                     'chat' => ['Forum', 'bxs-chat'],
-                    'electionDashboard' => ['Elections', 'bxs-check-square'],
+                    'elections' => ['Elections', 'bxs-chat'],
                     'studentProfile' => ['Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $studentPages);
@@ -38,6 +38,7 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-cog'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
+                    'adminProfileAndSettings'=> ['Admin Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $adminPages);
             }
@@ -46,6 +47,7 @@ class Sidebar
                 $superAdminPages = [
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
+                    'superAdminProfileAndSettings' => ['Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
             }
@@ -65,7 +67,6 @@ class Sidebar
 
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
-                    'elections' => ['Elections', 'bxs-chat'],
                     'approveTeachingStudents' => ['Teaching Students', 'bxs-pen'],
                     'manageMaterials' => ['Materials', 'bxs-book'],
                 ];
