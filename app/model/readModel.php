@@ -98,9 +98,18 @@ class readModel extends Model
         return false;
     }
 
-    public function getNotBookedTimeSlotsById($id)
+    public function getTimeSlotsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND added = ? AND booked = ?", "iii", [$id, 1, 0]);
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+    
+    public function getNotBookedTimeSlotsByCounselorId($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status = ?", "ii", [$id, 1]);
         if (count($result) > 0)
             return $result;
 
@@ -115,20 +124,52 @@ class readModel extends Model
 
         return false;
     }
-    
 
-    public function getAvailableReservationRequests()
+    public function getAvailableReservationRequestsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND declined = ?", "ii", [0, 0]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            WHERE r.status = ? 
+            AND r.counselor_id = ?
+        ", "ii", [0, $id]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
-
-    public function getAcceptedReservationRequests()
+    
+    public function getOneReservationRequest($counselor_id, $id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
+        // $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE id = ?", "i", [$id]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            WHERE r.status = ? 
+            AND r.counselor_id = ?
+            AND r.id = ?
+        ", "iii", [0, $counselor_id, $id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
+    public function getAcceptedReservationRequests($id)
+    {
+        // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            WHERE r.status = ?
+            AND r.counselor_id = ?
+        ", "ii", [ 1, $id]);
         if (count($result) > 0)
             return $result;
 
@@ -153,6 +194,7 @@ class readModel extends Model
         }
         return false;
     }
+
 
 
     public function getCountRoleUsers()
@@ -1519,15 +1561,12 @@ class readModel extends Model
         $empty = [
             "id" => "",
             "timeslot_id" => "",
+            "counselor_id" => "",
             "student_id" => "",
-            "year" => "",
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "accepted" => "",
-            "declined" => "",
-            "cancelled" => "",
-            "completed" => "",
+            "status" => "",
         ];
 
         $template = [
@@ -1537,14 +1576,14 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-            "student_id" => [
-                "label" => "Student ID",
+            "counselor_id" => [
+                "label" => "Counselor ID",
                 "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
-            "year" => [
-                "label" => "Year of the student",
+            "student_id" => [
+                "label" => "Student ID",
                 "type" => "number",
                 "validation" => "required",
                 "skip" => true
@@ -1568,26 +1607,8 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-            "accepted" => [
-                "label" => "Accepted",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "declined" => [
-                "label" => "Cover Image",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "cancelled" => [
-                "label" => "Cancelled",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "completed" => [
-                "label" => "Completed",
+            "status" => [
+                "label" => "Status",
                 "type" => "number",
                 "validation" => "",
                 "skip" => true
@@ -1611,9 +1632,17 @@ class readModel extends Model
             "end_time" => "",
             "added" => "",
             "booked" => "",
+            "status" => "",
         ];
 
         $template = [
+            "counselor_id" =>
+            [
+                "label" => "Counselor ID",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
             "date" => [
                 "label" => "Date",
                 "type" => "date",
@@ -1642,6 +1671,12 @@ class readModel extends Model
             ],
             "booked" => [
                 "label" => "Booked",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "status" => [
+                "label" => "Status",
                 "type" => "number",
                 "validation" => "",
                 "skip" => true

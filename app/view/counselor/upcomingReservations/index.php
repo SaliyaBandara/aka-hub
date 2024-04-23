@@ -34,7 +34,11 @@ $calendar = new Calendar();
                         usort($data["reservation_requests"], 'sortByDateTime');
                         
                         foreach ($data["reservation_requests"] as $reservation_requests) {
-                        $img_src = USER_IMG_PATH . $reservation_requests["cover_img"];
+                            $img_src = USER_IMG_PATH . "default_avatar.jpg";
+                            if ($reservation_requests["profile_img"] != null || $reservation_requests["profile_img"] != "") {
+                                $img_src = USER_IMG_PATH . $reservation_requests["profile_img"];
+                            }
+                        
                 ?>
                     
                     <div class="card-content">
@@ -49,7 +53,7 @@ $calendar = new Calendar();
                             <div class="card-content">
                                 <h2 class="name"><?= $reservation_requests["name"] ?></h2>
                                 <label class="description">Date: <?= date("Y/m/d", strtotime($reservation_requests["date"])) ?></label>
-                                <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["start_time"])) ?></label>
+                                <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["end_time"])) ?></label>
                                 <button class="button button-completed" data-id="<?= $reservation_requests["id"] ?>">Completed <i class='bx bxs-user-check'></i></button>
                                 <button class="button button-cancel" data-id="<?= $reservation_requests["id"] ?>">Cancel <i class='bx bxs-user-x'></i></button>
                             </div>
