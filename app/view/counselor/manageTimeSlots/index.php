@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar();
+$sidebar = new Sidebar("manageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -10,46 +10,32 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-            <!-- <div class="threeCardDiv">
-                <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
-                </div>
-                <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
-                </div>
-                <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        8 Total Requests in this week
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div> -->
-            
             <div class="calender-main">
                 <div class="calendarContainor">
                     <?php echo $calendar->render(); ?>
+                    <h2>Please select a Date or Date Range</h2>
+                    <!-- <form action="index.php?controller=calendar&action=filterDates" method="post">
+                        <div class="date-range">
+                            <p class="p1">
+                                <input type="date" name="start_date"> to 
+                                <input type="date" name="end_date">
+                                <button type="submit">Filter</button>
+                            </p>
+                        </div>
+                    </form> -->
+                    <div class="date-range">
+                        <p class="p1"><input type="date"> to <input type="date"></p>
+                    </div>
+                    <div class="manage-time-slots">
+                        <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
+                    </div>
                 </div>
-                <h2>Please select a Date or Date Range</h2>
-                <div class="date-range">
-                    <p class="p1"><input type="date"> to <input type="date"></p>
-                </div>
-                <div class="manage-time-slots">
-                    <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
-                </div>
+                
             </div>
             
 
         </div>
         <div class="right">
-            <!-- <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div> -->
         </div>
     </div>
 
@@ -148,6 +134,7 @@ $calendar = new Calendar();
             align-items: center;
             display: flex;
             flex-direction: column;
+            text-align: center;
         }
         .date-range{
             margin-top: 20px;

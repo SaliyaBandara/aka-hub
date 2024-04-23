@@ -22,6 +22,7 @@ class AdminPanelChartOne
             array("x" => 1420050600000, "y" => 1872000),
             array("x" => 1451586600000, "y" => 2140000)
         );
+        
 
 ?>
 

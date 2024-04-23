@@ -6,7 +6,6 @@ define("DB_HOST", "localhost");
 define("DB_USER", "root");
 if(!defined("DB_PASS")) 
     define("DB_PASS", "");
-
 define("DB_DATABASE", "akahub");
 define("DB_CHARSET", "utf8");
 

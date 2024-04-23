@@ -2,10 +2,6 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("adminpanel");
-$chartOne = new AdminPanelChartOne();
-$chartTwo = new AdminPanelChartTwo();
-$chartThree = new AdminPanelChartThree();
-$chartFour = new AdminPanelChartFour();
 $chartFive = new AdminPanelChartFive();
 $calendar = new Calendar();
 ?>
@@ -19,41 +15,47 @@ $calendar = new Calendar();
 
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        1200 Total Users
-                    </div>
+                    <?php if ($data["count_total_users"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_total_users"] ?> Total Users
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        1000 Active Users
-                    </div>
+                    <?php if ($data["count_role_users"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_role_users"] ?> Roled Users
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        200 New Users
-                    </div>
+                    <?php if ($data["count_new_users"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_new_users"] ?> New Users
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="fourGraphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <?php echo $chartFive->render(); ?>
+                        <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
-                        <?php echo $chartTwo->render(); ?>
+                        <div id="chartContainer2" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <?php echo $chartThree->render(); ?>
+                        <div id="chartContainer4" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
-                        <?php echo $chartFour->render(); ?>
+                        <div id="chartContainer3" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainorFive">
-                        <?php echo $chartOne->render(); ?>
+                        <div id="chartContainer5" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
             </div>
@@ -162,6 +164,7 @@ $calendar = new Calendar();
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .graphContainorFive {
@@ -180,3 +183,115 @@ $calendar = new Calendar();
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
+        var chart1 = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            exportEnabled: true,
+            axisY: {
+                title: "Yearly Users",
+            },
+            data: [{
+                type: "spline",
+                markerSize: 5,
+                xValueFormatString: "DD",
+                xValueType: "dateTime",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart1.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartTwo"], JSON_NUMERIC_CHECK); ?>;
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: true,
+            exportEnabled: true,
+            data: [{
+                type: "pie",
+                // showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 10,
+                indexLabel: "{label} - #percent%",
+                yValueFormatString: "฿#,##0",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart2.render();
+    });
+</script>
+
+<script>
+    // Initialize chart when the document is ready
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartThree"], JSON_NUMERIC_CHECK); ?>;
+        var chart3 = new CanvasJS.Chart("chartContainer3", {
+            animationEnabled: true,
+            exportEnabled: true,
+            theme: "light2",
+            axisY: {
+                title: "Number of Students"
+            },
+            data: [{
+                type: "column",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart3.render();
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartFour"], JSON_NUMERIC_CHECK); ?>;
+        var chart4 = new CanvasJS.Chart("chartContainer4", {
+            animationEnabled: true,
+            exportEnabled: true,
+            data: [{
+                type: "pie",
+                // showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 10,
+                indexLabel: "{label} - #percent%",
+                yValueFormatString: "฿#,##0",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart4.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartFive"], JSON_NUMERIC_CHECK); ?>;
+        var chart5 = new CanvasJS.Chart("chartContainer5", {
+            animationEnabled: true,
+            exportEnabled: true,
+            theme: "light2",
+            subtitles: [{
+                backgroundColor: "#2eacd1",
+                fontSize: 16,
+                fontColor: "white",
+                padding: 5
+            }],
+            legend: {
+                fontFamily: "calibri",
+                fontSize: 14,
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 90,
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart5.render();
+    });
+</script>

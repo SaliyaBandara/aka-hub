@@ -8,13 +8,30 @@ $sidebar = new Sidebar("settings");
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch("Saliya", "Bandara"); ?>
     <div class="my-2 mx-2">
-        <h3 class="text-muted"><?= $data["action"] == "create" ? "Create New Course" : "Edit Course" ?></h3>
+        <h3 class="text-muted">Edit Profile</h3>
 
 
         <form action="" method="post" class="form">
             <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" value = "<?= $data["user"]["name"] ?>">
+            </div>
+            <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Email Address</label>
+                    <input type="text" id="email" name="email" class="form-control" value = "<?= $data["user"]["email"] ?>" disabled>
+            </div>
+            <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Registration Number</label>
+                    <input type="text" id="student_id" name="student_id" class="form-control" value = "<?= $data["user"]["student_id"] ?>" disabled>
+            </div>
+            <div class="mb-1 form-group">
+                    <label for="name" class="form-label">Alternative Email Address</label>
+                    <input type="text" id="alt_email" name="alt_email" class="form-control" value = "<?= $data["user"]["alt_email"] ?>">
+            </div>
+
+            <div class="mb-1 form-group">
                     <label for="name" class="form-label">Student ID</label>
-                    <input type="text" id="student_id" name="student_id" class="form-control" value = "21001375" disabled>
+                    <input type="text" id="index_number" name="index_number" class="form-control" value = "<?= $data["student_profile"]["index_number"] ?>">
             </div>
 
             <?php
@@ -31,15 +48,61 @@ $sidebar = new Sidebar("settings");
             }
             ?>
 
-            <div class="mb-1 form-group">
+            <div class="mb-1">
+                <label class="form-label">Profile Image</label>
+                <p class="text-muted font-14">
+                    Upload profile image (Maximum 1 image)
+                </p>
+                <div action="/uploadFiles/img/profile_img" data-name="profile_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
+            </div>
+
+            <div class="mb-1">
+                <div class="table-responsive">
+                    <table <?= ($data["user"]['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="profile_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
+                        <thead class="cent">
+                            <tr>
+                                <th class="text-center py-1">Image</th>
+                                <th class="text-center py-1">Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot class="cent">
+                            <tr>
+                                <th class="text-center py-1">Image</th>
+                                <th class="text-center py-1">Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="ui-sortable">
+                            <?php
+                            if ($data["user"]['id'] != 0 && !empty($data["user"]['profile_img'])) {
+                                $img_src = USER_IMG_PATH . $data["user"]["profile_img"];
+                            ?>
+                                <tr class='ui-sortable-handle'>
+                                    <td>
+                                        <div class='preview-img preview-img-small' data-filename='<?= $data["user"]['profile_img'] ?>' data-fancybox='group' href='<?= $img_src ?>'>
+                                            <img src='<?= $img_src ?>' class='' alt='..'>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div title='Delete Image' target='_blank' class='action-icon custom-action-btn delete-preview-btn text-danger font-14'> <i class='mdi mdi-delete'></i> Delete</div>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- <div class="mb-1 form-group">
                     <label for="name" class="form-label">Preferred Email Address to receive Notifications</label>
                     <select id="emailAddress" name="emailAddress" class = "form-control">
                                 <option value="21cs1234@ucsc.amb.ac.lk" selected>21cs1234@ucsc.amb.ac.lk</option>
                                 <option value="samudi@gmail.com">samudi@gmail.com</option>
                     </select>
-            </div>
+            </div> -->
             
-            <div class="mb-1 form-group">
+            <!-- <div class="mb-1 form-group">
                     <label for="name" class="form-label">Send Exam and Assignment Notifications</label>
                     <label for="type1">Onsite Notifications</label>
                     <input type="radio" name="notify_exam" value="0" class = "form-control">
@@ -86,57 +149,11 @@ $sidebar = new Sidebar("settings");
                                 <option value="1">Before 1 week</option>
                                 <option value="2">Before 1 day</option>
                     </select>
-            </div>
+            </div> -->
 
-
-            <div class="mb-1">
-                <label class="form-label">Profile Picture</label>
-                <p class="text-muted font-14">
-                    Upload your profile image (Maximum 1 image)
-                </p>
-                <div action="/uploadFiles/img/course_cover" data-name="cover_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
-            </div>
-
-            <div class="mb-1">
-                <div class="table-responsive">
-                    <table <?= ($data['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="cover_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
-                        <thead class="cent">
-                            <tr>
-                                <th class="text-center py-1">Image</th>
-                                <th class="text-center py-1">Action</th>
-                            </tr>
-                        </thead>
-                        <tfoot class="cent">
-                            <tr>
-                                <th class="text-center py-1">Image</th>
-                                <th class="text-center py-1">Action</th>
-                            </tr>
-                        </tfoot>
-                        <tbody class="ui-sortable">
-                            <?php
-                            if ($data['id'] != 0 && !empty($data['student_profile']['profile_picture'])) {
-                                $img = USER_IMG_PATH . $data['student_profile']['profile_picture'];
-                            ?>
-                                <tr class='ui-sortable-handle'>
-                                    <td>
-                                        <div class='preview-img preview-img-small' data-filename='<?= $data['student_profile']['profile_picture']?>' data-fancybox='group' href='<?= $img ?>'>
-                                            <img src='<?= $img ?>' class='' alt='..'>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div title='Delete Image' target='_blank' class='action-icon custom-action-btn delete-preview-btn text-danger font-14'> <i class='mdi mdi-delete'></i> Delete</div>
-                                    </td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
             <div class="mt-1-5 form-group">
-                <a href="<?= BASE_URL ?>/courses" class="btn btn-info">Back</a>
+                <a href="<?= BASE_URL ?>/studentProfile" class="btn btn-info">Back</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
 
@@ -153,7 +170,6 @@ $sidebar = new Sidebar("settings");
     "use strict";
     Dropzone.autoDiscover = false;
     $(document).ready(function() {
-
         let imgCount = 0;
         let dropZoneImgsArr = [];
         $('.dropzone.imgDropZone').each(function() {
@@ -198,6 +214,7 @@ $sidebar = new Sidebar("settings");
             });
         })
 
+    
         $('form').submit(function(event) {
             event.preventDefault();
             var input = $(this);
@@ -221,13 +238,14 @@ $sidebar = new Sidebar("settings");
                 empty_fields.forEach(element => element.removeClass("border-danger"));
             }, 6000);
 
-            if (empty_fields.length > 0) {
-                empty_fields[0].focus();
-                return alertUser("warning", `Please fill all the fields`);
+            if (values["year"] != 1 && values["year"] != 2 && values["year"] != 3 && values["year"] != 4) {
+                empty_fields.push($("#year"));
+                $("#year").addClass("border-danger");
+                return alertUser("warning", `Year should be 1, 2, 3 or 4`);
             }
 
             let completed = 0;
-            let tables = ["profile_picture"];
+            let tables = ["profile_img"];
             $.each(tables, function(i, name) {
                 let table = $(`.table-responsive .image-preview-table[data-name='${name}'] tbody`)
                 let images = get_preview_imgs(table)
@@ -241,6 +259,11 @@ $sidebar = new Sidebar("settings");
 
             if (completed < tables.length)
                 return;
+
+            if (empty_fields.length > 0) {
+                empty_fields[0].focus();
+                return alertUser("warning", `Please fill all the fields`);
+            }
 
             $.ajax({
                 // url: url,

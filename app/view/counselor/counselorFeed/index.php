@@ -2,17 +2,13 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("counselorFeed");
-$feedArea = new feedArea();
 ?>
 
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
-
-
     <div class="main-grid flex">
         <div class="left">
-
             <?php if ($_SESSION["user_role"] == 5) { ?>
                 <div class="mb-1 form-group">
                     <a href="<?= BASE_URL ?>/counselorFeed/add_edit/0/" class="btn btn-primary">
@@ -20,207 +16,216 @@ $feedArea = new feedArea();
                     </a>
                 </div>
             <?php } ?>
-
             <h3 class="h3-CounselorFeed">Counselor Feed</h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
+                    <div class="feedContainer">
 
-                    <div class="feedContainor">
-
-                        <!-- <div class="feed-post"> -->
-                        <!-- <div class="feed-text-div">
-                                <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt="">
-                                <p>Gratitude should be paid where it's due…</br>
-
-                                    Our sense of obligation extends towards our distinguished member speakers and the wonderful audience in making this event, a grand success.</br>
-
-                                    We sincerely thank the participants for valuing our efforts and for having been a great audience.</br>
-
-                                    Until we meet again, au revoir…</br>
-
-                                    #ACM #UCSC #ACMSCUCSC</p>
-                                <div class="editDeleteButton">
-                                    <div class="repEdit">
-                                        <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                    </div>
-                                    <div class="repDecline">
-                                        <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
-                                    </div>
-                                </div>
-                            </div> -->
-
-                        <?php
-
-
-                        // Array
-                        // (
-                        //     [0] => Array
-                        //         (
-                        //             [id] => 1
-                        //             [user_id] => 9
-                        //             [title] => 
-                        //             [description] => Test
-                        //             [image] => course_cover_202311010814186541bb820eba100603290016988066581345.jpg
-                        //             [created_at] => 2023-11-01 08:09:36
-                        //             [updated_at] => 2023-11-01 08:09:36
-                        //         )
-
-                        //     [1] => Array
-                        //         (
-                        //             [id] => 2
-                        //             [user_id] => 9
-                        //             [title] => 
-                        //             [description] => Gratitude should be paid where it's due…
-                        // Our sense of obligation extends towards our distinguished member speakers and the wonderful audience in making this event, a grand success.
-                        // We sincerely thank the participants for valuing our efforts and for having been a great audience.
-                        // Until we meet again, au revoir…
-                        // #ACM #UCSC #ACMSCUCSC test
-                        //             [image] => course_cover_202311010810426541baaa5932003653490016988064426534.png
-                        //             [created_at] => 2023-11-01 08:11:12
-                        //             [updated_at] => 2023-11-01 08:11:12
-                        //         )
-
-                        // )
-
-                        // if (is_array($data['posts'])) {
-
-                        //     foreach ($data['posts'] as $key => $value) {
-                        //         $description = $value['description'];
-                        //         // $description = substr($description, 0, 200);
-                        //         $img = BASE_URL . "/public/assets/user_uploads/img/" . $value['image'];
-
-                        // ?>
-                            <div class="feed-post">
-                                    <div class="feed-text-div">
-                                        <img class="eventPost" src="<?= $img ?>" alt="">
+                        <?php 
+                            if (empty($data["posts"])) {
+                                echo "<div class='font-meidum text-muted'>You can publish an article using 'Add Post' button above!</div>";
+                            } else {
+                                foreach ($data["posts"] as $posts) {
+                                $img_src = USER_IMG_PATH . $posts["post_image"];
+                                $img_src_profile = USER_IMG_PATH . $posts["profile_img"];
+                        ?>
+                                    <div class="feedPost my-2">
+                                        <div class = "postDetails">
+                                            <div class = "detailsLeft">
+                                                <div class = "userImage">
+                                                    <img src="<?= $img_src_profile ?>" alt="">
+                                                </div>
+                                                <div class = "userDetails">
+                                                    <div class = "userName">
+                                                        <?= $posts["name"] ?>
+                                                    </div>
+                                                    <div class = "publishedDate">
+                                                        <?= date('d/m/y H:i', strtotime($posts["created_datetime"])) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class = detailsRight>
+                                                <?php if ($_SESSION["user_role"] == 5) { ?>
+                                                    <div class="editDeleteButton">
+                                                        <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
+                                                            <i class='bx bx-edit'></i>
+                                                        </a>
+                                                        <a class="repDecline delete-item" data-id="<?= $posts['id'] ?>">
+                                                            <i class='bx bx-trash text-danger'></i>
+                                                        </a>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <div class = "postTitle my-1 font-medium"> <?= strtoupper($posts["title"]) ?></div> 
+                                        <img class="postImage" src="<?= $img_src ?>" alt="">
                                         <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
                                         <p style="white-space: pre-line;">
-                                            <?= $description ?>
+                                            <?= substr($posts["description"], 0, 500) . (strlen($posts["description"]) > 500 ? '...' : '') ?>
                                         </p>
-                                        <div class="editDeleteButton">
-                                            <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $value['id'] ?>"
-                                            class="repEdit">
-                                                <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                            </a>
-                                            <a class="repDecline delete-item" data-id="<?= $value['id'] ?>">
-                                                <img src="<?= BASE_URL ?>/public/assets/img/icons/delete.png" alt="">
-                                            </a>
+                                        <div class = "postDetails">
+                                            <div class = "detailsLeft">
+                                                <div class="likeCommentButton">
+                                                    <!-- <a href="./counselorFeed/like/<?= $posts["id"] ?>"> -->
+                                                    <a class = "likePost" data-id = "<?= $posts["id"] ?>">
+                                                        <i class='bx bx-heart text-danger likeButton'></i>
+                                                    </a>
+                                                    <label class = "likeCountLabel">
+                                                        <?= ($posts['likesCount'] === null) ? '0 Likes' : $posts['likesCount'] . ' Likes' ?>
+                                                    </label>
+                                                    <a href = "#" class="commentsToggle">
+                                                        <i class='bx bx-message-rounded'></i>
+                                                    </a> 
+                                                    <label>
+                                                        <!-- <?= count($data["comments"]) ?>  -->
+                                                        2 Comments
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="commentsSection" style="display: none;">
+                                            <?php 
+                                                if (empty($data["comments"])) {
+                                                    echo "<div class='font-meidum text-muted'></div>";
+                                                } else {
+                                                    foreach ($data["comments"] as $comments) {
+                                            ?>
+                                                <p><?= $comments["comment"] ?></p>
+                                                <?php } ?>
+                                            <?php } ?>
                                         </div>
                                     </div>
-                            </div>
-
-                         <?php
-
-
-                        //     }
-                        // }
-
-
-                        ?>
-                        <!-- <img src="https://cdn-icons-png.flaticon.com/512/5508/5508714.png" alt=""> -->
-
+                            <?php } ?>
+                        <?php } ?>
                     </div>
-                    <style>
-                        .repEdit {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            width: 50px;
-                        }
-
-                        .repDecline {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            width: 50px;
-                        }
-
-                        .repEdit img {
-                            width: 35px;
-                            height: 35px;
-                        }
-
-                        .repDecline img {
-                            width: 35px;
-                            height: 35px;
-                        }
-
-                        .repEdit img:hover {
-                            width: 67px;
-                            height: 67px;
-                            cursor: pointer;
-                        }
-
-                        .repDecline img:hover {
-                            width: 37px;
-                            height: 37px;
-                            cursor: pointer;
-                        }
-
-                        .editDeleteButton {
-                            width: 100%;
-                            height: 50px;
-                            display: flex;
-                            justify-content: right;
-                            align-items: center;
-                        }
-
-                        .eventPost {
-                            width: 100%;
-                            height: 570px;
-                        }
-
-                        .feed-post {
-                            background-color: white;
-                            width: 100%;
-                            height: 850px;
-                            border-radius: 5px;
-                            justify-content: center;
-                            display: flex;
-                            margin: 0 0 100px 0;
-                        }
-
-                        .feed-text-div {
-                            text-align: center;
-                        }
-
-                        .feed-text-div p {
-                            text-align: justify;
-                            padding: 20px;
-                        }
-                    </style>
-
                 </div>
-                <style>
-                    .feedContainor {
-                        width: 100%;
-                        height: 100%;
-                        justify-content: center;
-                    }
-                </style>
-
-                <?php
-                // $feedArea->render();
-                ?>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    .delete-item {
+    .postDetails{
+        /* border: 1px solid black; */
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .detailsLeft{
+        /* border: 1px solid red; */
+        width: 70%;
+        display: flex;
+        flex-direction:row;
+        padding: 1rem;
+    }
+
+    .userDetails{
+        display: flex;
+        flex-direction: column;
+        padding-left: 1rem;
+        /* border: 1px solid red; */
+        justify-content: center;
+    }
+
+    .detailsRight{ width: 30%;}
+
+    .editDeleteButton {
+        display: flex;
+        justify-content: right;
+        /* border: 1px solid red; */
+        padding: 1rem;
+        font-size: 20px;
+    }
+
+    
+    .editDeleteButton a{
+        text-decoration: none;
+        color: inherit;
+        margin-left: 5px;
+    }
+
+    .likeCommentButton{
+        display: flex;
+        justify-content: right;
+        /* border: 1px solid red; */
+        font-size: 20px;
+    }
+
+    .likeCommentButton a{
+        font-size: 28px;
+        margin-right: 5px;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .likeCommentButton label{
+        font-size: 12px;
+        margin-right: 25px;
+        padding-top: 10px;
+    }
+
+    .userName , .publishedDate{
+        font-size: 12px;
+    }
+
+    .feedContainor {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .divFeed{
+        /* border: 1px solid red; */
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+
+
+    .postImage {
+        width: 100%;
+        height: auto;
+        /* border: 1px solid blue; */
+    }
+
+    .feedPost {
+        text-align: center;
+        /* border: 1px solid black; */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        border-radius : 20px;
+        /* margin: 25px; */
+    }
+
+    .feedPost p {
+        text-align: justify;
+        padding: 20px 20px 0 20px;
+    }
+
+    .postTitle{
+        padding-top: 15px;
+        padding-left: 15px;
+        text-align: left;
+        /* font-weight: bold; */
+    }
+
+    .repDecline {
+        width: 15%;
+        height: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: -10px;
+        margin-right: 13px;
+    }
+    .delete-item, .likePost{
         cursor: pointer;
     }
 
     .h3-CounselorFeed {
         text-align: center;
-    }
-
-    .divFeed {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
     }
 
     .divCounselorFeed {
@@ -230,26 +235,55 @@ $feedArea = new feedArea();
         justify-content: center;
     }
 
-    .main-grid {}
+    .userImage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 2px solid #bdd2f1;
+        width: 3rem;
+        height: 3rem;
+        overflow: hidden;
+    }
+
+    .userImage img{
+        width: 6rem;
+        height: 6rem;
+        display: block;
+    }
+
+    .main-grid {
+    }
 
     .main-grid .left {
         width: 100%;
         height: 3000px;
     }
-
-    /* .main-grid .right{
-            flex-grow: 1;
-            background-color: red;
-            height: 50vh;
-        } */
 </style>
-
-</div>
 
 <?php $HTMLFooter = new HTMLFooter(); ?>
 <script>
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Select all elements with the class 'commentsToggle'
+        const toggleButtons = document.querySelectorAll(".commentsToggle");
+
+        // Iterate over each toggle button
+        toggleButtons.forEach(function(toggleButton) {
+            // Add click event listener to each toggle button
+            toggleButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                // Find the corresponding comments section based on the button's parent element
+                const commentsSection = toggleButton.closest(".postDetails").nextElementSibling;
+                // Toggle the display style of the comments section
+                commentsSection.style.display = commentsSection.style.display === "none" ? "block" : "none";
+            });
+        });
+    });
+
+</script> -->
 <script>
     $(document).ready(function() {
         $(document).on("click", ".delete-item", function() {
@@ -257,7 +291,7 @@ $feedArea = new feedArea();
             let $this = $(this);
 
             // confirm delete
-            if (!confirm("Are you sure you want to delete this counselor?"))
+            if (!confirm("Are you sure you want to delete this post?"))
                 return;
 
             $.ajax({
@@ -270,7 +304,7 @@ $feedArea = new feedArea();
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        $this.closest(".feed-post").remove();
+                        $this.closest(".feedPost").remove();
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
@@ -278,6 +312,38 @@ $feedArea = new feedArea();
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
+        $(document).on("click", ".likePost", function() {
+            let id = $(this).attr("data-id");
+            let $this = $(this);
+
+            // // confirm delete
+            // if (!confirm("Are you sure you want to delete this post?"))
+            //     return;
+
+            $.ajax({
+                url: `${BASE_URL}/counselorFeed/like/${id}`,
+                type: 'post',
+                data: {
+                    like: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("danger", response['desc'])
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500);
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "You have already liked this post")
                 }
             });
         });

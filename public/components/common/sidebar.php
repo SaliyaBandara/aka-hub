@@ -8,6 +8,7 @@ class Sidebar
 
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
             $role = $_SESSION["user_role"];
+          
             $student_rep = $_SESSION["student_rep"];
             $club_rep = $_SESSION["club_rep"];
             $teaching_student = $_SESSION["teaching_student"];
@@ -17,6 +18,8 @@ class Sidebar
                 $studentPages = [
                     'dashboard' => ['Dashboard', 'bxs-dashboard'],
                     'courses' => ['Courses', 'bxs-book'],
+                    'eventFeed' => ['Events', 'bxs-calendar-star'],
+                    'counselorFeed' => ['Counselor Articles', 'bxs-donate-heart'],
                     'chat' => ['Forum', 'bxs-chat'],
                     'elections' => ['Elections', 'bxs-chat'],
                     'studentProfile' => ['Settings', 'bxs-cog'],
@@ -41,9 +44,8 @@ class Sidebar
 
             if ($role == 3) { //superadmin
                 $superAdminPages = [
-                    'superadminpanel' => ['Dashboard', 'bxs-dashboard'],
+                    'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
-                    'commonProfile' => ['Admin Profile', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
             }
@@ -51,11 +53,11 @@ class Sidebar
             if ($role == 5) { //counselor
                 $counselorPages = [
                     'counselorPanel' => ['Counselor Panel', 'bxs-home'],
-                    'upcomingReservations' => ['Upcoming Reservation', 'bxs-dashboard'],
+                    'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
                     'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
                     'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
+                    'counselorChat' => ['Messages', 'bxs-chat'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
-                    //chat needed to be added....
                 ];
 
                 $pages = array_merge($pages, $counselorPages);
@@ -63,8 +65,7 @@ class Sidebar
 
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
-                    'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'approveTeachingStudents' => ['Approve Kuppi', 'bxs-home'],
+                    'approveTeachingStudents' => ['Teaching Students', 'bxs-pen'],
                     'manageMaterials' => ['Materials', 'bxs-book'],
                 ];
                 $pages = array_merge($pages, $studentrepPages);
@@ -73,7 +74,6 @@ class Sidebar
             if ($club_rep == 1) { //ClubRep
                 $clubrepPages = [
                     'electionsAndPolls' => ['Manage Elections', 'bxs-chat'],
-                    'clubEventFeed' => ['Club Event Feed', 'bxs-home'],
                     'addClubEventsToCalendar' => ['Events to Calendar', 'bxs-home'],
                 ];
                 $pages = array_merge($pages, $clubrepPages);
@@ -130,7 +130,7 @@ class Sidebar
             </div>
 
             <div class="fixed__bottom">
-                <a class="logout" href="./logout">Logout <i class='bx bx-log-out'></i> </a>
+                <a class="logout" href="<?= BASE_URL ?>/logout">Logout <i class='bx bx-log-out'></i> </a>
             </div>
 
         </div>

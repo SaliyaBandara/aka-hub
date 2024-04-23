@@ -4,51 +4,93 @@ $HTMLHead = new HTMLHead($data['title']);
 $sidebar = new Sidebar("adminAccount");
 ?>
 
-
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
-        <div class="left">
-            <div class="divExistingAdmin">
-                <h3>Admin Account</h3>
-                <div class="divAdminCards">
-                    <div class="adminCardLine">
-                        <div class="adminCard">
-                            <div class="admin-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/Dr.Kasun Karunanayake.jpg" alt="" id = "adminPhoto">
-                            </div>
-                            <h5>A.H.T.N Thushanthika</h5>
-                            <h5>a.h.t.n.thushanthika@gmail.com</h5>
-                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
-                            <div class="edit-delete-containor">
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                </div>
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
-                                </div>
-                            </div>
+        <!-- <div class="left"> -->
+        <div class="divExistingCounselors">
+            <div class="section_header mb-1 flex title_bar">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-calendar-check me-0-5'></i> Existing Admin
+                </div>
+                <?php if ($data["role"] == 3) { ?>
+                    <div class="adminAddButtonRow">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/addAdmin/index/0" class="btn btn-primary">
+                                <i class='bx bxs-lock-open'></i> Add Counselors
+                            </a>
                         </div>
                     </div>
-                    <div class="buttonDivToAddAdmin">
-                        <div class="gotoAddAdmin">
-                            <div>
-                                <a href="<?= BASE_URL ?>/addAdmin/index"  class="mwb-form-submit-btn">Create Account</a>
-                            </div>
-                        </div>
-                    </div>
+                <?php } ?>
+            </div>
+            <div class="divCounselorCards">
+                <div class="conunselorCardLine">
+                    <?php
+                    if (is_array($data["admin"])) {
 
+                        foreach ($data["admin"] as $key => $value) {
+
+                            $img_src_profile = USER_IMG_PATH . $value["profile_img"];
+
+                            if ($value["role"] == 1) {
+                                echo "<div class='counselorCard'>";
+                                echo "<h4>Admin</h4>";
+
+                                echo "<div class='counselor-image-containor'>";
+                                echo "<img src='$img_src_profile' alt='' id = 'counselorPhoto'>";
+                                echo "</div>";
+                                echo "<h5>" . $value["name"] . "</h5>";
+                                echo "<h5>" . $value["email"] . "</h5>";
+
+                                //if user is a student 
+                                echo "<div class = 'detailsButtonArea'>";
+                                echo "<a href='" . BASE_URL . "/adminView/index/{$value['id']}'>";
+                                echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
+                                echo "View Details";
+                                echo "</div>";
+                                echo "</a>";
+                                echo "</div>";
+
+
+                                // echo "<p>".$value["description"]."</p>";
+                                //if user is an admin
+                                if ($data["role"] == 3) {
+                                    echo "<div class='edit-delete-containor'>";
+                                    echo "<a href='" . BASE_URL . "/addAdmin/index/" . $value["id"] . "' class='block iconContainor'>";
+                                    echo "<i class='bx bx-edit'></i>";
+                                    echo "</a>";
+                                    echo "<div class='iconContainor delete-item' data-id='" . $value["id"] . "'>";
+                                    echo "<i class='bx bx-trash text-danger'></i>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
+                                echo "</div>";
+                            }
+                        }
+                    }
+                    ?>
                 </div>
             </div>
         </div>
+        <!-- </div> -->
         <!-- <div class="right">
             
         </div> -->
     </div>
 
     <style>
-        .main-grid {}
+        .adminAddButtonRow {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 75%;
+            padding-top: 5px;
+        }
+
+        .delete-item {
+            cursor: pointer;
+        }
 
         .mwb-form-submit-btn {
             background-color: #2684FF;
@@ -61,7 +103,8 @@ $sidebar = new Sidebar("adminAccount");
             min-width: 200px;
             padding: 16px 10px;
         }
-        .mwb-form-submit-btn :hover{
+
+        .mwb-form-submit-btn :hover {
             background-color: white;
             border-radius: 4px;
             border: none;
@@ -72,16 +115,16 @@ $sidebar = new Sidebar("adminAccount");
             min-width: 200px;
             padding: 16px 10px;
         }
-        .buttonDivToAddAdmin {
+
+        .buttonDivToAddCounselors {
             width: 100%;
             height: 500px;
             display: flex;
             justify-content: right;
-            margin-top: 50px;
             padding: 0 100px 20px 0;
         }
 
-        .gotoAddAdmin {
+        .gotoAddCounselor {
             width: 120px;
             height: 40px;
             display: flex;
@@ -90,7 +133,7 @@ $sidebar = new Sidebar("adminAccount");
             text-align: center;
         }
 
-        .gotoAddAdmin a {
+        .gotoAddCounselor a {
             text-decoration: none;
         }
 
@@ -106,7 +149,15 @@ $sidebar = new Sidebar("adminAccount");
             display: flex;
             justify-content: right;
             align-items: center;
-            padding-right : 20px;
+            padding-right: 20px;
+        }
+
+        .edit-delete-containor a,
+        .delete-item {
+            text-decoration: none;
+            color: inherit;
+            margin-left: 5px;
+            font-size: 20px;
         }
 
         .iconContainor img {
@@ -118,60 +169,86 @@ $sidebar = new Sidebar("adminAccount");
             cursor: pointer;
         }
 
-        .adminCard {
+        .counselorCard {
             width: 28%;
+            min-width: 150px;
             height: 100%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
             margin: 25px;
-            padding: 25px;
+            border-radius: 10px;
         }
 
-        .admin-image-containor {
+        .counselor-image-containor {
             display: flex;
             width: 100%;
             justify-content: center;
             align-items: center;
         }
 
-        #adminPhoto {
+        #counselorPhoto {
             width: 150px;
             height: 150px;
         }
 
-        .adminCard h4 {
+        .counselorCard h4 {
             text-align: center;
         }
 
-        .adminCard h5 {
+        .counselorCard h5 {
             text-align: center;
+
         }
 
-        .adminCard p {
+        .counselorCard p {
             text-align: justify;
             padding-left: 30px;
             padding-right: 30px;
         }
 
-        .adminCardLine {
+        .conunselorCardLine {
             width: 100%;
-            height: 500px;
+            /* height: 500px; */
             display: flex;
-            justify-content: center;
-            align-items: center;
+            /* justify-content: center; */
+            /* align-items: center; */
+
+            flex-wrap: wrap;
         }
 
-        .divAdminCards {
+        .detailsButtonArea {
+            width: 100%;
+            /* border: 1px solid red; */
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .detailsButtonArea a {
+            text-decoration: none;
+        }
+
+        /* 
+        .detailsButton{
+            width: 50%;
+            border: 1px solid red;
+            justify-content: center ;
+            align-items: center ;
+            text-align: center;
+        } */
+
+        .divCounselorCards {
             width: 100%;
             height: 100%;
         }
 
-        .divExistingAdmin h3 {
+        .divExistingCounselors h3 {
             text-align: center;
         }
 
-        .divExistingAdmin {
+        .divExistingCounselors {
             width: 100%;
             height: 100%;
+            padding: 31px;
         }
 
         .main-grid .left {
@@ -186,3 +263,41 @@ $sidebar = new Sidebar("adminAccount");
     </style>
 
 </div>
+
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    $(document).ready(function() {
+        $(document).on("click", ".delete-item", function() {
+            let id = $(this).attr("data-id");
+            let $this = $(this);
+
+            // confirm delete
+            if (!confirm("Are you sure you want to delete this counselor?"))
+                return;
+
+            $.ajax({
+                url: `${BASE_URL}/existingCounselors/delete/${id}`,
+                type: 'post',
+                data: {
+                    delete: true
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response['status'] == 200) {
+                        alertUser("success", response['desc'])
+                        $this.closest(".counselorCard").remove();
+                    } else if (response['status'] == 403)
+                        alertUser("danger", response['desc'])
+                    else
+                        alertUser("warning", response['desc'])
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+    });
+</script>

@@ -20,7 +20,7 @@ $sidebar = new Sidebar("courses");
             ?>
                 <div class="mb-1 form-group">
                     <label for="name" class="form-label"><?= $value["label"] ?></label>
-                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["course"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" value="<?= $data["course"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                 </div>
             <?php
             }

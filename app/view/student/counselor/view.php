@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("Settings");
+$sidebar = new Sidebar("existingCounselors");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -16,7 +16,7 @@ $sidebar = new Sidebar("Settings");
                 <?php 
                 if (is_array($data["posts"])) {
                         foreach ($data["posts"] as $posts) {
-                        $img_src = USER_IMG_PATH . $posts["image"];
+                        $img_src = USER_IMG_PATH . $posts["post_image"];
                     ?>
                     <a class = "articleCard" href = "#">
                         <div class = "articleImage">
@@ -63,6 +63,9 @@ $sidebar = new Sidebar("Settings");
                         <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center">
                             Chat Now
                         </div>
+                    </div>
+                    <div class = "bookingButtonContainer">
+                        <a class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center load-timeslots" href="#" user-id="<?= $counselor['id'] ?>">Book an appointment</a>
                     </div>
                 </div>
                 <?php  } ?>
@@ -204,6 +207,14 @@ $sidebar = new Sidebar("Settings");
             display:flex;
             margin: 1rem 0 0 1rem;
         }
+        .bookingButtonContainer{
+            width: 100%;
+            /* border: 1px solid red; */
+            justify-content: left ;
+            align-items: left ;
+            display:flex;
+            margin: 1rem 0 0 1rem;
+        }
 
     </style>
 
@@ -215,4 +226,23 @@ $sidebar = new Sidebar("Settings");
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var BookApoinment = document.querySelectorAll('.load-timeslots');
+
+        BookApoinment.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var user_id = button.getAttribute('user-id');
+                console.log(user_id);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', BASE_URL + '/counselorView/bookReservation/' + user_id, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        window.location.href = BASE_URL + '/counselorView/bookReservation/' + user_id;
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });     
 </script>

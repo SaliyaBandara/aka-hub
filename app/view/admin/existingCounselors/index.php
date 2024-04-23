@@ -10,51 +10,64 @@ $sidebar = new Sidebar("existingCounselors");
     <div class="main-grid flex">
         <!-- <div class="left"> -->
         <div class="divExistingCounselors">
-            <h3>Existing Counselors</h3>
+            <div class="section_header mb-1 flex title_bar">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-calendar-check me-0-5'></i> Existing Counselors
+                </div>
+                <?php if ($data["role"] == 1) { ?>
+                    <div class="counselorsAddButtonRow">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/addCounselors/index/0" class="btn btn-primary">
+                                <i class='bx bxs-lock-open'></i> Add Counselors
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
             <div class="divCounselorCards">
                 <div class="conunselorCardLine">
                     <?php
                     if (is_array($data["counselors"])) {
-                        
+
                         foreach ($data["counselors"] as $key => $value) {
+
+                            $img_src_profile = USER_IMG_PATH . $value["profile_img"];
+
                             if ($value["role"] == 5) {
                                 echo "<div class='counselorCard'>";
-                                if($value["type"] == 1){
+                                if ($value["type"] == 1) {
                                     echo "<h4>Professional Counselor</h4>";
-                                }
-                                else{
+                                } else {
                                     echo "<h4>Student Counselor</h4>";
                                 }
                                 echo "<div class='counselor-image-containor'>";
-                                echo "<img src='" . BASE_URL . "/public/assets/img/counselors/counselorImage.jpg' alt='' id = 'counselorPhoto'>";
+                                echo "<img src='$img_src_profile' alt='' id = 'counselorPhoto'>";
                                 echo "</div>";
                                 echo "<h5>" . $value["name"] . "</h5>";
                                 echo "<h5>" . $value["email"] . "</h5>";
                                 echo "<h5> 0" . $value["contact"] . "</h5>";
 
                                 //if user is a student 
-                                if($data["role"] != 1){
-                                    echo "<div class = 'detailsButtonArea'>";
-                                    echo "<a href='./counselorView/index/{$value['id']}'>";
-                                    echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
-                                    echo "View Details";
-                                    echo "</div>";
-                                    echo "</a>";
-                                    echo "</div>";
-                                }
+                                echo "<div class = 'detailsButtonArea'>";
+                                echo "<a href='./counselorView/index/{$value['id']}'>";
+                                echo "<div class = 'btn btn-primary mb-1 form form-group  detailsButton justify-center align-center'>";
+                                echo "View Details";
+                                echo "</div>";
+                                echo "</a>";
+                                echo "</div>";
+
 
                                 // echo "<p>".$value["description"]."</p>";
                                 //if user is an admin
-                                if($data["role"] == 1) {
+                                if ($data["role"] == 1) {
                                     echo "<div class='edit-delete-containor'>";
                                     echo "<a href='" . BASE_URL . "/addCounselors/index/" . $value["id"] . "' class='block iconContainor'>";
-                                    echo "<img src='" . BASE_URL . "/public/assets/img/icons/edit.png' alt=''>";
+                                    echo "<i class='bx bx-edit'></i>";
                                     echo "</a>";
                                     echo "<div class='iconContainor delete-item' data-id='" . $value["id"] . "'>";
-                                    echo "<img src='" . BASE_URL . "/public/assets/img/icons/rejected.png' alt=''>";
+                                    echo "<i class='bx bx-trash text-danger'></i>";
                                     echo "</div>";
                                     echo "</div>";
-                                    
                                 }
                                 echo "</div>";
                             }
@@ -62,60 +75,7 @@ $sidebar = new Sidebar("existingCounselors");
                     }
 
                     ?>
-
-
-                    <!-- <div class="counselorCard">
-                            <h4>Student Counselor</h4>
-                            <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
-                            </div>
-                            <h5>Dr. Lasanthi De Silva</h5>
-                            <h5>lnc@ucsc.cmb.ac.lk</h5>
-                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
-                            <div class="edit-delete-containor">
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                </div>
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="counselorCard">
-                            <h4>Student Counselor</h4>
-                            <div class="counselor-image-containor">
-                                <img src="<?= BASE_URL ?>/public/assets/img/counselors/counselorImage.jpg" alt="" id = "counselorPhoto">
-                            </div>
-                            <h5>Dr. Kasun Karunanayake</h5>
-                            <h5>ktk@ucsc.cmb.ac.lk</h5>
-                            <p>Senior Lecturer in Computer Science; Researcher in Extended Reality, Human Computer Interaction, User Experience Design, Haptics, Virtual Taste & Smell, and Magnetic User Interfaces</p>
-                            <div class="edit-delete-containor">
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/edit.png" alt="">
-                                </div>
-                                <div class="iconContainor">
-                                    <img src="<?= BASE_URL ?>/public/assets/img/icons/rejected.png" alt="">
-                                </div>
-                            </div>
-                        </div> -->
                 </div>
-
-                <?php if ($data["role"] == 1) { ?>
-                    <div class="buttonDivToAddCounselors">
-                        <div class="gotoAddCounselor">
-                            <div>
-                                <a href="<?= BASE_URL ?>/addCounselors/index/0" class="mwb-form-submit-btn">Add Counselor</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-                <!-- <div class="buttonDivToAddCounselors">
-                    <div class="gotoAddCounselor">
-                        <div>
-                            <a href="<?= BASE_URL ?>/addCounselors/index/0" class="mwb-form-submit-btn">Add Counselor</a>
-                        </div>
-                    </div>
-                </div> -->
 
             </div>
         </div>
@@ -126,8 +86,13 @@ $sidebar = new Sidebar("existingCounselors");
     </div>
 
     <style>
-        .main-grid {}
-
+        .counselorsAddButtonRow{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 75%;
+            padding-top: 5px;
+        }
         .delete-item {
             cursor: pointer;
         }
@@ -192,6 +157,14 @@ $sidebar = new Sidebar("existingCounselors");
             padding-right: 20px;
         }
 
+        .edit-delete-containor a,
+        .delete-item {
+            text-decoration: none;
+            color: inherit;
+            margin-left: 5px;
+            font-size: 20px;
+        }
+
         .iconContainor img {
             width: 30px;
             height: 30px;
@@ -205,8 +178,9 @@ $sidebar = new Sidebar("existingCounselors");
             width: 28%;
             min-width: 150px;
             height: 100%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
             margin: 25px;
+            border-radius: 10px;
         }
 
         .counselor-image-containor {
@@ -227,7 +201,7 @@ $sidebar = new Sidebar("existingCounselors");
 
         .counselorCard h5 {
             text-align: center;
-            
+
         }
 
         .counselorCard p {
@@ -246,18 +220,19 @@ $sidebar = new Sidebar("existingCounselors");
             flex-wrap: wrap;
         }
 
-        .detailsButtonArea{
+        .detailsButtonArea {
             width: 100%;
             /* border: 1px solid red; */
-            justify-content: center ;
-            align-items: center ;
-            display:flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
         }
 
-        .detailsButtonArea a{
-            text-decoration : none;
+        .detailsButtonArea a {
+            text-decoration: none;
         }
-/* 
+
+        /* 
         .detailsButton{
             width: 50%;
             border: 1px solid red;
@@ -278,6 +253,7 @@ $sidebar = new Sidebar("existingCounselors");
         .divExistingCounselors {
             width: 100%;
             height: 100%;
+            padding: 31px;
         }
 
         .main-grid .left {

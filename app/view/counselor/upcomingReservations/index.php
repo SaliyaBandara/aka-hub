@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("reservationRequests");
+$sidebar = new Sidebar("upcomingReservations");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>
@@ -11,31 +11,56 @@ $calendar = new Calendar();
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
-            <!-- <div class="threeCardDiv">
-                <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        6 Received Requests in this Week
-                    </div>
-                </div>
-                <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
-                </div>
-                <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        2 Accepted Reservations in this Week
-                    </div>
-                </div>
-            </div> -->
-
+           
             <!-- ===VIRAJITH=== -->
+            <div class="main-container">
+                <?php
+                if (empty($data["reservation_requests"])) {
+                    echo "NO RESERVATIONS AVAILABLE";
+                } else {
+                        //sorting function to sort reservation requests by date and time
+                        function sortByDateTime($a, $b) {
+                            // Compare reservation dates
+                            $dateComparison = strcmp($a["date"], $b["date"]);
+                            if ($dateComparison != 0) {
+                                return $dateComparison;
+                            }
+                            
+                            // If reservation dates are equal, compare start times
+                            return strcmp($a["start_time"], $b["start_time"]);
+                        }
+        
+                        // Sort the reservation requests array using the custom sorting function
+                        usort($data["reservation_requests"], 'sortByDateTime');
+                        
+                        foreach ($data["reservation_requests"] as $reservation_requests) {
+                        $img_src = USER_IMG_PATH . $reservation_requests["cover_img"];
+                ?>
+                    
+                    <div class="card-content">
+                        <div class="card">
+                            <div class="image-content">
+                                <span class="overlay"></span>
 
-            <div class="card-container">
-                <div class="card">Card 1</div>
-                <div class="card">Card 2</div>
-                <div class="card">Card 3</div>
+                                <div class="card-image">
+                                    <img src="<?= $img_src ?>" alt="" class="card-img">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h2 class="name"><?= $reservation_requests["name"] ?></h2>
+                                <label class="description">Date: <?= date("Y/m/d", strtotime($reservation_requests["date"])) ?></label>
+                                <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["start_time"])) ?></label>
+                                <button class="button button-completed" data-id="<?= $reservation_requests["id"] ?>">Completed <i class='bx bxs-user-check'></i></button>
+                                <button class="button button-cancel" data-id="<?= $reservation_requests["id"] ?>">Cancel <i class='bx bxs-user-x'></i></button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                <?php }} ?>
             </div>
+            
+
+            
         </div>
     </div>
     <style>
@@ -138,19 +163,6 @@ $calendar = new Calendar();
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
-        .card-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  width: 200px;
-  height: 150px;
-  background-color: #f0f0f0;
-  margin: 10px;
-  padding: 20px;
-  box-sizing: border-box;
-}
         
     </style>
 
@@ -302,8 +314,168 @@ $calendar = new Calendar();
             border-color: #c3e6cb;
         }
     </style>
+    <style>
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            /* align-items: center; */
+        }
+        .card-content{
+            margin: 10px 30px;
+        }
+        .card{
+            width: 290px;
+            border-radius: 25px;
+            background: #eeecec;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .image-content,
+        .card-content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 14px;
+
+        }
+        .image-content{
+            position: relative;
+            row-gap: 5px;
+        }
+        .overlay{
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #4070F4;
+            border-radius: 25px 25px 0 25px;
+        }
+        .card-image{
+            position: relative;
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            background: #FFF;
+            padding: 3px;
+        }
+        .card-image .card-img{
+            height: 100;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #4070F4;
+        }
+        .name{
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        .description{
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+        .button-cancel{
+            border: none;
+            font-size: 16px;
+            color: #FFF;
+            padding: 8px 16px;
+            background-color: #ff2b2b;
+            border-radius: 6px;
+            margin: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0;
+            min-width: 142px;
+            min-height: 40px;
+        }
+        .button-cancel:hover{
+            background-color: #b30b0b;
+        }
+        .button-completed{
+            border: none;
+            font-size: 16px;
+            color: #FFF;
+            padding: 8px 16px;
+            background-color: #4070F4;
+            border-radius: 6px;
+            margin: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0;
+            min-width: 142px;
+            min-height: 40px;
+        }
+        .button-completed:hover{
+            background-color: #265df2;
+        }
+    </style>
 
 </div>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    $(document).on("click", ".button-completed", function(event) {
+        event.preventDefault(); 
+        let id = $(this).attr("data-id");  
+
+        $.ajax({
+            url: `${BASE_URL}/upcomingReservations/completedReservation/${id}`, 
+            type: 'POST',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 200) {
+                    alertUser("success", response['desc'])
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+            
+                } else {
+                    alertUser("warning", response['desc'])
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong")       
+            }
+        });
+    });  
+    $(document).on("click", ".button-cancel", function(event) {
+        event.preventDefault(); 
+        let id = $(this).attr("data-id");
+        
+        // confirm cancellation
+        if (!confirm("Are you sure you want to cancel this Reservation?"))
+                return;
+
+
+        $.ajax({
+            url: `${BASE_URL}/upcomingReservations/cancelledReservation/${id}`, 
+            type: 'POST',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 200) {
+                    alertUser("success", response['desc'])
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+            
+                } else {
+                    alertUser("warning", response['desc'])
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong")       
+            }
+        });
+    });
+</script>

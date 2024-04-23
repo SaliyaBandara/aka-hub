@@ -17,4 +17,20 @@ class deleteModel extends Model
 
         return false;
     }
+    public function deleteOneClubRep($table, $id)
+    {
+        $result = $this->db_handle->insert("DELETE FROM $table WHERE user_id = ?", "i", [$id]);
+        if ($result)
+            return $result;
+
+        return false;
+    }
+
+    public function deleteOneCascade($table, $id)
+    {
+        $result = $this->db_handle->insert("DELETE FROM $table WHERE id = ?", "i", [$id]);
+        if ($result)
+            return $result;
+        return false;
+    }
 }

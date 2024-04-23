@@ -31,76 +31,50 @@ $calendar = new Calendar();
 
             <!-- ===VIRAJITH=== -->
 
-            <div class="wrapper">
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="#divone">View</a>
-                </div>
-                <div class="card" >
-                    <div class="content">
-                        <div class="img"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"></div>
-                        <div class="details">
-                            <span class="name">Virajith Dissanayaka</span>
-                            <p>2nd year Undergraduate</p>
-                        </div>
-                    </div>
-                    <a href="#divone">View</a>
-                </div>
-            </div>
-            <div class="new">
-                <div class="overlay" id="divone">
-                    <div class="wrapper1 popup-form">
-                        <h2>Create Custom  Time  Slot</h2>
-                        <a href="" class="close">&times;</a>
+                
+
+            <?php
+                // Check if there are reservation requests
+            if (empty($data["reservation_requests"])) {
+                echo "<p>No Reservations</p>";
+            } else {
+                foreach ($data["reservation_requests"] as $reservation_request) {
+                    $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
+            ?>
+                <div class="wrapper">
+                    <div class="card" >
                         <div class="content">
-                            <div class="container">
-                                <form class="form-1">
-                                    <label>Start Time</label>
-                                    <input type="time"> 
-                                    <label>End Time</label>
-                                    <input type="time"><br /><br/>  
-                                    <input type="submit" value="Create">
-                                </form>
+                            <div class="img"><img src="<?= $img_src ?>"></div>
+                            <div class="details">
+                                <span class="name"><?= $reservation_request["name"] ?></span>
+                                <?php
+                                // Assuming $reservation_request["year"] contains the year value (e.g., 1, 2, 3, ...)
+                                $year = $reservation_request["year"];
+
+                                // Define an array of suffixes
+                                $suffixes = array("st", "nd", "rd");
+                                // Determine the suffix based on the year value
+                                if ($year >= 1 && $year <= 3) {
+                                    $suffix = $suffixes[$year - 1];
+                                } else {
+                                    $suffix = "th";
+                                }
+
+                                // Output the formatted string
+                                echo "<p>{$year}{$suffix} year Undergraduate</p>";
+                                ?>
                             </div>
                         </div>
+                        <div id="popup-button">
+                            <a href="#" class="view-button" data-reservation-id="<?= $reservation_request['id'] ?>">View <i class='bx bx-task'></i></a>
+                        </div>
+                        <!-- <a href="#divone" class="view-button">View</a> -->
                     </div>
-                </div>
+                </div> 
+            <?php }} ?>       
+            </div>
+            <div class="new">
+                <div class="overlay" id="divone"></div>
             </div>
 
         </div>
@@ -300,18 +274,15 @@ $calendar = new Calendar();
         .approveDivContainor h3 {
             text-align: center;
         }
-
-        .main-grid {}
-
         .main-grid .left {
             width: 100%;
             height: 1150px;
         }
 
-        /* .main-grid .right{
+        .main-grid .right{
             flex-grow: 1;
             height: 1000px;
-        } */
+        }
     </style>
 
     <style>
@@ -421,114 +392,62 @@ $calendar = new Calendar();
             color: #fff;
             background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
         }
+        .card a:hover{
+            /* background: linear-gradient(to bottom, #86b7e7 0%, #bea2e7 100%); */
+            background: #2684FF;
+        }
 
     </style>
     <style>
-    .overlay{
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, 0.8);
-        transition: opacity 500ms;
-        visibility: hidden;
-        opacity: 0;
-    }
-    .overlay:target{
-        visibility: visible;
-        opacity: 1;
-    }
-    .wrapper1{
-        margin: 70px auto;
-        padding: 20px;
-        background: #e7e7e7;
-        border-radius: 5px;
-        width: 30%;
-        position: relative;
-        transition: all 5s ease-in-out;
-        margin-top: 300px;
-    }
-    .wrapper1 h2{
-        margin-top: 0;
-        color: #333;
-    }
-    .wrapper1 .close{
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        transition: all 200ms;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-    }
-    .wrapper1 .content{
-        max-height: 30%;
-        overflow: auto;
-    }
-
-    /* form design */
-
-    .container{
-        border-radius: 10px;
-        background-color: #e7e7e7;
-        padding: 20px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    form label{
-        text-transform: uppercase;
-        font-weight: 500;
-        letter-spacing: 3px;
-    }
-    .container input[type="text"]{
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        margin-top: 6px;
-        margin-bottom: 16px;
-        resize: vertical;
-    }
-    .container input[type="submit"]{
-        background-color: #2684FF;
-        color: #fff;
-        padding: 15px 50px;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        font-size: 15px;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-    }
-    .popup-form{
-        width: 40%;
-        padding: 8px;
-        border-radius: 8px;
-        border-style: groove;
-        background-color: #fff; 
-    }
-    .form1 {
-        align-items: center;
-    }
-
-    .form-1 {
-        text-align: center;
-    }
-
-    .form-1 input[type="time"],
-    .form-1 input[type="submit"] {
-        margin: 0 auto; /* Center horizontally */
-    }
-
-    .wrapper1 h2{
-        text-align: center;
-    }
+        .overlay{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 9999;
+        }
+        .overlay:target{
+            visibility: visible;
+            opacity: 1;
+        }
 </style>
 
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    // JavaScript code to handle AJAX request
+    document.addEventListener('DOMContentLoaded', function() {
+        var viewButtons = document.querySelectorAll('.view-button');
+
+        viewButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var reservationId = button.getAttribute('data-reservation-id');
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', BASE_URL + '/reservationRequests/view/' + reservationId, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var response = xhr.responseText;
+                        document.getElementById('divone').innerHTML = response;
+                        // set opacity to default
+                        document.getElementById('divone').style.opacity = 1;
+                        // set visibility to visible
+                        document.getElementById('divone').style.visibility = 'visible';
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });
+</script>
 </div>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
