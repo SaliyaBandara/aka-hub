@@ -428,6 +428,7 @@ class readModel extends Model
         return false;
     }
 
+
     public function getOneAdmin($id)
     {
         $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
@@ -1003,7 +1004,7 @@ class readModel extends Model
             "template" => $template
         ];
     }
-
+    
     public function getEmptyCounselor()
     {
         $empty = [
