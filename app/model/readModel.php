@@ -18,6 +18,19 @@ class readModel extends Model
         return false;
     }
 
+    public function getOneByColumns($table, $columns, $values, $types)
+    {
+        $query = "SELECT * FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
     public function lastInsertedId($table, $key)
     {
 
@@ -768,6 +781,61 @@ class readModel extends Model
         ];
     }
 
+    // CREATE TABLE election_responses (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     user_id INT NOT NULL,
+    //     question_id INT NOT NULL,
+    //     response_option VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id),
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
+    // );
+
+    public function getEmptyElectionResponse()
+    {
+
+        $empty = [
+            "election_id" => "",
+            "user_id" => "",
+            "question_id" => "",
+            "response_option" => ""
+        ];
+
+        $template = [
+            "election_id" => [
+                "label" => "Election",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "question_id" => [
+                "label" => "Question",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "response_option" => [
+                "label" => "Response Option",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     /**
      * User Model
      */
@@ -959,8 +1027,10 @@ class readModel extends Model
         $empty = [
             "user_id" => "",
             "name" => "",
+            "description" => "",
             "start_date" => "",
-            "end_date" => ""
+            "end_date" => "",
+            "type" => "",
         ];
 
         $template = [
@@ -974,6 +1044,11 @@ class readModel extends Model
                 "label" => "Election Name",
                 "type" => "text",
                 "validation" => "required"
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => ""
             ],
             "start_date" => [
                 "label" => "Start Date",
@@ -989,6 +1064,12 @@ class readModel extends Model
                 "label" => "Cover Image",
                 "type" => "array",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "type" => [
+                "label" => "Election Type",
+                "type" => "number",
+                "validation" => "",
                 "skip" => true
             ],
         ];

@@ -14,6 +14,7 @@
 :root {
   --header-height: 68px;
   --primary-color: #ff9b2d;
+  --primary-color-faded: #ff9b2da9;
   --secondary-color: #1264ab;
   --secondary-color-faded: #1264aba9;
   --tertiary-color: #2684ff;
@@ -1374,6 +1375,7 @@ section.default__section.auth__section {
 .main-grid .left {
   /* background-color: yellowgreen; */
   width: 85% !important;
+  width: 75% !important;
   height: auto !important;
   min-height: calc(100vh - var(--header-height) - 5rem);
   padding: 2rem;
@@ -1385,9 +1387,15 @@ section.default__section.auth__section {
 
 .main-grid .right {
   /* background-color: yellowgreen; */
+  width: 25%;
   flex-grow: 1;
   height: auto !important;
   margin-right: 0.75rem;
+}
+
+.main-grid .solo{
+  width: 100% !important;
+  min-height: calc(100vh - var(--header-height) - 5rem);
 }
 
 .onsite_alert {
