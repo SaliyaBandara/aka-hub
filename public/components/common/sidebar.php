@@ -38,6 +38,7 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-cog'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
+                    'adminProfileAndSettings'=> ['Admin Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $adminPages);
             }
@@ -46,6 +47,7 @@ class Sidebar
                 $superAdminPages = [
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
+                    'superAdminProfileAndSettings' => ['Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
             }

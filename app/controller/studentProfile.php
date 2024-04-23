@@ -1,5 +1,6 @@
 <?php
-class StudentProfile extends Controller{
+class StudentProfile extends Controller
+{
 
     public function redirect($redirect = "")
     {
@@ -70,16 +71,21 @@ class StudentProfile extends Controller{
             $this->validate_template($values, $data["student_profile_template"]);
             $this->validate_template($values, $data["user_template"]);
 
-            if ($id == 0)
+            if ($id == 0) {
                 $result = $this->model('createModel')->insert_db("student", $values, $data["student_profile_template"]);
-            else
+                if ($result)
+                    die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+                else
+                    die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));
+            } else {
                 $result1 = $this->model('updateModel')->update_one("student", $values, $data["student_profile_template"], "id", $id, "i");
                 $result2 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
-            if ($result1 && $result2)
-                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+                if ($result1 && $result2)
+                    die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
-            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
+                die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));
+            }
         }
 
         $data["id"] = $id;
@@ -99,10 +105,11 @@ class StudentProfile extends Controller{
         $this->view->render('student/studentProfile/add_edit', $data);
     }
 
-    public function add_edit_settings($id){
+    public function add_edit_settings($id)
+    {
 
         $this->requireLogin();
-        
+
         $data = [
             'title' => 'Edit Profile',
             'message' => 'Welcome to Aka Hub!'
@@ -129,7 +136,7 @@ class StudentProfile extends Controller{
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
-            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing profile")));
+            die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));
         }
 
         $data["id"] = $id;
