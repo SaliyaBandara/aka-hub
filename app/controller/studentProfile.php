@@ -18,7 +18,6 @@ class StudentProfile extends Controller
         ];
 
         $id = $_SESSION["user_id"];
-        // print_r($id);
         $data["student_details"] = $this->model('readModel')->getUserDetails($id);
         $data["settings"] = $this->model('readModel')->getUserSettings($id);
 

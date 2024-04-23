@@ -13,6 +13,7 @@ $candidateCard = new CandidateCard();
 
     if ($data["previewRepresentative"]) {
         $userDetails = $data["previewRepresentative"][0];
+        $img_src = USER_IMG_PATH . $userDetails["profile_img"];
     }
     ?>
     <div class="main-grid flex">
@@ -21,11 +22,11 @@ $candidateCard = new CandidateCard();
             <div class="profileArea">
                 <div class="profileImageArea">
                     <div class="profileImageContainer">
-                        <img class="profileImage" src="<?= BASE_URL ?>/public/assets/img/common/candidateImage.jpg" alt="">
+                        <img class="profileImage" src=<?= $img_src ?> alt="No Image Uploaded">
                     </div>
                     <div class="editImageButton">
                         <a href="<?= BASE_URL ?>/approveRepresentatives/">
-                            <input type="button" class="profileButton" value="Back To Table" />
+                            <input type="button" class="btn btn-primary" value="Back To Table" />
                         </a>
                     </div>
                 </div>
@@ -39,8 +40,18 @@ $candidateCard = new CandidateCard();
                         <div class="profileDetailCell"><?= $userDetails['email'] ?? '' ?></div>
                     </div>
                     <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Alternative Email : </div>
-                        <div class="profileDetailCell"><?= $userDetails['alt_email'] ?? '' ?></div>
+                        <div class="profileDetailHeader">Alt Email : </div>
+                        <?php
+                        if ($userDetails["alt_email"] == NULL) {
+                        ?>
+                            <div class="profileDetailCell"> Not Specified </div>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="profileDetailCell"><?= $userDetails['alt_email'] ?></div>
+                        <?php
+                        }
+                        ?>
                     </div>
                     <div class="profileDetailRow">
                         <div class="profileDetailHeader">Faculty : </div>
@@ -55,7 +66,7 @@ $candidateCard = new CandidateCard();
                         <div class="profileDetailCell"><?= $userDetails['year'] ?? '' ?></div>
                     </div>
                     <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Registration Number : </div>
+                        <div class="profileDetailHeader">Reg Number : </div>
                         <div class="profileDetailCell"><?= $userDetails['student_id'] ?? '' ?></div>
                     </div>
                     <div class="profileDetailRow">
@@ -68,14 +79,13 @@ $candidateCard = new CandidateCard();
     </div>
 
     <style>
-        .main-grid {}
-
         .main-grid .left {
             width: 100%;
             height: 100vh;
             margin: 20px;
         }
-        .editImageButton a{
+
+        .editImageButton a {
             text-decoration: none;
         }
 

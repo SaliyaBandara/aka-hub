@@ -137,7 +137,7 @@ class readModel extends Model
 
         return false;
     }
-
+  
     public function getAvailableReservationRequestsByCounselorId($id)
     {
         $result = $this->db_handle->runQuery("
@@ -400,7 +400,17 @@ class readModel extends Model
         } else if ($userdata[0]['role'] == 3) {
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
         } else {
-            $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+            if ($userdata[0]['club_rep'] == 1) {
+                $result = $this->db_handle->runQuery("SELECT u.*, s.*, cr.*, c.id, c.name AS club_name
+                FROM user u
+                JOIN student s ON u.id = s.id
+                JOIN club_representative cr ON u.id = cr.user_id
+                JOIN clubs c ON cr.club_id = c.id
+                WHERE u.id = ?
+                ", "i", [$id]);
+            } else {
+                $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+            }
         }
 
         if (count($result) > 0)
@@ -542,9 +552,12 @@ class readModel extends Model
 
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("
-        SELECT p.post_id as post_id,u.profile_img as profile_img, u.name as name, p.comment as comment, p.user_id as user_id, ps.posted_by as posted_by, p.id as id FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? "
-        , "i", [$post_id]);
+        $result = $this->db_handle->runQuery(
+            "
+        SELECT p.post_id as post_id,u.profile_img as profile_img, u.name as name, p.comment as comment, p.user_id as user_id, ps.posted_by as posted_by, p.id as id FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? ",
+            "i",
+            [$post_id]
+        );
         if (count($result) > 0)
             return $result;
 
@@ -1046,7 +1059,7 @@ class readModel extends Model
             "template" => $template
         ];
     }
-    
+
     public function getEmptyCounselor()
     {
         $empty = [
