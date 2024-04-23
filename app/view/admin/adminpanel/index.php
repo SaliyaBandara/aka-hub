@@ -12,7 +12,6 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <?php if ($data["count_total_users"] !== null) : ?>
@@ -71,7 +70,7 @@ $calendar = new Calendar();
         .main-grid .left {
             width: 75%;
             height: 150vh;
-
+            padding-bottom: 50px;
         }
 
         .main-grid .right {
