@@ -471,7 +471,9 @@ class readModel extends Model
 
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? ", "i", [$post_id]);
+        $result = $this->db_handle->runQuery("
+        SELECT p.post_id as post_id,u.profile_img as profile_img, u.name as name, p.comment as comment, p.user_id as user_id, ps.posted_by as posted_by, p.id as id FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? "
+        , "i", [$post_id]);
         if (count($result) > 0)
             return $result;
 
