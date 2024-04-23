@@ -46,7 +46,7 @@ $sidebar = new Sidebar("counselorFeed");
                                                 </div>
                                             </div>
                                             <div class = detailsRight>
-                                                <?php if ($_SESSION["user_role"] == 5) { ?>
+                                                <?php if ($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1) { ?>
                                                     <div class="editDeleteButton">
                                                         <a href="<?= BASE_URL ?>/counselorFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
                                                             <i class='bx bx-edit'></i>
@@ -138,7 +138,7 @@ $sidebar = new Sidebar("counselorFeed");
                                                         </div>
                                                         
                                                         <?php 
-                                                            if($comment["user_id"] == $_SESSION["user_id"] || $comment["posted_by"] == $_SESSION["user_id"]){
+                                                            if($comment["user_id"] == $_SESSION["user_id"] || $comment["posted_by"] == $_SESSION["user_id"] || $_SESSION["user_role"] == 1){
                                                                 // echo '<div class = "text-medium font-1 mx-1 my-1"> <i class="bx bx-edit"></i> </div>';
                                                                 echo '<div class = "text-medium mx-0-5 text-danger flex justify-center align-center deleteComment" style = "font-size: 18px; cursor: pointer;" data-id = "'.$comment['id'].'"> <i class="bx bx-trash"></i> </div>';
                                                             }

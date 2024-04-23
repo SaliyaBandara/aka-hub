@@ -50,7 +50,7 @@ $sidebar = new Sidebar("eventFeed");
                                                 </div>
                                             </div>
                                             <div class = detailsRight>
-                                                <?php if ($_SESSION["club_rep"] && ($posts['posted_by'] == $_SESSION["user_id"])) { ?>
+                                                <?php if (($_SESSION["club_rep"] && ($posts['posted_by'] == $_SESSION["user_id"])) || $_SESSION["user_role"] == 1) { ?>
                                                     <div class="editDeleteButton">
                                                         <a href="<?= BASE_URL ?>/eventFeed/add_edit/<?= $posts['id'] ?>" class="repDecline">
                                                             <i class='bx bx-edit'></i>
@@ -66,6 +66,8 @@ $sidebar = new Sidebar("eventFeed");
                                         <img class="postImage" src="<?= $img_src ?>" alt="">
                                         <div class = "postTitle font-bold mt-1 mx-1" style = "text-align:right !important; ">
                                             <?php 
+                                                $club = " ";
+
                                                 foreach ($data["clubReps"] as $clubRep) {
                                                     if ($clubRep['user_id'] == $posts['posted_by']) {
                                                         // Output the comment content directly
@@ -151,7 +153,7 @@ $sidebar = new Sidebar("eventFeed");
                                                         </div>
                                                         
                                                         <?php 
-                                                            if($comment["user_id"] == $_SESSION["user_id"] || $comment["posted_by"] == $_SESSION["user_id"]){
+                                                            if($comment["user_id"] == $_SESSION["user_id"] || $comment["posted_by"] == $_SESSION["user_id"] || $_SESSION["user_role"] == 1){
                                                                 // echo '<div class = "text-medium font-1 mx-1 my-1"> <i class="bx bx-edit"></i> </div>';
                                                                 echo '<div class = "text-medium mx-0-5 text-danger flex justify-center align-center deleteComment" style = "font-size: 18px; cursor: pointer;" data-id = "'.$comment['id'].'"> <i class="bx bx-trash"></i> </div>';
                                                             }

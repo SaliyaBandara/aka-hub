@@ -54,7 +54,7 @@ class CounselorFeed extends Controller
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1)) )
             $this->redirect();
 
         $data = [
@@ -105,7 +105,7 @@ class CounselorFeed extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5)
+        if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1)) )
             $this->redirect();
 
         if ($id == 0)

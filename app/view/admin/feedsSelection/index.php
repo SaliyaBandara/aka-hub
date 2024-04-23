@@ -12,7 +12,7 @@ $sidebar = new Sidebar("feedsSelection");
         <div class="left">
             <div class="divTileRow">
                 <div class="divTile">
-                    <a href="<?= BASE_URL ?>/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
+                    <a href="<?= BASE_URL ?>/eventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
                 </div>
                 <div class="divTile">
                     <a href="<?= BASE_URL ?>/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
