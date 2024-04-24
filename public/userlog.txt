@@ -1,0 +1,2 @@
+User: 2021cs002@stu.ucsc.cmb.ac.lk 	 IP: 127.0.0.1 	 Time: 04/24/24 02:38PM 	 Action: User registered with email: 2021cs002@stu.ucsc.cmb.ac.lk	 URL: http://127.0.0.1/aka-hub/auth/registerurl=auth/register
+User: 2021cs175@stu.ucsc.cmb.ac.lk 	 IP: 127.0.0.1 	 Time: 04/24/24 02:53PM 	 Action: User logged in as Admin with email: 2021cs175@stu.ucsc.cmb.ac.lk	 URL: http://127.0.0.1/aka-hub/auth/loginurl=auth/login
