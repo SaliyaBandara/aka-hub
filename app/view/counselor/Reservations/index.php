@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("upcomingReservations");
+$sidebar = new Sidebar("counselorReservations");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>
@@ -321,8 +321,11 @@ $calendar = new Calendar();
     <style>
         .main-container {
             min-height: 100vh;
-            display: flex;
-            flex-wrap: wrap;
+            /* display: flex;
+            flex-wrap: wrap; */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+            grid-gap: 20px; /* Gap between cards */
             /* align-items: center; */
         }
         .card-content{
@@ -428,7 +431,7 @@ $calendar = new Calendar();
         let id = $(this).attr("data-id");  
 
         $.ajax({
-            url: `${BASE_URL}/upcomingReservations/completedReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/completedReservation/${id}`, 
             type: 'POST',
             data: {
                 id: id
@@ -460,7 +463,7 @@ $calendar = new Calendar();
 
 
         $.ajax({
-            url: `${BASE_URL}/upcomingReservations/cancelledReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`, 
             type: 'POST',
             data: {
                 id: id

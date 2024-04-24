@@ -1,6 +1,6 @@
 <?php
 
-class ReservationRequests extends Controller
+class counselorReservationRequests extends Controller
 {
 
     public function index()
@@ -16,7 +16,7 @@ class ReservationRequests extends Controller
 
         $user_id = $_SESSION["user_id"];
         $data["reservation_requests"] = $this->model('readModel')->getAvailableReservationRequestsByCounselorId($user_id);
-        $this->view->render('counselor/reservationrequests/index', $data);
+        $this->view->render('counselor/reservationRequests/index', $data);
     }
 
     public function view($id=0)
@@ -30,14 +30,14 @@ class ReservationRequests extends Controller
         $data["reservationRequest_template"] = $data["reservationRequest_data"]["template"];
 
         $counselor_id = $_SESSION["user_id"];
-
+     
         if ($id != 0) {
             $data["reservationRequest"] = $this->model('readModel')->getOneReservationRequest($counselor_id, $id);
             if (!$data["reservationRequest"])
                 $this->redirect();
         }
 
-        $this->view->render('counselor/reservationrequests/popup', $data); 
+        $this->view->render('counselor/reservationRequests/popup', $data); 
     }
 
     public function acceptReservation($id=0)

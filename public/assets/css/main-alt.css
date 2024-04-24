@@ -1364,8 +1364,8 @@ section.default__section.auth__section {
 
 .main-grid .left {
   /* background-color: yellowgreen; */
-  width: 85% !important;
-  width: 75% !important;
+  /* width: 85% !important; */
+  width: 50% !important;
   height: auto !important;
   min-height: calc(100vh - var(--header-height) - 5rem);
   padding: 2rem;

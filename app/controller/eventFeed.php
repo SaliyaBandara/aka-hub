@@ -294,6 +294,7 @@ class eventFeed extends Controller
         $values['comment'] = $comment;
 
         // print_r($comment);
+        // die();
 
         $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
 

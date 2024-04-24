@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("reservationRequests");
+$sidebar = new Sidebar("counselorReservationRequests");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>
@@ -439,7 +439,7 @@ $calendar = new Calendar();
                 event.preventDefault();
                 var reservationId = button.getAttribute('data-reservation-id');
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', BASE_URL + '/reservationRequests/view/' + reservationId, true);
+                xhr.open('GET', BASE_URL + '/counselorReservationRequests/view/' + reservationId, true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var response = xhr.responseText;
@@ -461,7 +461,7 @@ $calendar = new Calendar();
         console.log(id);
 
         $.ajax({
-            url: `${BASE_URL}/reservationRequests/acceptReservation/${id}`,
+            url: `${BASE_URL}/counselorReservationRequests/acceptReservation/${id}`,
             type: 'POST',
             data: {
                 id: id
@@ -489,8 +489,11 @@ $calendar = new Calendar();
         let id = $(this).attr("data-id");
         console.log(id);
 
+        if (!confirm("Are you sure you want to Decline this Request?"))
+                return;
+
         $.ajax({
-            url: `${BASE_URL}/reservationRequests/declineReservation/${id}`,
+            url: `${BASE_URL}/counselorReservationRequests/declineReservation/${id}`,
             type: 'POST',
             data: {
                 id: id
@@ -514,7 +517,3 @@ $calendar = new Calendar();
     });
 </script>
 </div>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
