@@ -130,6 +130,15 @@ class readModel extends Model
         return false;
     }
 
+    public function checkExistingReservations($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE student_id = ? AND status = ? OR status = ?", "iii", [$id, 0, 1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getNotBookedTimeSlots()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE added = ? AND booked = ?", "ii", [1, 0]);

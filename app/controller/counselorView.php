@@ -5,8 +5,8 @@ class CounselorView extends Controller
     public function index($id = 0)
     {
         $this->requireLogin();
-        // if ($_SESSION["user_role"] != 1)
-        //     $this->redirect();
+        if ($_SESSION["user_role"] != 0)
+            $this->redirect();
 
         $data = [
             'title' => 'Counselor Details',
@@ -14,8 +14,6 @@ class CounselorView extends Controller
         ];
 
 
-        // if (!$data["counselor"])
-        //     $this->redirect();
         $data["counselor"] = $this->model('readModel')->getOneCounselor($id);
         $data["posts"] = $this->model('readModel')->getCounselorPosts(1, $id);
         $this->view->render('student/counselor/view', $data);
@@ -25,11 +23,13 @@ class CounselorView extends Controller
 
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 0)
+            $this->redirect();
 
         $data = [
             'title' => 'Counselor Details',
             'message' => 'Welcome to Aka Hub!'
-        ];
+        ];    
 
         $data["reservation_data"] = $this->model('readModel')->getEmptyReservation();
         $data["reservation"] = $data["reservation_data"]["empty"];
@@ -89,4 +89,31 @@ class CounselorView extends Controller
 
         $this->view->render('student/counselor/bookReservation', $data);
     }
+
+    public function checkExistingReservations()
+    {
+        $this->requireLogin();
+
+        $data = [
+            'title' => 'Counselor Details',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $user_id = $_SESSION["user_id"]; 
+        
+        // print_r($user_id);
+        // die;
+    
+        $result = $this->model('readModel')->checkExistingReservations($user_id);
+
+        // print_r($data["reservation"]);
+        // die;
+
+        if ($result) {
+            die(json_encode(["status" => 200, "desc" => "There are existing reservations. Cannot make a new reservation."]));
+        } else {
+            die(json_encode(["status" => 400, "desc" => "There are no existing reservations."]));
+        }
+    }
+
 }
