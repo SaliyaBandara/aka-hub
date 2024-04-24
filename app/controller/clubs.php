@@ -11,17 +11,17 @@ class Clubs extends Controller
     public function index()
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1)
+        if ($_SESSION["user_role"] != 1){
+            $action = "User tried to add clubs without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
+        }
         $data = [
             'title' => 'Clubs and Societies',
             'message' => 'Welcome to Aka Hub!'
         ];
-
-        // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
         $data["clubs"] = $this->model('readModel')->getAllClubs();
-        // print_r($data["clubs"]);
 
         $this->view->render('admin/clubs/index', $data);
     }
@@ -29,9 +29,12 @@ class Clubs extends Controller
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1)
+        if ($_SESSION["user_role"] != 1){
+            $action = "User tried to add clubs without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
+        }
         $data = [
             'title' => ($id == 0) ? 'Create Club' : 'Edit Club',
             'message' => 'Welcome to Aka Hub!'
@@ -46,11 +49,17 @@ class Clubs extends Controller
 
             $this->validate_template($values, $data["club_template"]);
 
-            if ($id == 0)
+            if ($id == 0){
+                $action  = "Club created by admin";
+                $status = "201";
+                $this->model("createModel")->createLogEntry($action, $status);
                 $result = $this->model('createModel')->insert_db("clubs", $values, $data["club_template"]);
-            else
+             } else{
+                $action  = "Club updated by admin";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
                 $result = $this->model('updateModel')->update_one("clubs", $values, $data["club_template"], "id", $id, "i");
-
+             }
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
@@ -76,27 +85,35 @@ class Clubs extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1)
+        if ($_SESSION["user_role"] != 1){
+            $action = "User tried to delete clubs without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
-        if ($id == 0)
+        }
+        if ($id == 0){
+            $action = "User tried to delete clubs without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "400", "desc" => "Invalid club id")));
-
+        }
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
         $result = $this->model('deleteModel')->deleteOne("clubs", $id);
 
-        if ($result)
+        if ($result){
+            $action = "Club deleted by admin";
+            $status = "200";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }else{
         die(json_encode(array("status" => "400", "desc" => "Error while deleting post")));
+        }
     }
 
     public function like($id = 0)
     {
 
         $this->requireLogin();
-        // if ($_SESSION["user_role"] != 5)
-        //     $this->redirect();
         $data["likes_template"] = $this->model('readModel')->getEmptyPostLikes();
         $data["likes"] = $data["likes_template"]["empty"];
         $data["likes_template"] = $data["likes_template"]["template"];

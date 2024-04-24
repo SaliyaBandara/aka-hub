@@ -179,8 +179,13 @@ class createModel extends Model
             return true;
     }
 
-    public function createLogEntry($action)
+    public function createLogEntry($action , $status)
     {
+        // 200 => "Success",
+        // 201 => "Created",
+        // 401 => "Unauthorized", 
+
+
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
@@ -191,7 +196,7 @@ class createModel extends Model
         $time = date("m/d/y h:iA", time());
         $contents = file_get_contents("userlog.txt");
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
-        $contents .= "User: " . $email . " \t IP: $ip \t Time: $time \t Action: $action\t URL: $url\n";
+        $contents .= "User: $email\t IP: $ip\t Time: $time\t Action: $action\t URL: $url\t Status: $status\n";
         file_put_contents("userlog.txt", $contents);
     }
 }
