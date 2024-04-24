@@ -1,0 +1,5 @@
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: 127.0.0.1	 Time: 04/24/24 08:18PM	 Action: User logged in as Admin with email	 URL: http://127.0.0.1/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: 127.0.0.1	 Time: 04/24/24 08:20PM	 Action: Unauthorized user tried to access Admin Account Creation	 URL: http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	 Status: 401
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: 127.0.0.1	 Time: 04/24/24 08:20PM	 Action: Unauthorized user tried to access Admin Account Details	 URL: http://127.0.0.1/aka-hub/adminAccounturl=adminAccount	 Status: 401
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: 127.0.0.1	 Time: 04/24/24 08:20PM	 Action: User logged in as Admin with email	 URL: http://127.0.0.1/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: 127.0.0.1	 Time: 04/24/24 08:21PM	 Action: User viewed Admin Profile and Settings	 URL: http://127.0.0.1/aka-hub/adminProfileAndSettingsurl=adminProfileAndSettings	 Status: 200

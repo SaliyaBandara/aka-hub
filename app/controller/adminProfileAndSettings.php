@@ -4,6 +4,13 @@ class AdminProfileAndSettings extends Controller
     public function index()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            //log Entry
+            $action = "Unauthorized user tried to access Admin Profile and Settings";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
 
         $data = [
             'title' => 'Admin Profile And Settings',
