@@ -35,9 +35,11 @@ class counselorManageTimeSlots extends Controller
             // die;
 
             $today = new DateTime(); 
-            $todayDate = $today->format('Y-m-d');
+            // $todayDate = $today->format('Y-m-d');
+            $today = $today->format('Y-m-d H:i:s');
+            $date_time = $values['date'] . " " . $values['start_time'];
 
-            if ($values['date'] < $todayDate) {
+            if ($date_time < $today) {
                 die(json_encode(array("status" => "400", "desc" => "Date must be today or later")));
             }
 

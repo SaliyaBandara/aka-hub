@@ -74,7 +74,7 @@ $calendar = new Calendar();
                             <a href="" class="close">&times;</a>
                             <div class="content">
                                 <div class="container">
-                                    <form class="form" action="" method="post" name="form1" onsubmit="return validateForm()">
+                                    <form class="form" action="" method="post" name="form1" >
 
                                         <?php
                                             foreach ($data["timeSlot_template"] as $key => $value) {

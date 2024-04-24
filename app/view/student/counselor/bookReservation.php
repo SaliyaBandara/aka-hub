@@ -226,37 +226,96 @@ $sidebar = new Sidebar("Settings");
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
 <script>
+    // $(document).ready(function() {
+    //     $(".button-bookNow").click(function(e) {
+    //         e.preventDefault();
+    //         var timeslotId = $(this).data("timeslot-id");
+    //         // console.log(timeslotId);          
+
+    //         if (!confirm("Are you sure you want to make this Reservation?"))
+    //             return;
+
+    //         $.ajax({
+    //             url:`<?= BASE_URL ?>/counselorView/bookReservation/${timeslotId}`,
+    //             type: 'post',
+    //             dataType: 'json',
+    //             data: {
+    //                 timeslot_id: timeslotId
+    //             },
+    //             success: function(response) {
+    //                 if (response['status'] == 200) {
+    //                     alertUser("success", response['desc']);
+    //                     setTimeout(function() {
+    //                         location.reload();
+    //                     }, 500);
+
+    //                 } else {
+    //                     alertUser("warning", response['desc']);
+    //                 }
+    //             },
+    //             error: function(ajaxContext) {
+    //                 alertUser("danger", "Something Went Wrong");
+    //             }
+    //         });
+    //     });
+    // });
+
     $(document).ready(function() {
         $(".button-bookNow").click(function(e) {
             e.preventDefault();
             var timeslotId = $(this).data("timeslot-id");
-            // console.log(timeslotId);          
+            // console.log(timeslotId);
 
             if (!confirm("Are you sure you want to make this Reservation?"))
                 return;
 
-            $.ajax({
-                url:`<?= BASE_URL ?>/counselorView/bookReservation/${timeslotId}`,
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    timeslot_id: timeslotId
-                },
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", response['desc']);
-                        setTimeout(function() {
-                            location.reload();
-                        }, 500);
 
+            // Check if there are any reservations
+            $.ajax({
+                url: `<?= BASE_URL ?>/counselorView/checkExistingReservations`, // Replace with the actual URL to fetch reservations data
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    // if (response.status == 200 && response.reservations.length === 0) {
+                    if (response.status == 200) {    
+                        // No reservations found, proceed with making a new reservation
+                        alertUser("warning", response.desc);
+                        // makeReservation(timeslotId);
                     } else {
-                        alertUser("warning", response['desc']);
+                        // alertUser("warning", "There are existing reservations. Cannot make a new reservation.");
+                        // alertUser("warning", response.desc);
+                        makeReservation(timeslotId);
                     }
                 },
                 error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong");
+                    alertUser("danger", "Failed to fetch existing reservations data.");
                 }
             });
         });
     });
+
+    function makeReservation(timeslotId) {
+        $.ajax({
+            url: '<?= BASE_URL ?>/counselorView/bookReservation/' + timeslotId ,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                timeslot_id: timeslotId
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    alertUser("success", response.desc);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 500);
+
+                } else {
+                    alertUser("warning", response.desc);
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong");
+            }
+        });
+    }
 </script>
