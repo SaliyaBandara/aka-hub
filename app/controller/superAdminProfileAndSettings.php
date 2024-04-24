@@ -4,6 +4,11 @@ class SuperAdminProfileAndSettings extends Controller
     public function index()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 3) {
+            $task = "Unauthorized user tried to access SuperAdmin Profile And Settings";
+            $this->model("createModel")->createLogEntry($task, 400);
+            $this->redirect();
+        }
         $data = [
             'title' => 'SuperAdmin Profile And Settings',
             'message' => 'Welcome to Aka Hub!'
@@ -16,8 +21,11 @@ class SuperAdminProfileAndSettings extends Controller
     public function add_edit($id)
     {
         $this->requireLogin();
-        // if ($_SESSION["user_role"] != 0)
-        //     $this->redirect();
+        if($_SESSION["user_id"] != $id){
+            $task = "Unauthorized user tried to edit SuperAdmin Profile And Settings";
+            $this->model("createModel")->createLogEntry($task, 400);
+            $this->redirect();
+        }
 
         $data = [
             'title' => 'Edit Profile',
@@ -36,6 +44,8 @@ class SuperAdminProfileAndSettings extends Controller
             $result = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
             if ($result) {
+                $task = "SuperAdmin edited profile";
+                $this->model("createModel")->createLogEntry($task, 200);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             } else {
                 die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));

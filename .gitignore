@@ -13,6 +13,7 @@ gtihub_private.pub
 # *.php
 /public/assets/user_uploads/img/*
 /public/assets/user_uploads/pdf/*
+/public/userlog.txt
 /hidden
 /vendor
 

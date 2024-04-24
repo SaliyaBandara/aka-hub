@@ -43,9 +43,12 @@ class StudentProfile extends Controller
     public function add_edit($id)
     {
         $this->requireLogin();
-        if ($_SESSION["user_id"] != $id)
+        if ($_SESSION["user_id"] != $id){
+            $action = "Unauthorized user tried to edit Student profile";
+            $state = 400;
+            $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
-
+        }
         $data = [
             'title' => 'Edit Profile',
             'message' => 'Welcome to Aka Hub!'
@@ -72,15 +75,20 @@ class StudentProfile extends Controller
 
             if ($id == 0) {
                 $result = $this->model('createModel')->insert_db("student", $values, $data["student_profile_template"]);
-                if ($result)
+                if ($result){
+                    $task = "Student profile created";
+                    $this->model("createModel")->createLogEntry($task, 201);
+
                     die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-                else
+                }else
                     die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));
             } else {
                 $result1 = $this->model('updateModel')->update_one("student", $values, $data["student_profile_template"], "id", $id, "i");
                 $result2 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
                 if ($result1 && $result2){
+                    $task = "Student profile edited";
+                    $this->model("createModel")->createLogEntry($task, 200);
                     die(json_encode(array("status" => "200", "desc" => "Operation successful")));
                 }else{
                     die(json_encode(array("status" => "400", "desc" => "Error while editing profile")));
@@ -98,10 +106,6 @@ class StudentProfile extends Controller
                 $this->redirect();
         }
 
-        // print params
-        // print_r($id);
-        // print_r($action);
-
         $this->view->render('student/studentProfile/add_edit', $data);
     }
 
@@ -109,9 +113,12 @@ class StudentProfile extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_id"] != $id)
+        if ($_SESSION["user_id"] != $id){
+            $action = "Unauthorized user tried to edit Student settings";
+            $state = 400;
+            $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
-
+        }
         $data = [
             'title' => 'Edit Profile',
             'message' => 'Welcome to Aka Hub!'
@@ -135,9 +142,12 @@ class StudentProfile extends Controller
 
             $result = $this->model('updateModel')->update_one("notification_settings", $values, $data["settings_template"], "id", $id, "i");
 
-            if ($result)
+            if ($result){
+                $task = "Student settings edited";
+                $this->model("createModel")->createLogEntry($task, 200);
+                
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+            }
             die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));
         }
 

@@ -196,7 +196,7 @@ class createModel extends Model
         $time = date("m/d/y h:iA", time());
         $contents = file_get_contents("userlog.txt");
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
-        $contents .= "User: $email\t IP: $ip\t Time: $time\t Action: $action\t URL: $url\t Status: $status\n";
+        $contents .= "User: $email\t IP: $ip\t Time: $time\t Action: $action\t URL: $url\t Status: $status\n\n";
         file_put_contents("userlog.txt", $contents);
     }
 }

@@ -1,9 +1,1 @@
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/24/24 10:09PM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/24/24 11:47PM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/100url=counselorView/bookReservation/100	 Status: 201
-User: virajith@123.com	 IP: ::1	 Time: 04/25/24 12:02AM	 Action: Post created by counselor	 URL: http://localhost/aka-hub/counselorFeed/add_edit/0/url=counselorFeed/add_edit/0/	 Status: 201
-User: virajith@123.com	 IP: ::1	 Time: 04/25/24 12:03AM	 Action: Post liked	 URL: http://localhost/aka-hub/counselorFeed/like/19url=counselorFeed/like/19	 Status: 200
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 12:06AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/101url=counselorView/bookReservation/101	 Status: 201
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 12:36AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/102url=counselorView/bookReservation/102	 Status: 201
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 12:36AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/104url=counselorView/bookReservation/104	 Status: 201
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 12:36AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/103url=counselorView/bookReservation/103	 Status: 201
-User: virajith@123.com	 IP: ::1	 Time: 04/25/24 12:51AM	 Action: Post deleted	 URL: http://localhost/aka-hub/counselorFeed/delete/19url=counselorFeed/delete/19	 Status: 200
+
