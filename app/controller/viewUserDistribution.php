@@ -3,6 +3,12 @@ class ViewUserDistribution extends Controller{
     public function index()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to view User Distribution";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'User Distribution',
             'message' => 'Welcome to Aka Hub!'
@@ -14,6 +20,12 @@ class ViewUserDistribution extends Controller{
     public function previewUser($id)
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to Preview User Details";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'User Distribution',
             'message' => 'Welcome to Aka Hub!'
