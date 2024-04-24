@@ -1,10 +1,16 @@
 <?php
-class AdminAccount extends Controller{
+class AdminAccount extends Controller
+{
     public function index()
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 3)
+        if ($_SESSION["user_role"] != 3) {
+            //log Entry
+            $action = "Unauthorized user tried to access Admin Account Details";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
+        }
 
         $data = [
             'title' => 'Admin Account Details',
@@ -19,16 +25,18 @@ class AdminAccount extends Controller{
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 3)
-            $this->redirect();
+            $action = "Unauthorized user tried to delete Admin Account";
+        $status = "401";
+        $this->model("createModel")->createLogEntry($action, $status);
+        $this->redirect();
 
         if ($id == 0)
             $this->redirect();
         $resultOne = $this->model('deleteModel')->deleteOne("administrator", $id);
         $resultTwo = $this->model('deleteModel')->deleteOne("user", $id);
-        if ($resultOne&&$resultTwo)
+        if ($resultOne && $resultTwo)
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
-
 }

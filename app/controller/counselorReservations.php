@@ -5,6 +5,12 @@ class counselorReservations extends Controller
     public function index()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 5) {
+            $action = "User tried to access counselor reservations without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'upcomingReservations',
             'message' => 'Welcome to Aka Hub!'
@@ -19,8 +25,16 @@ class counselorReservations extends Controller
     public function completedReservation($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if ($_SESSION["user_role"] != 5) {
+            $action = "User tried to access reservation details without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
+        }
+        $data = [
+            'title' => 'Reservation Details',
+            'message' => 'Welcome to Aka Hub!'
+        ];
 
         $data["reservation_data"] = $this->model('readModel')->getEmptyReservation();
         $data["reservation"] = $data["reservation_data"]["empty"];
@@ -71,7 +85,6 @@ class counselorReservations extends Controller
         $data["values"]["status"] = 4;
 
         $result = $this->model('updateModel')->update_one("reservation_requests", $data["values"], $data["reservation_template"], "id", $id, "i");
-
         if ($result) {
             die(json_encode(["status" => 200, "desc" => "Reservation Cancelled."]));
         } else {

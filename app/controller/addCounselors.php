@@ -14,7 +14,8 @@ class AddCounselors extends Controller
         if ($_SESSION["user_role"] != 1)
             //log Entry
             $action = "Unauthorized user tried to access Counselor Account Creation";
-        $this->model("createModel")->createLogEntry($action);
+        $status = "401";
+        $this->model("createModel")->createLogEntry($action, $status);
         $this->redirect();
 
         $data = [
@@ -61,7 +62,8 @@ class AddCounselors extends Controller
                     if ($result) {
                         //log Entry
                         $action = "Counselor Account Created for email : " . $values["email"];
-                        $this->model("createModel")->createLogEntry($action);
+                        $status = "201";
+                        $this->model("createModel")->createLogEntry($action, $status);
                     }
                 }
             } else {
@@ -76,7 +78,8 @@ class AddCounselors extends Controller
                     if ($result) {
                         //log Entry
                         $action = "Counselor Account Edited for email : " . $values["email"];
-                        $this->model("createModel")->createLogEntry($action);
+                        $status = "200";
+                        $this->model("createModel")->createLogEntry($action, $status);
                     }
                 }
             }

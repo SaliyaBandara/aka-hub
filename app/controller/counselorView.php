@@ -70,9 +70,12 @@ class CounselorView extends Controller
             // print_r($isValidated);
             $result = $this->model('createModel')->insert_db("reservation_requests",  $data["reservation"] , $data["reservation_template"]);
 
-            if ($result && $result1)
+            if ($result && $result1){
+                $action  = "Reservation created by student";
+                $status = "201";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+            }
             die(json_encode(array("status" => "400", "desc" => "Error while booking reservation")));
         }
 

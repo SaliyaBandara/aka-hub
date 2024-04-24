@@ -16,12 +16,10 @@ class CounselorFeed extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        // $post_id = 5;
-        if($_SESSION["user_role"] != 5){
+        if ($_SESSION["user_role"] != 5) {
             $data["posts"] = $this->model('readModel')->getAllCounselorPosts(1);
-        }
-        else{
-            $data["posts"] = $this->model('readModel')->getCounselorPosts(1,$_SESSION["user_id"]);
+        } else {
+            $data["posts"] = $this->model('readModel')->getCounselorPosts(1, $_SESSION["user_id"]);
         }
 
         $data["comments"] = [];
@@ -30,16 +28,15 @@ class CounselorFeed extends Controller
         foreach ($data["posts"] as $post) {
 
             $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
-            $liked = $this->model('readModel')->getPostLikes($post['id'],$_SESSION['user_id']);
+            $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
 
-            if(!empty($commentsForPost)){
+            if (!empty($commentsForPost)) {
                 // print_r($commentsForPost);
                 $data['comments'] = array_merge($data['comments'], $commentsForPost);
             }
 
-            if(!empty($liked)){
+            if (!empty($liked)) {
                 $data['liked'] = array_merge($data['liked'], $liked);
-                
             }
         }
 
@@ -54,9 +51,12 @@ class CounselorFeed extends Controller
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1)) )
+        if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1))) {
+            $action = "User tried to add edit post without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
+        }
         $data = [
             'title' => ($id == 0) ? 'Create Post' : 'Edit Post',
             'message' => 'Welcome to Aka Hub!'
@@ -75,15 +75,26 @@ class CounselorFeed extends Controller
 
             $this->validate_template($values, $data["post_template"]);
 
-            if ($id == 0)
+            if ($id == 0) {
                 $result = $this->model('createModel')->insert_db("posts", $values, $data["post_template"]);
-            else
+                if ($result) {
+                    $action  = "Post created by counselor";
+                    $status = "201";
+                    $this->model("createModel")->createLogEntry($action, $status);
+                }
+            } else {
                 $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
-
-            if ($result)
+                if ($result) {
+                    $action  = "Post updated by counselor";
+                    $status = "200";
+                    $this->model("createModel")->createLogEntry($action, $status);
+                }
+            }
+            if ($result) {
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
-            die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
+            } else {
+                die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
+            }
         }
 
         $data["id"] = $id;
@@ -105,18 +116,24 @@ class CounselorFeed extends Controller
     {
 
         $this->requireLogin();
-        if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1)) )
+        if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1))){
+            $action = "User tried to delete post without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
+        }
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
 
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
         $result = $this->model('deleteModel')->deleteOne("posts", $id);
 
-        if ($result)
+        if ($result){
+            $action = "Post deleted";
+            $status = "200";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting post")));
     }
 
@@ -132,16 +149,18 @@ class CounselorFeed extends Controller
         // print_r($data["likes_template"]);
         // if ( isset($_POST['like'])) {
 
-            // $values = $_POST["like"];
-            // print_r($values);
-        
+        // $values = $_POST["like"];
+        // print_r($values);
+
         $values["user_id"] = $_SESSION["user_id"];
         $values["post_id"] = $id;
 
-        $existingLike = $this->model('readModel')->getPostLikes($id,$_SESSION["user_id"]);
-        print_r($existingLike);
+        $existingLike = $this->model('readModel')->getPostLikes($id, $_SESSION["user_id"]);
 
         if ($existingLike) {
+            $action = "User tried to like post multiple times";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "400", "desc" => "You have already liked this post")));
         }
 
@@ -149,15 +168,18 @@ class CounselorFeed extends Controller
 
         $result = $this->model('createModel')->insert_db("post_likes", $values, $data["likes_template"]);
 
-        if ($result)
+        if ($result){
+            $action = "Post liked";
+            $status = "200";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Liked")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
         // }
 
     }
 
-    public function postComment($post_id,$comment)
+    public function postComment($post_id, $comment)
     {
         $this->requireLogin();
 
@@ -175,9 +197,12 @@ class CounselorFeed extends Controller
 
         $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
 
-        if ($result)
+        if ($result){
+            $action = "Comment posted";
+            $status = "201";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Comment Posted")));
-        else {
+        }else {
             die(json_encode(array("status" => "400", "desc" => "Failed to post the comment")));
         }
     }
@@ -196,13 +221,17 @@ class CounselorFeed extends Controller
         $result = $this->model('deleteModel')->deleteOne("post_comments", $id);
         // print_r($result);
 
-        if ($result)
+        if ($result){
+            $action = "Comment deleted";
+            $status = "200";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting the comment")));
     }
 
-    public function postView($id){
+    public function postView($id)
+    {
 
         $this->requireLogin();
 
@@ -215,11 +244,9 @@ class CounselorFeed extends Controller
             die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
 
         $data["postDetails"] = $this->model('readModel')->getOnePost($id);
-        $data["liked"] = $this->model('readModel')->getPostLikes($id,$_SESSION['user_id']);
+        $data["liked"] = $this->model('readModel')->getPostLikes($id, $_SESSION['user_id']);
         // print_r($data["postDetails"]);
 
         $this->view->render('counselor/counselorFeed/postView', $data);
-
     }
-    
 }

@@ -111,9 +111,12 @@ class eventFeed extends Controller
     public function add_edit($id = 0)
     {
         $this->requireLogin();
-        if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) )
+        if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) ){
+            $action = "User tried to edit add event feed without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
+        }
         $data = [
             'title' => ($id == 0) ? 'Create Post' : 'Edit Post',
             'message' => 'Welcome to Aka Hub!'
@@ -132,11 +135,21 @@ class eventFeed extends Controller
 
             $this->validate_template($values, $data["post_template"]);
 
-            if ($id == 0)
-                $result = $this->model('createModel')->insert_db("posts", $values, $data["post_template"]);
-            else
-                $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
+            if ($id == 0){
 
+                $task = "User created a new post in event feed";
+                $state = "201";
+                $this->model("createModel")->createLogEntry($task, $state);
+
+                $result = $this->model('createModel')->insert_db("posts", $values, $data["post_template"]);
+            }else{
+
+                $task = "User updated a post in event feed";
+                $state = "200";
+                $this->model("createModel")->createLogEntry($task, $state);
+
+                $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
+            }
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
@@ -162,18 +175,24 @@ class eventFeed extends Controller
     {
 
         $this->requireLogin();
-        if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) )
+        if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) ){
+            $action = "User tried to delete event feed without permission";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
+        }
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Invalid post id")));
 
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
         $result = $this->model('deleteModel')->deleteOne("posts", $id);
 
-        if ($result)
+        if ($result){
+            $task = "User deleted a post in event feed";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting post")));
     }
 
@@ -199,6 +218,9 @@ class eventFeed extends Controller
         print_r($existingLike);
 
         if ($existingLike) {
+            $task = "User tried to like a post that has already been liked";
+            $state = "400";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "400", "desc" => "You have already liked this post")));
         }
 
@@ -206,9 +228,12 @@ class eventFeed extends Controller
 
         $result = $this->model('createModel')->insert_db("post_likes", $values, $data["likes_template"]);
 
-        if ($result)
+        if ($result){
+            $task = "User liked a post in event feed";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Liked")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
         // }
 
@@ -243,9 +268,12 @@ class eventFeed extends Controller
 
             $resultCreate = $this->model('createModel')->insert_db("club_representative", $values, $data["clubRep_template"]);
 
-            if ($resultUpdate && $resultCreate )
+            if ($resultUpdate && $resultCreate ){
+                $task = "User requested to be a club rep";
+                $state = "200";
+                $this->model("createModel")->createLogEntry($task, $state);
                 die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
-            else {
+            }else {
                 die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
             }
         }
@@ -270,9 +298,12 @@ class eventFeed extends Controller
 
         $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
 
-        if ($result)
+        if ($result){
+            $task = "User posted a comment in event feed";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Comment Posted")));
-        else {
+        }else {
             die(json_encode(array("status" => "400", "desc" => "Failed to post the comment")));
         }
     }
@@ -290,9 +321,12 @@ class eventFeed extends Controller
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);
         $result = $this->model('deleteModel')->deleteOne("post_comments", $id);
 
-        if ($result)
+        if ($result){
+            $task = "User deleted a comment in event feed";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting the comment")));
     }
 }

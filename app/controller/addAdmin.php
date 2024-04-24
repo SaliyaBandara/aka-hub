@@ -15,7 +15,8 @@ class AddAdmin extends Controller
         if ($_SESSION["user_role"] != 3) {
             //log Entry
             $action = "Unauthorized user tried to access Admin Account Creation";
-            $this->model("createModel")->createLogEntry($action);
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action,$status);
             $this->redirect();
         }
 
@@ -61,7 +62,8 @@ class AddAdmin extends Controller
                 if ($result) {
                     //log Entry
                     $action = "Admin Account Created for email : " . $values["email"];
-                    $this->model("createModel")->createLogEntry($action);
+                    $status = "201";
+                    $this->model("createModel")->createLogEntry($action,$status);
                 }
             } else {
                 $result = false;
@@ -74,7 +76,8 @@ class AddAdmin extends Controller
                 if ($result) {
                     //log Entry
                     $action = "Admin Account Edited for email : " . $values["email"];
-                    $this->model("createModel")->createLogEntry($action);
+                    $status = "200";
+                    $this->model("createModel")->createLogEntry($action,$status);
                 }
             }
 
