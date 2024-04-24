@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("manageTimeSlots");
+$sidebar = new Sidebar("counselorManageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -249,10 +249,10 @@ $calendar = new Calendar();
                 // var user_id = button.getAttribute('user-id');
                 // console.log(startDateInput);
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', BASE_URL + '/manageTimeSlots/filterDates' + startDate&endDate, true);
+                xhr.open('GET', BASE_URL + '/counselorManageTimeSlots/filterDates' + startDate&endDate, true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+                        window.location.href = BASE_URL + '/counselorManageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
                     }
                 };
                 xhr.send();

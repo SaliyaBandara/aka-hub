@@ -1,6 +1,6 @@
 <?php
 
-class ManageTimeSlots extends Controller
+class counselorManageTimeSlots extends Controller
 {
     public function index()
     {

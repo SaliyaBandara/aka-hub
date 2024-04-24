@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("upcomingReservations");
+$sidebar = new Sidebar("counselorReservations");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>
@@ -431,7 +431,7 @@ $calendar = new Calendar();
         let id = $(this).attr("data-id");  
 
         $.ajax({
-            url: `${BASE_URL}/upcomingReservations/completedReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/completedReservation/${id}`, 
             type: 'POST',
             data: {
                 id: id
@@ -463,7 +463,7 @@ $calendar = new Calendar();
 
 
         $.ajax({
-            url: `${BASE_URL}/upcomingReservations/cancelledReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`, 
             type: 'POST',
             data: {
                 id: id

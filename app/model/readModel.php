@@ -145,8 +145,9 @@ class readModel extends Model
             FROM reservation_requests r
             JOIN user u ON r.student_id = u.id
             JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
             WHERE r.status = ? 
-            AND r.counselor_id = ?
+            AND t.counselor_id = ?
         ", "ii", [0, $id]);
         if (count($result) > 0)
             return $result;
@@ -158,12 +159,13 @@ class readModel extends Model
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE id = ?", "i", [$id]);
         $result = $this->db_handle->runQuery("
-            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            SELECT r.*, u.name, u.email, u.profile_img, s.year, t.date, t.start_time, t.end_time 
             FROM reservation_requests r
             JOIN user u ON r.student_id = u.id
             JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
             WHERE r.status = ? 
-            AND r.counselor_id = ?
+            AND t.counselor_id = ?
             AND r.id = ?
         ", "iii", [0, $counselor_id, $id]);
         if (count($result) > 0)
@@ -176,12 +178,13 @@ class readModel extends Model
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         $result = $this->db_handle->runQuery("
-            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            SELECT r.*, u.name, u.email, u.profile_img, s.year , t.date, t.start_time, t.end_time
             FROM reservation_requests r
             JOIN user u ON r.student_id = u.id
             JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
             WHERE r.status = ?
-            AND r.counselor_id = ?
+            AND t.counselor_id = ?
         ", "ii", [1, $id]);
         if (count($result) > 0)
             return $result;
@@ -1700,11 +1703,7 @@ class readModel extends Model
         $empty = [
             "id" => "",
             "timeslot_id" => "",
-            "counselor_id" => "",
             "student_id" => "",
-            "date" => "",
-            "start_time" => "",
-            "end_time" => "",
             "status" => "",
         ];
 
@@ -1715,34 +1714,9 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-            "counselor_id" => [
-                "label" => "Counselor ID",
-                "type" => "number",
-                "validation" => "required",
-                "skip" => true
-            ],
             "student_id" => [
                 "label" => "Student ID",
                 "type" => "number",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "date" => [
-                "label" => "Reservation date",
-                "type" => "date",
-                "validation" => "required",
-                "skip" => true
-            ],
-
-            "start_time" => [
-                "label" => "Start Time",
-                "type" => "time",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "end_time" => [
-                "label" => "End Time",
-                "type" => "time",
                 "validation" => "required",
                 "skip" => true
             ],
@@ -1769,8 +1743,6 @@ class readModel extends Model
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "added" => "",
-            "booked" => "",
             "status" => "",
         ];
 
@@ -1801,18 +1773,6 @@ class readModel extends Model
                 "type" => "time",
                 "validation" => "required",
 
-            ],
-            "added" => [
-                "label" => "Added",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "booked" => [
-                "label" => "Booked",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
             ],
             "status" => [
                 "label" => "Status",
