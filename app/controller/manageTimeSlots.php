@@ -45,13 +45,13 @@ class ManageTimeSlots extends Controller
                 die(json_encode(array("status" => "400", "desc" => "Start time must be before end time")));
             }
 
-            // // Check for overlapping time slots
-            // $counselor_id = $_SESSION['user_id'];
-            // $overlapping_slots = $this->model('readModel')->checkForOverlappingTimeSlots($counselor_id, $values['start_time'], $values['end_time']);
+            // Check for overlapping time slots
+            $counselor_id = $_SESSION['user_id'];
+            $overlapping_slots = $this->model('readModel')->checkForOverlappingTimeSlots($counselor_id, $values['start_time'], $values['end_time'], $values['date']);
 
-            // if (!empty($overlapping_slots)) {
-            //     die(json_encode(array("status" => "400", "desc" => "There are overlapping time slots")));
-            // }
+            if (!empty($overlapping_slots)) {
+                die(json_encode(array("status" => "400", "desc" => "There are overlapping time slots")));
+            }
 
             $this->validate_template($values, $data["timeSlot_template"]);
 
