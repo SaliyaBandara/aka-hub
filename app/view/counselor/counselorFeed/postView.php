@@ -1,7 +1,12 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("counselorFeed");
+if($_SESSION["user_role"] == 1){
+    $sidebar = new Sidebar("feedsSelection");
+}
+else{
+    $sidebar = new Sidebar("counselorFeed");
+}
 ?>
 
 

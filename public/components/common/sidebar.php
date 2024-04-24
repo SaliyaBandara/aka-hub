@@ -32,10 +32,11 @@ class Sidebar
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'approveRepresentatives' => ['Approvals', 'bxs-home'],
                     'existingCounselors' => ['Counselor Acc', 'bx-body'],
-                    'viewlogs' => ['User Logs', 'bxs-dashboard'],
+                    'elections' => ['Elections', 'bxs-chat'],
                     'manageMaterials' => ['Manage Materials', 'bxs-book'],
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-chat'],
+                    'viewlogs' => ['User Logs', 'bxs-dashboard'],
                     'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
                     'adminProfileAndSettings' => ['Admin Settings', 'bxs-cog'],
                 ];
@@ -46,6 +47,7 @@ class Sidebar
                 $superAdminPages = [
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
+                    'viewlogs' => ['User Logs', 'bxs-dashboard'],
                     'superAdminProfileAndSettings' => ['Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
@@ -146,12 +148,17 @@ class Sidebar
             <div class="spacer">
 
             </div>
-
-            <div class="fixed__bottom">
-                Do you need counselor support?
-                Click <a href="<?= BASE_URL ?>/existingCounselors">here</a>
-                to talk with a counselor.
-            </div>
+            <?php 
+                if($_SESSION["user_role"] == 0){
+            ?>
+                <div class="fixed__bottom">
+                    Do you need counselor support?
+                    Click <a href="<?= BASE_URL ?>/existingCounselors">here</a>
+                    to talk with a counselor.
+                </div>
+            <?php
+                }
+            ?>
 
             <div class="fixed__bottom">
                 <a class="logout" href="<?= BASE_URL ?>/logout">Logout <i class='bx bx-log-out'></i> </a>
