@@ -179,39 +179,24 @@ class createModel extends Model
             return true;
     }
 
-    public function insert_db_return_id($table, $data, $template = []) //not working properly
+    public function createLogEntry($action , $status)
     {
-        $columns = "";
-        $values = "";
-        $types = "";
-        $params = [];
+        // 200 => "Success",
+        // 201 => "Created",
+        // 401 => "Unauthorized", 
 
-        foreach ($data as $key => $value) {
-            if ($value == "" || $value == null)
-                continue;
 
-            if(!isset($template[$key]) || !isset($template[$key]["type"]))
-                continue;
-
-            $columns .= $key . ",";
-            $values .= "?,";
-            // $types .= $value[1];
-            $types .= $template[$key]["type"] == "number" ? "i" : "s";
-
-            if (is_array($value))
-                $value = implode(",", $value);
-            array_push($params, $value);
+        if (!file_exists("userlog.txt")) {
+            file_put_contents("userlog.txt", "");
         }
-
-        $columns = rtrim($columns, ",");
-        $values = rtrim($values, ",");
-
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-
-        $whether_inserted = $this->db_handle->insert($query, $types, $params);
-        $returned_id = $this->db_handle->getLastInsertedID();
-
-        return array($whether_inserted, $returned_id);
-
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING'];
+        date_default_timezone_set("Asia/Colombo");
+        $time = date("m/d/y h:iA", time());
+        $contents = file_get_contents("userlog.txt");
+        $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
+        $contents .= "User: $email\t IP: $ip\t Time: $time\t Action: $action\t URL: $url\t Status: $status\n";
+        file_put_contents("userlog.txt", $contents);
     }
 }

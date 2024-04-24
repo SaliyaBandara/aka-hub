@@ -57,9 +57,12 @@ class Courses extends Controller
     public function material($action = "add_edit", $course_id = 0, $id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1))
+        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+            $task = "User tried to add edit material without permission";
+            $state = "400";
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
-
+        }
         if ($course_id == 0)
             $this->redirect();
 
@@ -89,11 +92,17 @@ class Courses extends Controller
 
             $this->validate_template($values, $data["data_template"]);
 
-            if ($id == 0)
+            if ($id == 0){
+                $task = "Course material created successfully";
+                $state = "201";
+                $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('createModel')->insert_db("course_materials", $values, $data["data_template"]);
-            else
+            }else{
+                $task = "Course material updated successfully";
+                $state = "200";
+                $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
-
+            }
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
@@ -119,25 +128,34 @@ class Courses extends Controller
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1))
+        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+            $task = "User tried to delete material without permission";
+            $state = "400";
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
-
+        }
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid course material id")));
 
         $result = $this->model('deleteModel')->deleteOne("course_materials", $id);
-        if ($result)
+        if ($result){
+            $task = "Course material deleted successfully";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course material")));
     }
 
     public function add_edit($id = 0, $action = "create")
     {
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1))
+        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+            $task = "User tried to add edit course without permission";
+            $state = "400";
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
-
+        }
         $data = [
             'title' => ($action == "create") ? 'Create Course' : 'Edit Course',
             'message' => 'Welcome to Aka Hub!'
@@ -151,11 +169,17 @@ class Courses extends Controller
             $values = $_POST["add_edit"];
             $this->validate_template($values, $data["course_template"]);
 
-            if ($id == 0)
+            if ($id == 0){
+                $task = "Course created successfully";
+                $state = "201";
+                $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('createModel')->insert_db("courses", $values, $data["course_template"]);
-            else
+            }else{
+                $task = "Course updated successfully";
+                $state = "200";
+                $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("courses", $values, $data["course_template"], "id", $id, "i");
-
+            }
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
 
@@ -182,22 +206,29 @@ class Courses extends Controller
     {
 
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1))
+        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+            $task = "User tried to delete course without permission";
+            $state = "400";
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
-
+        }
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid course id")));
 
         $result = $this->model('deleteModel')->deleteOne("courses", $id);
-        if ($result)
+        if ($result){
+            $task = "Course deleted successfully";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 
     public function clickToBeRole($role)
     {
         $this->requireLogin();
+
         if ($_SESSION["$role"] == 1) {
             die(json_encode(array("status" => "400", "desc" => "You are already a $role")));
         } else if ($_SESSION["$role"] == 2) {
@@ -210,9 +241,12 @@ class Courses extends Controller
                 $_SESSION["user_id"],
                 2
             );
-            if ($result)
+            if ($result){
+                $task = "User requested to be a role";
+                $state = "200";
+                $this->model("createModel")->createLogEntry($task, $state);
                 die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
-            else {
+            }else {
                 die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
             }
         }

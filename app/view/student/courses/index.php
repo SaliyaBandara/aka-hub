@@ -168,9 +168,7 @@ $calendar = new Calendar();
         </div>
 
         <div class="right">
-            <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div>
+
             <div class = "flex-column justify-center align-center divButtonSection">
                 <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
                     Send your request now to join our "Teaching Army" !
@@ -187,21 +185,21 @@ $calendar = new Calendar();
     <style>
         .main-grid {}
 
-        /* .main-grid .left {
-            width: 85% !;
-            background-color: yellowgreen;
+        .main-grid .left {
+            width: 80% !important;
+            /* background-color: yellowgreen; */
             height: 50vh;
             padding: 2rem;
-        } */
+        }
 
-        /* .main-grid .right {
-            width: 30%;
+        .main-grid .right {
+            width: 40%;
             flex-grow: 1;
-            background-color: red;
+            /* background-color: red; */
             height: 150vh;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
             
-        } */
+        }
 
         .divButtonSection{
             border-radius: 10px;

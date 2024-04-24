@@ -4,6 +4,12 @@ class ApproveRepresentatives extends Controller
     public function index()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to view Approve Representatives page";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'Rep Approvement',
             'message' => 'Welcome to Aka Hub!'
@@ -14,7 +20,14 @@ class ApproveRepresentatives extends Controller
 
     public function previewRepresentative($id)
     {
+
         $this->requireLogin();
+        if($_SESSION["user_role"] != 1){
+            $action = "Unauthorized user tried to preview Representatives page";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'Rep Approvement',
             'message' => 'Welcome to Aka Hub!',
@@ -25,6 +38,12 @@ class ApproveRepresentatives extends Controller
     public function previewAdminAccessControl($id)
     {
         $this->requireLogin();
+        if($_SESSION["user_role"] != 1){
+            $action = "Unauthorized user tried to preview Admin Access Control page";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'Rep Approvement',
             'message' => 'Welcome to Aka Hub!',
@@ -35,6 +54,13 @@ class ApproveRepresentatives extends Controller
     public function acceptRole($id, $role)
     {
         $this->requireLogin();
+        if($_SESSION["user_role"] != 1){
+            $action = "Unauthorized user tried to accept Role";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
+
         if($role == "club_rep"){
             $resultUserUpdate = $this->model('updateModel')->to_get_role(
                 "user",
@@ -45,13 +71,16 @@ class ApproveRepresentatives extends Controller
 
             $resultStatusUpdate = $this->model('updateModel')->to_update_status("club_representative",$id);
 
-            if ($resultUserUpdate && $resultStatusUpdate)
+            if ($resultUserUpdate && $resultStatusUpdate){
+                $action = "Admin successfully accepted role of Club Representative";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
-            else {
+            }else {
                 die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
             }
         }
-        else{
+        else if($role == "student_rep"){
             $resultUserUpdate = $this->model('updateModel')->to_get_role(
                 "user",
                 $role,
@@ -59,9 +88,12 @@ class ApproveRepresentatives extends Controller
                 1
             );
 
-            if ($resultUserUpdate)
+            if ($resultUserUpdate){
+                $action = "Admin successfully accepted role of Student Representative";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
-            else {
+            }else {
                 die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
             }
         }
@@ -71,15 +103,24 @@ class ApproveRepresentatives extends Controller
     public function declineRole($id = 0, $role = 0)
     {
         $this->requireLogin();
+        if($_SESSION["user_role"] != 1){
+            $action = "Unauthorized user tried to decline Role";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $result = $this->model('updateModel')->to_get_role(
             "user",
             $role,
             $id,
             0
         );
-        if ($result)
+        if ($result){
+            $action = "Admin successfully declined role";
+            $status = "200";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
-        else {
+        }else {
             die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
         }
     }
@@ -87,6 +128,12 @@ class ApproveRepresentatives extends Controller
     public function adminAccessControlView()
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to view Admin Access Control page";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'Admin Access Control',
             'message' => 'Welcome to Aka Hub!'
@@ -98,6 +145,12 @@ class ApproveRepresentatives extends Controller
     public function removeAccess($id = 0, $role = 0)
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to remove Access";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $result1 = $this->model('updateModel')->to_get_role(
             "user",
             $role,
@@ -110,12 +163,18 @@ class ApproveRepresentatives extends Controller
                 $id,
             );
             if ($result1 * $result2) {
+                $action = "Admin successfully removed Access";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
                 die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
             }
         } else {
             if ($result1) {
+                $action = "Admin successfully removed Access";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
                 die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));

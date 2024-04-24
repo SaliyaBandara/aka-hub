@@ -4,20 +4,31 @@ class AdminProfileAndSettings extends Controller
     public function index()
     {
         $this->requireLogin();
+
         $data = [
             'title' => 'Admin Profile And Settings',
             'message' => 'Welcome to Aka Hub!'
         ];
 
         $data["admin_details"] = $this->model("readModel")->getOneAdmin($_SESSION['user_id']);
+        $action = "User viewed Admin Profile and Settings";
+        $status = "200";
+        $this->model("createModel")->createLogEntry($action, $status);
+        $this->redirect();
         $this->view->render('admin/adminProfileAndSettings/index', $data);
     }
 
     public function add_edit($id)
     {
         $this->requireLogin();
-        // if ($_SESSION["user_role"] != 0)
-        //     $this->redirect();
+
+        if ($_SESSION["user_id"] != $id) {
+            //log Entry
+            $action = "Unauthorized user tried to edit Admin Profile and Settings";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
 
         $data = [
             'title' => 'Edit Profile',
@@ -43,6 +54,10 @@ class AdminProfileAndSettings extends Controller
             $result2 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
             if ($result1 && $result2) {
+                //log Entry
+                $action = "Admin successfully updated profile details " . $_SESSION['user_email'];
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             } else {
                 die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));

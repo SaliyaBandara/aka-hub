@@ -39,15 +39,37 @@ class Auth extends Controller
 
 
                 if ($result["role"] == "1") {
+                    //log Entry
+                    $action = "User logged in as Admin with email";
+                    $status = "200";
+                    $this->model("createModel")->createLogEntry($action, $status);
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/adminpanel")));
                 } else if ($result["role"] == "3") {
+                    //log Entry
+                    $action = "User logged in as Super Admin with email";
+                    $status = "200";
+                    $this->model("createModel")->createLogEntry($action, $status);
+
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/adminpanel")));
                 } else if ($result["role"] == "5") {
+                    //log Entry
+                    $action = "User logged in as Counselor with email";
+                    $status = "200";
+                    $this->model("createModel")->createLogEntry($action, $status);
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/counselorPanel")));
                 } else {
+                    //log Entry
+                    $action = "User logged in as Admin with email";
+                    $status = "200";
+                    $this->model("createModel")->createLogEntry($action, $status);
+
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/dashboard")));
                 }
             }
+            //log Entry
+            $action = "User entered invalid email or password";
+            $status = "200";
+            $this->model("createModel")->createLogEntry($action, $status);
 
             die(json_encode(array("status" => "400", "desc" => "Invalid email or password")));
         } else
@@ -92,9 +114,17 @@ class Auth extends Controller
                 $_SESSION["club_rep"] = $result["club_rep"];
                 $_SESSION["teaching_student"] = $result["teaching_student"];
 
+                //log Entry
+                $action = "User Registered with email";
+                $status = "201";
+                $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Successfully Registered", "redirect" => "/aka-hub/dashboard")));
             }
 
+            //log Entry
+            $action = "User tried to register with an existing email";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "400", "desc" => "Email already exists")));
         } else
             die(json_encode(array("status" => "400", "desc" => "Please fill all the input fields")));
