@@ -20,7 +20,9 @@ class CounselorView extends Controller
         $data["posts"] = $this->model('readModel')->getCounselorPosts(1, $id);
         $this->view->render('student/counselor/view', $data);
     }
+
     public function bookReservation($id = 0)
+
     {
         $this->requireLogin();
 
@@ -35,6 +37,7 @@ class CounselorView extends Controller
 
 
         if (isset($_POST['timeslot_id'])) {
+
             $data["user_id"] = $_SESSION["user_id"];
             $data["student"] = $this->model('readModel')->getOne("user", $data["user_id"]);
             $data["timeslot"] = $this->model('readModel')->getOne("timeslots", $id);
@@ -54,25 +57,8 @@ class CounselorView extends Controller
 
             $result1 = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
 
-            // print_r($data["timeslot"]);
-            // print_r($data["student"]);
-            // print_r($data["values"]);
-            // print_r($data["user_id"]);
-            // print_r($result1);
-            // die;
-
-            $data["student_details"] = $this->model('readModel')->getOne("student", $data["user_id"]);
-            $data["academic_year"] = $data["student_details"]["year"];
-
-            $data["values"] = [
-                "student_id" => $data["user_id"],
-                "timeslot_id" => $data["timeslot"]["id"],
-                "counselor_id" => $data["timeslot"]["counselor_id"],
-                "date" => $data["timeslot"]["date"],
-                "start_time" => $data["timeslot"]["start_time"],
-                "end_time" => $data["timeslot"]["end_time"],
-                "status" => 0,
-            ];
+            $data["reservation"]["timeslot_id"] = $id; 
+            $data["reservation"]["user_id"] = $_SESSION["user_id"];
 
             //status = 0 => created
             //status = 1 => accepted
@@ -80,10 +66,9 @@ class CounselorView extends Controller
             //status = 3 => accepted and completed
             //status = 4 => accepted and canceled
 
-            $values = $data["values"];
-
-            $this->validate_template($values, $data["reservation_template"]);
-            $result = $this->model('createModel')->insert_db("reservation_requests", $values, $data["reservation_template"]);
+            $isValidated = $this->validate_template( $data["reservation"], $data["reservation_template"]);
+            // print_r($isValidated);
+            $result = $this->model('createModel')->insert_db("reservation_requests",  $data["reservation"] , $data["reservation_template"]);
 
             if ($result && $result1)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
@@ -92,8 +77,13 @@ class CounselorView extends Controller
         }
 
 
-
         $data["timeslots"] = $this->model('readModel')->getNotBookedTimeSlotsByCounselorId($id);
+        $data["counselor"] = $this->model('readModel')->getOneCounselor($id);
+
+        $data["latestReservation"] = $this->model('readModel')->getLatestReservation($_SESSION["user_id"], $id);
+
+        // print_r($data["latestReservation"]);
+
         $this->view->render('student/counselor/bookReservation', $data);
     }
 }

@@ -80,6 +80,22 @@ $calendar = new Calendar();
                 </div>
 
                 <style>
+                    .main-grid .left {
+                        width: 80% !important;
+                        /* background-color: yellowgreen; */
+                        height: 50vh;
+                        padding: 2rem;
+                    } 
+
+                    .main-grid .right {
+                        width: 40%;
+                        flex-grow: 1;
+                        /* background-color: red; */
+                        height: 150vh;
+                        /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
+                        
+                    }
+
                     a{
                         text-decoration: none;
                     }
@@ -146,9 +162,6 @@ $calendar = new Calendar();
 
         </div>
         <div class="right">
-            <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div>
             <div class = "flex-column justify-center align-center divButtonSection">
                 <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
                     Are you a responsible student representative?
