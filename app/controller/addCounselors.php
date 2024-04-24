@@ -12,7 +12,10 @@ class AddCounselors extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1)
-            $this->redirect();
+            //log Entry
+            $action = "Unauthorized user tried to access Counselor Account Creation";
+        $this->model("createModel")->createLogEntry($action);
+        $this->redirect();
 
         $data = [
             'title' => 'Counselors Adding',
@@ -54,6 +57,13 @@ class AddCounselors extends Controller
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
                     $result = $result1 && $result2;
                 }
+                if ($result) {
+                    if ($result) {
+                        //log Entry
+                        $action = "Counselor Account Created for email : " . $values["email"];
+                        $this->model("createModel")->createLogEntry($action);
+                    }
+                }
             } else {
                 $result = false;
                 $result1 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
@@ -61,6 +71,13 @@ class AddCounselors extends Controller
                     $values["id"] = $id;
                     $result2 = $this->model('updateModel')->update_one("counselor", $values, $data["counselor_template"], "id", $id, "i");
                     $result = $result1 && $result2;
+                }
+                if ($result) {
+                    if ($result) {
+                        //log Entry
+                        $action = "Counselor Account Edited for email : " . $values["email"];
+                        $this->model("createModel")->createLogEntry($action);
+                    }
                 }
             }
 

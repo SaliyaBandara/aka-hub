@@ -12,8 +12,12 @@ class AddAdmin extends Controller
     {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 3)
+        if ($_SESSION["user_role"] != 3) {
+            //log Entry
+            $action = "Unauthorized user tried to access Admin Account Creation";
+            $this->model("createModel")->createLogEntry($action);
             $this->redirect();
+        }
 
         $data = [
             'title' => 'Admin Adding',
@@ -28,7 +32,7 @@ class AddAdmin extends Controller
 
         $data["user_template"] = $data["user_template"]["template"];
         $data["admin_template"] = $data["admin_template"]["template"];
-        
+
         $data["id"] = $id;
 
         if (isset($_POST['add_edit'])) {
@@ -54,6 +58,11 @@ class AddAdmin extends Controller
                     $result2 = $this->model('createModel')->insert_db("administrator", $values, $data["admin_template"]);
                     $result = $result1 && $result2;
                 }
+                if ($result) {
+                    //log Entry
+                    $action = "Admin Account Created for email : " . $values["email"];
+                    $this->model("createModel")->createLogEntry($action);
+                }
             } else {
                 $result = false;
                 $result1 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
@@ -61,6 +70,11 @@ class AddAdmin extends Controller
                     $values["id"] = $id;
                     $result2 = $this->model('updateModel')->update_one("administrator", $values, $data["admin_template"], "id", $id, "i");
                     $result = $result1 && $result2;
+                }
+                if ($result) {
+                    //log Entry
+                    $action = "Admin Account Edited for email : " . $values["email"];
+                    $this->model("createModel")->createLogEntry($action);
                 }
             }
 
