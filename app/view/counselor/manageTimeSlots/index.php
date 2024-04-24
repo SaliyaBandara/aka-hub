@@ -13,6 +13,8 @@ $calendar = new Calendar();
             <div class="calender-main">
                 <div class="calendarContainor">
                     <?php echo $calendar->render(); ?>
+                </div>  
+                <div class="date-range-picker">
                     <h2>Please select a Date or Date Range</h2>
                     <div class="date-range">
                         <p class="p1"><input type="date"> to <input type="date"></p>
@@ -20,7 +22,7 @@ $calendar = new Calendar();
                     <div class="manage-time-slots">
                         <a href="#" class="filter-dates">Manage Time Slots</a>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>    
             
@@ -116,7 +118,7 @@ $calendar = new Calendar();
     <style>
         .calendarContainor{
             justify-content: space-between;
-            width: 30%;
+            /* width: 30%; */
             height: 400px;
         }
         .calender-main{
