@@ -321,8 +321,11 @@ $calendar = new Calendar();
     <style>
         .main-container {
             min-height: 100vh;
-            display: flex;
-            flex-wrap: wrap;
+            /* display: flex;
+            flex-wrap: wrap; */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+            grid-gap: 20px; /* Gap between cards */
             /* align-items: center; */
         }
         .card-content{
