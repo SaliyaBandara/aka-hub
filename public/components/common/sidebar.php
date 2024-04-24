@@ -56,9 +56,9 @@ class Sidebar
             if ($role == 5) { //counselor
                 $counselorPages = [
                     'counselorPanel' => ['Counselor Panel', 'bxs-home'],
-                    'upcomingReservations' => ['Upcoming Reservations', 'bxs-dashboard'],
-                    'reservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
-                    'manageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
+                    'counselorReservations' => ['Reservations', 'bxs-dashboard'],
+                    'counselorReservationRequests' => ['Reservation Requests', 'bxs-user-pin'],
+                    'counselorManageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
                     'counselorChat' => ['Messages', 'bxs-chat'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
                 ];

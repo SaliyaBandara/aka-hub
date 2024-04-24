@@ -67,10 +67,6 @@ class CounselorView extends Controller
             $data["values"] = [
                 "student_id" => $data["user_id"],
                 "timeslot_id" => $data["timeslot"]["id"],
-                "counselor_id" => $data["timeslot"]["counselor_id"],
-                "date" => $data["timeslot"]["date"],
-                "start_time" => $data["timeslot"]["start_time"],
-                "end_time" => $data["timeslot"]["end_time"],
                 "status" => 0,
             ];
 

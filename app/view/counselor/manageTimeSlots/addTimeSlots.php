@@ -2,7 +2,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("manageTimeSlots");
+$sidebar = new Sidebar("counselorManageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -546,7 +546,7 @@ $calendar = new Calendar();
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/delete/${id}`,
+                url: `${BASE_URL}/counselorManageTimeSlots/delete/${id}`,
                 type: 'post',
                 data: {
                     delete: true
@@ -576,7 +576,7 @@ $calendar = new Calendar();
             // console.log(id); 
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/addToTimeslot/${id}`, 
+                url: `${BASE_URL}/counselorManageTimeSlots/addToTimeslot/${id}`, 
                 type: 'POST',
                 data: {
                     id: id
@@ -609,7 +609,7 @@ $calendar = new Calendar();
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/removeTimeslot/${id}`, 
+                url: `${BASE_URL}/counselorManageTimeSlots/removeTimeslot/${id}`, 
                 type: 'POST',
                 data: {
                     id: id
