@@ -259,7 +259,7 @@ class eventFeed extends Controller
         $data["commentContent"] = $data["comment_template"]["empty"];
         $data["comment_template"] = $data["comment_template"]["template"];
 
-        $comment = str_replace('%20', ' ', $comment);
+        // $comment = str_replace('%20', ' ', $comment);
 
         $values['post_id'] = $post_id;
         $values['user_id'] = $_SESSION["user_id"];

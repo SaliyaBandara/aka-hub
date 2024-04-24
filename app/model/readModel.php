@@ -146,8 +146,9 @@ class readModel extends Model
             FROM reservation_requests r
             JOIN user u ON r.student_id = u.id
             JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
             WHERE r.status = ? 
-            AND r.counselor_id = ?
+            AND t.counselor_id = ?
         ", "ii", [0, $id]);
         if (count($result) > 0)
             return $result;
@@ -159,12 +160,13 @@ class readModel extends Model
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE id = ?", "i", [$id]);
         $result = $this->db_handle->runQuery("
-            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            SELECT r.*, u.name, u.email, u.profile_img, s.year, t.date, t.start_time, t.end_time 
             FROM reservation_requests r
             JOIN user u ON r.student_id = u.id
             JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
             WHERE r.status = ? 
-            AND r.counselor_id = ?
+            AND t.counselor_id = ?
             AND r.id = ?
         ", "iii", [0, $counselor_id, $id]);
         if (count($result) > 0)
@@ -177,12 +179,13 @@ class readModel extends Model
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         $result = $this->db_handle->runQuery("
-            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            SELECT r.*, u.name, u.email, u.profile_img, s.year , t.date, t.start_time, t.end_time
             FROM reservation_requests r
             JOIN user u ON r.student_id = u.id
             JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
             WHERE r.status = ?
-            AND r.counselor_id = ?
+            AND t.counselor_id = ?
         ", "ii", [1, $id]);
         if (count($result) > 0)
             return $result;
@@ -190,11 +193,11 @@ class readModel extends Model
         return false;
     }
 
-    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
+    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time, $date)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((date = ? AND start_time <= ? AND end_time > ?) OR (date = ? AND start_time < ? AND end_time >= ?) OR (date = ? AND ? < start_time AND ? > end_time))", "ssssssssss", [$counselor_id, $date, $start_time, $start_time, $date, $end_time, $end_time, $date, $start_time, $end_time]);
 
-        if (count($result) > 0)
+       if (count($result) > 0)
             return $result;
 
         return false;
@@ -1733,6 +1736,7 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
+
             "user_id" => [
                 "label" => "User ID",
                 "type" => "number",
@@ -1756,8 +1760,6 @@ class readModel extends Model
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "added" => "",
-            "booked" => "",
             "status" => "",
         ];
 
@@ -1788,18 +1790,6 @@ class readModel extends Model
                 "type" => "time",
                 "validation" => "required",
 
-            ],
-            "added" => [
-                "label" => "Added",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "booked" => [
-                "label" => "Booked",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
             ],
             "status" => [
                 "label" => "Status",

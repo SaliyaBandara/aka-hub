@@ -18,7 +18,7 @@ $sidebar = new Sidebar("adminAccount");
                     <div class="adminAddButtonRow">
                         <div class="mb-1 form-group right_side">
                             <a href="<?= BASE_URL ?>/addAdmin/index/0" class="btn btn-primary">
-                                <i class='bx bxs-lock-open'></i> Add Counselors
+                                <i class='bx bxs-lock-open'></i> Add Administrators
                             </a>
                         </div>
                     </div>

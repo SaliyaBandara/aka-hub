@@ -39,7 +39,7 @@ $candidateCard = new CandidateCard();
                         <div class="profileDetailCell"><?= $userDetails['name'] ?? '' ?></div>
                     </div>
                     <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Email Address : </div>
+                        <div class="profileDetailHeader">Email : </div>
                         <div class="profileDetailCell"><?= $userDetails['email'] ?? '' ?></div>
                     </div>
 
@@ -117,7 +117,7 @@ $candidateCard = new CandidateCard();
                             <div class="profileDetailCell"><?= $userDetails['student_id'] ?? '' ?></div>
                         </div>
                         <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Index Number : </div>
+                            <div class="profileDetailHeader">Index No : </div>
                             <div class="profileDetailCell"><?= $userDetails['index_number'] ?? '' ?></div>
                         </div>
                         <?php
@@ -134,7 +134,7 @@ $candidateCard = new CandidateCard();
                     }
                     ?>
                     <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Current Roles :  </div>
+                        <div class="profileDetailHeader">Roles : </div>
                         <div class="profileDetailCellforRoles">
 
                             <?php

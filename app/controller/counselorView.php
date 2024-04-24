@@ -56,7 +56,7 @@ class CounselorView extends Controller
             $data["values"]["status"] = 3;    
 
             $result1 = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
-
+          
             $data["reservation"]["timeslot_id"] = $id; 
             $data["reservation"]["user_id"] = $_SESSION["user_id"];
 
