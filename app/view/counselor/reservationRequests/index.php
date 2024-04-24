@@ -190,7 +190,7 @@ $calendar = new Calendar();
 
 <style>
     .main-grid .left {
-        width: 75%;
+        width: 75% !important;
         height: 150vh;
 
     }

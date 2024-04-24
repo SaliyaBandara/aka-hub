@@ -122,8 +122,8 @@ class readModel extends Model
 
     public function getNotBookedTimeSlotsByCounselorId($id)
     {
-
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots t WHERE counselor_id = ? AND CONCAT(t.date, ' ', t.start_time) >= NOW() AND status = ?", "ii", [$id, 1]);
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status = ?", "ii", [$id, 1]);
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots t WHERE counselor_id = ? AND CONCAT(t.date, ' ', t.start_time) >= NOW() AND status = ?", "ii", [$id, 1]);
         if (count($result) > 0)
             return $result;
 
@@ -727,7 +727,7 @@ class readModel extends Model
     public function getLatestReservation($user_id, $counselor_id)
     {
 
-        $sql = "SELECT * from reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = 1 AND r.user_id = ? AND t.counselor_id = ? ORDER BY CONCAT(t.date, ' ', t.start_time) LIMIT 1";
+        $sql = "SELECT * from reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = 1 AND r.student_id = ? AND t.counselor_id = ? ORDER BY CONCAT(t.date, ' ', t.start_time) LIMIT 1";
         $result = $this->db_handle->runQuery($sql, "ii", [$user_id, $counselor_id]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
@@ -1726,7 +1726,8 @@ class readModel extends Model
 
         $empty = [
             "timeslot_id" => "",
-            "user_id" => ""
+            "student_id" => "",
+            "status" => "",
         ];
 
         $template = [
@@ -1737,10 +1738,16 @@ class readModel extends Model
                 "skip" => true
             ],
 
-            "user_id" => [
+            "student_id" => [
                 "label" => "User ID",
                 "type" => "number",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "status" => [
+                "label" => "Status",
+                "type" => "number",
+                "validation" => "",
                 "skip" => true
             ],
         ];
