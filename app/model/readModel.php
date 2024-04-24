@@ -189,11 +189,11 @@ class readModel extends Model
         return false;
     }
 
-    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
+    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time, $date)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((date = ? AND start_time <= ? AND end_time > ?) OR (date = ? AND start_time < ? AND end_time >= ?) OR (date = ? AND ? < start_time AND ? > end_time))", "ssssssssss", [$counselor_id, $date, $start_time, $start_time, $date, $end_time, $end_time, $date, $start_time, $end_time]);
 
-        if (count($result) > 0)
+       if (count($result) > 0)
             return $result;
 
         return false;

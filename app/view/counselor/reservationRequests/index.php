@@ -489,6 +489,9 @@ $calendar = new Calendar();
         let id = $(this).attr("data-id");
         console.log(id);
 
+        if (!confirm("Are you sure you want to Decline this Request?"))
+                return;
+
         $.ajax({
             url: `${BASE_URL}/reservationRequests/declineReservation/${id}`,
             type: 'POST',
