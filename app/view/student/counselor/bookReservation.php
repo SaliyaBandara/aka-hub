@@ -174,6 +174,10 @@ $sidebar = new Sidebar("Settings");
             display:flex;
             margin: 1rem 0 0 1rem;
         }
+        .button-bookNow{
+            min-width: 120px;
+            text-align: center;
+        }
     </style>
     <style>
         /* .wrapper{
@@ -226,7 +230,7 @@ $sidebar = new Sidebar("Settings");
         $(".button-bookNow").click(function(e) {
             e.preventDefault();
             var timeslotId = $(this).data("timeslot-id");
-            // console.log(timeslotId);
+            // console.log(timeslotId);          
 
             if (!confirm("Are you sure you want to make this Reservation?"))
                 return;

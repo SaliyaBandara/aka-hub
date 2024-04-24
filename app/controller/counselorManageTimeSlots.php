@@ -170,6 +170,7 @@ class counselorManageTimeSlots extends Controller
         //status = 0 => created
         //status = 1 => added
         //status = 2 => removed
+        //status = 3 => booked
 
         $data["values"]["status"] = 2;
 
