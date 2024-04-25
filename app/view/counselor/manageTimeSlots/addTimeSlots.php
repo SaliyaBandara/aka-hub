@@ -30,7 +30,7 @@ $calendar = new Calendar();
                       
                     <?php
                     if (empty($data["timeslots"])) {
-                        echo "NO TIME SLOTS AVAILABLE";
+                        echo "<p>NO TIME SLOTS AVAILABLE</p>";
                     } else {
                             foreach ($data["timeslots"] as $timeslot) {
                                 $class = "card-not-added";
@@ -468,6 +468,14 @@ $calendar = new Calendar();
     .fields-container {
         text-align: left;
         align-items: center;
+    }
+    .wrapper p{
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        /* justify-self: center; */
+        /* justify-content: center; */
     }
 </style>
 

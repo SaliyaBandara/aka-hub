@@ -53,7 +53,7 @@ class CounselorFeed extends Controller
         $this->requireLogin();
         if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1))) {
             $action = "User tried to add edit post without permission";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -118,7 +118,7 @@ class CounselorFeed extends Controller
         $this->requireLogin();
         if ((!($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1))){
             $action = "User tried to delete post without permission";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

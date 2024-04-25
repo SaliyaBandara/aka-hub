@@ -5,10 +5,9 @@ class ManageMaterials extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
-            $action = "User tried to view manage materials page";
-            $state = 400;
+            $action = "Unauthorized User tried to view manage materials page";
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
-
             $this->redirect();
         }
         $data = [
@@ -16,15 +15,17 @@ class ManageMaterials extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
         $data["materials"] = $this->model('readModel')->getMaterials();
+        if (!$data["materials"])
+            $data["materials"] = array();
         $this->view->render('admin/manageMaterials/index', $data);
     }
 
     public function view($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){
-            $action = "User tried to view a specific material";
-            $state = 400;
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized User tried to view a specific material";
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }
@@ -44,23 +45,20 @@ class ManageMaterials extends Controller
         $this->view->render('admin/manageMaterials/view', $data);
     }
 
-    public function material($action = "add_edit", $course_id = 0, $id = 0)
+    public function material($action = "add_edit", $id = 0, $course_id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){
-            $action = "User tried to add edit material without permission";
-            $state = 400;
-            $this->model("createModel")->createLogEntry($action, $state);
+        if ($_SESSION["user_role"] != 1) {
+            $task = "Unauthorized User tried to add edit material without permission";
+            $state = 401;
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
-        if ($course_id == 0)
-            $this->redirect();
 
         $data = [
-            'title' => $id == 0 ? 'Add Course Material' : 'Edit Course Material',
+            'title' => 'Edit Course Material',
             'message' => 'Welcome to Aka Hub!'
         ];
-
         $data["course"] = $this->model('readModel')->getOne("courses", $course_id);
         if (!$data["course"])
             $this->redirect();
@@ -82,24 +80,13 @@ class ManageMaterials extends Controller
 
             $this->validate_template($values, $data["data_template"]);
 
-            if ($id == 0)
-                $result = $this->model('createModel')->insert_db("course_materials", $values, $data["data_template"]);
-                if($result){
-                    $action = "Course material created successfully";
-                    $state = 201;
-                    $this->model("createModel")->createLogEntry($action, $state);
-                }
-            else{
-                $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
-                if($result){
-                    $action = "Course material updated successfully";
-                    $state = 200;
-                    $this->model("createModel")->createLogEntry($action, $state);
-                }
-            }
-            if ($result)
+            $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
+            if ($result) {
+                $task1 = "Course material updated successfully";
+                $state = 200;
+                $this->model("createModel")->createLogEntry($task1, $state);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+            }
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
 
@@ -108,13 +95,9 @@ class ManageMaterials extends Controller
             if (!$data["material"])
                 $this->redirect();
         }
-
-        // print_r($data["material"]);
-
         $data["id"] = $id;
         $data["action"] = $action;
 
-        $data["teaching_student"] = $_SESSION["teaching_student"];
         $this->view->render('admin/manageMaterials/add_edit_material', $data);
     }
 
@@ -122,118 +105,22 @@ class ManageMaterials extends Controller
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){
-            $action = "User tried to delete material without permission";
-            $state = 400;
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to delete material without permission";
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }
-        if ($id == 0)
+        if ($id == 0) {
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid course material id")));
-
+        }
         $result = $this->model('deleteModel')->deleteOne("course_materials", $id);
-        if ($result)
-            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
-        die(json_encode(array("status" => "400", "desc" => "Error while deleting course material")));
-    }
-
-    public function add_edit($id = 0, $action = "create")
-    {
-        $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){ 
-            $action = "User tried to add edit course without permission";
-            $state = 400;
-            $this->redirect();
-        }
-        $data = [
-            'title' => ($action == "create") ? 'Create Course' : 'Edit Course',
-            'message' => 'Welcome to Aka Hub!'
-        ];
-
-        $data["course_template"] = $this->model('readModel')->getEmptyCourse();
-        $data["course"] = $data["course_template"]["empty"];
-        $data["course_template"] = $data["course_template"]["template"];
-
-        if (isset($_POST['add_edit'])) {
-            $values = $_POST["add_edit"];
-            $this->validate_template($values, $data["course_template"]);
-
-            if ($id == 0)
-                $result = $this->model('createModel')->insert_db("courses", $values, $data["course_template"]);
-                if($result){
-                    $action = "Course created successfully";
-                    $state = 201;
-                    $this->model("createModel")->createLogEntry($action, $state);
-                }
-            else
-                $result = $this->model('updateModel')->update_one("courses", $values, $data["course_template"], "id", $id, "i");
-                if($result){
-                    $action = "Course updated successfully";
-                    $state = 200;
-                    $this->model("createModel")->createLogEntry($action, $state);
-                }
-
-            if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
-            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
-        }
-
-        $data["id"] = $id;
-        $data["action"] = $action;
-
-        if ($id != 0) {
-            $data["course"] = $this->model('readModel')->getOne("courses", $id);
-            if (!$data["course"])
-                $this->redirect();
-        }
-
-        // print params
-        // print_r($id);
-        // print_r($action);
-
-        $this->view->render('admin/manageMaterials/add_edit', $data);
-    }
-
-    public function delete($id = 0)
-    {
-
-        $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){
-            $action = "User tried to delete course without permission";
-            $state = 400;
-            $this->model("createModel")->createLogEntry($action, $state);
-            $this->redirect();
-        }
-        if ($id == 0)
-            die(json_encode(array("status" => "400", "desc" => "Please provide a valid course id")));
-
-        $result = $this->model('deleteModel')->deleteOne("courses", $id);
-        if ($result){
-            $action = "Course deleted successfully";
+        if ($result) {
+            $action = "Course material deleted successfully";
             $state = 200;
             $this->model("createModel")->createLogEntry($action, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
         }
-        die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
-    }
-    
-    public function viewMaterial($id)
-    {
-        $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){
-            $action = "User tried to view material without permission";
-            $state = 400;
-            $this->model("createModel")->createLogEntry($action, $state);
-
-            $this->redirect();
-        }
-        $data = [
-            'title' => 'Manage Materials',
-            'message' => 'Welcome to Aka Hub!'
-        ];
-        $data["viewMaterial"] = $this->model('readModel')->getMaterialToView($id);
-        $this->view->render('admin/manageMaterials/viewMaterial', $data);
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting course material")));
     }
 }

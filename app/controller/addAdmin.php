@@ -62,7 +62,7 @@ class AddAdmin extends Controller
                 if ($result) {
                     //log Entry
                     $action = "Admin Account Created for email : " . $values["email"];
-                    $status = "201";
+                    $status = "600";
                     $this->model("createModel")->createLogEntry($action,$status);
                 }
             } else {
@@ -75,8 +75,8 @@ class AddAdmin extends Controller
                 }
                 if ($result) {
                     //log Entry
-                    $action = "Admin Account Edited for email : " . $values["email"];
-                    $status = "200";
+                    $action = "Admin Account Updated for email : " . $values["email"];
+                    $status = "601";
                     $this->model("createModel")->createLogEntry($action,$status);
                 }
             }

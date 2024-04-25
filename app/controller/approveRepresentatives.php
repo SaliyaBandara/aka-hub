@@ -73,7 +73,7 @@ class ApproveRepresentatives extends Controller
 
             if ($resultUserUpdate && $resultStatusUpdate){
                 $action = "Admin successfully accepted role of Club Representative";
-                $status = "200";
+                $status = "606";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
             }else {
@@ -90,7 +90,7 @@ class ApproveRepresentatives extends Controller
 
             if ($resultUserUpdate){
                 $action = "Admin successfully accepted role of Student Representative";
-                $status = "200";
+                $status = "606";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
             }else {
@@ -164,7 +164,7 @@ class ApproveRepresentatives extends Controller
             );
             if ($result1 * $result2) {
                 $action = "Admin successfully removed Access";
-                $status = "200";
+                $status = "607";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
@@ -173,7 +173,7 @@ class ApproveRepresentatives extends Controller
         } else {
             if ($result1) {
                 $action = "Admin successfully removed Access";
-                $status = "200";
+                $status = "607";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {

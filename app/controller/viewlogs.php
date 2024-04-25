@@ -1,11 +1,12 @@
 <?php
-class ViewLogs extends Controller{
+class ViewLogs extends Controller
+{
     public function index()
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1 || $_SESSION["user_role"] != 3) {
-            $action = "Unauthorized user tried to view Admin Profile and Settings";
-            $status = "400";
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["user_role"] != 3)) {
+            $action = "Unauthorized user tried to view Logs and Actions page";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

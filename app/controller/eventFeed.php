@@ -322,8 +322,8 @@ class eventFeed extends Controller
     {
         $this->requireLogin();
         if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) ){
-            $action = "User tried to edit add event feed without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to edit add event feed without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -350,14 +350,12 @@ class eventFeed extends Controller
             $this->validate_template($values, $data["post_template"]);
 
             if ($id == 0){
-
                 $task = "User created a new post in event feed";
                 $state = "201";
                 $this->model("createModel")->createLogEntry($task, $state);
 
                 $result = $this->model('createModel')->insert_db("posts", $values, $data["post_template"]);
             }else{
-
                 $task = "User updated a post in event feed";
                 $state = "200";
                 $this->model("createModel")->createLogEntry($task, $state);
@@ -390,8 +388,8 @@ class eventFeed extends Controller
 
         $this->requireLogin();
         if ((!($_SESSION["club_rep"] || $_SESSION["user_role"] == 1)) ){
-            $action = "User tried to delete event feed without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to delete event feed without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -427,7 +425,7 @@ class eventFeed extends Controller
 
         if ($existingLike) {
             $task = "User tried to like a post that has already been liked";
-            $state = "400";
+            $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "400", "desc" => "You have already liked this post")));
         }
@@ -511,7 +509,7 @@ class eventFeed extends Controller
 
         if ($result){
             $task = "User posted a comment in event feed";
-            $state = "200";
+            $state = "201";
             $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Comment Posted")));
         }else {

@@ -5,7 +5,7 @@ class ViewUserDistribution extends Controller{
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to view User Distribution";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -14,6 +14,8 @@ class ViewUserDistribution extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
         $data["users"] = $this->model('readModel')->getAllUsers();
+        if (!$data["users"])
+            $data["users"] = array();
         $this->view->render('admin/viewUserDistribution/index', $data);
     }
 
@@ -22,7 +24,7 @@ class ViewUserDistribution extends Controller{
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to Preview User Details";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

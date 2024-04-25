@@ -16,7 +16,7 @@ $calendar = new Calendar();
             <div class="main-container">
                 <?php
                 if (empty($data["reservation_requests"])) {
-                    echo "NO RESERVATIONS AVAILABLE";
+                    echo "<p>NO RESERVATIONS AVAILABLE</p>";
                 } else {
                         //sorting function to sort reservation requests by date and time
                         function sortByDateTime($a, $b) {
@@ -273,6 +273,7 @@ $calendar = new Calendar();
             flex-grow: 1;
             height: 1000px;
         } */
+      
     </style>
 
     <style>
@@ -324,9 +325,10 @@ $calendar = new Calendar();
             /* display: flex;
             flex-wrap: wrap; */
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
-            grid-gap: 20px; /* Gap between cards */
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px; 
             /* align-items: center; */
+            /* justify-content: center; */
         }
         .card-content{
             margin: 10px 30px;
@@ -416,6 +418,14 @@ $calendar = new Calendar();
         }
         .button-completed:hover{
             background-color: #265df2;
+        }
+        .main-container p{
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            /* justify-self: center; */
+            /* justify-content: center; */
         }
     </style>
 
