@@ -12,8 +12,8 @@ class Clubs extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1){
-            $action = "User tried to add clubs without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to add clubs without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -30,8 +30,8 @@ class Clubs extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1){
-            $action = "User tried to add clubs without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to add clubs without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -86,15 +86,12 @@ class Clubs extends Controller
 
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1){
-            $action = "User tried to delete clubs without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to delete clubs without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
         if ($id == 0){
-            $action = "User tried to delete clubs without permission";
-            $status = "400";
-            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "400", "desc" => "Invalid club id")));
         }
         // $result = $this->model('deleteModel')->deleteOne("courses", $id);

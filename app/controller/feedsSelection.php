@@ -4,8 +4,8 @@ class FeedsSelection extends Controller{
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1){
-            $action = "User tried to view feeds selection page";
-            $state = 200;
+            $action = "Unauthorized User tried to view feeds selection page";
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }

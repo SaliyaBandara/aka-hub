@@ -5,7 +5,6 @@ class AdminProfileAndSettings extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
-            //log Entry
             $action = "Unauthorized user tried to access Admin Profile and Settings";
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
@@ -18,10 +17,6 @@ class AdminProfileAndSettings extends Controller
         ];
 
         $data["admin_details"] = $this->model("readModel")->getOneAdmin($_SESSION['user_id']);
-        $action = "User viewed Admin Profile and Settings";
-        $status = "200";
-        $this->model("createModel")->createLogEntry($action, $status);
-        $this->redirect();
         $this->view->render('admin/adminProfileAndSettings/index', $data);
     }
 
@@ -30,7 +25,6 @@ class AdminProfileAndSettings extends Controller
         $this->requireLogin();
 
         if ($_SESSION["user_id"] != $id) {
-            //log Entry
             $action = "Unauthorized user tried to edit Admin Profile and Settings";
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
@@ -63,7 +57,7 @@ class AdminProfileAndSettings extends Controller
             if ($result1 && $result2) {
                 //log Entry
                 $action = "Admin successfully updated profile details " . $_SESSION['user_email'];
-                $status = "200";
+                $status = "601";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             } else {

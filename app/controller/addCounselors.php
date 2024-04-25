@@ -11,13 +11,12 @@ class AddCounselors extends Controller
     public function index($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1)
-            //log Entry
+        if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to access Counselor Account Creation";
-        $status = "401";
-        $this->model("createModel")->createLogEntry($action, $status);
-        $this->redirect();
-
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
         $data = [
             'title' => 'Counselors Adding',
             'message' => 'Welcome to Aka Hub!'
@@ -62,7 +61,7 @@ class AddCounselors extends Controller
                     if ($result) {
                         //log Entry
                         $action = "Counselor Account Created for email : " . $values["email"];
-                        $status = "201";
+                        $status = "600";
                         $this->model("createModel")->createLogEntry($action, $status);
                     }
                 }
@@ -77,8 +76,8 @@ class AddCounselors extends Controller
                 if ($result) {
                     if ($result) {
                         //log Entry
-                        $action = "Counselor Account Edited for email : " . $values["email"];
-                        $status = "200";
+                        $action = "Counselor Account Updated for email : " . $values["email"];
+                        $status = "601";
                         $this->model("createModel")->createLogEntry($action, $status);
                     }
                 }

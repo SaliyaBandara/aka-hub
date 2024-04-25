@@ -58,8 +58,8 @@ class Courses extends Controller
     {
         $this->requireLogin();
         if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
-            $task = "User tried to add edit material without permission";
-            $state = "400";
+            $task = "Unauthorized User tried to add edit material without permission";
+            $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
@@ -129,8 +129,8 @@ class Courses extends Controller
     {
         $this->requireLogin();
         if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
-            $task = "User tried to delete material without permission";
-            $state = "400";
+            $task = "Unauthorized User tried to delete material without permission";
+            $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
@@ -151,8 +151,8 @@ class Courses extends Controller
     {
         $this->requireLogin();
         if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
-            $task = "User tried to add edit course without permission";
-            $state = "400";
+            $task = "Unauthorized User tried to add edit course without permission";
+            $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
@@ -207,8 +207,8 @@ class Courses extends Controller
 
         $this->requireLogin();
         if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
-            $task = "User tried to delete course without permission";
-            $state = "400";
+            $task = "Unauthorized User tried to delete course without permission";
+            $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
