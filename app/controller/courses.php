@@ -17,10 +17,184 @@ class Courses extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["buttonValue"] = " Go To Archieved Courses";
+        $data["link"] = "viewArchievedCourses";
+        $data["iClass"] = "bx-archive-in";
+        $data["topic"] = "Onoing Courses in Your Year";
+        $data["filter"] = 1;
+
         $data["teaching_student"] = $_SESSION["teaching_student"];
         $data["student_rep"] = $_SESSION["student_rep"];
-        $data["courses"] = $this->model('readModel')->getAll("courses");
+
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+        $year = $data["student"][0]["year"];
+
+        $data["courses"] = $this->model('readModel')->getCoursesByYear($year);
+
         $this->view->render('student/courses/index', $data);
+    }
+
+    public function viewArchievedCourses()
+    {
+        $this->requireLogin();
+
+        $data = [
+            'title' => 'Courses',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["buttonValue"] = "Go To Ongoing Courses";
+        $data["link"] = "index";
+        $data["iClass"] = "bx-archive-out";
+        $data["topic"] = "Archieved Courses";
+        $data["filter"] = 2;
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
+
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+
+        $year = $data["student"][0]["year"];
+
+        $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
+
+        $this->view->render('student/courses/index', $data);
+    }
+
+    public function filter(){
+
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
+
+        $semester = $_POST['semester'];
+
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+        $year = $data["student"][0]["year"];
+
+        if($semester == 0){
+            $data["courses"] = $this->model('readModel')->getCoursesByYear($year);
+        }
+        else{
+
+            $data["courses"] = $this->model('readModel')->getCoursesBySemester($year,(int)$semester);
+        }
+
+        $BASE_URL =  BASE_URL ;
+
+        if(empty($data["courses"])){
+            echo "<div class='font-meidum text-muted'> No courses added! </div>";
+        }
+        else{
+            foreach ($data["courses"] as $course) {     
+                echo '
+                    <div href="./courses/view/'.$course["id"].'" class="js-link todo_item flex align-center">
+                            <div>
+                                <div class="todo_item_date flex align-center justify-center">
+                                    <img src= '.USER_IMG_PATH . $course["cover_img"].' alt="">
+                                </div>
+                            </div>
+                            <div class="todo_item_text">
+                                <div class="font-1-25 font-semibold"> '.$course["name"] .'</div>
+                                <div class="font-1 font-medium text-muted"> '.$course["code"].'</div>
+                                <div class="font-0-8 text-muted">Year '. $course["year"].' Semester '. $course["semester"] .'</div>
+                            </div>
+                ';
+
+                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
+                                echo '
+                                    <div class="todo_item_actions">
+                                        <a href="'. $BASE_URL.'/courses/add_edit/'. $course["id"] .'/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                        <div class="btn delete-item" data-id= '.$course["id"].'>
+                                            <i class="bx bx-trash text-danger"></i>
+                                        </div>
+                                    </div>
+                                ';
+                             }
+
+                    echo '</div>';
+            }
+        }
+
+    }
+
+    public function filterBelow(){
+
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
+
+        $yearA = $_POST['yearA'];
+        $semesterA = $_POST['semesterA'];
+
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+        $year = $data["student"][0]["year"];
+
+        if($yearA == 0 && $semesterA == 0){
+            $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
+        }
+        else if($yearA > $year){
+            $data["courses"] = 1;
+        }
+        else if($yearA == 0 && $semesterA != 0){
+            $data["courses"] = $this->model('readModel')->getCoursesByOnlySemester($semesterA);
+        }
+        else if($yearA != 0 && $semesterA == 0){
+            $data["courses"] = $this->model('readModel')->getCoursesByYear($yearA);
+        }
+        else{
+            $data["courses"] = $this->model('readModel')->getCoursesBySemester($yearA,$semesterA);
+        }
+
+        $BASE_URL =  BASE_URL ;
+
+        if(empty($data["courses"])){
+            echo "<div class='font-meidum text-muted'> No courses added! </div>";
+        }
+        else if($data["courses"] == 1){
+            echo "<div class='font-meidum text-muted'> Can't access this year! </div>";
+        }
+        else{
+            foreach ($data["courses"] as $course) {     
+                echo '
+                    <div href="./view/'.$course["id"].'" class="js-link todo_item flex align-center">
+                            <div>
+                                <div class="todo_item_date flex align-center justify-center">
+                                    <img src= '.USER_IMG_PATH . $course["cover_img"].' alt="">
+                                </div>
+                            </div>
+                            <div class="todo_item_text">
+                                <div class="font-1-25 font-semibold"> '.$course["name"] .'</div>
+                                <div class="font-1 font-medium text-muted"> '.$course["code"].'</div>
+                                <div class="font-0-8 text-muted">Year '. $course["year"].' Semester '. $course["semester"] .'</div>
+                            </div>
+                ';
+
+                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
+                                echo '
+                                    <div class="todo_item_actions">
+                                        <a href="'. $BASE_URL.'/courses/add_edit/'. $course["id"] .'/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                        <div class="btn delete-item" data-id= '.$course["id"].'>
+                                            <i class="bx bx-trash text-danger"></i>
+                                        </div>
+                                    </div>
+                                ';
+                             }
+
+                    echo '</div>';
+            }
+        }
+
     }
 
     public function view($id = 0)
@@ -167,6 +341,12 @@ class Courses extends Controller
 
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
+
+            $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+            $year = $data["student"][0]["year"];
+
+            $values["year"] = $year;
+
             $this->validate_template($values, $data["course_template"]);
 
             if ($id == 0){

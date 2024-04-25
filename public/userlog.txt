@@ -1,0 +1,34 @@
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 06:19PM	Student profile edited	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 07:05PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 07:06PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 07:06PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:27PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:28PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:28PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:29PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/1/editurl=courses/add_edit/1/edit	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:29PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:30PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:30PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:32PM	Course material created successfully	http://localhost/aka-hub/courses/material/add_edit/8/0/createurl=courses/material/add_edit/8/0/create	201
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:33PM	Course material deleted successfully	http://localhost/aka-hub/courses/delete_material/2url=courses/delete_material/2	200
+
+Not logged in	::1	04/25/24 08:35PM	User entered invalid email or password	http://localhost/aka-hub/auth/loginurl=auth/login	401
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:35PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:40PM	Reservation created by student	http://localhost/aka-hub/counselorView/bookReservation/47url=counselorView/bookReservation/47	201
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 09:22PM	Unauthorized user tried to edit Student profile	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3	401
+
