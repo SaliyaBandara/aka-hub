@@ -98,3 +98,11 @@ Not logged in	127.0.0.1	04/25/24 03:03PM	User entered invalid email or password	
 
 2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 03:03PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+Not logged in	127.0.0.1	04/25/24 03:08PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 03:08PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+Not logged in	127.0.0.1	04/25/24 03:09PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 03:09PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+

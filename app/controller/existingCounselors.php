@@ -15,6 +15,8 @@ class ExistingCounselors extends Controller
 
         $data["role"] = $_SESSION["user_role"];
         $data["counselors"] = $this->model('readModel')->getCounselors();
+        if (!$data["counselors"])
+            $data["counselors"] = array();
         $this->view->render('admin/existingCounselors/index', $data);
     }
 

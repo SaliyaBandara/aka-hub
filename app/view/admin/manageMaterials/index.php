@@ -37,7 +37,6 @@ $calendar = new Calendar();
                             <tbody>
 
                                 <?php
-
                                 if (isset($data["materials"])) {
                                     $i = 1;
                                     foreach ($data["materials"] as $material) {
@@ -81,7 +80,7 @@ $calendar = new Calendar();
                         margin-right: 5px;
                     } */
 
-                    .icons{
+                    .icons {
                         font-size: 24px;
                     }
 
