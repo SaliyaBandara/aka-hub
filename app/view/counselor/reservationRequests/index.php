@@ -32,51 +32,54 @@ $calendar = new Calendar();
             <!-- ===VIRAJITH=== -->
 
 
+            <div class="main-container">
+                <div class="container1">
+                <?php
+                // Check if there are reservation requests
+                if (empty($data["reservation_requests"])) {
+                    echo "<p>NO RESERVATION REQUESTS</p>";
+                } else {
+                    foreach ($data["reservation_requests"] as $reservation_request) {
+                        $img_src = USER_IMG_PATH . "default_avatar.jpg";
+                        if ($reservation_request["profile_img"] != null || $reservation_request["profile_img"] != "") {
+                            $img_src = USER_IMG_PATH . $reservation_request["profile_img"];
+                        }
 
-            <?php
-            // Check if there are reservation requests
-            if (empty($data["reservation_requests"])) {
-                echo "<p>No Reservations</p>";
-            } else {
-                foreach ($data["reservation_requests"] as $reservation_request) {
-                    $img_src = USER_IMG_PATH . "default_avatar.jpg";
-                    if ($reservation_request["profile_img"] != null || $reservation_request["profile_img"] != "") {
-                        $img_src = USER_IMG_PATH . $reservation_request["profile_img"];
-                    }
+                ?>
+                </div>
+                        <div class="wrapper">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="img"><img src="<?= $img_src ?>"></div>
+                                    <div class="details">
+                                        <span class="name"><?= $reservation_request["name"] ?></span>
+                                        <?php
+                                        // Assuming $reservation_request["year"] contains the year value (e.g., 1, 2, 3, ...)
+                                        $year = $reservation_request["year"];
 
-            ?>
-                    <div class="wrapper">
-                        <div class="card">
-                            <div class="content">
-                                <div class="img"><img src="<?= $img_src ?>"></div>
-                                <div class="details">
-                                    <span class="name"><?= $reservation_request["name"] ?></span>
-                                    <?php
-                                    // Assuming $reservation_request["year"] contains the year value (e.g., 1, 2, 3, ...)
-                                    $year = $reservation_request["year"];
+                                        // Define an array of suffixes
+                                        $suffixes = array("st", "nd", "rd");
+                                        // Determine the suffix based on the year value
+                                        if ($year >= 1 && $year <= 3) {
+                                            $suffix = $suffixes[$year - 1];
+                                        } else {
+                                            $suffix = "th";
+                                        }
 
-                                    // Define an array of suffixes
-                                    $suffixes = array("st", "nd", "rd");
-                                    // Determine the suffix based on the year value
-                                    if ($year >= 1 && $year <= 3) {
-                                        $suffix = $suffixes[$year - 1];
-                                    } else {
-                                        $suffix = "th";
-                                    }
-
-                                    // Output the formatted string
-                                    echo "<p>{$year}{$suffix} year Undergraduate</p>";
-                                    ?>
+                                        // Output the formatted string
+                                        echo "<p>{$year}{$suffix} year Undergraduate</p>";
+                                        ?>
+                                    </div>
                                 </div>
+                                <div id="popup-button">
+                                    <a href="#" class="view-button" data-reservation-id="<?= $reservation_request['id'] ?>">View <i class='bx bx-task'></i></a>
+                                </div>
+                                <!-- <a href="#divone" class="view-button">View</a> -->
                             </div>
-                            <div id="popup-button">
-                                <a href="#" class="view-button" data-reservation-id="<?= $reservation_request['id'] ?>">View <i class='bx bx-task'></i></a>
-                            </div>
-                            <!-- <a href="#divone" class="view-button">View</a> -->
                         </div>
-                    </div>
-            <?php }
-            } ?>
+                <?php }
+                } ?>
+            </div>
         </div>
         <div class="new">
             <div class="overlay" id="divone"></div>
@@ -404,6 +407,14 @@ $calendar = new Calendar();
         /* background: linear-gradient(to bottom, #86b7e7 0%, #bea2e7 100%); */
         background: #2684FF;
     }
+    .container1 p{
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            /* justify-self: center; */
+            /* justify-content: center; */
+        }
 </style>
 <style>
     .overlay {
