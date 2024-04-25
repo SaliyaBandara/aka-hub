@@ -45,7 +45,7 @@ class StudentProfile extends Controller
         $this->requireLogin();
         if ($_SESSION["user_id"] != $id){
             $action = "Unauthorized user tried to edit Student profile";
-            $state = 400;
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }
@@ -115,7 +115,7 @@ class StudentProfile extends Controller
         $this->requireLogin();
         if ($_SESSION["user_id"] != $id){
             $action = "Unauthorized user tried to edit Student settings";
-            $state = 400;
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }
@@ -144,7 +144,7 @@ class StudentProfile extends Controller
 
             if ($result){
                 $task = "Student settings edited";
-                $this->model("createModel")->createLogEntry($task, 200);
+                $this->model("createModel")->createLogEntry($task, 601);
                 
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             }

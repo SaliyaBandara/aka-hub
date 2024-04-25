@@ -52,7 +52,7 @@ class ApproveTeachingStudents extends Controller
         );
         if ($result) {
             $action = "Teaching Student Role accepted";
-            $status = "200";
+            $status = "606";
             $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
         } else {
@@ -120,7 +120,7 @@ class ApproveTeachingStudents extends Controller
 
         if ($result1) {
             $action = "Student Rep successfully removed access";
-            $status = "200";
+            $status = "607";
             $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
         } else {

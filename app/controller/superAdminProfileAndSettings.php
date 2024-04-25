@@ -6,7 +6,7 @@ class SuperAdminProfileAndSettings extends Controller
         $this->requireLogin();
         if ($_SESSION["user_role"] != 3) {
             $task = "Unauthorized user tried to access SuperAdmin Profile And Settings";
-            $this->model("createModel")->createLogEntry($task, 400);
+            $this->model("createModel")->createLogEntry($task, 401);
             $this->redirect();
         }
         $data = [
@@ -23,7 +23,7 @@ class SuperAdminProfileAndSettings extends Controller
         $this->requireLogin();
         if($_SESSION["user_id"] != $id){
             $task = "Unauthorized user tried to edit SuperAdmin Profile And Settings";
-            $this->model("createModel")->createLogEntry($task, 400);
+            $this->model("createModel")->createLogEntry($task, 401);
             $this->redirect();
         }
 
@@ -45,7 +45,7 @@ class SuperAdminProfileAndSettings extends Controller
 
             if ($result) {
                 $task = "SuperAdmin edited profile";
-                $this->model("createModel")->createLogEntry($task, 200);
+                $this->model("createModel")->createLogEntry($task, 601);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             } else {
                 die(json_encode(array("status" => "400", "desc" => "Error while " . "editing" . "ing profile")));

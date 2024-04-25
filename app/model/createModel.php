@@ -179,24 +179,32 @@ class createModel extends Model
             return true;
     }
 
-    public function createLogEntry($action , $status)
+    public function createLogEntry($action, $status)
     {
         // 200 => "Success",
         // 201 => "Created",
+        // 400 => "Bad Request",
         // 401 => "Unauthorized", 
-
+        // 600 => "User Created",
+        // 601 => "User Updated",
+        // 602 => "User Deleted",
+        // 603 => "User Logged In",
+        // 604 => "User Logged Out",
+        // 605 => "User Password Changed",
+        // 606 => "User Granted Permission",
+        // 607 => "User Revoked Permission"
 
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
         $ip = $_SERVER['REMOTE_ADDR'];
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].$_SERVER['QUERY_STRING'];
+        $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'];
         date_default_timezone_set("Asia/Colombo");
         $time = date("m/d/y h:iA", time());
         $contents = file_get_contents("userlog.txt");
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
-        $contents .= "User: $email\t IP: $ip\t Time: $time\t Action: $action\t URL: $url\t Status: $status\n\n";
+        $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
         file_put_contents("userlog.txt", $contents);
     }
 }
