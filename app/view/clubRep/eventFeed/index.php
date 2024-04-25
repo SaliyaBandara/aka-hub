@@ -28,6 +28,22 @@ else{
                     </a>
                 </div>
             <?php } ?>
+            <?php 
+                if($data["filter"] == 1){
+            ?>
+                <select id="club" name="club" placeholder="Select Your Club/Society" data-validation="required" class="form-control my-2">
+                    <?php 
+                        if (empty($data["clubs"])) {
+                            echo "<option value = '' class='font-medium text-muted'> There are no excisting clubs </option>";
+                        } else {
+                            echo "<option selected value=''> Select your club/society </option>";
+                            foreach ($data["clubs"] as $club) {        
+                                echo "<option value='{$club['id']}'>{$club['name']}</option>";
+                            }
+                        }
+                    ?>
+                </select>
+            <?php } ?>
             <h3 class="h3-CounselorFeed"><?= $data["topic"] ?></h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
@@ -35,7 +51,7 @@ else{
 
                         <?php 
                             if (empty($data["posts"])) {
-                                echo "<div class='font-meidum text-muted'>You can publish a post using 'Add Post' button above!</div>";
+                                echo "<div class='font-meidum text-muted'> No posts found! </div>";
                             } else {
                                 foreach ($data["posts"] as $posts) {
                                 $img_src = USER_IMG_PATH . $posts["post_image"];
@@ -52,7 +68,7 @@ else{
                                                         <?= $posts["name"] ?>
                                                     </div>
                                                     <div class = "publishedDate">
-                                                        <?= date('d/m/y H:i', strtotime($posts["created_datetime"])) ?>
+                                                        <?= date('d/m/y H:i', strtotime($posts["updated_datetime"])) ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -542,9 +558,14 @@ else{
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("danger", response['desc'])
-                        setTimeout(function() {
-                            location.reload();
-                        }, 500);
+
+                        let $countLabel = $this.closest('.likeCommentButton').find('.likeCountLabel');
+                        let currentCountText = $countLabel.text().trim();
+                        let currentCount = parseInt(currentCountText.split(' ')[0]);
+                        $countLabel.text((currentCount + 1) + ' Likes');
+
+                        $this.closest('.likePost').find('i').removeClass('bx bx-heart text-danger likeButton').addClass('bx bxs-heart text-danger likeButton');
+
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
@@ -594,22 +615,28 @@ else{
             var postId = $(this).attr("id");
             var comment = $(this).closest(".feedPost").find(".textBox").val();
             console.log(comment);
-
+            
             // comment = encodeURIComponent(comment);
 
             $.ajax({
-                url: `${BASE_URL}/eventFeed/postComment/${postId}/${comment}`,
+                url: `${BASE_URL}/eventFeed/postComment/${postId}`,
                 type: 'post',
                 data: {
-                    request: true
+                    request: true,
+                    comment : comment
                 },
                 dataType: 'json',
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        setTimeout(function() {
-                            location.reload();
-                        }, 500);
+
+                        let $commentCountLabel = $(`#${postId}`).closest(".feedPost").find("#commentCount");
+                        let currentCount = parseInt($commentCountLabel.text().trim().split(' ')[0]);
+                        $commentCountLabel.text((currentCount + 1) + ' Comments');
+
+                        $(`#${postId}`).closest(".feedPost").find(".textBox").val("");
+
+                        refreshComments(postId);
 
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
@@ -651,5 +678,49 @@ else{
                 }
             });
         });
+
+        $(document).on("change", "#club", function() {
+
+            let selectedValue = $("#club").val();
+
+            $.ajax({
+                url: `${BASE_URL}/eventFeed/filter`,
+                type: 'post',
+                data: {
+                    club_id: selectedValue
+                },
+                success: function(data) {
+                    if (data) {
+                        $('.feedContainer').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No posts found for the selected club.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+        function refreshComments(postId) {
+            let $commentsSection = $(`#${postId}`).closest(".feedPost").find("#commentsSection");
+
+            // Send AJAX request to fetch updated comments
+            $.ajax({
+                url: `${BASE_URL}/eventFeed/getComments`,
+                type: 'post',
+                data: {
+                    postId: postId
+                },
+                success: function(data) {
+                    // Replace the content of commentsSection with the updated comments
+                    $commentsSection.html(data);
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Failed to refresh comments");
+                }
+            });
+        }
     });
 </script>

@@ -122,8 +122,8 @@ class readModel extends Model
 
     public function getNotBookedTimeSlotsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status = ?", "ii", [$id, 1]);
-        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots t WHERE counselor_id = ? AND CONCAT(t.date, ' ', t.start_time) >= NOW() AND status = ?", "ii", [$id, 1]);
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status = ?", "ii", [$id, 1]);
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots t WHERE counselor_id = ? AND CONCAT(t.date, ' ', t.start_time) >= NOW() AND status = ?", "ii", [$id, 1]);
         if (count($result) > 0)
             return $result;
 
@@ -557,6 +557,30 @@ class readModel extends Model
         return false;
     }
 
+    public function getPostsOfClubs($club_id)
+    {
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u , club_representative as cr, clubs as c
+            WHERE p.type = 2 
+            AND p.posted_by = u.id
+            AND p.posted_by = cr.user_id
+            AND cr.club_id = c.id
+            AND c.id = ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "i", [$club_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getOnePost($post_id)
     {
         $result = $this->db_handle->runQuery("
@@ -736,7 +760,7 @@ class readModel extends Model
     public function getLatestReservation($user_id, $counselor_id)
     {
 
-        $sql = "SELECT * from reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = 1 AND r.student_id = ? AND t.counselor_id = ? ORDER BY CONCAT(t.date, ' ', t.start_time) LIMIT 1";
+        $sql = "SELECT * from reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = 1 AND  CONCAT(t.date, ' ', t.start_time) >= NOW() AND r.student_id = ? AND t.counselor_id = ? ORDER BY CONCAT(t.date, ' ', t.start_time) LIMIT 1";
         $result = $this->db_handle->runQuery($sql, "ii", [$user_id, $counselor_id]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
@@ -1716,6 +1740,13 @@ class readModel extends Model
             "posted_by" => [
                 "label" => "Who posted the post",
                 "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+
+            "updated_datetime" => [
+                "label" => "Post Updated Time",
+                "type" => "timestamp",
                 "validation" => "",
                 "skip" => true
             ],

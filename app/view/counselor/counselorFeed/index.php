@@ -459,9 +459,14 @@ else{
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("danger", response['desc'])
-                        setTimeout(function() {
-                            location.reload();
-                        }, 500);
+
+                        let $countLabel = $this.closest('.likeCommentButton').find('.likeCountLabel');
+                        let currentCountText = $countLabel.text().trim();
+                        let currentCount = parseInt(currentCountText.split(' ')[0]);
+                        $countLabel.text((currentCount + 1) + ' Likes');
+
+                        $this.closest('.likePost').find('i').removeClass('bx bx-heart text-danger likeButton').addClass('bx bxs-heart text-danger likeButton');
+                    
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
@@ -490,18 +495,24 @@ else{
             // comment = encodeURIComponent(comment);
 
             $.ajax({
-                url: `${BASE_URL}/counselorFeed/postComment/${postId}/${comment}`,
+                url: `${BASE_URL}/counselorFeed/postComment/${postId}`,
                 type: 'post',
                 data: {
-                    request: true
+                    request: true,
+                    comment: comment
                 },
                 dataType: 'json',
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        setTimeout(function() {
-                            location.reload();
-                        }, 500);
+
+                        let $commentCountLabel = $(`#${postId}`).closest(".feedPost").find("#commentCount");
+                        let currentCount = parseInt($commentCountLabel.text().trim().split(' ')[0]);
+                        $commentCountLabel.text((currentCount + 1) + ' Comments');
+
+                        $(`#${postId}`).closest(".feedPost").find(".textBox").val("");
+
+                        refreshComments(postId);
 
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
@@ -543,5 +554,25 @@ else{
                 }
             });
         });
+
+        function refreshComments(postId) {
+            let $commentsSection = $(`#${postId}`).closest(".feedPost").find("#commentsSection");
+
+            // Send AJAX request to fetch updated comments
+            $.ajax({
+                url: `${BASE_URL}/eventFeed/getComments`,
+                type: 'post',
+                data: {
+                    postId: postId
+                },
+                success: function(data) {
+                    // Replace the content of commentsSection with the updated comments
+                    $commentsSection.html(data);
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Failed to refresh comments");
+                }
+            });
+        }
     });
 </script>
