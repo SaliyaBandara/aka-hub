@@ -8,7 +8,7 @@ $sidebar = new Sidebar("Settings");
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
-        <div class="left">
+        <div class="leftContent">
             <div class="main-div">
                 <div class="section_header mb-1 flex flex-column">
                     <div class="title font-1-5 font-semibold flex align-center">
@@ -44,7 +44,7 @@ $sidebar = new Sidebar("Settings");
                 </div>
             </div>
         </div>
-        <div class = "right">
+        <div class = "rightContent">
             <div class = "profileDescriptionPanel">
                 <?php 
                     foreach ($data["counselor"] as $counselor) {
@@ -77,11 +77,11 @@ $sidebar = new Sidebar("Settings");
                 </div>
                 <?php  } ?>
             </div>
-            <div class="wrapper flex flex-column justify-center">
+            <div class="wrapper flex flex-column justify-center mx-2">
                 <?php
                     
                     if (empty($data["latestReservation"])) {
-                        echo "<div class='font-medium text-muted'>There are no upcoming reservatios for you!</div>";
+                        echo "<div class='font-medium text-muted my-2'>There are no upcoming reservatios for you!</div>";
                     } else {
                         $latestReservation = $data["latestReservation"][0];
                     ?>
@@ -106,20 +106,28 @@ $sidebar = new Sidebar("Settings");
     </div>
 
     <style>
-        .main-grid .left{
-            /* width: 50%; */
+        .main-grid .leftContent{
+            width: 50%;
             height: 700px;
             /* border: 1px solid red; */
             justify-content: center;
             align-items:center;
+
+            height: auto !important;
+            min-height: calc(100vh - var(--header-height) - 5rem);
+            padding: 2rem;
         }
 
-        .main-grid .right{
-            /* width: 50%; */
+        .main-grid .rightContent{
+            width: 50%;
             /* border: 1px solid red; */
-            justify-content: space-evenly;
+            justify-content: flex-start;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; 
+
+            flex-grow: 1;
+            height: auto !important;
+            margin-right: 0.75rem;
             
         }
 
@@ -129,6 +137,7 @@ $sidebar = new Sidebar("Settings");
             flex-wrap: wrap;
             border-radius: 10px;
             margin-right: 3rem !important;
+            /* border: 1px solid red; */
         }
 
         .descriptionPanelLeft{
@@ -174,18 +183,14 @@ $sidebar = new Sidebar("Settings");
             display:flex;
             margin: 1rem 0 0 1rem;
         }
+
         .button-bookNow{
             min-width: 120px;
             text-align: center;
         }
+
     </style>
     <style>
-        /* .wrapper{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        } */
 
         .todo_item {
             text-decoration: none;

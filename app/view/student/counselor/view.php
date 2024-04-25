@@ -8,7 +8,7 @@ $sidebar = new Sidebar("existingCounselors");
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
-        <div class="left">
+        <div class="leftContent">
             <div class = "counselorArticlesPanel">
                 <div class = "panelTitle">
                     <h4 class = "text-center"> Published Articles </h4>
@@ -34,7 +34,7 @@ $sidebar = new Sidebar("existingCounselors");
                 
             </div>
         </div>
-        <div class = "right">
+        <div class = "rightContent">
             <div class = "profileDescriptionPanel">
                 <?php 
                     foreach ($data["counselor"] as $counselor) {
@@ -76,20 +76,28 @@ $sidebar = new Sidebar("existingCounselors");
     </div>
 
     <style>
-        .main-grid .left{
-            /* width: 50%; */
+        .main-grid .leftContent{
+            width: 50%;
             height: 700px;
             /* border: 1px solid red; */
             justify-content: center;
             align-items:center;
+
+            height: auto !important;
+            min-height: calc(100vh - var(--header-height) - 5rem);
+            padding: 2rem;
         }
 
-        .main-grid .right{
-            /* width: 50%; */
+        .main-grid .rightContent{
+            width: 50%;
             /* border: 1px solid red; */
             justify-content: flex-start;
             display: flex;
             flex-direction: column; 
+
+            flex-grow: 1;
+            height: auto !important;
+            margin-right: 0.75rem;
             
         }
 

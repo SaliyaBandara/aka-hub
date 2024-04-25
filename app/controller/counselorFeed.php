@@ -179,9 +179,11 @@ class CounselorFeed extends Controller
 
     }
 
-    public function postComment($post_id, $comment)
+    public function postComment($post_id)
     {
         $this->requireLogin();
+
+        $comment = $_POST["comment"];
 
         $data["comment_template"] = $this->model('readModel')->getEmptyPostComments();
         $data["commentContent"] = $data["comment_template"]["empty"];
@@ -249,4 +251,46 @@ class CounselorFeed extends Controller
 
         $this->view->render('counselor/counselorFeed/postView', $data);
     }
+
+    
+    public function getComments()
+    {
+        $postId = $_POST['postId'];
+        $comments = $this->model('readModel')->getPostComments($postId);
+
+        $data['comments'] = $comments;
+
+        echo '
+            <div class="font-medium font-1 text-left mx-1"> Comments </div>';
+
+            $hasComments = false;
+
+            foreach ($data['comments'] as $comment) {
+                    echo '
+                        <div class="commentContent flex flex-row">
+                            <div class="userImageComment">
+                                <img src="' . USER_IMG_PATH . $comment["profile_img"] . '" alt="">
+                            </div>
+                            <div class="flex flex-column justify-center">
+                                <div class="text-medium mx-0-5 flex" style="font-size: 9px;">' . $comment['name'] . '</div>
+                                <div class="text-medium font-1 mx-0-5 flex">' . $comment['comment'] . '</div>
+                            </div>';
+
+                        if ($comment["user_id"] == $_SESSION["user_id"] || $comment["posted_by"] == $_SESSION["user_id"] || $_SESSION["user_role"] == 1) {
+                            echo '<div class="text-medium mx-0-5 text-danger flex justify-center align-center deleteComment" style="font-size: 18px; cursor: pointer;" data-id="' . $comment['id'] . '"> <i class="bx bx-trash"></i> </div>';
+                        }
+
+                        echo '</div>';
+
+                        $hasComments = true; // Set flag to true as comments exist
+            }
+
+                    // If no comments were found, display a message
+            if (!$hasComments) {
+                echo '<div class="text-muted font-medium mx-1 my-1 font-1" style="text-align: left;">No comments to show</div>';
+            }
+
+            echo '</div>';
+    }
+
 }
