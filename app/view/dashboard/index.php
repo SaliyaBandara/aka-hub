@@ -167,7 +167,7 @@ $calendar = new Calendar();
                     Are you a responsible student representative?
                 </div>
                 <div href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
-                    <div class = "btn btn-primary mb-1 form form-group repRequestButton justify-center align-center">
+                    <div class = "btn btn-primary mb-1 form form-group repRequestButton justify-center align-center text-center">
                         Send Request
                     </div>
                 </div>
@@ -187,13 +187,13 @@ $calendar = new Calendar();
                     }
 
 
-                    .repRequestButton{
+                    /* .repRequestButton{
                         border: 1px solid #2684ff;
                         background-color: var(--secondary-color);
                         color: white;
                         width: 100%;
                         text-align:center;
-                    }
+                    } */
 
                     .requestDescription{
                         text-align: center;

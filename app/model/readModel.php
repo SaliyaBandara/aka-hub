@@ -67,6 +67,46 @@ class readModel extends Model
         return false;
     }
 
+    public function getCoursesByYear($year){
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ?", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+
+    }
+
+    public function getCoursesBySemester($year, $semester){
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND semester = ?", "ii", [$year,$semester]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+
+    }
+
+    public function getCoursesBelowYear($year){
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year < ? ", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+
+    }
+
+    public function getCoursesByOnlySemester($semester){
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE semester = ? ", "i", [$semester]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+
+    }
+
     public function getAllChatUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE ?", "i", [1]);
@@ -84,6 +124,8 @@ class readModel extends Model
 
         return false;
     }
+
+
     public function getAllChatMessagesById($outgoing_id, $incoming_id)
     {
         $sql = "
@@ -132,7 +174,7 @@ class readModel extends Model
 
     public function checkExistingReservations($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE student_id = ? AND status = ? OR status = ?", "iii", [$id, 0, 1]);
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE student_id = ? AND (status = ? OR status = ?)", "iii", [$id, 0, 1]);
         if (count($result) > 0)
             return $result;
 
@@ -897,7 +939,8 @@ class readModel extends Model
             "year" => [
                 "label" => "Year",
                 "type" => "number",
-                "validation" => "required"
+                "validation" => "required",
+                "skip" => true
             ],
             "semester" => [
                 "label" => "Semester",

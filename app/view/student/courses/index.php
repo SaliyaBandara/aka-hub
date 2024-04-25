@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("courses");
-$calendar = new Calendar();
+
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -13,57 +13,84 @@ $calendar = new Calendar();
 
             <!-- section header -->
             <section>
-
-                <?php if (($data["teaching_student"] == 1)||($data["student_rep"])) { ?>
-                    <div class="mb-1 form-group">
-                        <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
-                            <i class='bx bx-plus'></i> Add Course
-                        </a>
-                    </div>
-                <?php } ?>
-
-                <div class="section_header mb-1 flex">
+                <div class="section_header mb-1 me-1 flex">
                     <div class="title font-1-5 font-semibold flex align-center">
                         <i class='bx bxs-calendar-check me-0-5'></i> Courses List
                     </div>
                 </div>
-
-
-                <!-- todo flex wrap -->
-                <div class="todo_flex_wrap flex flex-wrap">
-
-                    <!-- <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
+                <div class = "flex flex-row mb-1" style = "align-items: last baseline ">
+                    <?php if (($data["teaching_student"] == 1)||($data["student_rep"])) { ?>
+                        <div class="mb-1 form-group me-1">
+                            <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
+                                <i class='bx bx-plus'></i> Add Course
+                            </a>
                         </div>
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
-                        </div>
-                    </a> -->
+                    <?php } ?>
+                    
+                    <div class="form-group switchButton me-1">
+                        <a href="<?= BASE_URL ?>/courses/<?= $data["link"]?>" class="btn btn-primary">
+                            <i class='bx <?= $data["iClass"] ?>'></i> <?= $data["buttonValue"]?>
+                        </a>
+                    </div>
+                    
+                    <?php 
+                        if($data["filter"] == 1){
+                    ?>
+                        <select id="semester" name="semester" style = "width: 20%; " data-validation="required" class="form-control ">
+                            <option value = 0 >All</option>
+                            <option value = 1 >Semester 1</option>
+                            <option value = 2 >Semester 2</option>
+                        </select>
+                </div>
 
                     <?php
+                        } else {
+                    ?>
+                </div>
+                    <div class = "flex flex-row my-1">
+                        <select id="year" name="year" style = "width: 20%; " data-validation="required" class="form-control me-1">
+                            <option value = 0 >All</option>
+                            <option value = 1 >1</option>
+                            <option value = 2 >2</option>
+                            <option value = 3 >3</option>
+                            <option value = 4 >4</option>
+                        </select>
 
-                    // (
-                    //     [0] => Array
-                    //         (
-                    //             [id] => 1
-                    //             [name] => Computer Networks
-                    //             [code] => SCS2206
-                    //             [description] => Test Desc
-                    //             [cover_img] => course_cover_2023103110401565408c3737aa102280080016987290157030.jpg
-                    //             [year] => 2
-                    //             [semester] => 1
-                    //             [created_at] => 2023-10-31 05:24:24
-                    //             [updated_at] => 2023-10-31 05:24:24
-                    //         ) 
+                        <select id="semesterA" name="semesterA" style = "width: 20%; " data-validation="required" class="form-control me-1">
+                            <option value = 0 >All</option>
+                            <option value = 1 >Semester 1</option>
+                            <option value = 2 >Semester 2</option>
+                        </select>
 
+                        <div class="form-group filterButton me-1">
+                            <a href="#" class="btn btn-primary">
+                                <i class='bx bx-filter-alt' ></i> Filter
+                            </a>
+                        </div>
+                    </div>
+                    <?php } ?>
+
+                <h3 class="h3-CounselorFeed"><?= $data["topic"] ?></h3>
+
+                <!-- todo flex wrap -->
+                <div class="todo_flex_wrap flex flex-wrap" id= "courses">
+                    <?php
+                    if(empty($data["courses"])){
+                       echo  '<div class="font-meidum text-muted"> No courses added for this year! </div>';
+                    }
+                    else{
                     foreach ($data["courses"] as $course) {
                         $img_src = USER_IMG_PATH . $course["cover_img"];
-                    ?>
 
-                        <div href="./courses/view/<?= $course["id"] ?>" class="js-link todo_item flex align-center">
+                        if($data["filter"] == 2){
+                            $link = "./view/";
+                        }
+                        else{
+                            $link = "./courses/view/";
+                        }
+                    ?>
+                    
+                        <div href="<?= $link ?><?= $course["id"] ?>" class="js-link todo_item flex align-center">
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src="<?= $img_src ?>" alt="">
@@ -90,7 +117,7 @@ $calendar = new Calendar();
 
                         </div>
 
-                    <?php } ?>
+                    <?php } }?>
 
                 </div>
 
@@ -169,12 +196,12 @@ $calendar = new Calendar();
 
         <div class="right">
 
-            <div class = "flex-column justify-center align-center divButtonSection">
+            <div class = "flex-column justify-center align-center my-2 mx-2">
                 <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
                     Send your request now to join our "Teaching Army" !
                 </div>
                 <div href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
-                    <div class = "btn btn-primary mb-1 form form-group teachingRequestButton justify-center align-center">
+                    <div class = "btn btn-primary mb-1 form form-group teachingRequestButton justify-center align-center text-center">
                         Send Request
                     </div>
                 </a>
@@ -199,28 +226,6 @@ $calendar = new Calendar();
             height: 150vh;
             /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
             
-        }
-
-        .divButtonSection{
-            border-radius: 10px;
-            margin:1rem;
-            /* border: 1px solid red; */
-            justify-content: center;
-            padding:1rem;
-        }
-
-
-        .teachingRequestButton{
-            border: 1px solid #2684ff;
-            background-color: var(--secondary-color);
-            color: white;
-            width: 100%;
-            text-align:center;
-            text-decoration: none !important;
-        }
-
-        .divButtonSection a{
-            text-decoration: none !important;
         }
       
         .requestDescription{
@@ -315,6 +320,56 @@ $calendar = new Calendar();
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
+                }
+            });
+        });
+
+        $(document).on("change", "#semester", function() {
+
+            let selectedValue = $("#semester").val();
+
+            $.ajax({
+                url: `${BASE_URL}/courses/filter`,
+                type: 'post',
+                data: {
+                    semester: selectedValue
+                },
+                success: function(data) {
+                    if (data) {
+                        $('#courses').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No courses found for this semester.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+        $(document).on("click", ".filterButton", function() {
+
+            var year = $('#year').val();
+            var semesterA = $('#semesterA').val();
+
+            $.ajax({
+                url: `${BASE_URL}/courses/filterBelow`,
+                type: 'post',
+                data: {
+                    yearA: year,
+                    semesterA: semesterA
+                },
+                success: function(data) {
+                    if (data) {
+                        $('#courses').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No courses found for this semester.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
                 }
             });
         });
