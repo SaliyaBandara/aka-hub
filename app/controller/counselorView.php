@@ -110,7 +110,7 @@ class CounselorView extends Controller
         // die;
 
         if ($result) {
-            die(json_encode(["status" => 200, "desc" => "There are existing reservations. Cannot make a new reservation."]));
+            die(json_encode(["status" => 200, "desc" => "You have an existing reservation. Cannot make a new reservation."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "There are no existing reservations."]));
         }

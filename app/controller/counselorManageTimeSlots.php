@@ -40,7 +40,7 @@ class counselorManageTimeSlots extends Controller
             $date_time = $values['date'] . " " . $values['start_time'];
 
             if ($date_time < $today) {
-                die(json_encode(array("status" => "400", "desc" => "Date must be today or later")));
+                die(json_encode(array("status" => "400", "desc" => "Please select a upcoming date and time")));
             }
 
             if ($values['start_time'] >= $values['end_time']) {
