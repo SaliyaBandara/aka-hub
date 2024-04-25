@@ -7,7 +7,7 @@ class AdminPanel extends Controller
         if (($_SESSION["user_role"] != 1) && ($_SESSION["user_role"] != 3)) {
             //log Entry
             $action = "Unauthorized user tried to access Adminpanel";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

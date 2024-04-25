@@ -6,8 +6,8 @@ class counselorReservations extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 5) {
-            $action = "User tried to access counselor reservations without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to access counselor reservations without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -27,7 +27,7 @@ class counselorReservations extends Controller
         $this->requireLogin();
         if ($_SESSION["user_role"] != 5) {
             $action = "User tried to access reservation details without permission";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

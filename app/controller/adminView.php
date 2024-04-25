@@ -6,8 +6,8 @@ class AdminView extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 3) {
-            $action = "Admin successfully viewed admin account details of ";
-            $status = "200";
+            $action = "Unauthorized user tried to access Admin Details";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

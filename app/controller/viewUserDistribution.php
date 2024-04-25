@@ -5,7 +5,7 @@ class ViewUserDistribution extends Controller{
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to view User Distribution";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
@@ -22,7 +22,7 @@ class ViewUserDistribution extends Controller{
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to Preview User Details";
-            $status = "400";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }

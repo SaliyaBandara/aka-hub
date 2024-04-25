@@ -6,8 +6,8 @@ class CounselorPanel extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 5) {
-            $action = "User tried to access counselor panel without permission";
-            $status = "400";
+            $action = "Unauthorized User tried to access counselor panel without permission";
+            $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
