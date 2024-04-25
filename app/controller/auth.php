@@ -59,7 +59,7 @@ class Auth extends Controller
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/counselorPanel")));
                 } else {
                     //log Entry
-                    $action = "User logged in as Admin with email";
+                    $action = "User logged in as Student with email";
                     $status = "603";
                     $this->model("createModel")->createLogEntry($action, $status);
 
