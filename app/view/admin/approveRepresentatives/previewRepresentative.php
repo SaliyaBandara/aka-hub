@@ -8,9 +8,7 @@ $candidateCard = new CandidateCard();
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
-
     <?php
-
     if ($data["previewRepresentative"]) {
         $userDetails = $data["previewRepresentative"][0];
         $img_src = USER_IMG_PATH . $userDetails["profile_img"];
@@ -18,60 +16,51 @@ $candidateCard = new CandidateCard();
     ?>
     <div class="main-grid flex">
         <div class="left">
-            <div class="profileHeading">Preview Details of User</div>
+            <div class="title font-1-5 font-semibold flex align-center">
+                <i class='bx bxs-user-circle me-0-5'></i> Preview Details of User
+            </div>
             <div class="profileArea">
-                <div class="profileImageArea">
-                    <div class="profileImageContainer">
-                        <img class="profileImage" src=<?= $img_src ?> alt="No Image Uploaded">
-                    </div>
-                    <div class="editImageButton">
-                        <a href="<?= BASE_URL ?>/approveRepresentatives/">
-                            <input type="button" class="btn btn-primary" value="Back To Table" />
-                        </a>
-                    </div>
+                <div class="profileImageArea profileRow">
+                    <div class="profileImage"><img src="<?= $img_src ?>" alt="No Image Uploaded"></div>
                 </div>
-                <div class="profileDetailArea">
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Name : </div>
-                        <div class="profileDetailCell"><?= $userDetails['name'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Email Address : </div>
-                        <div class="profileDetailCell"><?= $userDetails['email'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Alt Email : </div>
-                        <?php
-                        if ($userDetails["alt_email"] == NULL) {
-                        ?>
-                            <div class="profileDetailCell"> Not Specified </div>
-                        <?php
-                        } else {
-                        ?>
-                            <div class="profileDetailCell"><?= $userDetails['alt_email'] ?></div>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Faculty : </div>
-                        <div class="profileDetailCell"><?= $userDetails['faculty'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Degree : </div>
-                        <div class="profileDetailCell"><?= $userDetails['degree'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Year : </div>
-                        <div class="profileDetailCell"><?= $userDetails['year'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Reg Number : </div>
-                        <div class="profileDetailCell"><?= $userDetails['student_id'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Index Number : </div>
-                        <div class="profileDetailCell"><?= $userDetails['index_number'] ?? '' ?></div>
+
+                <div class="profileDetailNames profileRow font-medium">
+                    <div>Name:</div>
+                    <div>Email Address:</div>
+                    <div>Index Number:</div>
+                    <div>Registration Number:</div>
+                    <div>Faculty:</div>
+                    <div>Degree:</div>
+                    <div>Study Year:</div>
+                    <div>Alternative Email:</div>
+                </div>
+                <div class="profileDetailValues profileRow">
+                    <div><?= $userDetails["name"] ?></div>
+                    <div><?= $userDetails["email"] ?></div>
+                    <?php
+                    if ($userDetails["index_number"] == " ") {
+                        echo '<div class = "text-danger" > Not Specified </div>';
+                    } else {
+                        echo '<div>' . $userDetails["index_number"] . '</div>';
+                    }
+                    ?>
+                    <div><?= $userDetails["student_id"] ?></div>
+                    <div><?= $userDetails["faculty"] ?></div>
+                    <div><?= $userDetails["degree"] ?></div>
+                    <div>Year <?= $userDetails["year"] ?></div>
+                    <?php
+                    if ($userDetails["alt_email"] == NULL) {
+                        echo '<div class = "text-danger" > Not Specified </div>';
+                    } else {
+                        echo '<div>' . $userDetails["alt_email"] . '</div>';
+                    }
+                    ?>
+                </div>
+                <div class="flex notificationSettings">
+                    <div>
+                        <a href="<?= BASE_URL ?>/approveRepresentatives" class="btn btn-primary">
+                            Back
+                        </a>
                     </div>
                 </div>
             </div>
@@ -79,148 +68,64 @@ $candidateCard = new CandidateCard();
     </div>
 
     <style>
+        .main-grid {}
+
         .main-grid .left {
-            width: 100%;
+            width: 100% !important;
             height: 100vh;
             margin: 20px;
         }
 
-        .editImageButton a {
-            text-decoration: none;
-        }
-
-        .profileHeading {
-            margin-left: 20px;
-            font-weight: bold;
-        }
-
-        .profileButton {
-            text-decoration: none;
-            color: white;
-        }
-
-        .notificationHeading {
-            margin-top: 20px;
-            margin-left: 20px;
-            font-weight: bold;
-        }
-
         .profileImage {
-            border-radius: 100px;
-            width: 200px;
-            height: 200px;
-            /* margin-left: 20px; */
+            border-radius: 200px;
+            border: 1px solid black;
+            width: 15rem;
+            height: 15rem;
             margin: 0 auto;
-            margin-bottom: 20px;
-            border: 5px solid rgba(38, 132, 255, 0.5)
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profileImage img {
+            display: block;
+            width: 30rem;
+            height: 30rem;
+        }
+
+        .profileImageArea {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            width: 40% !important;
+            /* border: 1px solid red; */
         }
 
         .profileArea,
-        .notificationDetailArea {
+        .notificationArea {
             display: flex;
-            height: 45%;
+            flex-direction: row;
+            height: auto;
+            /* border: 1px solid red; */
         }
 
-        .profileDetailArea {
-            width: 65%;
-            padding-top: 70px;
-
+        .profileRow {
+            margin: 2rem 1rem 2rem 0 !important;
+            /* border: 1px solid red; */
+            width: 40%;
         }
 
-        .profileImageArea {
-            width: 35%;
-            margin: 1%;
-            padding: 4%;
-
+        .profileRow div {
+            padding: 0.5rem;
         }
 
-        .profileImageArea {
-            width: 50%;
-            margin: 10px;
-            padding: 4%;
-            margin-top: 0px;
-        }
-
-        .profileButton {
-            width: 150px;
-            height: 30px;
-            background-color: #2684FF;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
+        .profileDetailNames {
+            justify-content: right;
+            text-align: left;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            border: none;
-
-        }
-
-        .profileButton:hover {
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .editImageButton {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 100px;
-        }
-
-        .profileDetailRow {
-            display: flex;
-            margin-top: 2%;
-        }
-
-        .profileDetailCell {
-            justify-content: flex-start;
-            margin-left: 5%;
-        }
-
-        .profileDetailHeader {
-            width: 25%;
-        }
-
-        .notificationHeaders {
-            width: 30%;
-        }
-
-        .notificationHeaders,
-        .notificationInputs {
-            padding-left: 30px;
-            margin-top: 30px;
-            width: 50%
-        }
-
-        .notificationHeader {
-            margin: 2%;
-            margin: 3%;
-        }
-
-        .notificationInputRow {
-            display: flex;
-            margin: 2.7%
-        }
-
-        .notificationInputCell {
-            margin-right: 10px;
-        }
-
-        .profileButtons {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 30px;
-        }
-
-        .saveButton input {
-            margin-right: 20px;
-
-        }
-
-        .changePasswordButton input {
-            width: 200px;
-            margin-left: 20px;
+            flex-direction: column;
+            width: 20% !important;
         }
     </style>
 

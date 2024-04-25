@@ -37,7 +37,7 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-chat'],
                     'viewlogs' => ['User Logs', 'bxs-dashboard'],
-                    'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
+                    'viewUserDistribution' => ['User Details', 'bxs-user-circle'],
                     'adminProfileAndSettings' => ['Admin Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $adminPages);

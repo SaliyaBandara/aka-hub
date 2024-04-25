@@ -1,0 +1,54 @@
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:43PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:47PM	Counselor Account Created for email : 2021cs180@stu.ucsc.cmb.ac.lk	http://127.0.0.1/aka-hub/addCounselors/index/0url=addCounselors/index/0	600
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:48PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:51PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:52PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:54PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/3/student_repurl=approveRepresentatives/acceptRole/3/student_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:55PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/57/student_repurl=approveRepresentatives/acceptRole/57/student_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:55PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/60/student_repurl=approveRepresentatives/acceptRole/60/student_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 06:55PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/63/student_repurl=approveRepresentatives/acceptRole/63/student_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:41PM	User requested to be a club rep	http://127.0.0.1/aka-hub/eventFeed/clickToBeClubRep/8url=eventFeed/clickToBeClubRep/8	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:44PM	User requested to be a club rep	http://127.0.0.1/aka-hub/eventFeed/clickToBeClubRep/3url=eventFeed/clickToBeClubRep/3	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:44PM	User requested to be a club rep	http://127.0.0.1/aka-hub/eventFeed/clickToBeClubRep/9url=eventFeed/clickToBeClubRep/9	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:46PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:49PM	Admin successfully accepted role of Club Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/4/club_repurl=approveRepresentatives/acceptRole/4/club_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:50PM	User posted a comment in event feed	http://127.0.0.1/aka-hub/eventFeed/postComment/20url=eventFeed/postComment/20	201
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:50PM	User posted a comment in event feed	http://127.0.0.1/aka-hub/eventFeed/postComment/20url=eventFeed/postComment/20	201
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:56PM	User deleted a post in event feed	http://127.0.0.1/aka-hub/eventFeed/delete/20url=eventFeed/delete/20	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 07:58PM	Post updated by counselor	http://127.0.0.1/aka-hub/counselorFeed/add_edit/5url=counselorFeed/add_edit/5	200
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 08:01PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+Not logged in	127.0.0.1	04/25/24 08:05PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/25/24 08:05PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+kasunsilva@gmail.com	127.0.0.1	04/25/24 08:05PM	User logged in as Counselor with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 08:21PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 08:31PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 08:32PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/25/24 08:33PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/25/24 08:34PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
