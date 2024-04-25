@@ -14,7 +14,7 @@ class ViewLogs extends Controller
             'title' => 'ViewLogs',
             'message' => 'Welcome to Aka Hub!'
         ];
-
+        $data['logs'] = $this->model('readModel')->readLogEntries();
         $this->view->render('admin/viewLogs/index', $data);
     }
 }
