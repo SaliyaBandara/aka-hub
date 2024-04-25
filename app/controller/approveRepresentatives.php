@@ -48,7 +48,7 @@ class ApproveRepresentatives extends Controller
             'title' => 'Rep Approvement',
             'message' => 'Welcome to Aka Hub!',
         ];
-        $data["previewRepresentative"] = $this->model('readModel')->getPreviewRepresentative($id);
+        $data["previewRepresentative"] = $this->model('readModel')->getPreviewRepresentativeWithClub($id);
         $this->view->render('admin/approveRepresentatives/previewAccessControl', $data);
     }
     public function acceptRole($id, $role)

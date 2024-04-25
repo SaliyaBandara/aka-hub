@@ -21,318 +21,146 @@ $candidateCard = new CandidateCard();
     ?>
     <div class="main-grid flex">
         <div class="left">
-            <div class="profileHeading">Preview Details of User</div>
+            <div class="title font-1-5 font-semibold flex align-center">
+                <i class='bx bxs-user-circle me-0-5'></i> Preview Details of User
+            </div>
             <div class="profileArea">
-                <div class="profileImageArea">
-                    <div class="profileImageContainer">
-                        <img class="profileImage" src=<?= $img_src ?> alt="No Image Uploaded">
-                    </div>
-                    <div class="editImageButton">
-                        <a href="<?= BASE_URL ?>/viewUserDistribution/">
-                            <input type="button" class="btn btn-primary" value="Back to Table" />
-                        </a>
-                    </div>
+                <div class="profileImageArea profileRow">
+                    <div class="profileImage"><img src="<?= $img_src ?>" alt="No Image Uploaded"></div>
                 </div>
-                <div class="profileDetailArea">
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Name : </div>
-                        <div class="profileDetailCell"><?= $userDetails['name'] ?? '' ?></div>
-                    </div>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Email : </div>
-                        <div class="profileDetailCell"><?= $userDetails['email'] ?? '' ?></div>
-                    </div>
-
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Alt Email : </div>
-                        <?php
-                        if ($userDetails["alt_email"] == NULL) {
-                        ?>
-                            <div class="profileDetailCell"> Not Specified </div>
-                        <?php
-                        } else {
-                        ?>
-                            <div class="profileDetailCell"><?= $userDetails['alt_email'] ?></div>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                <div class="profileDetailNames profileRow font-medium">
+                    <div>Name:</div>
+                    <div>Email Address:</div>
+                    <div>Alternative Email:</div>
+                    <?php if ($userDetails["club_rep"] === 1) {
+                        echo '<div>Club Name:</div>';
+                    } ?>
                     <?php
-                    if ($userDetails["role"] === 1) {
-                    ?>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Contact Number : </div>
-                            <div class="profileDetailCell"><?= $userDetails['contact_number'] ?? '' ?></div>
-                        </div>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Whatsapp Number : </div>
-                            <div class="profileDetailCell"><?= $userDetails['whatsapp_number'] ?? '' ?></div>
-                        </div>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Address : </div>
-                            <div class="profileDetailCell"><?= $userDetails['address'] ?? '' ?></div>
-                        </div>
-
-                    <?php
+                    if ($userDetails["role"] == 1) {
+                        echo '<div>Contact Number:</div>';
+                        echo '<div>Whatsapp Number:</div>';
+                        echo '<div>Address:</div>';
                     } else if ($userDetails["role"] === 5) {
+                        echo '<div>Contact Number:</div>';
+                        echo '<div>Counselor Type:</div>';
+                    } else if ($userDetails["role"] !== 3) {
+                        echo '<div>Faculty:</div>';
+                        echo '<div>Degree:</div>';
+                        echo '<div>Year:</div>';
+                        echo '<div>Registration Number:</div>';
+                        echo '<div>Index Number:</div>';
+                    }
                     ?>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Contact Number : </div>
-                            <div class="profileDetailCell"><?= $userDetails['contact'] ?? '' ?></div>
-                        </div>
-                        <?php
+                </div>
+                <div class="profileDetailValues profileRow">
+                    <div><?= $userDetails["name"] ?></div>
+                    <div><?= $userDetails["email"] ?></div>
+                    <?php
+                    if ($userDetails["alt_email"] == NULL) {
+                        echo '<div class = "text-danger" > Not Specified </div>';
+                    } else {
+                        echo '<div>' . $userDetails["alt_email"] . '</div>';
+                    }
+                    ?>
+                    <?php if ($userDetails["club_rep"] === 1) {
+                        echo '<div>Club Name:</div>';
+                    } ?>
+                    <?php
+                    if ($userDetails["role"] == 1) {
+                        echo '<div>' . $userDetails["contact_number"] . '</div>';
+                        echo '<div>' . $userDetails["whatsapp_number"] . '</div>';
+                        echo '<div>' . $userDetails["address"] . '</div>';
+                    } else if ($userDetails["role"] === 5) {
+                        echo '<div>' . $userDetails["contact"] . '</div>';
                         if ($userDetails["type"] === 1) {
-                        ?>
-                            <div class="profileDetailRow">
-                                <div class="profileDetailHeader">Counselor Type: </div>
-                                <div class="profileDetailCell">Professional Counselor</div>
-                            </div>
+                    ?>
+                            <div>Professional Counselor</div>
                         <?php
                         } else if ($userDetails["type"] === 2) {
                         ?>
-                            <div class="profileDetailRow">
-                                <div class="profileDetailHeader">Counselor Type: </div>
-                                <div class="profileDetailCell">Student Counselor</div>
-                            </div>
-                        <?php
-                        }
-                        ?>
+                            <div>Student Counselor</div>
                     <?php
+                        }
                     } else if ($userDetails["role"] !== 3) {
-                    ?>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Faculty : </div>
-                            <div class="profileDetailCell"><?= $userDetails['faculty'] ?? '' ?></div>
-                        </div>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Degree : </div>
-                            <div class="profileDetailCell"><?= $userDetails['degree'] ?? '' ?></div>
-                        </div>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Year : </div>
-                            <div class="profileDetailCell"><?= $userDetails['year'] ?? '' ?></div>
-                        </div>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Reg Number : </div>
-                            <div class="profileDetailCell"><?= $userDetails['student_id'] ?? '' ?></div>
-                        </div>
-                        <div class="profileDetailRow">
-                            <div class="profileDetailHeader">Index No : </div>
-                            <div class="profileDetailCell"><?= $userDetails['index_number'] ?? '' ?></div>
-                        </div>
-                        <?php
-                        if ($userDetails["club_rep"] == 1) {
-                        ?>
-                            <div class="profileDetailRow">
-                                <div class="profileDetailHeader">Club : </div>
-                                <div class="profileDetailCell"><?= $userDetails['club_name'] ?? '' ?></div>
-                            </div>
-                        <?php
-                        }
-                        ?>
-                    <?php
+                        echo '<div>' . $userDetails["faculty"] . '</div>';
+                        echo '<div>' . $userDetails["degree"] . '</div>';
+                        echo '<div>' . $userDetails["year"] . '</div>';
+                        echo '<div>' . $userDetails["student_id"] . '</div>';
+                        echo '<div>' . $userDetails["index_number"] . '</div>';
                     }
                     ?>
-                    <div class="profileDetailRow">
-                        <div class="profileDetailHeader">Roles : </div>
-                        <div class="profileDetailCellforRoles">
+                </div>
+                <div class="flex notificationSettings">
+                    <div>
+                        <a href="<?= BASE_URL ?>/viewUserDistribution" class="btn btn-primary">
+                            Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <?php
-                            if ($userDetails["student_rep"] === 1) {
-                            ?><div class="profileDetailCell"> Student Rep <div>
-                                    <?php
-                                }
-                                if ($userDetails["club_rep"] === 1) {
-                                    ?>
-                                        <div class="profileDetailCell"> Club Rep <div>
-                                            <?php
-                                        }
-                                        if ($userDetails["teaching_student"] === 1) {
-                                            ?>
-                                                <div class="profileDetailCell"> Teaching Student <div>
-                                                    <?php
-                                                }
-                                                if ($userDetails['role'] === 5) {
-                                                    ?>
-                                                        <div class="profileDetailCell"> Counselor <div>
-                                                            <?php
-                                                        } else if ($userDetails['role'] === 3) {
-                                                            ?>
-                                                                <div class="profileDetailCell"> SuperAdmin <div>
-                                                                    <?php
-                                                                } else if ($userDetails['role'] === 1) {
-                                                                    ?>
-                                                                        <div class="profileDetailCell"> Admin <div>
-                                                                            <?php
-                                                                        } else {
-                                                                            ?>
-                                                                                <div class="profileDetailCell"> Student <div>
-                                                                                    <?php
-                                                                                }
-                                                                                    ?>
-                                                                                    </div>
-                                                                                </div>
+    <style>
+        .main-grid {}
 
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+        .main-grid .left {
+            width: 100% !important;
+            height: 100vh;
+            margin: 20px;
+        }
 
-                                                                    <style>
-                                                                        .main-grid {}
+        .profileImage {
+            border-radius: 200px;
+            border: 1px solid black;
+            width: 15rem;
+            height: 15rem;
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-                                                                        .main-grid .left {
-                                                                            width: 100%;
-                                                                            height: 100vh;
-                                                                            margin: 20px;
-                                                                        }
+        .profileImage img {
+            display: block;
+            width: 30rem;
+            height: 30rem;
+        }
 
-                                                                        .editImageButton a {
-                                                                            text-decoration: none;
-                                                                        }
+        .profileImageArea {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            width: 40% !important;
+            /* border: 1px solid red; */
+        }
 
-                                                                        .profileHeading {
-                                                                            margin-left: 20px;
-                                                                            font-weight: bold;
-                                                                        }
+        .profileArea,
+        .notificationArea {
+            display: flex;
+            flex-direction: row;
+            height: auto;
+            /* border: 1px solid red; */
+        }
 
-                                                                        .profileButton {
-                                                                            text-decoration: none;
-                                                                            color: white;
-                                                                        }
+        .profileRow {
+            margin: 2rem 1rem 2rem 0 !important;
+            /* border: 1px solid red; */
+            width: 40%;
+        }
 
-                                                                        .notificationHeading {
-                                                                            margin-top: 20px;
-                                                                            margin-left: 20px;
-                                                                            font-weight: bold;
-                                                                        }
+        .profileRow div {
+            padding: 0.5rem;
+        }
 
-                                                                        .profileImage {
-                                                                            border-radius: 100px;
-                                                                            width: 200px;
-                                                                            height: 200px;
-                                                                            /* margin-left: 20px; */
-                                                                            margin: 0 auto;
-                                                                            margin-bottom: 20px;
-                                                                            border: 5px solid rgba(38, 132, 255, 0.5)
-                                                                        }
+        .profileDetailNames {
+            justify-content: right;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            width: 20% !important;
+        }
+    </style>
 
-                                                                        .profileArea,
-                                                                        .notificationDetailArea {
-                                                                            display: flex;
-                                                                            height: 45%;
-                                                                        }
-
-                                                                        .profileDetailArea {
-                                                                            width: 65%;
-                                                                            padding-top: 70px;
-
-                                                                        }
-
-                                                                        .profileImageArea {
-                                                                            width: 35%;
-                                                                            margin: 1%;
-                                                                            padding: 4%;
-
-                                                                        }
-
-                                                                        .profileImageArea {
-                                                                            width: 50%;
-                                                                            margin: 10px;
-                                                                            padding: 4%;
-                                                                            margin-top: 0px;
-                                                                        }
-
-                                                                        .profileButton {
-                                                                            width: 150px;
-                                                                            height: 30px;
-                                                                            background-color: #2684FF;
-                                                                            border-radius: 5px;
-                                                                            color: white;
-                                                                            text-align: center;
-                                                                            display: flex;
-                                                                            align-items: center;
-                                                                            justify-content: center;
-                                                                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                                                                            border: none;
-
-                                                                        }
-
-                                                                        .profileButton:hover {
-                                                                            cursor: pointer;
-                                                                            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-                                                                        }
-
-                                                                        .editImageButton {
-                                                                            display: flex;
-                                                                            align-items: center;
-                                                                            justify-content: center;
-                                                                            margin-top: 100px;
-                                                                        }
-
-                                                                        .profileDetailRow {
-                                                                            display: flex;
-                                                                            margin-top: 3%;
-                                                                            align-items: center;
-                                                                            /* justify-content: center; */
-                                                                        }
-
-                                                                        .profileDetailCellforRoles {
-                                                                            display: flex;
-                                                                        }
-
-                                                                        .profileDetailCellforRoles p {
-                                                                            display: flex;
-                                                                            margin-left: 10px;
-                                                                        }
-
-                                                                        .profileDetailCell {
-                                                                            justify-content: flex-start;
-                                                                        }
-
-                                                                        .profileDetailHeader {
-                                                                            width: 25%;
-                                                                        }
-
-                                                                        .notificationHeaders {
-                                                                            width: 30%;
-                                                                        }
-
-                                                                        .notificationHeaders,
-                                                                        .notificationInputs {
-                                                                            padding-left: 30px;
-                                                                            margin-top: 30px;
-                                                                            width: 50%
-                                                                        }
-
-                                                                        .notificationHeader {
-                                                                            margin: 2%;
-                                                                            margin: 3%;
-                                                                        }
-
-                                                                        .notificationInputRow {
-                                                                            display: flex;
-                                                                            margin: 2.7%
-                                                                        }
-
-                                                                        .notificationInputCell {
-                                                                            margin-right: 10px;
-                                                                        }
-
-                                                                        .profileButtons {
-                                                                            display: flex;
-                                                                            justify-content: flex-end;
-                                                                            margin-top: 30px;
-                                                                        }
-
-                                                                        .saveButton input {
-                                                                            margin-right: 20px;
-
-                                                                        }
-
-                                                                        .changePasswordButton input {
-                                                                            width: 200px;
-                                                                            margin-left: 20px;
-                                                                        }
-                                                                    </style>
-
-                                                                </div>
+</div>
