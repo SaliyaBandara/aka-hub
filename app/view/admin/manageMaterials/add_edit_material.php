@@ -373,18 +373,19 @@ $sidebar = new Sidebar("manageMaterials");
                 },
                 dataType: 'json',
                 success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", response['desc'])
+                    if (response.status == "200") { // Check for status as a string
+                        alertUser("success", response.desc);
                         setTimeout(function() {
                             history.go(-1);
                             window.close();
                         }, 2000);
-
-                    } else if (response['status'] == 403)
-                        alertUser("danger", response['desc'])
-                    else
-                        alertUser("warning", response['desc'])
+                    } else if (response.status == "403") {
+                        alertUser("danger", response.desc);
+                    } else {
+                        alertUser("warning", response.desc);
+                    }
                 },
+
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
                 }

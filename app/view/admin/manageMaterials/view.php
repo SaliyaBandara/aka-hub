@@ -42,7 +42,7 @@ $sidebar = new Sidebar("manageMaterials");
                             if ($data["role"] == 1) {
                             ?>
                                 <div class="todo_item_actions flex">
-                                    <a href="<?= BASE_URL ?>/manageMaterials/material/add_edit/<?= $course_material->material_ID ?>/<?= $data["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                    <a href="<?= BASE_URL ?>/manageMaterials/material/add_edit/<?= $course_material->material_ID ?>/<?= $course_material->course_id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
                                     <div class="btn delete-item" data-id="<?= $course_material->id ?>">
                                         <i class='bx bx-trash text-danger'></i>
                                     </div>
@@ -111,19 +111,25 @@ $sidebar = new Sidebar("manageMaterials");
                 }
                 ?>
 
-                <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/manageMaterials">
-                    <input type="button" class="profileButton" value="Back To Table" />
+                <a class="manageMaterialsLink" href="<?= BASE_URL ?>/manageMaterials">
+                    <input type="button" class="btn btn-primary" value="Back To Table" />
                 </a>
 
                 <style>
-                    .profileButton{
+                    .manageMaterialsLink {
+                        text-decoration: none;
+                    }
+
+                    .profileButton {
                         background-color: #2d7bf4;
                         color: white !important;
-                        border:none;
+                        border: none;
                     }
-                    .profileButton:hover{
+
+                    .profileButton:hover {
                         cursor: pointer;
                     }
+
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;

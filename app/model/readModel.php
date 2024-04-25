@@ -206,7 +206,7 @@ class readModel extends Model
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((date = ? AND start_time <= ? AND end_time > ?) OR (date = ? AND start_time < ? AND end_time >= ?) OR (date = ? AND ? < start_time AND ? > end_time))", "ssssssssss", [$counselor_id, $date, $start_time, $start_time, $date, $end_time, $end_time, $date, $start_time, $end_time]);
 
-       if (count($result) > 0)
+        if (count($result) > 0)
             return $result;
 
         return false;
@@ -463,12 +463,21 @@ class readModel extends Model
 
     public function getMaterialToView($id)
     {
-        $sql = "SELECT co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND ?";
+        $sql = "SELECT co.id AS course_id , co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND cm.id=?";
 
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
 
+        return false;
+    }
+
+    public  function getCourseIdFromMaterial($id)
+    {
+        $sql = "SELECT course_id from course_materials WHERE id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
         return false;
     }
 
@@ -750,7 +759,7 @@ class readModel extends Model
     public function getOneTimeSlot($id)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE id = ?", "i", [$id]);
-        if ($result!== false) {
+        if ($result !== false) {
             return $result;
         }
         return false;

@@ -43,23 +43,20 @@ class ManageMaterials extends Controller
         $this->view->render('admin/manageMaterials/view', $data);
     }
 
-    public function material($action = "add_edit", $course_id = 0, $id = 0)
+    public function material($action = "add_edit", $id = 0, $course_id = 0)
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1) {
-            $action = "Unauthorized User tried to add edit material without permission";
+            $task = "Unauthorized User tried to add edit material without permission";
             $state = 401;
-            $this->model("createModel")->createLogEntry($action, $state);
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
-        if ($course_id == 0)
-            $this->redirect();
 
         $data = [
-            'title' => $id == 0 ? 'Add Course Material' : 'Edit Course Material',
+            'title' => 'Edit Course Material',
             'message' => 'Welcome to Aka Hub!'
         ];
-
         $data["course"] = $this->model('readModel')->getOne("courses", $course_id);
         if (!$data["course"])
             $this->redirect();
@@ -81,24 +78,13 @@ class ManageMaterials extends Controller
 
             $this->validate_template($values, $data["data_template"]);
 
-            if ($id == 0) {
-                $result = $this->model('createModel')->insert_db("course_materials", $values, $data["data_template"]);
-                if ($result) {
-                    $action = "Course material created successfully";
-                    $state = 201;
-                    $this->model("createModel")->createLogEntry($action, $state);
-                }
-            } else {
-                $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
-                if ($result) {
-                    $action = "Course material updated successfully";
-                    $state = 200;
-                    $this->model("createModel")->createLogEntry($action, $state);
-                }
-            }
-            if ($result)
+            $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
+            if ($result) {
+                $task1 = "Course material updated successfully";
+                $state = 200;
+                $this->model("createModel")->createLogEntry($task1, $state);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+            }
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
 
@@ -107,13 +93,9 @@ class ManageMaterials extends Controller
             if (!$data["material"])
                 $this->redirect();
         }
-
-        // print_r($data["material"]);
-
         $data["id"] = $id;
         $data["action"] = $action;
 
-        $data["teaching_student"] = $_SESSION["teaching_student"];
         $this->view->render('admin/manageMaterials/add_edit_material', $data);
     }
 
