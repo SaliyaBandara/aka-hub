@@ -61,6 +61,7 @@ class Sidebar
                     'counselorManageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
                     'counselorChat' => ['Messages', 'bxs-chat'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
+                    'counselorSettings' => ['Profile Settings', 'bxs-cog'],
                 ];
 
                 $pages = array_merge($pages, $counselorPages);
