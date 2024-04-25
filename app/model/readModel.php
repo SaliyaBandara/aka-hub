@@ -789,6 +789,35 @@ class readModel extends Model
         return false;
     }
 
+
+    public function readLogEntries()
+    {
+        $filename = "userlog.txt";
+
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        $logEntries = [];
+        $i = 0;
+        foreach ($lines as $line) {
+            $parts = explode("\t", $line);
+
+            $logData = [
+                "id" => $i++,
+                'email' => $parts[0],
+                'ip_address' => $parts[1],
+                'timestamp' => $parts[2],
+                'message' => $parts[3],
+                'url' => $parts[4],
+                'response_code' => $parts[5]
+            ];
+
+            $logEntries[] = $logData;
+        }
+
+        return $logEntries;
+    }
+
+
     // get all the posts of the counselor
     // public function getCounselorPosts()
     // {
