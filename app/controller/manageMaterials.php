@@ -15,6 +15,8 @@ class ManageMaterials extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
         $data["materials"] = $this->model('readModel')->getMaterials();
+        if($data["materials"] == null)
+            $this->redirect();
         $this->view->render('admin/manageMaterials/index', $data);
     }
 
@@ -33,8 +35,11 @@ class ManageMaterials extends Controller
         ];
 
         $data["role"] = $_SESSION["user_role"];
-
+        if($data["role"] != 1)
+            $this->redirect();
         $data["id"] = $id;
+        if($id == 0)
+            $this->redirect();
         $data["course"] = $this->model('readModel')->getOne("course_materials", $id);
         if (!$data["course"])
             $this->redirect();
