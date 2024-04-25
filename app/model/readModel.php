@@ -113,7 +113,11 @@ class readModel extends Model
 
     public function getTimeSlotsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+        $query = "SELECT * FROM timeslots WHERE counselor_id = ?  AND status != ?  AND date >= CURDATE() AND start_time > CURTIME()";
+
+        $result = $this->db_handle->runQuery($query, "ii", [$id, 3]);
+
         if (count($result) > 0)
             return $result;
 
@@ -512,6 +516,16 @@ class readModel extends Model
 
         return false;
     }
+
+    // public function getOneCounselor($id)
+    // {
+    //     $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
+    //     $result = $this->db_handle->runQuery($sql, "ii", [1, $id]);
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
 
     public function getCounselorPosts($type, $posted_by)
     {
