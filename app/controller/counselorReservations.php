@@ -22,6 +22,21 @@ class counselorReservations extends Controller
         $this->view->render('counselor/Reservations/index', $data);
     }
 
+    public function sendEmail($id=0)
+    {
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 5))
+            $this->redirect();
+     
+        if ($id != 0) {
+            $data["user"] = $this->model('readModel')->getOne("user", $id);
+            if (!$data["user"])
+                $this->redirect();
+        }
+
+        $this->view->render('counselor/Reservations/custom_email_popup', $data); 
+    }
+
     public function completedReservation($id)
     {
         $this->requireLogin();

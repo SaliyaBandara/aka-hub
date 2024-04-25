@@ -44,7 +44,7 @@ $calendar = new Calendar();
                     <div class="card-content">
                         <div class="card">
                             <div class="image-content">
-                                <span class="overlay"></span>
+                                <span class="overlay1"></span>
 
                                 <div class="card-image">
                                     <img src="<?= $img_src ?>" alt="" class="card-img">
@@ -61,6 +61,9 @@ $calendar = new Calendar();
                     </div>
                    
                 <?php }} ?>
+            </div>
+            <div class="new">
+                <div class="overlay" id="divone"></div>
             </div>
             
 
@@ -351,7 +354,7 @@ $calendar = new Calendar();
             position: relative;
             row-gap: 5px;
         }
-        .overlay{
+        .overlay1{
             position: absolute;
             left: 0;
             top: 0;
@@ -428,6 +431,25 @@ $calendar = new Calendar();
             /* justify-content: center; */
         }
     </style>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        .overlay:target {
+            visibility: visible;
+            opacity: 1;
+        }
+</style>
 
 </div>
 
@@ -463,17 +485,50 @@ $calendar = new Calendar();
             }
         });
     });  
-    $(document).on("click", ".button-cancel", function(event) {
-        event.preventDefault(); 
-        let id = $(this).attr("data-id");
-        
-        // confirm cancellation
-        if (!confirm("Are you sure you want to cancel this Reservation?"))
-                return;
 
+    // $(document).on("click", ".button-cancel", function(event) {
+    //     event.preventDefault(); 
+    //     let id = $(this).attr("data-id");
+        
+    //     // confirm cancellation
+    //     if (!confirm("Are you sure you want to cancel this Reservation?"))
+    //             return;
+
+
+    //     $.ajax({
+    //         url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`, 
+    //         type: 'POST',
+    //         data: {
+    //             id: id
+    //         },
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             if (response.status === 200) {
+    //                 alertUser("success", response['desc'])
+    //                 setTimeout(() => {
+    //                     location.reload();
+    //                 }, 1000);
+            
+    //             } else {
+    //                 alertUser("warning", response['desc'])
+    //             }
+    //         },
+    //         error: function(ajaxContext) {
+    //             alertUser("danger", "Something Went Wrong")       
+    //         }
+    //     });
+    // });
+
+    $(document).on("click", ".button-cancel", function(event) {
+        event.preventDefault();
+        let id = $(this).attr("data-id");
+        console.log(id);
+
+        if (!confirm("Are you sure you want to Cancel this Reservation?"))
+            return;
 
         $.ajax({
-            url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`,
             type: 'POST',
             data: {
                 id: id
@@ -481,18 +536,34 @@ $calendar = new Calendar();
             dataType: 'json',
             success: function(response) {
                 if (response.status === 200) {
-                    alertUser("success", response['desc'])
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-            
+                    // Load popup form
+                    loadPopupForm(id);
+                    // Display success message
+                    alertUser("success", response['desc']);
                 } else {
-                    alertUser("warning", response['desc'])
+                    alertUser("warning", response['desc']);
                 }
             },
             error: function(ajaxContext) {
-                alertUser("danger", "Something Went Wrong")       
+                alertUser("danger", "Something Went Wrong");
             }
         });
     });
+
+    function loadPopupForm(reservationId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', BASE_URL + '/counselorReservations/sendEmail/' + reservationId, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                // Load popup form with email input
+                document.getElementById('divone').innerHTML = response; 
+                // set opacity to default
+                document.getElementById('divone').style.opacity = 1;
+                // set visibility to visible
+                document.getElementById('divone').style.visibility = 'visible';
+            }
+        };
+        xhr.send();
+    }
 </script>

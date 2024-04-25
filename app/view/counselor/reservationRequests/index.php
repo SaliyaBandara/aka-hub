@@ -83,6 +83,7 @@ $calendar = new Calendar();
         </div>
         <div class="new">
             <div class="overlay" id="divone"></div>
+            <div class="overlay" id="divtwo"></div>
         </div>
 
     </div>
@@ -408,13 +409,13 @@ $calendar = new Calendar();
         background: #2684FF;
     }
     .container1 p{
-            text-align: center;
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            /* justify-self: center; */
-            /* justify-content: center; */
-        }
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        /* justify-self: center; */
+        /* justify-content: center; */
+    }
 </style>
 <style>
     .overlay {
@@ -501,7 +502,7 @@ $calendar = new Calendar();
         console.log(id);
 
         if (!confirm("Are you sure you want to Decline this Request?"))
-                return;
+            return;
 
         $.ajax({
             url: `${BASE_URL}/counselorReservationRequests/declineReservation/${id}`,
@@ -512,19 +513,39 @@ $calendar = new Calendar();
             dataType: 'json',
             success: function(response) {
                 if (response.status === 200) {
-                    alertUser("success", response['desc'])
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-
+                    // Load popup form
+                    loadPopupForm(id);
+                    // Display success message
+                    alertUser("success", response['desc']);
                 } else {
-                    alertUser("warning", response['desc'])
+                    alertUser("warning", response['desc']);
                 }
             },
             error: function(ajaxContext) {
-                alertUser("danger", "Something Went Wrong")
+                alertUser("danger", "Something Went Wrong");
             }
         });
     });
+
+    function loadPopupForm(reservationId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', BASE_URL + '/counselorReservationRequests/sendEmail/' + reservationId, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                // set opacity to default
+                document.getElementById('divone').style.opacity = 0;
+                //set divone form visibility to hidden
+                document.getElementById('divone').style.visibility = 'hidden';
+                // Load popup form with email input
+                document.getElementById('divtwo').innerHTML = response; 
+                // set opacity to default
+                document.getElementById('divtwo').style.opacity = 1;
+                // set visibility to visible
+                document.getElementById('divtwo').style.visibility = 'visible';
+            }
+        };
+        xhr.send();
+    }
 </script>
 </div>

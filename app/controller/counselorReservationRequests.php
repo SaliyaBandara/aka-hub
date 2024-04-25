@@ -37,7 +37,22 @@ class counselorReservationRequests extends Controller
                 $this->redirect();
         }
 
-        $this->view->render('counselor/reservationRequests/popup', $data); 
+        $this->view->render('counselor/reservationRequests/accept_decline_popup', $data); 
+    }
+
+    public function sendEmail($id=0)
+    {
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 5))
+            $this->redirect();
+     
+        if ($id != 0) {
+            $data["user"] = $this->model('readModel')->getOne("user", $id);
+            if (!$data["user"])
+                $this->redirect();
+        }
+
+        $this->view->render('counselor/reservationRequests/custom_email_popup', $data); 
     }
 
     public function acceptReservation($id=0)
