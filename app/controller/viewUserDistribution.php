@@ -14,6 +14,8 @@ class ViewUserDistribution extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
         $data["users"] = $this->model('readModel')->getAllUsers();
+        if (!$data["users"])
+            $data["users"] = array();
         $this->view->render('admin/viewUserDistribution/index', $data);
     }
 
