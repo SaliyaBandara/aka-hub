@@ -77,7 +77,6 @@ $candidateCard = new CandidateCard();
             width: 15rem;
             height: 15rem;
             margin: 0 auto;
-            border: 5px solid rgba(38, 132, 255, 0.5);
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -97,7 +96,9 @@ $candidateCard = new CandidateCard();
             width: 40% !important;
             /* border: 1px solid red; */
         }
-
+        .profileArea{
+            margin-top: 50px;
+        }
         .profileArea,
         .notificationArea {
             display: flex;
