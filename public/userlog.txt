@@ -82,3 +82,19 @@
 
 2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:40PM	Course material updated successfully	http://127.0.0.1/aka-hub/manageMaterials/material/add_edit/3/5/editurl=manageMaterials/material/add_edit/3/5/edit	200
 
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:45PM	Unauthorized User tried to delete material without permission	http://127.0.0.1/aka-hub/courses/delete_material/3url=courses/delete_material/3	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:46PM	Unauthorized User tried to delete material without permission	http://127.0.0.1/aka-hub/courses/delete_material/3url=courses/delete_material/3	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:53PM	Course material deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/delete_material/3url=manageMaterials/delete_material/3	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:56PM	Course material deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/delete_material/1url=manageMaterials/delete_material/1	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:56PM	Course material updated successfully	http://127.0.0.1/aka-hub/manageMaterials/material/add_edit/2/5/editurl=manageMaterials/material/add_edit/2/5/edit	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 02:56PM	Course material deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/delete_material/2url=manageMaterials/delete_material/2	200
+
+Not logged in	127.0.0.1	04/25/24 03:03PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	127.0.0.1	04/25/24 03:03PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
