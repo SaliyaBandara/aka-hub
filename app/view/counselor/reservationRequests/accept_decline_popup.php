@@ -108,7 +108,7 @@
             position: relative;
         }
         form label{
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             font-weight: 600;
             letter-spacing: 2px;
         }
