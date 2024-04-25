@@ -1,59 +1,132 @@
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 11:25AM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
 
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:37AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/106url=counselorView/bookReservation/106	 Status: 201
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 01:49PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/16url=eventFeed/like/16	 Status: 200
 
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:38AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/107url=counselorView/bookReservation/107	 Status: 201
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:02PM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
 
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:39AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/108url=counselorView/bookReservation/108	 Status: 201
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:03PM	 Action: Club created by admin	 URL: http://localhost/aka-hub/clubs/add_edit/0url=clubs/add_edit/0	 Status: 201
 
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:20AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/109url=counselorView/bookReservation/109	 Status: 201
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:07PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/vade%20hariurl=eventFeed/postComment/20/vade hari	 Status: 200
 
-User: 2021cs020@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:27AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/112url=counselorView/bookReservation/112	 Status: 201
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:07PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/47url=eventFeed/deleteComment/47	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:27AM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:11PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/20url=eventFeed/like/20	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:27AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/113url=counselorView/bookReservation/113	 Status: 201
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:13PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/19url=eventFeed/like/19	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:58AM	 Action: Reservation created by student	 URL: http://localhost/aka-hub/counselorView/bookReservation/110url=counselorView/bookReservation/110	 Status: 201
+User: 2021cs175@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:15PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/18url=eventFeed/like/18	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:01AM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021is096@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:19PM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:01AM	 Action: Admin successfully removed Access	 URL: http://localhost/aka-hub/approveRepresentatives/removeAccess/2/teaching_studenturl=approveRepresentatives/removeAccess/2/teaching_student	 Status: 200
+User: 2021is096@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:19PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/19url=eventFeed/like/19	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:02AM	 Action: 	 URL: http://localhost/aka-hub/addCounselors/index/0url=addCounselors/index/0	 Status: 401
+User: 2021is096@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:19PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/3url=eventFeed/like/3	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:02AM	 Action: 	 URL: http://localhost/aka-hub/addCounselors/index/0url=addCounselors/index/0	 Status: 401
+User: 2021is096@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:19PM	 Action: User tried to like a post that has already been liked	 URL: http://localhost/aka-hub/eventFeed/like/19url=eventFeed/like/19	 Status: 400
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:02AM	 Action: 	 URL: http://localhost/aka-hub/addCounselors/index/0url=addCounselors/index/0	 Status: 401
+User: 2021is096@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:21PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/20url=eventFeed/like/20	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:02AM	 Action: 	 URL: http://localhost/aka-hub/addCounselors/index/0url=addCounselors/index/0	 Status: 401
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:35PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:02AM	 Action: 	 URL: http://localhost/aka-hub/addCounselors/index/0url=addCounselors/index/0	 Status: 401
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:36PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:03AM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/18url=eventFeed/like/18	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:36PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/49url=eventFeed/deleteComment/49	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:03AM	 Action: User tried to like a post that has already been liked	 URL: http://localhost/aka-hub/eventFeed/like/18url=eventFeed/like/18	 Status: 400
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:36PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/48url=eventFeed/deleteComment/48	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:03AM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/18/sdsurl=eventFeed/postComment/18/sds	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:37PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:03AM	 Action: Unauthorized user tried to view Admin Profile and Settings	 URL: http://localhost/aka-hub/viewlogsurl=viewlogs	 Status: 400
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:41PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/commenturl=eventFeed/postComment/20/comment	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:03AM	 Action: Unauthorized user tried to view Admin Profile and Settings	 URL: http://localhost/aka-hub/viewlogsurl=viewlogs	 Status: 400
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:43PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/commenturl=eventFeed/postComment/20/comment	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:04AM	 Action: User viewed Admin Profile and Settings	 URL: http://localhost/aka-hub/adminProfileAndSettingsurl=adminProfileAndSettings	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:44PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/commenturl=eventFeed/postComment/20/comment	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:04AM	 Action: User viewed Admin Profile and Settings	 URL: http://localhost/aka-hub/adminProfileAndSettingsurl=adminProfileAndSettings	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:44PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/52url=eventFeed/deleteComment/52	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:04AM	 Action: User viewed Admin Profile and Settings	 URL: http://localhost/aka-hub/adminProfileAndSettingsurl=adminProfileAndSettings	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:44PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/51url=eventFeed/deleteComment/51	 Status: 200
 
-User: 2021cs054@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:04AM	 Action: User viewed Admin Profile and Settings	 URL: http://localhost/aka-hub/adminProfileAndSettingsurl=adminProfileAndSettings	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:44PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/50url=eventFeed/deleteComment/50	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:04AM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:44PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/commenturl=eventFeed/postComment/20/comment	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:05AM	 Action: Comment posted	 URL: http://localhost/aka-hub/counselorFeed/postComment/15/fefgurl=counselorFeed/postComment/15/fefg	 Status: 201
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:45PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/54url=eventFeed/deleteComment/54	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:05AM	 Action: Comment deleted	 URL: http://localhost/aka-hub/counselorFeed/deleteComment/6url=counselorFeed/deleteComment/6	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 02:45PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/53url=eventFeed/deleteComment/53	 Status: 200
 
-User: 2021cs010@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:08AM	 Action: User logged in as Admin with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:01PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
 
-User: virajith@123.com	 IP: ::1	 Time: 04/25/24 04:09AM	 Action: User logged in as Counselor with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:02PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:03PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/56url=eventFeed/deleteComment/56	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:03PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/55url=eventFeed/deleteComment/55	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:03PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:04PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/57url=eventFeed/deleteComment/57	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:04PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/20/hellourl=eventFeed/postComment/20/hello	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:13PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/19/hellourl=eventFeed/postComment/19/hello	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:13PM	 Action: Comment posted	 URL: http://localhost/aka-hub/counselorFeed/postComment/5/hellourl=counselorFeed/postComment/5/hello	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 03:13PM	 Action: Comment deleted	 URL: http://localhost/aka-hub/counselorFeed/deleteComment/60url=counselorFeed/deleteComment/60	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:17PM	 Action: User deleted a post in event feed	 URL: http://localhost/aka-hub/eventFeed/delete/19url=eventFeed/delete/19	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:24PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:28PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:35PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:37PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:37PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:38PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:38PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:39PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:41PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:41PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:41PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:42PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:42PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:44PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:45PM	 Action: User created a new post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/0/url=eventFeed/add_edit/0/	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:45PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/21url=eventFeed/add_edit/21	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:46PM	 Action: User updated a post in event feed	 URL: http://localhost/aka-hub/eventFeed/add_edit/21url=eventFeed/add_edit/21	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:49PM	 Action: Comment posted	 URL: http://localhost/aka-hub/counselorFeed/postComment/5/Heyurl=counselorFeed/postComment/5/Hey	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:49PM	 Action: Comment deleted	 URL: http://localhost/aka-hub/counselorFeed/deleteComment/61url=counselorFeed/deleteComment/61	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:51PM	 Action: Comment posted	 URL: http://localhost/aka-hub/counselorFeed/postComment/5url=counselorFeed/postComment/5	 Status: 201
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:52PM	 Action: User posted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/postComment/21url=eventFeed/postComment/21	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:52PM	 Action: User liked a post in event feed	 URL: http://localhost/aka-hub/eventFeed/like/21url=eventFeed/like/21	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:52PM	 Action: User deleted a comment in event feed	 URL: http://localhost/aka-hub/eventFeed/deleteComment/63url=eventFeed/deleteComment/63	 Status: 200
+
+User: kusumalatha@gmail.com	 IP: ::1	 Time: 04/25/24 04:53PM	 Action: User logged in as Counselor with email	 URL: http://localhost/aka-hub/auth/loginurl=auth/login	 Status: 200
+
+User: kusumalatha@gmail.com	 IP: ::1	 Time: 04/25/24 04:53PM	 Action: Post created by counselor	 URL: http://localhost/aka-hub/counselorFeed/add_edit/0/url=counselorFeed/add_edit/0/	 Status: 201
+
+User: kusumalatha@gmail.com	 IP: ::1	 Time: 04/25/24 04:54PM	 Action: Post liked	 URL: http://localhost/aka-hub/counselorFeed/like/22url=counselorFeed/like/22	 Status: 200
+
+User: 2021cs138@stu.ucsc.cmb.ac.lk	 IP: ::1	 Time: 04/25/24 04:54PM	 Action: Comment posted	 URL: http://localhost/aka-hub/counselorFeed/postComment/22url=counselorFeed/postComment/22	 Status: 201
 
