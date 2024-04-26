@@ -2,7 +2,6 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("studentProfile");
-$candidateCard = new CandidateCard();
 ?>
 
 
