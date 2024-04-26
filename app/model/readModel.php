@@ -860,6 +860,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getMaterialsForCourse($course_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM course_materials WHERE course_id = ?", "i", [$course_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAllClubs()
     {
 
@@ -952,6 +961,59 @@ class readModel extends Model
     //     PRIMARY KEY (`id`),
     //     UNIQUE KEY `code` (`code`)
     //   );   
+
+
+    public function getEmptyCourseForAdmin()
+    {
+
+        $empty = [
+            "name" => "",
+            "code" => "",
+            "description" => "",
+            "year" => "",
+            "semester" => ""
+        ];
+
+        $template = [
+            "name" => [
+                "label" => "Course Name",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "code" => [
+                "label" => "Course Code",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "description" => [
+                "label" => "Course Description",
+                "type" => "text",
+                "validation" => ""
+            ],
+            "year" => [
+                "label" => "Year",
+                "type" => "number",
+                "validation" => "required",
+            ],
+            "semester" => [
+                "label" => "Semester",
+                "type" => "number",
+                "validation" => "required"
+            ],
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
 
     public function getEmptyCourse()
     {
