@@ -58,3 +58,57 @@ Not logged in	::1	04/26/24 08:10AM	User entered invalid email or password	http:/
 
 2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 09:09AM	User deleted a comment in event feed	http://localhost/aka-hub/eventFeed/deleteComment/65url=eventFeed/deleteComment/65	200
 
+samanbandara@gmail.com	127.0.0.1	04/26/24 10:43AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 10:46AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 10:46AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 10:47AM	Unauthorized User tried to access counselor panel without permission	http://127.0.0.1/aka-hub/counselorPanel/indexurl=counselorPanel/index	401
+
+2021is096@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 01:11PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 01:16PM	Unauthorized User tried to edit a specific course	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/5url=manageMaterials/courseEdit/5	401
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:17PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:41PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/1url=manageMaterials/courseEdit/1	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:41PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/1url=manageMaterials/courseEdit/1	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:42PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/1url=manageMaterials/courseEdit/1	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:45PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/1url=manageMaterials/courseEdit/1	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:45PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/4url=manageMaterials/courseEdit/4	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:46PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/4url=manageMaterials/courseEdit/4	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 01:55PM	Course deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/deleteCourse/4url=manageMaterials/deleteCourse/4	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:12PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/2url=manageMaterials/courseEdit/2	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:44PM	Course deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/deleteCourse/2url=manageMaterials/deleteCourse/2	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:45PM	Course deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/deleteCourse/1url=manageMaterials/deleteCourse/1	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:52PM	Course deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/deleteCourse/1url=manageMaterials/deleteCourse/1	200
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:52PM	Course deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/deleteCourse/5url=manageMaterials/deleteCourse/5	200
+
+2021is096@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 02:52PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+Not logged in	127.0.0.1	04/26/24 02:53PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/26/24 02:54PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 02:54PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 02:55PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 02:56PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:56PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/26/24 02:56PM	Course deleted successfully	http://127.0.0.1/aka-hub/manageMaterials/deleteCourse/7url=manageMaterials/deleteCourse/7	200
+

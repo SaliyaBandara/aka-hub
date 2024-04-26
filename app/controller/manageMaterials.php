@@ -4,7 +4,7 @@ class ManageMaterials extends Controller
     public function index()
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $action = "Unauthorized User tried to view manage materials page";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -23,7 +23,7 @@ class ManageMaterials extends Controller
     public function view($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $action = "Unauthorized User tried to view a specific material";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -48,7 +48,7 @@ class ManageMaterials extends Controller
     public function material($action = "add_edit", $id = 0, $course_id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $task = "Unauthorized User tried to add edit material without permission";
             $state = 401;
             $this->model("createModel")->createLogEntry($task, $state);
@@ -105,7 +105,7 @@ class ManageMaterials extends Controller
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $action = "Unauthorized user tried to delete material without permission";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -124,10 +124,11 @@ class ManageMaterials extends Controller
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course material")));
     }
 
-    public function courses(){
+    public function courses()
+    {
 
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $action = "Unauthorized User tried to view manage courses page";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -143,9 +144,10 @@ class ManageMaterials extends Controller
         $this->view->render('admin/manageMaterials/courses', $data);
     }
 
-    public function courseView($id){
+    public function courseView($id)
+    {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $action = "Unauthorized User tried to view a specific course";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -165,12 +167,13 @@ class ManageMaterials extends Controller
         $this->view->render('admin/manageMaterials/courseView', $data);
     }
 
-    public function courseEdit($id){
+    public function courseEdit($id)
+    {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1) {
-            $action = "Unauthorized User tried to edit a specific course";
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+            $task = "Unauthorized User tried to edit a specific course";
             $state = 401;
-            $this->model("createModel")->createLogEntry($action, $state);
+            $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
         $data = [
@@ -181,21 +184,47 @@ class ManageMaterials extends Controller
         if (!$data["course"])
             $this->redirect();
 
+        $data["data_template"] = $this->model('readModel')->getEmptyCourseForAdmin();
+        $data["material"] = $data["data_template"]["empty"];
+        $data["data_template"] = $data["data_template"]["template"];
+
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
-            $this->validate_template($values, $this->model('readModel')->getEmptyCourse());
-            $result = $this->model('updateModel')->update_one("courses", $values, $this->model('readModel')->getEmptyCourse(), "id", $id, "i");
+
+            $values["course_id"] = $id;
+            $this->validate_template($values, $data["data_template"]);
+            $result = $this->model('updateModel')->update_one("courses", $values, $data["data_template"], "id", $id, "i");
             if ($result) {
                 $task1 = "Course updated successfully";
                 $state = 200;
                 $this->model("createModel")->createLogEntry($task1, $state);
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             }
-            die(json_encode(array("status" => "400", "desc" => "Error while editing course")));
+            die(json_encode(array("status" => "400", "desc" => "Error while updating course")));
         }
-
         $data["id"] = $id;
-        $data["action"] = "add_edit";
         $this->view->render('admin/manageMaterials/add_edit_course', $data);
+    }
+
+    public function deleteCourse($id)
+    {
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+            $action = "Unauthorized User tried to delete a course";
+            $state = 401;
+            $this->model("createModel")->createLogEntry($action, $state);
+            $this->redirect();
+        }
+        if ($id == 0)
+            die(json_encode(array("status" => "400", "desc" => "Please provide a valid course id")));
+
+        $result = $this->model('deleteModel')->deleteOne("courses", $id);
+        if ($result) {
+            $task = "Course deleted successfully";
+            $state = "200";
+            $this->model("createModel")->createLogEntry($task, $state);
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+        }
+        die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 }
