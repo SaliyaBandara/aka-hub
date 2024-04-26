@@ -106,4 +106,26 @@ class updateModel extends Model
         $result = $this->db_handle->update($query, $valueTypesString, $values);
         return $result;
     }
+
+    public function restrictUser($id)
+    {
+        $query = "UPDATE user SET status = 0 WHERE id = ?";
+        $values = [$id];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
+
+    public function removeRestriction($id)
+    {
+        $query = "UPDATE user SET status = 1 WHERE id = ?";
+        $values = [$id];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
 }

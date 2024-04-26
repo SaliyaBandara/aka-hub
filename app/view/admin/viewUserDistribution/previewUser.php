@@ -2,7 +2,6 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("viewUserDistribution");
-$candidateCard = new CandidateCard();
 ?>
 
 
@@ -18,6 +17,7 @@ $candidateCard = new CandidateCard();
     ?>
     <?php
     $img_src = USER_IMG_PATH . $userDetails["profile_img"];
+    $id = $userDetails["id"];
     ?>
     <div class="main-grid flex">
         <div class="left">
@@ -92,10 +92,22 @@ $candidateCard = new CandidateCard();
                 </div>
                 <div class="flex notificationSettings">
                     <div>
-                        <a href="<?= BASE_URL ?>/viewUserDistribution" class="btn btn-primary">
+                        <a href="<?= BASE_URL ?>/viewUserDistribution" class="btn btn-info mx-1">
                             Back
                         </a>
                     </div>
+                    <div class="">
+                        <?php
+                        $isRestricted = $data["isRestricted"];
+                        $buttonClass = ($isRestricted == 1) ? 'btn-primary' : 'btn-danger';
+                        $buttonText = ($isRestricted == 1) ? 'Enable' : 'Restrict';
+                        $buttonLink = ($isRestricted == 1) ? BASE_URL . '/viewUserDistribution/restrictUser/' . $userDetails["id"] : BASE_URL . '/viewUserDistribution/restrictUser/' . $userDetails["id"];
+                        ?>
+                        <a class="btn restrictButton <?= $buttonClass ?> mx-0.5" href="<?= $buttonLink ?>">
+                            <?= $buttonText ?>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -108,6 +120,10 @@ $candidateCard = new CandidateCard();
             width: 100% !important;
             height: 100vh;
             margin: 20px;
+        }
+
+        .btn {
+            text-decoration: none;
         }
 
         .profileImage {
@@ -164,3 +180,30 @@ $candidateCard = new CandidateCard();
     </style>
 
 </div>
+
+<script>
+    $(document).on("click", ".restrictButton", function(event) {
+        event.preventDefault();
+        let button = $(this);
+        let url = button.attr("href");
+        if (!confirm("Are you sure you want to remove access from this user?")) {
+            return;
+        }
+        $.ajax({
+            url: `${BASE_URL}/viewUserDistribution/restrictUser/${id}`,
+            type: 'post',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 200) {
+                    alertUser("success", response.message);
+                    button.closest("div").find(".restrictButton").toggleClass("btn-danger btn-success").text("Enable");
+                } else {
+                    alertUser("warning", response.desc);
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong");
+            }
+        });
+    });
+</script>

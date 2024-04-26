@@ -87,6 +87,16 @@ class readModel extends Model
         return false;
     }
 
+
+    public function findWhetherRestricted($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT status FROM user WHERE id = ? AND status = ?", "ii", [$id, 0]);
+        if (count($result) > 0)
+            return true;
+
+        return false;
+    }
+
     public function getCoursesBelowYear($year)
     {
 
