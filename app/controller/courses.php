@@ -18,7 +18,7 @@ class Courses extends Controller
         ];
 
         $data["buttonValue"] = " Go To Archieved Courses";
-        $data["link"] = "viewArchievedCourses";
+        $data["link"] = "/viewArchievedCourses";
         $data["iClass"] = "bx-archive-in";
         $data["topic"] = "Onoing Courses in Your Year";
         $data["filter"] = 1;
@@ -44,7 +44,7 @@ class Courses extends Controller
         ];
 
         $data["buttonValue"] = "Go To Ongoing Courses";
-        $data["link"] = "index";
+        $data["link"] = "";
         $data["iClass"] = "bx-archive-out";
         $data["topic"] = "Archieved Courses";
         $data["filter"] = 2;
@@ -53,10 +53,10 @@ class Courses extends Controller
         $data["student_rep"] = $_SESSION["student_rep"];
 
         $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
-
         $year = $data["student"][0]["year"];
 
         $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
+
 
         $this->view->render('student/courses/index', $data);
     }
@@ -88,11 +88,11 @@ class Courses extends Controller
         $BASE_URL =  BASE_URL;
 
         if (empty($data["courses"])) {
-            echo "<div class='font-meidum text-muted'> No courses added! </div>";
+            echo "<div class='font-medium text-muted'> No courses added! </div>";
         } else {
             foreach ($data["courses"] as $course) {
                 echo '
-                    <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                        <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
@@ -105,15 +105,15 @@ class Courses extends Controller
                             </div>
                 ';
 
-                if (($data["teaching_student"] == 1) || ($data["student_rep"])) {
+                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
                     echo '
-                                    <div class="todo_item_actions">
-                                        <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
-                                        <div class="btn delete-item" data-id= ' . $course["id"] . '>
-                                            <i class="bx bx-trash text-danger"></i>
-                                        </div>
-                                    </div>
-                                ';
+                            <div class="todo_item_actions">
+                                <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                <div class="btn delete-item" data-id= ' . $course["id"] . '>
+                                    <i class="bx bx-trash text-danger"></i>
+                                </div>
+                            </div>
+                        ';
                 }
 
                 echo '</div>';
@@ -159,8 +159,9 @@ class Courses extends Controller
             echo "<div class='font-meidum text-muted'> Can't access this year! </div>";
         } else {
             foreach ($data["courses"] as $course) {
+
                 echo '
-                    <div href="./view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                        <div href="./view/' . $course["id"] . '" class="js-link todo_item flex align-center">
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
@@ -173,18 +174,19 @@ class Courses extends Controller
                             </div>
                 ';
 
-                if (($data["teaching_student"] == 1) || ($data["student_rep"])) {
+                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
                     echo '
-                                    <div class="todo_item_actions">
-                                        <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
-                                        <div class="btn delete-item" data-id= ' . $course["id"] . '>
-                                            <i class="bx bx-trash text-danger"></i>
-                                        </div>
-                                    </div>
-                                ';
+                            <div class="todo_item_actions">
+                                <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                <div class="btn delete-item" data-id= ' . $course["id"] . '>
+                                    <i class="bx bx-trash text-danger"></i>
+                                </div>
+                            </div>
+                        ';
                 }
 
                 echo '</div>';
+
             }
         }
     }
