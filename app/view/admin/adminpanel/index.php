@@ -2,7 +2,6 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("adminpanel");
-$chartFive = new AdminPanelChartFive();
 $calendar = new Calendar();
 ?>
 
@@ -23,7 +22,7 @@ $calendar = new Calendar();
                 <div class="cardActiveUsers">
                     <?php if ($data["count_role_users"] !== null) : ?>
                         <div class="divUsersContainor">
-                            <?= $data["count_role_users"] ?> Roled Users
+                            <?= $data["count_role_users"] ?> Users with Roles
                         </div>
                     <?php endif; ?>
                 </div>
@@ -36,39 +35,70 @@ $calendar = new Calendar();
                 </div>
             </div>
             <div class="fourGraphsContainor">
+                <div class="printDiv">
+                    <div class="printInnerDiv btn btn-info mx-2" style="max-width: 10%;">
+                        <i class='bx bxs-printer'></i> Print
+                    </div>
+                </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
+                        <p class="mb-1"><b>User Registration For the System</b></p>
                         <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
+                        <p class="mb-1"><b>Distribution of Users with Roles</b></p>
                         <div id="chartContainer2" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
+                        <p class="mb-1"><b>User engagement in the System</b></p>
                         <div id="chartContainer4" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
+                        <p class="mb-1"><b>User Distribution in 4 years</b></p>
                         <div id="chartContainer3" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainorFive">
+                        <p class="mb-1"><b>Counselor Resevation Requests</b></p>
                         <div id="chartContainer5" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="right">
+        <!-- <div class="right">
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <style>
+        /* .printDiv {
+            width: 100%;
+            height: 2rem;
+            display: flex;
+        }
+
+        .printInnerDiv {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        .printDiv img {
+            width: 1.5rem;
+            height: 1.5rem;
+        } */
+
         .main-grid .left {
-            width: 75%;
+            width: 100%;
             height: 150vh;
             padding-bottom: 50px;
         }
@@ -164,6 +194,8 @@ $calendar = new Calendar();
             justify-content: center;
             align-items: center;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         .graphContainorFive {
@@ -172,6 +204,8 @@ $calendar = new Calendar();
             display: flex;
             justify-content: center;
             align-items: center;
+            display: flex;
+            flex-direction: column;
         }
     </style>
 
@@ -187,6 +221,7 @@ $calendar = new Calendar();
     document.addEventListener("DOMContentLoaded", function() {
         var dataPoints = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
         var chart1 = new CanvasJS.Chart("chartContainer1", {
+            backgroundColor: "transparent",
             animationEnabled: true,
             exportEnabled: true,
             axisY: {
@@ -209,6 +244,7 @@ $calendar = new Calendar();
     document.addEventListener("DOMContentLoaded", function() {
         var dataPoints = <?php echo json_encode($data["chartTwo"], JSON_NUMERIC_CHECK); ?>;
         var chart2 = new CanvasJS.Chart("chartContainer2", {
+            backgroundColor: "transparent",
             animationEnabled: true,
             exportEnabled: true,
             data: [{
@@ -231,6 +267,7 @@ $calendar = new Calendar();
     document.addEventListener("DOMContentLoaded", function() {
         var dataPoints = <?php echo json_encode($data["chartThree"], JSON_NUMERIC_CHECK); ?>;
         var chart3 = new CanvasJS.Chart("chartContainer3", {
+            backgroundColor: "transparent",
             animationEnabled: true,
             exportEnabled: true,
             theme: "light2",
@@ -250,6 +287,7 @@ $calendar = new Calendar();
     document.addEventListener("DOMContentLoaded", function() {
         var dataPoints = <?php echo json_encode($data["chartFour"], JSON_NUMERIC_CHECK); ?>;
         var chart4 = new CanvasJS.Chart("chartContainer4", {
+            backgroundColor: "transparent",
             animationEnabled: true,
             exportEnabled: true,
             data: [{
@@ -271,6 +309,7 @@ $calendar = new Calendar();
     document.addEventListener("DOMContentLoaded", function() {
         var dataPoints = <?php echo json_encode($data["chartFive"], JSON_NUMERIC_CHECK); ?>;
         var chart5 = new CanvasJS.Chart("chartContainer5", {
+            backgroundColor: "transparent",
             animationEnabled: true,
             exportEnabled: true,
             theme: "light2",
