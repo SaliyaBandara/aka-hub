@@ -30,9 +30,13 @@ $calendar = new Calendar();
                 <div class="todo_flex_wrap flex flex-wrap">
 
                     <?php
-                    foreach ($data["main_events"] as $main_events) {
-                    ?>
 
+                    if(empty($data["main_events"])){
+                        echo "<div class='font-medium text-muted'>You don't have any upcoming tasks!</div>";
+                    }
+                    else{
+                        foreach ($data["main_events"] as $main_events) {
+                    ?>
                         <a href="#" class="todo_item flex align-center">
                             <div>
                                 <?php
@@ -75,7 +79,7 @@ $calendar = new Calendar();
                                 <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
                             </div>
                         </a>
-                    <?php } ?>
+                    <?php } }?>
 
                 </div>
 

@@ -27,10 +27,17 @@ if ($_SESSION["user_role"] == 1) {
                     </a>
                 </div>
             <?php } ?>
+            <div class="section_header mb-1 flex">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-calendar-star me-0-5'></i> Club Event Feed
+                </div>
+            </div>
+            
             <?php
             if ($data["filter"] == 1) {
             ?>
-                <select id="club" name="club" placeholder="Select Your Club/Society" data-validation="required" class="form-control my-2">
+                <div class='font-medium text-muted mb-1 mt-2'>Select a club to filter posts</div>
+                <select id="club" name="club" placeholder="Select Your Club/Society" data-validation="required" class="form-control mb-2">
                     <?php
                     if (empty($data["clubs"])) {
                         echo "<option value = '' class='font-medium text-muted'> There are no excisting clubs </option>";
@@ -43,14 +50,13 @@ if ($_SESSION["user_role"] == 1) {
                     ?>
                 </select>
             <?php } ?>
-            <h3 class="h3-CounselorFeed"><?= $data["topic"] ?></h3>
             <div class="divFeed">
                 <div class="divCounselorFeed">
                     <div class="feedContainer">
 
                         <?php
                         if (empty($data["posts"])) {
-                            echo "<div class='font-meidum text-muted'> No posts found! </div>";
+                            echo "<div class='font-medium text-muted'> No posts found! </div>";
                         } else {
                             foreach ($data["posts"] as $posts) {
                                 $img_src = USER_IMG_PATH . $posts["post_image"];
@@ -399,9 +405,9 @@ if ($_SESSION["user_role"] == 1) {
         cursor: pointer;
     }
 
-    .h3-CounselorFeed {
+    /* .h3-CounselorFeed {
         text-align: center;
-    }
+    } */
 
     .divCounselorFeed {
         width: 80%;
