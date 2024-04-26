@@ -21,7 +21,11 @@ else{
                     </a>
                 </div>
             <?php } ?>
-            <h3 class="h3-CounselorFeed">Counselor Feed</h3>
+            <div class="section_header mb-1 flex">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-donate-heart me-0-5'></i> Counselor Articles
+                </div>
+            </div>
             <div class="divFeed flex justify-center">
                 <div class="divCounselorFeed">
                     <div class="feedContainer">
@@ -262,7 +266,7 @@ else{
     .feedContainor {
         width: 100%;
         height: 100%;
-        justify-content: center;
+        /* justify-content: center; */
     }
 
     .divFeed{
@@ -270,7 +274,7 @@ else{
         width: 100%;
         height: 100%;
         display: flex;
-        justify-content: center;
+        /* justify-content: center; */
     }
 
 
@@ -322,7 +326,7 @@ else{
         width: 65%;
         height: 100%;
         display: flex;
-        justify-content: center;
+        /* justify-content: center; */
     }
 
     .userImage{

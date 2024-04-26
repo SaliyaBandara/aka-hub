@@ -58,3 +58,45 @@ Not logged in	::1	04/26/24 08:10AM	User entered invalid email or password	http:/
 
 2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 09:09AM	User deleted a comment in event feed	http://localhost/aka-hub/eventFeed/deleteComment/65url=eventFeed/deleteComment/65	200
 
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 10:51AM	User posted a comment in event feed	http://localhost/aka-hub/eventFeed/postComment/20url=eventFeed/postComment/20	201
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 10:52AM	User deleted a comment in event feed	http://localhost/aka-hub/eventFeed/deleteComment/66url=eventFeed/deleteComment/66	200
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:04AM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:07AM	User posted a comment in event feed	http://localhost/aka-hub/eventFeed/postComment/20url=eventFeed/postComment/20	201
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:07AM	User deleted a comment in event feed	http://localhost/aka-hub/eventFeed/deleteComment/67url=eventFeed/deleteComment/67	200
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:07AM	User requested to be a club rep	http://localhost/aka-hub/eventFeed/clickToBeClubRep/11url=eventFeed/clickToBeClubRep/11	200
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:08AM	User requested to be a club rep	http://localhost/aka-hub/eventFeed/clickToBeClubRep/8url=eventFeed/clickToBeClubRep/8	200
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:10AM	Student profile edited	http://localhost/aka-hub/studentProfile/add_edit/58url=studentProfile/add_edit/58	200
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:10AM	Student settings edited	http://localhost/aka-hub/studentProfile/add_edit_settings/58url=studentProfile/add_edit_settings/58	601
+
+kasunsilva@gmail.com	::1	04/26/24 11:12AM	User logged in as Counselor with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:19AM	User requested to be a role	http://localhost/aka-hub/Courses/clickToBeRole/student_repurl=Courses/clickToBeRole/student_rep	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:19AM	User logged in as Admin with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:20AM	Admin successfully accepted role of Student Representative	http://localhost/aka-hub/approveRepresentatives/acceptRole/58/student_repurl=approveRepresentatives/acceptRole/58/student_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:21AM	Club created by admin	http://localhost/aka-hub/clubs/add_edit/0url=clubs/add_edit/0	201
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:21AM	Club updated by admin	http://localhost/aka-hub/clubs/add_edit/13url=clubs/add_edit/13	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:21AM	Admin successfully removed Access	http://localhost/aka-hub/approveRepresentatives/removeAccess/58/student_repurl=approveRepresentatives/removeAccess/58/student_rep	607
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:22AM	Unauthorized User tried to access counselor view without permission	http://localhost/aka-hub/counselorView/index/5url=counselorView/index/5	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:22AM	Unauthorized User tried to access counselor view without permission	http://localhost/aka-hub/counselorView/index/5url=counselorView/index/5	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:22AM	Unauthorized User tried to access counselor view without permission	http://localhost/aka-hub/counselorView/index/24url=counselorView/index/24	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 11:26AM	User liked a post in event feed	http://localhost/aka-hub/eventFeed/like/21url=eventFeed/like/21	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 12:09PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
