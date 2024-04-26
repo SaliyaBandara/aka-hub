@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("superAdminProfileAndSettings");
-$candidateCard = new CandidateCard();
+
 ?>
 
 
