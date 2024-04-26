@@ -131,7 +131,7 @@ $sidebar = new Sidebar("courses");
                 </div>
 
         <?php }
-        } ?>
+        }} ?>
 
     </div>
 
