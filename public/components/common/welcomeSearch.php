@@ -48,16 +48,52 @@ class WelcomeSearch
 
 
                             <div class="profile__img">
-                                <img src="<?= USER_IMG_PATH ?><?= $_SESSION["user_img"] ?>" alt="">
+                                <img src="<?= USER_IMG_PATH ?><?= $_SESSION["user_img"] ?>" alt="student profile image">
                             </div>
-
+                            <?php
+                            $dashboardController = "";
+                            $profile = "";
+                            if (($_SESSION["user_role"]) == 1) {
+                                $dashboardController = "adminpanel";
+                                $profile = "adminProfileAndSettings";
+                            } else if (($_SESSION["user_role"]) == 3) {
+                                $dashboardController = "adminpanel";
+                                $profile = "superAdminProfileAndSettings";
+                            } else if (($_SESSION["user_role"]) == 5) {
+                                $dashboardController = "counselorPanel";
+                                $profile = "counselorSettings";
+                            } ?>
                             <div class="list__wrapper">
                                 <ul>
-                                    <li><a href="<?= BASE_URL ?>/dashboard">Dashboard</a></li>
-                                    <li><a href="<?= BASE_URL ?>/studentProfile">Profile</a></li>
+                                    <li><a href="<?= BASE_URL ?><?php $dashboardController ?>">Dashboard</a></li>
+                                    <li><a href="<?= BASE_URL ?><?php $profile ?>">Profile</a></li>
+                                    <li><a href="<?= BASE_URL ?>/logout">Logout</a></li>
+                                </ul>
+                            </div><?php
+                                    $dashboardController = "";
+                                    $profile = "";
+                                    if ($_SESSION["user_role"] == 1) {
+                                        $dashboardController = "adminpanel";
+                                        $profile = "adminProfileAndSettings";
+                                    } else if ($_SESSION["user_role"] == 3) {
+                                        $dashboardController = "adminpanel";
+                                        $profile = "superAdminProfileAndSettings";
+                                    } else if ($_SESSION["user_role"] == 5) {
+                                        $dashboardController = "counselorPanel";
+                                        $profile = "counselorSettings";
+                                    } else {
+                                        $dashboardController = "dashboard";
+                                        $profile = "studentProfile";
+                                    }
+                                    ?>
+                            <div class="list__wrapper">
+                                <ul>
+                                    <li><a href="<?= BASE_URL ?>/<?= $dashboardController ?>">Dashboard</a></li>
+                                    <li><a href="<?= BASE_URL ?>/<?= $profile ?>">Profile</a></li>
                                     <li><a href="<?= BASE_URL ?>/logout">Logout</a></li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
 
