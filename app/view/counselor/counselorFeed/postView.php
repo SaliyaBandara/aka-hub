@@ -21,9 +21,10 @@ else{
             <div class = "post flex justify-center flex-column align-center">
                 <h2 class="postTitle mt-2"><?= $post["title"]?></h2>
                 <h3 class="postTitle mt-1 mb-2 font-medium"><em> by Counselor <?= $post["name"]?></em></h3>
-                <div class="postImage flex justify-center">
-                    <img src="<?= $img_src ?>" alt="">
+                <div class="flex justify-center align-center">
+                    <img src="<?= $img_src ?>" alt="" class="postImage flex justify-center align-center">
                 </div>
+
                 <div class = "postButtons flex flex-row">
                     <div class = editDelete>
                         <?php if ($_SESSION["user_role"] == 5 || $_SESSION["user_role"] == 1) { ?>
@@ -50,7 +51,7 @@ else{
 
                         ?>
                         
-                        <a class = "likePost" data-id = "<?= $post["id"] ?>">
+                        <a class = "likePost" data-id = "<?= $post["post_id"] ?>">
                             <i class= "<?= $heartIconClass ?>"></i>
                         </a>
                         <label class = "likeCountLabel font-medium">
@@ -58,27 +59,35 @@ else{
                         </label>
                     </div>
                 </div>
+
                 <div class="postContent">
                     <p style="white-space: pre-line;" ><?= $post["description"]?></p>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>
 
 <style>
 
-    .postButtons{
-        /* border: 1px solid red; */
-        width: 60%;
-        margin: 1rem;
-        border-radius: 10px;
-        border: 1px solid #d0d0d0;
+    .post{
+        border: 1px solid #6c757d !important;
+        border-radius: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    .postImage img{
-        width: 70%;
-        height: 70%;
+    .postButtons{
+        /* border: 1px solid red; */
+        width: 40%;
+        margin: 1rem;
+        border-radius: 10px;
+        border: 1px solid #6c757d;
+    }
+
+    .postImage{
+        width: 80%;
+        height: auto;
         border-radius: 10px;
     }
 
@@ -177,6 +186,8 @@ else{
             let id = $(this).attr("data-id");
             let $this = $(this);
 
+            console.log(id);
+
             // // confirm delete
             // if (!confirm("Are you sure you want to delete this post?"))
             //     return;
@@ -191,9 +202,14 @@ else{
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("danger", response['desc'])
-                        setTimeout(function() {
-                            location.reload();
-                        }, 500);
+
+                        let $countLabel = $this.closest('.likes').find('.likeCountLabel');
+                        let currentCountText = $countLabel.text().trim();
+                        let currentCount = parseInt(currentCountText.split(' ')[0]);
+                        $countLabel.text((currentCount + 1) + ' Likes');
+
+                        $this.closest('.likePost').find('i').removeClass('bx bx-heart text-danger likeButton').addClass('bx bxs-heart text-danger likeButton');
+                    
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
