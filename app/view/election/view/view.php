@@ -19,7 +19,149 @@ $sidebar = new Sidebar("elections");
                     </div>
                 </div>
                 <div class="tabs">
-                    <div class="tab" id="results">
+                    <div class="tab active" id="results">
+                        <div class="general-stats flex">
+
+                            <div class="stats-left">
+                                <div class="stat-card">
+                                    <div class="title">
+                                        <div class="icon"> <i class='bx bx-user'></i> </div>
+                                        <div class="title">Total Votes</div>
+                                        <div class="value"><?= isset($data["analytics"]["total_votes"]) ? $data["analytics"]["total_votes"] : 20 ?></div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="title">
+                                        <div class="icon"> <i class='bx bx-user'></i> </div>
+                                        <div class="title">Total Votes</div>
+                                        <div class="value"><?= isset($data["analytics"]["total_votes"]) ? $data["analytics"]["total_votes"] : 20 ?></div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="title">
+                                        <div class="icon"> <i class='bx bx-user'></i> </div>
+                                        <div class="title">Total Votes</div>
+                                        <div class="value"><?= isset($data["analytics"]["total_votes"]) ? $data["analytics"]["total_votes"] : 20 ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stats-right">
+                                <div id="vote-timeline"></div>
+                            </div>
+
+                            <style>
+                                .general-stats {
+                                    display: flex;
+                                    /* flex-direction: column; */
+                                    gap: 2rem;
+                                }
+
+                                .stats-right {
+                                    flex-grow: 1;
+                                    /* max-height: 300px; */
+                                }
+
+                                .stats-left {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+
+                                #vote-timeline{
+                                    width: 60%;
+                                    /* margin: 0 auto; */
+                                }
+
+                                .apexcharts-canvas * {
+                                    font-family: 'Poppins', sans-serif !important;
+                                }
+
+
+                                .stat-card {
+                                    position: relative;
+
+                                    /* display: flex; */
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 1rem;
+                                    border-radius: 0.5rem;
+                                    background: white;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                    margin-bottom: 1rem;
+                                    width: 200px;
+                                }
+
+                                .stat-card .title {
+                                    font-size: var(--rv-1);
+                                    color: rgb(60, 64, 67, 0.7);
+                                }
+
+                                .stat-card .icon {
+                                    position: absolute;
+                                    top: 0.75rem;
+                                    right: 0.75rem;
+
+                                    padding: 0.5rem;
+                                    border-radius: 0.5rem;
+                                    color: #727cf5;
+                                    background-color: rgba(114, 124, 245, .25);
+
+                                    width: 40px;
+                                    height: 40px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                }
+
+                                .stat-card .value {
+                                    font-size: 1.5rem;
+                                    font-weight: 600;
+                                    margin-top: 0.5rem;
+                                }
+                            </style>
+
+                        </div>
+
+                        <div class="chart-container">
+                            <?php
+
+                            // foreach question print canvas
+                            $chart_no = 1;
+                            foreach ($data["analytics"]["chart_data"] as $chart_data) {
+                                echo '<div>';
+                                echo '<div class="election_chart" id="election_chart_' . $chart_no . '"></div>';
+                                echo '</div>';
+
+                                $chart_no++;
+                            }
+
+                            ?>
+                        </div>
+
+
+                        <!-- <div>
+                            <canvas id="election_chart_1"></canvas>
+                        </div> -->
+
+                        <style>
+                            /* #election_chart_1 {
+                                max-width: 20vw;
+                                max-height: 300px;
+                                background-color: whitesmoke;
+                            } */
+                            .election_chart {
+                                max-width: 20vw;
+                                /* height: 500px; */
+                                /* background-color: whitesmoke; */
+                            }
+
+                            .chart-container {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 1rem;
+                            }
+                        </style>
                     </div>
                     <div class="tab active" id="vote">
 
@@ -115,10 +257,12 @@ $sidebar = new Sidebar("elections");
                                     $question["question_options"] = json_decode($question["question_options"], true);
                                     // check if question has images
                                     $has_images = false;
-                                    foreach ($question["question_options"] as $option) {
-                                        if (isset($option["cover_img"])) {
-                                            $has_images = true;
-                                            break;
+                                    if (is_array($question["question_options"])) {
+                                        foreach ($question["question_options"] as $option) {
+                                            if (isset($option["cover_img"])) {
+                                                $has_images = true;
+                                                break;
+                                            }
                                         }
                                     }
 
@@ -440,12 +584,327 @@ $sidebar = new Sidebar("elections");
     </div>
 </div>
 
-<?php $HTMLFooter = new HTMLFooter(); ?>
+<?php $HTMLFooter = new HTMLFooter(['chartjs']); ?>
 <script>
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script> -->
+
 <script>
     $(document).ready(function() {
+        let chart_data = <?= json_encode($data["analytics"]["chart_data"]) ?>;
+
+        // for each chart data
+        // const ctx = document.getElementById('election_chart_1').getContext('2d');
+        // let bg_colors = ["#FF6633", "#FFB399", "#FF33FF", "#FFFF99", "#00B3E6",
+        //     "#E6B333", "#3366E6", "#999966", "#99FF99", "#B34D4D",
+        //     "#80B300", "#809900", "#E6B3B3", "#6680B3", "#66991A",
+        //     "#FF99E6", "#CCFF1A", "#FF1A66", "#E6331A", "#33FFCC",
+        //     "#66994D", "#B366CC", "#4D8000", "#B33300", "#CC80CC",
+        //     "#66664D", "#991AFF", "#E666FF", "#4DB3FF", "#1AB399",
+        //     "#E666B3", "#33991A", "#CC9999", "#B3B31A", "#00E680",
+        //     "#4D8066", "#809980", "#E6FF80", "#1AFF33", "#999933",
+        //     "#FF3380", "#CCCC00", "#66E64D", "#4D80CC", "#9900B3",
+        //     "#E64D66", "#4DB380", "#FF4D4D", "#99E6E6", "#6666FF"
+        // ];
+        const plugin = {
+            id: 'customCanvasBackgroundColor',
+            beforeDraw: (chart, args, options) => {
+                const {
+                    ctx
+                } = chart;
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = options.color || '#99ffff';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        };
+
+        window.Apex = {
+            chart: {
+                parentHeightOffset: 0,
+                toolbar: {
+                    show: !1
+                }
+            },
+            grid: {
+                padding: {
+                    left: 0,
+                    right: 0
+                }
+            },
+            colors: ["#727cf5", "#0acf97", "#fa5c7c", "#ffbc00"],
+        };
+
+        var lastWeek = ["0", "0", "0", "0", "0", "0", "0"];
+        var thisWeek = [37, "0", 10, 20, "0", "0", "0"];
+        var e = ["#727cf5", "#0acf97", "#fa5c7c", "#ffbc00"];
+        var r = {
+            chart: {
+                height: 364,
+                type: "line",
+                dropShadow: {
+                    enabled: !0,
+                    opacity: 0.2,
+                    blur: 7,
+                    left: -7,
+                    top: 7
+                },
+            },
+            dataLabels: {
+                enabled: !1
+            },
+            stroke: {
+                curve: "smooth",
+                width: 4
+            },
+            series: [{
+                    name: "Last Vote Turnout",
+                    data: thisWeek
+                },
+                {
+                    name: "Current Voter Turnout",
+                    data: lastWeek
+                },
+            ],
+            colors: e,
+            zoom: {
+                enabled: !1
+            },
+            legend: {
+                show: !1
+            },
+            xaxis: {
+                type: "string",
+                categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                tooltip: {
+                    enabled: !1
+                },
+                axisBorder: {
+                    show: !1
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function(e) {
+                        return e;
+                        return e + " LKR";
+                    },
+                    offsetX: -15,
+                },
+            },
+        };
+
+        new ApexCharts(document.querySelector("#vote-timeline"), r).render();
+
+        // var options = {
+        //     series: [44, 55, 41, 17, 15],
+        //     chart: {
+        //         type: 'donut',
+        //     },
+        //     responsive: [{
+        //         breakpoint: 480,
+        //         options: {
+        //             chart: {
+        //                 width: 200
+        //             },
+        //             legend: {
+        //                 position: 'bottom'
+        //             }
+        //         }
+        //     }]
+        // };
+
+        // var chart = new ApexCharts(document.querySelector(`#election_chart_1`), options);
+        // chart.render();
+        // console.log(chart);
+
+
+
+        let chart_no = 1;
+        chart_data.forEach(chart => {
+            let chart_id = 'election_chart_' + chart_no;
+            // let ctx = document.getElementById(chart_id).getContext('2d');
+            // let ctx = document.getElementById(chart_id);
+
+            // truncate labels to 2 words
+            chart.labels = chart.labels.map(label => label.split(" ").slice(0, 2).join(" "));
+
+
+            let data = {
+                labels: chart.labels,
+                datasets: [{
+                    label: chart.title,
+                    data: chart.count,
+                    // backgroundColor: bg_colors,
+                    borderWidth: 1
+                }]
+            };
+
+            e = ["#727cf5", "#0acf97", "#fa5c7c", "#ffbc00"];
+            // (t = o("#average-sales").data("colors")) && (e = t.split(","));
+            // get current font family
+            var o = document.body;
+            var t = window.getComputedStyle(o, null).getPropertyValue('font-family');
+            console.log(t);
+            r = {
+                chart: {
+                    height: 208,
+                    type: "donut",
+                    fontFamily: t,
+                },
+                legend: {
+                    show: !1
+                },
+                stroke: {
+                    colors: ["transparent"]
+                },
+                series: chart.count,
+                labels: chart.labels,
+                colors: e,
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                        legend: {
+                            position: "bottom"
+                        }
+                    },
+                }, ],
+            };
+
+            // var options = {
+            //     series: [44, 55, 41, 17, 15],
+            //     chart: {
+            //         type: 'donut',
+            //     },
+            //     responsive: [{
+            //         breakpoint: 480,
+            //         options: {
+            //             chart: {
+            //                 width: 200
+            //             },
+            //             legend: {
+            //                 position: 'bottom'
+            //             }
+            //         }
+            //     }]
+            // };
+
+            var chart = new ApexCharts(document.querySelector(`#${chart_id}`), r);
+            chart.render();
+
+
+            // new ApexCharts(document.querySelector(`#${chart_id}`), r).render();
+
+            // data = {
+            //     labels: ['A', 'B', 'C', 'D'],
+            //     datasets: [{
+            //         label: 'My Dataset',
+            //         data: [25, 59, 80, 76],
+            //         fill: false,
+            //         backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+            //         borderColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)'],
+            //         borderWidth: 1
+            //     }]
+            // };
+
+            // let img1 = new Image();
+            // img1.src = 'https://i.stack.imgur.com/9EMtU.png';
+            // const barAvatar = {
+            //     id: 'barAvatar',
+            //     afterDatasetsDraw: (chart, args, options) => {
+            //         const {
+            //             ctx,
+            //             chartArea: {
+            //                 top,
+            //                 bottom,
+            //                 left,
+            //                 right,
+            //                 width,
+            //                 height
+            //             },
+            //             scales: {
+            //                 x,
+            //                 y
+            //             }
+            //         } = chart;
+            //         ctx.save();
+
+            //         console.log(chart.data.datasets[0].data);
+            //         console.log("barAvatar");
+
+            //         ctx.drawImage(img1, x.getPixelForValue(0), y.getPixelForValue(18), 20, 20);
+            //     }
+            // };
+
+            // new Chart(ctx, {
+            //     type: 'bar',
+            //     data: data,
+            //     options: {
+            //         // plugins: [barAvatar],
+            //         plugins: {
+            //             customCanvasBackgroundColor: {
+            //                 color: 'rgba(255, 255, 255, 0.5)'
+            //             },
+            //             legend: {
+            //                 display: false,
+            //             },
+            //             labels: {
+            //                 render: 'image',
+            //                 textMargin: 10,
+            //                 images: [{
+            //                         src: 'https://i.stack.imgur.com/9EMtU.png',
+            //                         width: 20,
+            //                         height: 20
+            //                     },
+            //                     null,
+            //                     {
+            //                         src: 'https://i.stack.imgur.com/9EMtU.png',
+            //                         width: 20,
+            //                         height: 20
+            //                     },
+            //                     null
+            //                 ]
+            //             }
+            //         },
+            //         layout: {
+            //             padding: {
+            //                 top: 30
+            //             }
+            //         },
+            //         scales: {
+            //             x: {
+            //                 grid: {
+            //                     display: false,
+            //                     drawBorder: false,
+            //                 }
+            //             },
+            //             y: {
+            //                 beginAtZero: true,
+            //                 ticks: {
+            //                     stepSize: 1
+            //                 },
+            //                 grid: {
+            //                     // display: false,
+            //                     drawBorder: false,
+            //                 }
+            //             }
+            //         }
+            //     },
+            //     plugins: [plugin]
+            // });
+
+            chart_no++;
+        });
+
 
         $(document).on("click", ".vote-btn", function(event) {
             event.preventDefault();
