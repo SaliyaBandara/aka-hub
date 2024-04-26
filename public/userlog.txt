@@ -26,3 +26,35 @@ samanbandara@gmail.com	127.0.0.1	04/26/24 08:29AM	User logged in as Admin with e
 
 samanbandara@gmail.com	127.0.0.1	04/26/24 08:36AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
 
+kasunsilva@gmail.com	::1	04/25/24 11:02PM	User logged in as Counselor with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 11:16PM	Reservation created by student	http://localhost/aka-hub/counselorView/bookReservation/53url=counselorView/bookReservation/53	201
+
+Not logged in	::1	04/25/24 11:39PM	User entered invalid email or password	http://localhost/aka-hub/auth/loginurl=auth/login	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/25/24 11:39PM	User logged in as Admin with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+kasunsilva@gmail.com	::1	04/25/24 11:59PM	User logged in as Counselor with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 11:59PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 07:47AM	User logged in as Admin with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 07:47AM	Unauthorized user tried to edit Student profile	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 07:48AM	Unauthorized user tried to edit Student profile	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 07:48AM	Unauthorized user tried to edit Student profile	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3	401
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 07:49AM	Unauthorized User tried to add edit course without permission	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/createurl=courses/add_edit/0/createurl=courses/add_edit/0/create	401
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 07:52AM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+Not logged in	::1	04/26/24 08:10AM	User entered invalid email or password	http://localhost/aka-hub/auth/loginurl=auth/login	401
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 08:10AM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 09:09AM	User posted a comment in event feed	http://localhost/aka-hub/eventFeed/postComment/20url=eventFeed/postComment/20	201
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 09:09AM	User deleted a comment in event feed	http://localhost/aka-hub/eventFeed/deleteComment/65url=eventFeed/deleteComment/65	200
+

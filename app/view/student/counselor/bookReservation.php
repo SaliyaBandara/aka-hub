@@ -17,6 +17,9 @@ $sidebar = new Sidebar("Settings");
                     <div class="title font-1 font-semibold flex align-center text-muted my-2" >
                         Available timeslots of counselor <?= $data["counselor"][0]["name"] ?>
                     </div>
+                    <div>
+                        <a href="<?= BASE_URL ?>/counselorView/viewBookings/<?=$data["counselor"][0]["id"]?>" class="btn btn-info mb-1 form form-group justify-center align-center text-center" style = "max-width: 230px !important;"> Manage My Appointments </a>
+                    </div>
                 </div>
                 
                 <div class="wrapper">

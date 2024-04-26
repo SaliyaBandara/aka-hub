@@ -12,6 +12,10 @@ class StudentProfile extends Controller
     {
         $this->requireLogin();
 
+        if($_SESSION["user_role"] != 0){
+            $this->redirect();
+        }
+
         $data = [
             'title' => 'Student Profile',
             'message' => 'Welcome to Aka Hub!'

@@ -211,6 +211,9 @@ class Courses extends Controller
         $data["material"] = $this->model('readModel')->getCourseMaterial($id);
         $data["teaching_student"] = $_SESSION["teaching_student"];
 
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+        $year = $data["student"][0]["year"];
+
         // print_r($data["material"]);
 
         // $data["course"] = $this->model('readModel')->getOne("courses", $id);

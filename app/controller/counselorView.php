@@ -91,7 +91,7 @@ class CounselorView extends Controller
 
         $data["latestReservation"] = $this->model('readModel')->getLatestReservation($_SESSION["user_id"], $id);
 
-        // print_r($data["latestReservation"]);
+        // print_r($data["counselor"]);
 
         $this->view->render('student/counselor/bookReservation', $data);
     }
@@ -121,5 +121,99 @@ class CounselorView extends Controller
             die(json_encode(["status" => 400, "desc" => "There are no existing reservations."]));
         }
     }
+
+    public function viewBookings($counselor_id)
+    {
+        $this->requireLogin();
+
+        $data = [
+            'title' => 'Counselor Details',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["reservations"] = $this->model('readModel')->getReservationsByStudent($_SESSION["user_id"],(int)$counselor_id);
+        // print_r($data["reservations"]);
+
+        $this->view->render('student/counselor/viewBookings', $data);
+    }
+
+    public function filter(){
+
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $status = $_POST['status'];
+        $counselor_id = $_POST['counselor_id'];
+        $student_id = $_SESSION["user_id"];
+
+        if($status == 0){
+            $data["reservations"] = $this->model('readModel')->getReservationsByStatus(0,$student_id,$counselor_id);
+        }
+        else if($status == 1){
+            $data["reservations"] = $this->model('readModel')->getReservationsByStatus(1,$student_id,$counselor_id);
+        }
+        else if($status == 2){
+            $data["reservations"] = $this->model('readModel')->getReservationsByStudent($student_id,$counselor_id);
+            // print_r($data["reservations"]);
+        }
+        else if($status == 3){
+            $data["reservations"] = $this->model('readModel')->getReservationsByStatus(3,$student_id,$counselor_id);
+        }
+
+        // $BASE_URL =  BASE_URL ;
+
+        if(empty($data["reservations"])){
+            echo "<div class='font-meidum text-muted'> No reservations found! </div>";
+        }
+        else{
+            foreach ($data["reservations"] as $reservation) {     
+
+                        if($reservation["reservation_status"] == 1){
+                            $class = "primary";
+                            $button = "Accepted";
+                        }
+                        else if($reservation["reservation_status"] == 3){
+                            $class = "orange";
+                            $button = "Completed";
+                        }
+                        else if($reservation["reservation_status"] == 0){
+                            $class = "info";
+                            $button = "Pending";
+                        }
+                    
+                       echo '<div class=" card-not-added todo_item flex flex-row justify-between border-'. $class.'">
+                                <div class="content flex flex-column">
+                                    <div class="my-0-5">
+                                        <i class="bx bxs-calendar me-1"></i> Date : '. date("Y.m.d", strtotime($reservation["date"])) .'
+                                    </div>
+                                    
+                                    <div class="my-0-5">
+                                        <i class="bx bxs-time me-1"></i> Time : '.date("H:i", strtotime($reservation["start_time"])) .' to '. date("H:i", strtotime($reservation["end_time"])) .'
+                                    </div>
+                                </div>';
+
+                                if($reservation["reservation_status"] == 3){
+                                    echo'
+                                        <div class="buttons flex flex-column justify-center align-center" style = "width: 30%;">
+                                            <div href="#" class=" btn btn-'.$class.' form form-group justify-center align-center text-center" style = "max-width: 120px !important;">'.$button.'</div>
+                                        </div>';
+                                } 
+                                else{ 
+                                    echo'
+                                        <div class="buttons flex flex-column" style = "width: 30%; margin: 0 !important;">
+                                            <div href="#" class=" btn btn-'.$class.' mb-1 form form-group justify-center align-center text-center" style = "max-width: 120px !important;">'.$button.'</div>
+                                            <div href="#" class=" btn btn-danger form form-group justify-center align-center text-center" style = "max-width: 120px !important;">Cancel</div>
+                                        </div>';
+                                }
+                        echo '</div>'; 
+                    
+            }
+        }
+
+    }
+
 
 }

@@ -103,16 +103,31 @@ $sidebar = new Sidebar("courses");
                     <?php
                     if (($data["teaching_student"] == 1) || ($data["student_rep"])) {
                     ?>
-
-                        <div class="todo_item_actions">
-                            <a href="<?= BASE_URL ?>/courses/add_edit/<?= $course["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
-                            <div class="btn delete-item" data-id="<?= $course["id"] ?>">
-                                <i class='bx bx-trash text-danger'></i>
+                    
+                        <div href="<?= $link ?><?= $course["id"] ?>" class="js-link todo_item flex align-center">
+                            <div>
+                                <div class="todo_item_date flex align-center justify-center">
+                                    <img src="<?= $img_src ?>" alt="">
+                                </div>
                             </div>
-                        </div>
+                            <div class="todo_item_text">
+                                <div class="font-1-25 font-semibold"><?= $course["name"] ?></div>
+                                <div class="font-1 font-medium text-muted"><?= $course["code"] ?></div>
+                                <div class="font-0-8 text-muted">Year <?= $course["year"] ?> Semester <?= $course["semester"] ?></div>
+                            </div>
 
-                    <?php } ?>
+                            <?php
+                            if (($data["teaching_student"] == 1)||($data["student_rep"]) && ($data["student"][0]["year"] == $course["year"])) {
+                            ?>
 
+                                <div class="todo_item_actions">
+                                    <a href="<?= BASE_URL ?>/courses/add_edit/<?= $course["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                    <div class="btn delete-item" data-id="<?= $course["id"] ?>">
+                                        <i class='bx bx-trash text-danger'></i>
+                                    </div>
+                                </div>
+
+                            <?php } ?>
                 </div>
 
         <?php }
