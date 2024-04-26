@@ -2,7 +2,7 @@
 
 class HTMLFooter
 {
-    public function __construct($title = null, $desc = null)
+    public function __construct($options = [], $title = null, $desc = null)
     {
 
 ?>
@@ -15,8 +15,14 @@ class HTMLFooter
         <script src="<?= BASE_URL ?>/public/assets/libs/flickity-fade/flickity-fade.js"></script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
 
+        <!-- if option set for chartjs -->
+        <?php if (in_array('chartjs', $options)) { ?>
+            <!-- <script src="<?= ASSETS_PATH ?>js/chart.js"></script> -->
+        <?php } ?>
+        
         <script src="<?= BASE_URL ?>/public/assets/js/common.js"></script>
 <?php
 
     }
+
 }

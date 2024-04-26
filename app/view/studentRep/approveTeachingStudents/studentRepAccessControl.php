@@ -197,6 +197,10 @@ $calendar = new Calendar();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
+                
+                if (!confirm("Are you sure you want to remove access from this user?"))
+                    return;
+
                 $.ajax({
                     url: `${BASE_URL}/approveTeachingStudents/removeAccess/${id}/teaching_student`,
                     type: 'post',

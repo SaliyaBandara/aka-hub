@@ -126,7 +126,7 @@ $sidebar = new Sidebar("courses");
         </div>
 
         <div class="right">
-            <?php if ($_SESSION["user_role"] === 0) { ?>
+            <?php if ($_SESSION["user_role"] === 0 && !($_SESSION["teaching_student"] == 1)) { ?>
                 <div class="flex-column justify-center align-center my-2 mx-2">
                     <div class="title font-1-5 font-bold flex align-center justify-center requestDescription">
                         Send your request now to join our "Teaching Army" !
@@ -295,6 +295,10 @@ $sidebar = new Sidebar("courses");
         });
 
         $(document).on("click", ".teachingRequestButton", function() {
+
+            if (!confirm("Are you sure you want to request this role?"))
+                return;
+
             $.ajax({
                 url: `${BASE_URL}/Courses/clickToBeRole/teaching_student`,
                 type: 'post',

@@ -32,6 +32,7 @@ class Auth extends Controller
                 $_SESSION["user_name"] = $result["name"];
                 $_SESSION["user_email"] = $result["email"];
                 $_SESSION["user_role"] = $result["role"];
+                $_SESSION["user_img"] = $result["profile_img"];
 
                 $_SESSION["student_rep"] = $result["student_rep"];
                 $_SESSION["club_rep"] = $result["club_rep"];
