@@ -341,7 +341,6 @@ class Courses extends Controller
 
             $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
             $year = $data["student"][0]["year"];
-
             $values["year"] = $year;
 
             $this->validate_template($values, $data["course_template"]);
@@ -389,6 +388,7 @@ class Courses extends Controller
             $this->model("createModel")->createLogEntry($task, $state);
             $this->redirect();
         }
+
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid course id")));
 
@@ -399,6 +399,7 @@ class Courses extends Controller
             $this->model("createModel")->createLogEntry($task, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
         }
+
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 
