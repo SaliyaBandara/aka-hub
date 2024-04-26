@@ -152,3 +152,85 @@ kasunsilva@gmail.com	::1	04/26/24 11:12AM	User logged in as Counselor with email
 
 2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 02:35PM	Unauthorized User tried to view manage materials page	http://localhost/aka-hub/manageMaterialsurl=manageMaterials	401
 
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 02:50PM	User logged in as Admin with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 02:51PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 02:52PM	Student profile edited	http://localhost/aka-hub/studentProfile/add_edit/59url=studentProfile/add_edit/59	200
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 02:52PM	Student settings edited	http://localhost/aka-hub/studentProfile/add_edit_settings/59url=studentProfile/add_edit_settings/59	601
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 02:52PM	Reservation created by student	http://localhost/aka-hub/counselorView/bookReservation/56url=counselorView/bookReservation/56	201
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:13PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:14PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:14PM	User requested to be a club rep	http://localhost/aka-hub/eventFeed/clickToBeClubRep/3url=eventFeed/clickToBeClubRep/3	200
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:17PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:37PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:38PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:38PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:39PM	Unauthorized User tried to view manage materials page	http://localhost/aka-hub/manageMaterialsurl=manageMaterials	401
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:39PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:40PM	Unauthorized User tried to view manage materials page	http://localhost/aka-hub/manageMaterialsurl=manageMaterials	401
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:46PM	Post liked	http://localhost/aka-hub/counselorFeed/like/5url=counselorFeed/like/5	200
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:46PM	Post liked	http://localhost/aka-hub/counselorFeed/like/22url=counselorFeed/like/22	200
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:46PM	User tried to like post multiple times	http://localhost/aka-hub/counselorFeed/like/5url=counselorFeed/like/5	400
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:47PM	Comment posted	http://localhost/aka-hub/counselorFeed/postComment/22url=counselorFeed/postComment/22	201
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 04:48PM	Comment deleted	http://localhost/aka-hub/counselorFeed/deleteComment/69url=counselorFeed/deleteComment/69	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:45PM	User logged in as Admin with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:46PM	Admin successfully removed Access	http://localhost/aka-hub/approveRepresentatives/removeAccess/58/club_repurl=approveRepresentatives/removeAccess/58/club_rep	607
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:46PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:47PM	User requested to be a club rep	http://localhost/aka-hub/eventFeed/clickToBeClubRep/9url=eventFeed/clickToBeClubRep/9	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:49PM	Admin successfully accepted role of Club Representative	http://localhost/aka-hub/approveRepresentatives/acceptRole/3/club_repurl=approveRepresentatives/acceptRole/3/club_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:49PM	Admin successfully removed Access	http://localhost/aka-hub/approveRepresentatives/removeAccess/3/club_repurl=approveRepresentatives/removeAccess/3/club_rep	607
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:52PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:52PM	User requested to be a role	http://localhost/aka-hub/Courses/clickToBeRole/student_repurl=Courses/clickToBeRole/student_rep	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:52PM	Admin successfully accepted role of Student Representative	http://localhost/aka-hub/approveRepresentatives/acceptRole/3/student_repurl=approveRepresentatives/acceptRole/3/student_rep	606
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:56PM	User requested to be a role	http://localhost/aka-hub/Courses/clickToBeRole/student_repurl=Courses/clickToBeRole/student_rep	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:57PM	Admin successfully accepted role of Student Representative	http://localhost/aka-hub/approveRepresentatives/acceptRole/3/student_repurl=approveRepresentatives/acceptRole/3/student_rep	606
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:57PM	Admin successfully removed Access	http://localhost/aka-hub/approveRepresentatives/removeAccess/3/student_repurl=approveRepresentatives/removeAccess/3/student_rep	607
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:57PM	Club created by admin	http://localhost/aka-hub/clubs/add_edit/0url=clubs/add_edit/0	201
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:57PM	Club deleted by admin	http://localhost/aka-hub/clubs/delete/14url=clubs/delete/14	200
+
+2021cs175@stu.ucsc.cmb.ac.lk	::1	04/26/24 05:57PM	Club deleted by admin	http://localhost/aka-hub/clubs/delete/13url=clubs/delete/13	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 06:00PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021is096@stu.ucsc.cmb.ac.lk	::1	04/26/24 06:02PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 06:03PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs091@stu.ucsc.cmb.ac.lk	::1	04/26/24 06:04PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+kusumalatha@gmail.com	::1	04/26/24 06:11PM	User logged in as Counselor with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+
+2021cs138@stu.ucsc.cmb.ac.lk	::1	04/26/24 06:38PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+

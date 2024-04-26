@@ -289,24 +289,26 @@ class eventFeed extends Controller
         $data["clubReps"] = [];
         $data["liked"] = [];
 
-        foreach ($data["posts"] as $post) {
+        if(!empty($data["posts"])){
+            foreach ($data["posts"] as $post) {
 
-            $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
-            $club = $this->model('readModel')->getClubRep($post['posted_by']);
-            $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
+                $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+                $club = $this->model('readModel')->getClubRep($post['posted_by']);
+                $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
 
-            if (!empty($commentsForPost)) {
-                // print_r($commentsForPost);
-                $data['comments'] = array_merge($data['comments'], $commentsForPost);
-            }
+                if (!empty($commentsForPost)) {
+                    // print_r($commentsForPost);
+                    $data['comments'] = array_merge($data['comments'], $commentsForPost);
+                }
 
-            if (!empty($club)) {
-                // print_r($club);
-                $data['clubReps'] = array_merge($data['clubReps'], $club);
-            }
+                if (!empty($club)) {
+                    // print_r($club);
+                    $data['clubReps'] = array_merge($data['clubReps'], $club);
+                }
 
-            if (!empty($liked)) {
-                $data['liked'] = array_merge($data['liked'], $liked);
+                if (!empty($liked)) {
+                    $data['liked'] = array_merge($data['liked'], $liked);
+                }
             }
         }
 
@@ -455,15 +457,18 @@ class eventFeed extends Controller
         $data["clubRep"] = $data["clubRep_template"]["empty"];
         $data["clubRep_template"] = $data["clubRep_template"]["template"];
 
+        $data["alreadyRequested"] = $this->model('readModel')->getClubRepByUser($_SESSION["user_id"],0);
+        $data["alreadyGiven"] = $this->model('readModel')->getClubRepByUser($_SESSION["user_id"],1);
 
-        
-        // print_r($_SESSION["club_rep"] );
+        if ($_SESSION["club_rep"] == 1 || (!empty($data["alreadyGiven"]))) {
 
-        if ($_SESSION["club_rep"] == 1) {
             die(json_encode(array("status" => "400", "desc" => "You are already a Club Representative")));
-        } else if ($_SESSION["club_rep"] == 2) {
+
+        } else if ($_SESSION["club_rep"] == 2 || (!empty($data["alreadyRequested"]))) {
+
             die(json_encode(array("status" => "400", "desc" => "Already requested")));
-        } else if ($_SESSION["club_rep"] == 0) {
+
+        } else if ($_SESSION["club_rep"] == 0 || (empty($data["alreadyGiven"]))) {
 
             $resultUpdate = $this->model('updateModel')->to_get_role(
                 "user",

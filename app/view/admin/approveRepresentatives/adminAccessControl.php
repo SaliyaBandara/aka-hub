@@ -222,6 +222,10 @@ $calendar = new Calendar();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
+
+                if (!confirm("Are you sure you want to remove access from this user?"))
+                    return;
+
                 $.ajax({
                     url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/student_rep`,
                     type: 'post',
@@ -246,6 +250,10 @@ $calendar = new Calendar();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
+
+                if (!confirm("Are you sure you want to remove access from this user?"))
+                    return;
+
                 $.ajax({
                     url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/club_rep`,
                     type: 'post',
@@ -269,6 +277,10 @@ $calendar = new Calendar();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
+
+                if (!confirm("Are you sure you want to remove access from this user?"))
+                    return;
+
                 $.ajax({
                     url: `${BASE_URL}/approveRepresentatives/removeAccess/${id}/teaching_student`,
                     type: 'post',

@@ -15,6 +15,11 @@ if ($_SESSION["user_role"] == 1) {
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
+            <div class="section_header mb-1 flex">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-calendar-star me-0-5'></i> Club Event Feed
+                </div>
+            </div>
             <?php if ($_SESSION["club_rep"]) { ?>
                 <div class="mb-1 form-group switchButton">
                     <a href="<?= BASE_URL ?>/eventFeed/add_edit/0/" class="btn btn-primary">
@@ -26,13 +31,7 @@ if ($_SESSION["user_role"] == 1) {
                         <i class='bx <?= $data["iClass"] ?>'></i> <?= $data["buttonValue"] ?>
                     </a>
                 </div>
-            <?php } ?>
-            <div class="section_header mb-1 flex">
-                <div class="title font-1-5 font-semibold flex align-center">
-                    <i class='bx bxs-calendar-star me-0-5'></i> Club Event Feed
-                </div>
-            </div>
-            
+            <?php } ?>            
             <?php
             if ($data["filter"] == 1) {
             ?>
@@ -230,7 +229,7 @@ if ($_SESSION["user_role"] == 1) {
             </div>
         </div>
         <div class="right">
-            <?php if ($_SESSION["user_role"] == 0) { ?>
+            <?php if ($_SESSION["user_role"] == 0 && !($_SESSION["club_rep"] == 1)) { ?>
                 <div class="flex-column justify-center align-center divButtonSection">
                     <div class="title font-1-5 font-bold flex align-center justify-center requestDescription">
                         Are you engaged in any club/society in the university?
@@ -593,6 +592,9 @@ if ($_SESSION["user_role"] == 1) {
         $(document).on("click", ".clubRequestButton", function() {
 
             let selectedValue = $("#name").val();
+
+            if (!confirm("Are you sure you want to request this role?"))
+                return;
 
             $.ajax({
                 url: `${BASE_URL}/eventFeed/clickToBeClubRep/${selectedValue}`,

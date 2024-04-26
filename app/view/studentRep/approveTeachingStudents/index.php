@@ -192,6 +192,10 @@ $calendar = new Calendar();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
+
+                if (!confirm("Are you sure you want to accept this role?"))
+                    return;
+
                 $.ajax({
                     url: `${BASE_URL}/approveTeachingStudents/acceptRole/${id}/teaching_student`,
                     type: 'post',
@@ -216,6 +220,10 @@ $calendar = new Calendar();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
                 let id = urlParts[urlParts.length - 2];
+
+                if (!confirm("Are you sure you want to declline this role?"))
+                    return;
+
                 $.ajax({
                     url: `${BASE_URL}/approveTeachingStudents/declineRole/${id}/teaching_student`,
                     type: 'post',

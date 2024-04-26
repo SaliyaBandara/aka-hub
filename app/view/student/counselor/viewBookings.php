@@ -5,13 +5,21 @@ $sidebar = new Sidebar("Settings");
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch(); ?>
+    <?php 
+        $welcomeSearch = new WelcomeSearch();
+        if(empty($data["reservations"])){
+            $counselor_id = "";
+        }
+        else{
+            $counselor_id = $data["reservations"][0]["counselor_id"];
+        }
+    ?>
 
     <div class="main-grid flex">
         <div class="leftContent">
             <div class="main-div">
                 <div class="section_header mb-1 flex flex-column">
-                    <div class="title font-1-5 font-semibold flex align-center counselorID" id = <?=$data["reservations"][0]["counselor_id"]?>>
+                    <div class="title font-1-5 font-semibold flex align-center counselorID" id = <?=$counselor_id?>>
                         <i class='bx bxs-calendar-check me-0-5'></i> Manage your appointments
                     </div>
                     <select id="status" name="status" style = "width: 20%; " data-validation="required" class="form-control my-1">
