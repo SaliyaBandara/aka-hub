@@ -13,7 +13,7 @@ $sidebar = new Sidebar("courses");
             <!-- section header -->
             <section>
 
-                <?php if (($data["teaching_student"] == 1) || ($data["student_rep"])) { ?>
+                <?php if (($data["teaching_student"] == 1) || ($data["student_rep"]) && ($data["student"][0]["year"] == $data["course"]["year"])) { ?>
                     <div class="form-group">
                         <a href="../material/add_edit/<?= $data["id"] ?>/0/create" class="btn btn-primary">
                             <i class='bx bx-plus'></i> Add Materials
@@ -79,7 +79,7 @@ $sidebar = new Sidebar("courses");
 
                                 </div>
                                 <?php
-                                if (($data["teaching_student"] == 1) || ($data["student_rep"]==1)) {
+                                if (($data["teaching_student"] == 1) || ($data["student_rep"]==1) && ($data["student"][0]["year"] == $data["course"]["year"])) {
                                 ?>
                                     <div class="todo_item_actions flex">
                                         <a href="<?= BASE_URL ?>/courses/material/add_edit/<?= $data["id"] ?>/<?= $course_material->id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>

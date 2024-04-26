@@ -35,13 +35,11 @@ $calendar = new Calendar();
     <style>
         .main-grid .left {
             width: 85% !important;
-            height: 150vh;
 
         }
 
         .main-grid .right {
             flex-grow: 1;
-            height: 150vh;
         }
 
         .threeCardDiv {
@@ -169,14 +167,10 @@ $calendar = new Calendar();
         margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
         /* background-color: yellowgreen; */
         width: (100vw - var(--sidebar-width-actual));
-        /* height: 50vh; */
-
-        /* border: 2px solid red; */
-
-
+        height: calc(100vh - 2rem); /* Adjust the height as needed */
+        overflow-y: auto;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
-        overflow: hidden;
     }
 </style>
 

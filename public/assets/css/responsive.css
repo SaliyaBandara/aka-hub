@@ -448,6 +448,17 @@ a.btn {
   background-color: #4a4e52;
 }
 
+.btn-success {
+  font-size: var(--rv-1);
+  background-color: #0acf97;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #06976e;
+}
+
+
 /* border styles */
 
 .border-success {

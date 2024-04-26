@@ -190,6 +190,26 @@ class readModel extends Model
         return false;
     }
 
+    public function getReservationsByStudent($user_id,$counselor_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.student_id = ? AND t.counselor_id = ?", "ii", [$user_id, $counselor_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getReservationsByStatus($status, $user_id, $counselor_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = ? AND r.student_id = ? AND t.counselor_id = ?", "iii", [$status, $user_id, $counselor_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+
+
     public function getAvailableReservationRequestsByCounselorId($id)
     {
         $result = $this->db_handle->runQuery("
@@ -545,7 +565,7 @@ class readModel extends Model
 
     public function getOneCounselor($id)
     {
-        $sql = "SELECT * from user u , counselor c where c.id = u.id AND u.id = ?";
+        $sql = "SELECT u.*, c.id as counselor_id, c.type as type from user u , counselor c where c.id = u.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;

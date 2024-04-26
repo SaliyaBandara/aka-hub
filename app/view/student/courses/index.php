@@ -103,7 +103,7 @@ $sidebar = new Sidebar("courses");
                             </div>
 
                             <?php
-                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
+                            if (($data["teaching_student"] == 1)||($data["student_rep"]) && ($data["student"][0]["year"] == $course["year"])) {
                             ?>
 
                                 <div class="todo_item_actions">
