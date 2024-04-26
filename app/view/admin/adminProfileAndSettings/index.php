@@ -59,83 +59,166 @@ $candidateCard = new CandidateCard();
                     </a>
                 </div>
             </div>
+            <div class="title font-1-5 font-semibold flex align-center">
+                <i class='bx bxs-cog  me-0-5'></i> Admin settings
+            </div>
+            <div class="notificationArea">
+                <div class="notificationDetails notificationRow font-medium">
+                    <div>Academic Year Starting Date: </div>
+                    <div>Academic Year Ending Date: </div>
+                </div>
+                <div class="notificationValues notificationRow">
+                    <div>
+                        <input type="date" id="datePicker1" name="startDate">
+                    </div>
+                    <div>
+                        <input type="date" id="datePicker2" name="endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="flex notificationSettings">
+                <div>
+                    <a href="<?= BASE_URL ?>/adminProfileAndSettings/add_edit_settings" class="btn btn-primary">
+                        Edit Settings
+                    </a>
+                </div>
+            </div>
+
+            <style>
+                #datePicker1 {
+                    width: 20rem;
+                    padding: 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    background-color: #f5f5f5;
+                }
+
+                #datePicker2 {
+                    width: 20rem;
+                    padding: 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    background-color: #f5f5f5;
+                }
+
+                .main-grid .left {
+                    width: 100% !important;
+                    height: 100vh;
+                    margin: 20px;
+                }
+
+                .profileImage {
+                    border-radius: 200px;
+                    border: 1px solid black;
+                    width: 15rem;
+                    height: 15rem;
+                    margin: 0 auto;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .profileImage img {
+                    display: block;
+                    width: 30rem;
+                    height: 30rem;
+                }
+
+                .profileImageArea {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    width: 40% !important;
+                    /* border: 1px solid red; */
+                }
+
+                .profileArea {
+                    margin-top: 50px;
+                }
+
+                .profileArea,
+                .notificationArea {
+                    display: flex;
+                    flex-direction: row;
+                    height: auto;
+                    /* border: 1px solid red; */
+                }
+
+                .profileRow {
+                    margin: 2rem 1rem 2rem 0 !important;
+                    /* border: 1px solid red; */
+                    width: 40%;
+                }
+
+                .profileRow div {
+                    padding: 0.5rem;
+                }
+
+                .profileDetailNames {
+                    justify-content: right;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: column;
+                    width: 20% !important;
+                }
+
+                .notificationSettings {
+                    margin: 2rem;
+                    justify-content: flex-end;
+                }
+
+                .notificationSettings {
+                    margin: 2rem;
+                    justify-content: flex-end;
+                }
+
+                .notificationRow {
+                    margin: 2rem 0 2rem 0 !important;
+                    /* border: 1px solid red; */
+                    width: 47%;
+                }
+
+                .notificationRow div {
+                    padding: 0.6rem;
+                }
+
+                .notificationDetails {
+                    justify-content: right;
+                    text-align: left;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .warningNone {
+                    display: inline !important;
+                }
+
+                .notificationValues input[type="checkbox"] {
+                    margin-right: 0.5rem;
+                    width: 1rem;
+                    height: 1rem;
+                }
+
+                .notificationValues label {
+                    margin-right: 2rem;
+                    font-size: 1rem;
+                }
+
+                .notificationValues select {
+                    padding: 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    width: 20rem;
+                    background-color: #f5f5f5;
+                }
+            </style>
 
         </div>
-    </div>
-
-    <style>
-        .main-grid {}
-
-        .main-grid .left {
-            width: 100% !important;
-            height: 100vh;
-            margin: 20px;
-        }
-
-        .profileImage {
-            border-radius: 200px;
-            border: 1px solid black;
-            width: 15rem;
-            height: 15rem;
-            margin: 0 auto;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .profileImage img {
-            display: block;
-            width: 30rem;
-            height: 30rem;
-        }
-
-        .profileImageArea {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            width: 40% !important;
-            /* border: 1px solid red; */
-        }
-
-        .profileArea {
-            margin-top: 50px;
-        }
-
-        .profileArea,
-        .notificationArea {
-            display: flex;
-            flex-direction: row;
-            height: auto;
-            /* border: 1px solid red; */
-        }
-
-        .profileRow {
-            margin: 2rem 1rem 2rem 0 !important;
-            /* border: 1px solid red; */
-            width: 40%;
-        }
-
-        .profileRow div {
-            padding: 0.5rem;
-        }
-
-        .profileDetailNames {
-            justify-content: right;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            width: 20% !important;
-        }
-
-        .notificationSettings {
-            margin: 2rem;
-            justify-content: flex-end;
-        }
-    </style>
-
-</div>
-<?php $HTMLFooter = new HTMLFooter(); ?>
-<script>
-    let BASE_URL = "<?= BASE_URL ?>";
-</script>
+        <?php $HTMLFooter = new HTMLFooter(); ?>
+        <script>
+            let BASE_URL = "<?= BASE_URL ?>";
+        </script>

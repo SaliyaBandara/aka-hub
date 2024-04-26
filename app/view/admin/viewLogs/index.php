@@ -30,7 +30,7 @@ $calendar = new Calendar();
                                     <th>Timestamp</th>
                                     <th>Message</th>
                                     <th>URL</th>
-                                    <th>Response Code</th>
+                                    <th>Status Code</th>
                                 </tr>
                             </thead>
                             <tbody>

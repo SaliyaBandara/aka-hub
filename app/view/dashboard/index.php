@@ -29,52 +29,52 @@ $calendar = new Calendar();
                 <!-- todo flex wrap -->
                 <div class="todo_flex_wrap flex flex-wrap">
 
-                <?php 
+                    <?php
                     foreach ($data["main_events"] as $main_events) {
                     ?>
 
-                    <a href="#" class="todo_item flex align-center">
-                    <div>
-                        <?php
-                        $currentDate = new DateTime();
-                        $endDate = new DateTime($main_events["end_date"]);
+                        <a href="#" class="todo_item flex align-center">
+                            <div>
+                                <?php
+                                $currentDate = new DateTime();
+                                $endDate = new DateTime($main_events["end_date"]);
 
-                        $dateDiff = $currentDate->diff($endDate);
-                        $daysRemaining = $dateDiff->days;
-                        
-                        // if ($currentDate <= $endDate) {
-                        //     if ($daysRemaining > 0) {
-                        //         echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
-                        //     }
-                        // }
-                        // else {
-                        //     echo '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
-                        // }
+                                $dateDiff = $currentDate->diff($endDate);
+                                $daysRemaining = $dateDiff->days;
 
-                        if ($currentDate <= $endDate) {
-                            if ($daysRemaining > 0) {
-                                echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
-                            } elseif ($daysRemaining == 0) {
-                                $hoursRemaining = $endDate->diff($currentDate)->h;
-                                echo '<div class="todo_item_date_red flex align-center justify-center">' . $hoursRemaining . 'h</div>';
-                            }else{
-                                echo '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
-                            }
-                        }
+                                // if ($currentDate <= $endDate) {
+                                //     if ($daysRemaining > 0) {
+                                //         echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                                //     }
+                                // }
+                                // else {
+                                //     echo '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
+                                // }
 
-                        
-                        // echo ($currentDate <= $endDate && $daysRemaining > 0) ? '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>' 
-                        //                             : '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
+                                if ($currentDate <= $endDate) {
+                                    if ($daysRemaining > 0) {
+                                        echo '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>';
+                                    } elseif ($daysRemaining == 0) {
+                                        $hoursRemaining = $endDate->diff($currentDate)->h;
+                                        echo '<div class="todo_item_date_red flex align-center justify-center">' . $hoursRemaining . 'h</div>';
+                                    } else {
+                                        echo '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
+                                    }
+                                }
 
-                        ?>
-                    </div>
 
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold"><?= $main_events["name"] ?></div>
-                            <div class="font-1 font-meidum text-muted"><?= $main_events["title"] ?></div>
-                            <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
-                        </div>
-                    </a>
+                                // echo ($currentDate <= $endDate && $daysRemaining > 0) ? '<div class="todo_item_date flex align-center justify-center">' . $daysRemaining . '</div>' 
+                                //                             : '<div class="todo_item_date_red flex align-center justify-center">' . $daysRemaining . '</div>';
+
+                                ?>
+                            </div>
+
+                            <div class="todo_item_text">
+                                <div class="font-1-25 font-semibold"><?= $main_events["name"] ?></div>
+                                <div class="font-1 font-meidum text-muted"><?= $main_events["title"] ?></div>
+                                <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
+                            </div>
+                        </a>
                     <?php } ?>
 
                 </div>
@@ -85,7 +85,7 @@ $calendar = new Calendar();
                         /* background-color: yellowgreen; */
                         height: 50vh;
                         padding: 2rem;
-                    } 
+                    }
 
                     .main-grid .right {
                         width: 40%;
@@ -93,12 +93,13 @@ $calendar = new Calendar();
                         /* background-color: red; */
                         height: 150vh;
                         /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
-                        
+
                     }
 
-                    a{
+                    a {
                         text-decoration: none;
                     }
+
                     .todo_flex_wrap {
                         /* display: flex;
                         flex-wrap: wrap;
@@ -162,32 +163,34 @@ $calendar = new Calendar();
 
         </div>
         <div class="right">
-            <div class = "flex-column justify-center align-center divButtonSection">
-                <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
-                    Are you a responsible student representative?
-                </div>
-                <div href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
-                    <div class = "btn btn-primary mb-1 form form-group repRequestButton justify-center align-center text-center">
-                        Send Request
+            <?php if ($_SESSION["user_role"] === 0) { ?>
+                <div class="flex-column justify-center align-center divButtonSection">
+                    <div class="title font-1-5 font-bold flex align-center justify-center requestDescription">
+                        Are you a responsible student representative?
+                    </div>
+                    <div href="<?= BASE_URL ?>/Courses/clickToBeRole/student_rep">
+                        <div class="btn btn-primary mb-1 form form-group repRequestButton justify-center align-center text-center">
+                            Send Request
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
         <style>
-                    .divButtonSection{
-                        border-radius: 10px;
-                        margin:1rem;
-                        /* border: 1px solid red; */
-                        justify-content: center;
-                        padding:1rem;
-                    }
+            .divButtonSection {
+                border-radius: 10px;
+                margin: 1rem;
+                /* border: 1px solid red; */
+                justify-content: center;
+                padding: 1rem;
+            }
 
-                    .divButtonSection a{
-                        text-decoration:none;
-                    }
+            .divButtonSection a {
+                text-decoration: none;
+            }
 
 
-                    /* .repRequestButton{
+            /* .repRequestButton{
                         border: 1px solid #2684ff;
                         background-color: var(--secondary-color);
                         color: white;
@@ -195,13 +198,13 @@ $calendar = new Calendar();
                         text-align:center;
                     } */
 
-                    .requestDescription{
-                        text-align: center;
-                        width : 100%;
-                        /* border:1px solid red; */
-                        padding-bottom: 1rem;
-                        color: black;
-                    }
+            .requestDescription {
+                text-align: center;
+                width: 100%;
+                /* border:1px solid red; */
+                padding-bottom: 1rem;
+                color: black;
+            }
         </style>
 
     </div>
@@ -260,7 +263,4 @@ $calendar = new Calendar();
         });
 
     });
-
-    
-
 </script>
