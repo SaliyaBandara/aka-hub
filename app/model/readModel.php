@@ -67,44 +67,44 @@ class readModel extends Model
         return false;
     }
 
-    public function getCoursesByYear($year){
+    public function getCoursesByYear($year)
+    {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ?", "i", [$year]);
         if (count($result) > 0)
             return $result;
 
         return false;
-
     }
 
-    public function getCoursesBySemester($year, $semester){
+    public function getCoursesBySemester($year, $semester)
+    {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND semester = ?", "ii", [$year,$semester]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND semester = ?", "ii", [$year, $semester]);
         if (count($result) > 0)
             return $result;
 
         return false;
-
     }
 
-    public function getCoursesBelowYear($year){
+    public function getCoursesBelowYear($year)
+    {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year < ? ", "i", [$year]);
         if (count($result) > 0)
             return $result;
 
         return false;
-
     }
 
-    public function getCoursesByOnlySemester($semester){
+    public function getCoursesByOnlySemester($semester)
+    {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE semester = ? ", "i", [$semester]);
         if (count($result) > 0)
             return $result;
 
         return false;
-
     }
 
     public function getAllChatUsers()
@@ -512,6 +512,16 @@ class readModel extends Model
         $sql = "SELECT co.id AS course_id , co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND cm.id=?";
 
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCourses()
+    {
+        $sql = "SELECT * from courses WHERE ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
         if (count($result) > 0)
             return $result;
 

@@ -123,4 +123,79 @@ class ManageMaterials extends Controller
         }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course material")));
     }
+
+    public function courses(){
+
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized User tried to view manage courses page";
+            $state = 401;
+            $this->model("createModel")->createLogEntry($action, $state);
+            $this->redirect();
+        }
+        $data = [
+            'title' => 'Manage Courses',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+        $data["courses"] = $this->model('readModel')->getCourses();
+        if (!$data["courses"])
+            $data["courses"] = array();
+        $this->view->render('admin/manageMaterials/courses', $data);
+    }
+
+    public function courseView($id){
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized User tried to view a specific course";
+            $state = 401;
+            $this->model("createModel")->createLogEntry($action, $state);
+            $this->redirect();
+        }
+        $data = [
+            'title' => 'Manage Courses',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["role"] = $_SESSION["user_role"];
+
+        $data["id"] = $id;
+        $data["course"] = $this->model('readModel')->getOne("courses", $id);
+        if (!$data["course"])
+            $this->redirect();
+        $this->view->render('admin/manageMaterials/courseView', $data);
+    }
+
+    public function courseEdit($id){
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized User tried to edit a specific course";
+            $state = 401;
+            $this->model("createModel")->createLogEntry($action, $state);
+            $this->redirect();
+        }
+        $data = [
+            'title' => 'Edit Course',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+        $data["course"] = $this->model('readModel')->getOne("courses", $id);
+        if (!$data["course"])
+            $this->redirect();
+
+        if (isset($_POST['add_edit'])) {
+            $values = $_POST["add_edit"];
+            $this->validate_template($values, $this->model('readModel')->getEmptyCourse());
+            $result = $this->model('updateModel')->update_one("courses", $values, $this->model('readModel')->getEmptyCourse(), "id", $id, "i");
+            if ($result) {
+                $task1 = "Course updated successfully";
+                $state = 200;
+                $this->model("createModel")->createLogEntry($task1, $state);
+                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
+            die(json_encode(array("status" => "400", "desc" => "Error while editing course")));
+        }
+
+        $data["id"] = $id;
+        $data["action"] = "add_edit";
+        $this->view->render('admin/manageMaterials/add_edit_course', $data);
+    }
 }

@@ -15,12 +15,12 @@ $calendar = new Calendar();
             <section>
                 <div class="section_header mb-1 flex">
                     <div class="title font-1-5 font-semibold flex align-center">
-                        <i class='bx bxs-calendar-check me-0-5'></i> Manage Materials
+                        <i class='bx bxs-calendar-check me-0-5'></i> Manage Courses
                     </div>
                     <div class="approveRepresentativesButtonsLine">
                         <div class="mb-1 form-group right_side">
-                            <a href="<?= BASE_URL ?>/manageMaterials/courses" class="btn btn-primary">
-                                <i class='bx bxs-book'></i> Manage Courses
+                            <a href="<?= BASE_URL ?>/manageMaterials" class="btn btn-info">
+                                <i class=''></i> Back to Table
                             </a>
                         </div>
                     </div>
@@ -31,32 +31,32 @@ $calendar = new Calendar();
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
                                     <th>Course Code</th>
-                                    <th>Subject</th>
                                     <th>Year</th>
                                     <th>Semester</th>
-                                    <th>User</th>
-                                    <th>Reg Number</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Preview</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <?php
-                                if (isset($data["materials"])) {
+                                if (isset($data["courses"])) {
                                     $i = 1;
-                                    foreach ($data["materials"] as $material) {
+                                    foreach ($data["courses"] as $course) {
                                 ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $material["course_code"] ?></td>
-                                            <td><?= $material["course_name"] ?></td>
-                                            <td><?= $material["year"] ?></td>
-                                            <td><?= $material["semester"] ?></td>
-                                            <td><?= $material["user_name"] ?></td>
-                                            <td><?= $material["student_id"] ?></td>
+                                            <td><?= $course["name"] ?></td>
+                                            <td><?= $course["code"] ?></td>
+                                            <td><?= $course["year"] ?></td>
+                                            <td><?= $course["semester"] ?></td>
+                                            <td><?= $course["created_at"] ?></td>
+                                            <td><?= $course["updated_at"] ?></td>  
                                             <td>
-                                                <a href="<?= BASE_URL ?>/manageMaterials/view/<?php echo $material['material_ID']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                                <a href="<?= BASE_URL ?>/manageMaterials/courseView/<?php echo $course['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
                                             </td>
                                         </tr>
                                 <?php
