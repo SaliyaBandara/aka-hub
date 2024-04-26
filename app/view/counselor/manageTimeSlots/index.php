@@ -162,16 +162,16 @@ $calendar = new Calendar();
 </div>
 
 <style>
-    #sidebar-active {
+    /* #sidebar-active {
 
         margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
-        /* background-color: yellowgreen; */
+        background-color: yellowgreen;
         width: (100vw - var(--sidebar-width-actual));
-        height: calc(100vh - 2rem); /* Adjust the height as needed */
-        overflow-y: auto;
+        height: calc(100vh - 2rem); 
+        overflow: hidden !important;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
-    }
+    } */
 </style>
 
 <?php $HTMLFooter = new HTMLFooter(); ?>

@@ -980,6 +980,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getClubRepByUser($user_id, $status)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM club_representative cr WHERE user_id = ? AND status = ? ", "ii", [$user_id,$status]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     // public function getPostLikesCount($post_id)
     // {
     //     $result = $this->db_handle->runQuery("SELECT COUNT(l.id) as likesCount FROM posts p, post_likes l WHERE p.id = l.post_id AND p.id = ? GROUP BY l.post_id" , "i" ,[$post_id] );

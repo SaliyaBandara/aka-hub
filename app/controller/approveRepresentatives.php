@@ -115,13 +115,31 @@ class ApproveRepresentatives extends Controller
             $id,
             0
         );
-        if ($result){
-            $action = "Admin successfully declined role";
-            $status = "200";
-            $this->model("createModel")->createLogEntry($action, $status);
-            die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
-        }else {
-            die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
+
+        if($role == "club_rep"){
+            $result1 = $this->model('deleteModel')->deleteOne("club_representative", $id);
+
+            if ($result && $result1){
+                $action = "Admin successfully declined role";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
+                die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
+            }else {
+                die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
+            }
+            
+        }
+
+        else if($role == "student_rep"){
+            if ($result){
+                $action = "Admin successfully declined role";
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
+                die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
+            }else {
+                die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
+            }
+            
         }
     }
 

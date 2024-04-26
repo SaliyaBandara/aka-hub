@@ -167,7 +167,7 @@ $calendar = new Calendar();
 
         </div>
         <div class="right">
-            <?php if ($_SESSION["user_role"] === 0) { ?>
+            <?php if ($_SESSION["user_role"] === 0 && !($_SESSION["student_rep"] === 1)) { ?>
                 <div class="flex-column justify-center align-center divButtonSection">
                     <div class="title font-1-5 font-bold flex align-center justify-center requestDescription">
                         Are you a responsible student representative?
@@ -245,6 +245,10 @@ $calendar = new Calendar();
         });
 
         $(document).on("click", ".repRequestButton", function() {
+
+            if (!confirm("Are you sure you want to request this role?"))
+                return;
+
             $.ajax({
                 url: `${BASE_URL}/Courses/clickToBeRole/student_rep`,
                 type: 'post',

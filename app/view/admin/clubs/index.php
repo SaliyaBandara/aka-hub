@@ -363,6 +363,9 @@ $sidebar = new Sidebar("approveRepresentatives");
                 return alertUser("warning", `Please fill all the fields`);
             }
 
+            if (!confirm("Are you sure you want to add this club?"))
+                return;
+
             $.ajax({
                 url: `${BASE_URL}/clubs/add_edit/0`,
                 type: 'post',
