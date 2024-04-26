@@ -113,7 +113,7 @@ $sidebar = new Sidebar("manageMaterials");
                 ?>
 
                 <a class="manageMaterialsLink" href="<?= BASE_URL ?>/manageMaterials">
-                    <input type="button" class="btn btn-primary" value="Back To Table" />
+                    <input type="button" class="btn btn-info" value="Back To Table" />
                 </a>
 
                 <style>

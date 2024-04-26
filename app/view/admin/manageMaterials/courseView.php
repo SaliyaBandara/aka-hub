@@ -21,7 +21,7 @@ $sidebar = new Sidebar("manageMaterials");
                         if ($data["role"] == 1) {
                         ?>
                             <div class="todo_item_actions flex">
-                                <a href="<?= BASE_URL ?>/manageMaterials/courseEdit/add_edit/<?= $data["course"]["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                <a href="<?= BASE_URL ?>/manageMaterials/courseEdit/<?= $data["course"]["id"] ?>" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
                                 <div class="btn delete-item" data-id="<?= $data["course"]["id"] ?>">
                                     <i class='bx bx-trash text-danger'></i>
                                 </div>
@@ -62,20 +62,22 @@ $sidebar = new Sidebar("manageMaterials");
                 ?>
 
                 <a class="manageMaterialsLink" href="<?= BASE_URL ?>/manageMaterials/courses">
-                    <input type="button" class="btn btn-primary my-1" value="Back To Table" />
+                    <input type="button" class="btn btn-info my-1" value="Back To Table" />
                 </a>
 
                 <style>
-                    .coverImageArea{
+                    .coverImageArea {
+                        border-radius: 5px;
+                        width: 60%;
+                        height: auto;
+                    }
+
+                    .coverImage img {
                         border-radius: 5px;
                         width: 70%;
                         height: auto;
                     }
-                    .coverImage img{
-                        border-radius: 5px;
-                        width: 80%;
-                        height: auto;
-                    }
+
                     .section_header {
                         padding: 1rem;
                         border-radius: 15px;
@@ -193,17 +195,18 @@ $sidebar = new Sidebar("manageMaterials");
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/manageMaterials/delete_material/${id}`,
+                url: `${BASE_URL}/manageMaterials/deleteCourse/${id}`,
                 type: 'post',
                 data: {
                     delete: true
                 },
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status == 200) {
+                    if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        $this.closest(".material-item").remove();
-                    } else if (response.status == 403)
+                        $this.closest(".todo_item").remove();
+                        window.history.back();
+                    } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
                         alertUser("warning", response['desc'])
