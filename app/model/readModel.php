@@ -960,7 +960,6 @@ class readModel extends Model
             "name" => "",
             "code" => "",
             "description" => "",
-            "year" => "",
             "semester" => ""
         ];
 

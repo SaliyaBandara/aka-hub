@@ -455,6 +455,8 @@ class eventFeed extends Controller
         $data["clubRep"] = $data["clubRep_template"]["empty"];
         $data["clubRep_template"] = $data["clubRep_template"]["template"];
 
+
+        
         // print_r($_SESSION["club_rep"] );
 
         if ($_SESSION["club_rep"] == 1) {
@@ -482,7 +484,7 @@ class eventFeed extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
             } else {
-                die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
+                die(json_encode(array("status" => "400", "desc" => "Request unsuccessfull")));
             }
         }
     }
