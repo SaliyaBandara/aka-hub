@@ -17,8 +17,14 @@ $calendar = new Calendar();
                     <div class="title font-1-5 font-semibold flex align-center">
                         <i class='bx bxs-calendar-check me-0-5'></i> Manage Materials
                     </div>
+                    <div class="approveRepresentativesButtonsLine">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/manageMaterials/courses" class="btn btn-primary">
+                                <i class='bx bxs-book'></i> Manage Courses
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="table-container">
                     <div class="table-responsive">
                         <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
@@ -37,7 +43,6 @@ $calendar = new Calendar();
                             <tbody>
 
                                 <?php
-
                                 if (isset($data["materials"])) {
                                     $i = 1;
                                     foreach ($data["materials"] as $material) {
@@ -65,6 +70,19 @@ $calendar = new Calendar();
                 </div>
 
                 <style>
+                    .section_header {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .approveRepresentativesButtonsLine {
+                        display: flex;
+                        justify-content: right;
+                        align-items: center;
+                        width: 350px;
+                    }
+
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;
@@ -81,7 +99,7 @@ $calendar = new Calendar();
                         margin-right: 5px;
                     } */
 
-                    .icons{
+                    .icons {
                         font-size: 24px;
                     }
 

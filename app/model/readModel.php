@@ -67,8 +67,47 @@ class readModel extends Model
         return false;
     }
 
+    public function getCoursesByYear($year)
+    {
 
-    // CREATE TABLE elections (
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ?", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesBySemester($year, $semester)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND semester = ?", "ii", [$year, $semester]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesBelowYear($year)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year < ? ", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesByOnlySemester($semester)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE semester = ? ", "i", [$semester]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+     // CREATE TABLE elections (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     user_id INT NOT NULL,
     //     name VARCHAR(255) NOT NULL,
@@ -342,6 +381,8 @@ class readModel extends Model
 
         return false;
     }
+
+
     public function getAllChatMessagesById($outgoing_id, $incoming_id)
     {
         $sql = "
@@ -369,9 +410,32 @@ class readModel extends Model
         return false;
     }
 
-    public function getNotBookedTimeSlotsById($id)
+    public function getTimeSlotsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND added = ? AND booked = ?", "iii", [$id, 1, 0]);
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+        $query = "SELECT * FROM timeslots WHERE counselor_id = ?  AND status != ?  AND date >= CURDATE() AND start_time > CURTIME()";
+
+        $result = $this->db_handle->runQuery($query, "ii", [$id, 3]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getNotBookedTimeSlotsByCounselorId($id)
+    {
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status = ?", "ii", [$id, 1]);
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots t WHERE counselor_id = ? AND CONCAT(t.date, ' ', t.start_time) >= NOW() AND status = ?", "ii", [$id, 1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function checkExistingReservations($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE student_id = ? AND (status = ? OR status = ?)", "iii", [$id, 0, 1]);
         if (count($result) > 0)
             return $result;
 
@@ -387,28 +451,83 @@ class readModel extends Model
         return false;
     }
 
-
-    public function getAvailableReservationRequests()
+    public function getReservationsByStudent($user_id,$counselor_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND declined = ?", "ii", [0, 0]);
+        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.student_id = ? AND t.counselor_id = ?", "ii", [$user_id, $counselor_id]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
 
-    public function getAcceptedReservationRequests()
+    public function getReservationsByStatus($status, $user_id, $counselor_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
+        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = ? AND r.student_id = ? AND t.counselor_id = ?", "iii", [$status, $user_id, $counselor_id]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
 
-    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time)
+
+
+    public function getAvailableReservationRequestsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((start_time <= ? AND end_time >= ?) OR (start_time <= ? AND end_time >= ?) OR (? <= start_time AND ? >= end_time))", "sssssss", [$counselor_id, $start_time, $start_time, $end_time, $end_time, $start_time, $end_time]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year 
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
+            WHERE r.status = ? 
+            AND t.counselor_id = ?
+        ", "ii", [0, $id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getOneReservationRequest($counselor_id, $id)
+    {
+        // $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE id = ?", "i", [$id]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year, t.date, t.start_time, t.end_time 
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
+            WHERE r.status = ? 
+            AND t.counselor_id = ?
+            AND r.id = ?
+        ", "iii", [0, $counselor_id, $id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
+    public function getAcceptedReservationRequests($id)
+    {
+        // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year , t.date, t.start_time, t.end_time
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
+            WHERE r.status = ?
+            AND t.counselor_id = ?
+        ", "ii", [1, $id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function checkForOverlappingTimeSlots($counselor_id, $start_time, $end_time, $date)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND ((date = ? AND start_time <= ? AND end_time > ?) OR (date = ? AND start_time < ? AND end_time >= ?) OR (date = ? AND ? < start_time AND ? > end_time))", "ssssssssss", [$counselor_id, $date, $start_time, $start_time, $date, $end_time, $end_time, $date, $start_time, $end_time]);
 
         if (count($result) > 0)
             return $result;
@@ -424,6 +543,7 @@ class readModel extends Model
         }
         return false;
     }
+
 
 
     public function getCountRoleUsers()
@@ -567,14 +687,23 @@ class readModel extends Model
     public function getChartFive()
     {
         $dataPoints = array(
+            array("label" => "Created Reservation Requests", "y" => 0),
             array("label" => "Accepted Reservation Requests", "y" => 0),
             array("label" => "Denied Reservation Requests", "y" => 0),
+            array("label" => "Completed Reservation Requests", "y" => 0),
+            array("label" => "Canceled Reservation Requests", "y" => 0),
         );
-        $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE accepted = ?", "i", [1]);
-        $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE declined = ?", "i", [1]);
+        $resultCreatedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [0]);
+        $resultAcceptedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [1]);
+        $resultDeniedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [2]);
+        $resultCompletedRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [3]);
+        $resultCanceledRequests = $this->db_handle->runQuery("SELECT COUNT(*) as counts FROM reservation_requests WHERE status = ?", "i", [4]);
 
-        $dataPoints[0]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
-        $dataPoints[1]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
+        $dataPoints[0]["y"] = ($resultCreatedRequests ? (int) $resultCreatedRequests[0]['counts'] : 0);
+        $dataPoints[1]["y"] = ($resultAcceptedRequests ? (int) $resultAcceptedRequests[0]['counts'] : 0);
+        $dataPoints[2]["y"] = ($resultDeniedRequests ? (int) $resultDeniedRequests[0]['counts'] : 0);
+        $dataPoints[3]["y"] = ($resultCompletedRequests ? (int) $resultCompletedRequests[0]['counts'] : 0);
+        $dataPoints[4]["y"] = ($resultCanceledRequests ? (int) $resultCanceledRequests[0]['counts'] : 0);
 
         return $dataPoints;
     }
@@ -616,7 +745,17 @@ class readModel extends Model
         } else if ($userdata[0]['role'] == 3) {
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
         } else {
-            $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+            if ($userdata[0]['club_rep'] == 1) {
+                $result = $this->db_handle->runQuery("SELECT u.*, s.*, cr.*, c.id, c.name AS club_name
+                FROM user u
+                JOIN student s ON u.id = s.id
+                JOIN club_representative cr ON u.id = cr.user_id
+                JOIN clubs c ON cr.club_id = c.id
+                WHERE u.id = ?
+                ", "i", [$id]);
+            } else {
+                $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+            }
         }
 
         if (count($result) > 0)
@@ -647,12 +786,31 @@ class readModel extends Model
 
     public function getMaterialToView($id)
     {
-        $sql = "SELECT co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND ?";
+        $sql = "SELECT co.id AS course_id , co.name AS course_name, co.code AS course_code,co.updated_at, co.year, co.semester, cm.id As material_ID, cm.video_links, cm.reference_links, cm.short_notes, cm.description, u.name AS user_name, u.student_id, u.email from course_materials cm, user u, courses co WHERE cm.course_id = co.id AND cm.user_id = u.id AND cm.id=?";
 
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
 
+        return false;
+    }
+
+    public function getCourses()
+    {
+        $sql = "SELECT * from courses WHERE ?";
+        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public  function getCourseIdFromMaterial($id)
+    {
+        $sql = "SELECT course_id from course_materials WHERE id = ?";
+        $result = $this->db_handle->runQuery($sql, "i", [$id]);
+        if (count($result) > 0)
+            return $result;
         return false;
     }
 
@@ -678,13 +836,14 @@ class readModel extends Model
 
     public function getOneCounselor($id)
     {
-        $sql = "SELECT * from user u , counselor c where c.id = u.id AND u.id = ?";
+        $sql = "SELECT u.*, c.id as counselor_id, c.type as type from user u , counselor c where c.id = u.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
 
         return false;
     }
+
 
     public function getOneAdmin($id)
     {
@@ -695,6 +854,16 @@ class readModel extends Model
 
         return false;
     }
+
+    // public function getOneCounselor($id)
+    // {
+    //     $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
+    //     $result = $this->db_handle->runQuery($sql, "ii", [1, $id]);
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
 
     public function getCounselorPosts($type, $posted_by)
     {
@@ -740,9 +909,53 @@ class readModel extends Model
         return false;
     }
 
+    public function getPostsOfClubs($club_id)
+    {
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u , club_representative as cr, clubs as c
+            WHERE p.type = 2 
+            AND p.posted_by = u.id
+            AND p.posted_by = cr.user_id
+            AND cr.club_id = c.id
+            AND c.id = ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "i", [$club_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getOnePost($post_id)
+    {
+        $result = $this->db_handle->runQuery("
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+        FROM posts p, user u WHERE p.posted_by = u.id AND p.id = ? ", "i", [$post_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getPostComments($post_id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? ", "i", [$post_id]);
+        $result = $this->db_handle->runQuery(
+            "
+        SELECT p.post_id as post_id,u.profile_img as profile_img, u.name as name, p.comment as comment, p.user_id as user_id, ps.posted_by as posted_by, p.id as id FROM post_comments p, user u, posts ps WHERE p.user_id = u.id AND  p.post_id = ps.id AND post_id = ? ",
+            "i",
+            [$post_id]
+        );
         if (count($result) > 0)
             return $result;
 
@@ -827,6 +1040,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getTeachingStudentsToLimitAccess()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [1]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
     public function getTeachingStudentsToApprove()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE teaching_student = ?", "i", [2]);
@@ -843,6 +1065,28 @@ class readModel extends Model
             return $result;
         }
         return false;
+    }
+
+    public function getPreviewRepresentativeWithClub($id)
+    {
+        $userdata = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        $result = [];
+        if ($userdata[0]['club_rep'] == 1) {
+            $result = $this->db_handle->runQuery("SELECT u.*, s.*, cr.*, c.id AS club_id, c.name AS club_name
+            FROM user u
+            JOIN student s ON u.id = s.id
+            JOIN club_representative cr ON u.id = cr.user_id
+            JOIN clubs c ON cr.club_id = c.id
+            WHERE u.id = ?
+                ", "i", [$id]);
+        } else {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+        }
+        if (count($result) > 0) {
+            return $result;
+        } else {
+            return false;
+        }
     }
 
     public function getOngoingElections($table)
@@ -873,6 +1117,15 @@ class readModel extends Model
         return false;
     }
 
+    public function getMaterialsForCourse($course_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM course_materials WHERE course_id = ?", "i", [$course_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAllClubs()
     {
 
@@ -886,6 +1139,58 @@ class readModel extends Model
 
         return false;
     }
+
+    public function getLatestReservation($user_id, $counselor_id)
+    {
+
+        $sql = "SELECT * from reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = 1 AND  CONCAT(t.date, ' ', t.start_time) >= NOW() AND r.student_id = ? AND t.counselor_id = ? ORDER BY CONCAT(t.date, ' ', t.start_time) LIMIT 1";
+        $result = $this->db_handle->runQuery($sql, "ii", [$user_id, $counselor_id]);
+
+        // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getOneTimeSlot($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE id = ?", "i", [$id]);
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
+
+    public function readLogEntries()
+    {
+        $filename = "userlog.txt";
+
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        $logEntries = [];
+        $i = 0;
+        foreach ($lines as $line) {
+            $parts = explode("\t", $line);
+
+            $logData = [
+                "id" => $i++,
+                'email' => $parts[0],
+                'ip_address' => $parts[1],
+                'timestamp' => $parts[2],
+                'message' => $parts[3],
+                'url' => $parts[4],
+                'response_code' => $parts[5]
+            ];
+
+            $logEntries[] = $logData;
+        }
+
+        return $logEntries;
+    }
+
 
     // get all the posts of the counselor
     // public function getCounselorPosts()
@@ -914,7 +1219,8 @@ class readModel extends Model
     //     UNIQUE KEY `code` (`code`)
     //   );   
 
-    public function getEmptyCourse()
+
+    public function getEmptyCourseForAdmin()
     {
 
         $empty = [
@@ -944,7 +1250,59 @@ class readModel extends Model
             "year" => [
                 "label" => "Year",
                 "type" => "number",
+                "validation" => "required",
+            ],
+            "semester" => [
+                "label" => "Semester",
+                "type" => "number",
                 "validation" => "required"
+            ],
+            "cover_img" => [
+                "label" => "Cover Image",
+                "type" => "array",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+    public function getEmptyCourse()
+    {
+
+        $empty = [
+            "name" => "",
+            "code" => "",
+            "description" => "",
+            "semester" => ""
+        ];
+
+        $template = [
+            "name" => [
+                "label" => "Course Name",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "code" => [
+                "label" => "Course Code",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "description" => [
+                "label" => "Course Description",
+                "type" => "text",
+                "validation" => ""
+            ],
+            "year" => [
+                "label" => "Year",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
             ],
             "semester" => [
                 "label" => "Semester",
@@ -1851,6 +2209,13 @@ class readModel extends Model
                 "skip" => true
             ],
 
+            "updated_datetime" => [
+                "label" => "Post Updated Time",
+                "type" => "timestamp",
+                "validation" => "",
+                "skip" => true
+            ],
+
         ];
 
         return [
@@ -1865,17 +2230,9 @@ class readModel extends Model
     {
 
         $empty = [
-            "id" => "",
             "timeslot_id" => "",
             "student_id" => "",
-            "year" => "",
-            "date" => "",
-            "start_time" => "",
-            "end_time" => "",
-            "accepted" => "",
-            "declined" => "",
-            "cancelled" => "",
-            "completed" => "",
+            "status" => "",
         ];
 
         $template = [
@@ -1885,57 +2242,15 @@ class readModel extends Model
                 "validation" => "required",
                 "skip" => true
             ],
-            "student_id" => [
-                "label" => "Student ID",
-                "type" => "number",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "year" => [
-                "label" => "Year of the student",
-                "type" => "number",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "date" => [
-                "label" => "Reservation date",
-                "type" => "date",
-                "validation" => "required",
-                "skip" => true
-            ],
 
-            "start_time" => [
-                "label" => "Start Time",
-                "type" => "time",
+            "student_id" => [
+                "label" => "User ID",
+                "type" => "number",
                 "validation" => "required",
                 "skip" => true
             ],
-            "end_time" => [
-                "label" => "End Time",
-                "type" => "time",
-                "validation" => "required",
-                "skip" => true
-            ],
-            "accepted" => [
-                "label" => "Accepted",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "declined" => [
-                "label" => "Cover Image",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "cancelled" => [
-                "label" => "Cancelled",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "completed" => [
-                "label" => "Completed",
+            "status" => [
+                "label" => "Status",
                 "type" => "number",
                 "validation" => "",
                 "skip" => true
@@ -1957,11 +2272,17 @@ class readModel extends Model
             "date" => "",
             "start_time" => "",
             "end_time" => "",
-            "added" => "",
-            "booked" => "",
+            "status" => "",
         ];
 
         $template = [
+            "counselor_id" =>
+            [
+                "label" => "Counselor ID",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
             "date" => [
                 "label" => "Date",
                 "type" => "date",
@@ -1982,14 +2303,8 @@ class readModel extends Model
                 "validation" => "required",
 
             ],
-            "added" => [
-                "label" => "Added",
-                "type" => "number",
-                "validation" => "",
-                "skip" => true
-            ],
-            "booked" => [
-                "label" => "Booked",
+            "status" => [
+                "label" => "Status",
                 "type" => "number",
                 "validation" => "",
                 "skip" => true

@@ -11,9 +11,20 @@ class Controller
 
     public function redirect($redirect = "")
     {
-        header("Location: " . BASE_URL . "/$redirect");
+        $roleToPanel = [
+            1 => "adminpanel",
+            3 => "adminpanel",
+            5 => "counselorPanel"
+        ];
+
+        $panel = isset($roleToPanel[$_SESSION["user_role"]]) ? $roleToPanel[$_SESSION["user_role"]] : "";
+
+        $redirectUrl = BASE_URL . "/" . ($panel ? "$panel/" : "") . $redirect;
+
+        header("Location: $redirectUrl");
         die();
     }
+
 
     protected function validate($data, $required_vars)
     {

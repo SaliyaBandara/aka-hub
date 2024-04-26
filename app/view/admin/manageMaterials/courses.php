@@ -1,5 +1,6 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
+// $header = new header();
 $sidebar = new Sidebar("manageMaterials");
 $calendar = new Calendar();
 ?>
@@ -8,156 +9,102 @@ $calendar = new Calendar();
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
-        <div class="left">
+        <div class="left w-100">
 
             <!-- section header -->
             <section>
-
-                <?php if ($data["teaching_student"] == 1) { ?>
-                    <div class="mb-1 form-group">
-                        <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
-                            <i class='bx bx-plus'></i> Add Course
-                        </a>
-                    </div>
-                <?php } ?>
-
                 <div class="section_header mb-1 flex">
                     <div class="title font-1-5 font-semibold flex align-center">
-                        <i class='bx bxs-calendar-check me-0-5'></i> Courses List
+                        <i class='bx bxs-calendar-check me-0-5'></i> Manage Courses
+                    </div>
+                    <div class="approveRepresentativesButtonsLine">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/manageMaterials" class="btn btn-info">
+                                <i class=''></i> Back to Table
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Course Code</th>
+                                    <th>Year</th>
+                                    <th>Semester</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                    <th>Preview</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                                <?php
+                                if (isset($data["courses"])) {
+                                    $i = 1;
+                                    foreach ($data["courses"] as $course) {
+                                ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $course["name"] ?></td>
+                                            <td><?= $course["code"] ?></td>
+                                            <td><?= $course["year"] ?></td>
+                                            <td><?= $course["semester"] ?></td>
+                                            <td><?= $course["created_at"] ?></td>
+                                            <td><?= $course["updated_at"] ?></td>  
+                                            <td>
+                                                <a href="<?= BASE_URL ?>/manageMaterials/courseView/<?php echo $course['id']; ?>"><i class='bx bx-show icons text-secondary'></i></a>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
+                                }
 
-                <!-- todo flex wrap -->
-                <div class="todo_flex_wrap flex flex-wrap">
-
-                    <!-- <a href="#" class="todo_item flex align-center">
-                        <div>
-                            <div class="todo_item_date flex align-center justify-center">15</div>
-                        </div>
-                        <div class="todo_item_text">
-                            <div class="font-1-25 font-semibold">Computer Networks</div>
-                            <div class="font-1 font-medium text-muted">Take Home Assignment</div>
-                            <div class="font-0-8 text-muted">Deadline : Tuesday, 10 June</div>
-                        </div>
-                    </a> -->
-
-                    <?php
-
-                    // (
-                    //     [0] => Array
-                    //         (
-                    //             [id] => 1
-                    //             [name] => Computer Networks
-                    //             [code] => SCS2206
-                    //             [description] => Test Desc
-                    //             [cover_img] => course_cover_2023103110401565408c3737aa102280080016987290157030.jpg
-                    //             [year] => 2
-                    //             [semester] => 1
-                    //             [created_at] => 2023-10-31 05:24:24
-                    //             [updated_at] => 2023-10-31 05:24:24
-                    //         ) 
-
-                    foreach ($data["courses"] as $course) {
-                        $img_src = USER_IMG_PATH . $course["cover_img"];
-                    ?>
-
-                        <div href="./courses/view/<?= $course["id"] ?>" class="js-link todo_item flex align-center">
-                            <div>
-                                <div class="todo_item_date flex align-center justify-center">
-                                    <img src="<?= $img_src ?>" alt="">
-                                </div>
-                            </div>
-                            <div class="todo_item_text">
-                                <div class="font-1-25 font-semibold"><?= $course["name"] ?></div>
-                                <div class="font-1 font-medium text-muted"><?= $course["code"] ?></div>
-                                <div class="font-0-8 text-muted">Year <?= $course["year"] ?> Semester <?= $course["semester"] ?></div>
-                            </div>
-
-                            <?php
-                            if ($data["teaching_student"] == 1) {
-                            ?>
-
-                                <div class="todo_item_actions">
-                                    <a href="<?= BASE_URL ?>/courses/add_edit/<?= $course["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
-                                    <div class="btn delete-item" data-id="<?= $course["id"] ?>">
-                                        <i class='bx bx-trash text-danger'></i>
-                                    </div>
-                                </div>
-
-                            <?php } ?>
-
-                        </div>
-
-                    <?php } ?>
-
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <style>
-                    .todo_flex_wrap {
-                        /* display: flex;
-                        flex-wrap: wrap;
-                        justify-content: space-between; */
-                    }
-
-                    .todo_item {
-                        text-decoration: none;
-                        color: initial;
-
-                        width: calc(40% - 2rem);
-                        min-width: 300px;
-                        padding: 1rem;
-                        margin: 1rem;
-                        margin-left: 0;
-                        margin-top: 0;
-                        border-radius: 10px;
-                        border: 1px solid #d0d0d0;
-                        /* background-color: #f5f5f5; */
-
-                        transition: all 0.3s ease-in-out;
-                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .todo_item:hover {
-                        transform: scale(1.025);
-                        background-color: #f5f5f5;
-                        background-color: #eeecec;
-                        background-color: #bdd2f138;
-                    }
-
-                    .todo_item .todo_item_date {
-                        width: 4.5rem;
-                        height: 4.5rem;
-                        border-radius: 50%;
-                        border: 5px solid #bdd2f1;
-                        font-size: 2rem;
-                        font-weight: 500;
-                    }
-
-                    .todo_item .todo_item_date img {
-                        object-fit: cover;
-                        border-radius: 50%;
-                    }
-
-                    .todo_item .todo_item_actions {
-                        margin-left: 0.5rem;
+                    .section_header {
+                        width: 100%;
                         display: flex;
-                        flex-direction: column;
+                        justify-content: space-between;
+                    }
+
+                    .approveRepresentativesButtonsLine {
+                        display: flex;
+                        justify-content: right;
                         align-items: center;
-                        justify-content: center;
+                        width: 350px;
                     }
 
-                    .todo_item .todo_item_actions .btn {
-                        padding: 0.5rem;
+                    .btn-blue {
+                        background-color: #2d7bf4;
+                        color: white !important;
                     }
 
-                    .todo_item .todo_item_text {
-                        margin-left: 1.5rem;
-                        flex-grow: 1;
+                    .table .table-img-preview {
+                        width: 70px;
+                        cursor: pointer;
                     }
 
-                    .todo_item .todo_item_text>div {
-                        margin-bottom: 0.25rem;
+                    /* .table .action-list a {
+                        color: inherit;
+                        font-size: 24px;
+                        margin-right: 5px;
+                    } */
+
+                    .icons {
+                        font-size: 24px;
+                    }
+
+                    .table .action-list {
+                        text-align: center;
                     }
                 </style>
 
@@ -166,162 +113,58 @@ $calendar = new Calendar();
 
         </div>
 
-        <div class="right">
-            <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
-            </div>
-            <div class = "flex-column justify-center align-center divButtonSection">
-                <div class = "title font-1-5 font-bold flex align-center justify-center requestDescription">
-                    Send your request now to join our "Teaching Army" !
-                </div>
-                <div href="<?= BASE_URL ?>/Courses/clickToBeRole/teaching_student">
-                    <div class = "btn btn-primary mb-1 form form-group teachingRequestButton justify-center align-center">
-                        Send Request
-                    </div>
-                </a>
-            </div>
-        </div>
+        <!-- <div class="right">
+            <div style="width: 30vh;"></div>
+        </div> -->
+
     </div>
 
-    <style>
-        .main-grid {}
+    <?php $HTMLFooter = new HTMLFooter(); ?>
 
-        /* .main-grid .left {
-            width: 85% !;
-            background-color: yellowgreen;
-            height: 50vh;
-            padding: 2rem;
-        } */
+    <!-- //cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css -->
+    <!-- //cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js -->
 
-        /* .main-grid .right {
-            width: 30%;
-            flex-grow: 1;
-            background-color: red;
-            height: 150vh;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            
-        } */
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.js"></script> -->
+    <!-- <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script> -->
 
-        .divButtonSection{
-            border-radius: 10px;
-            margin:1rem;
-            /* border: 1px solid red; */
-            justify-content: center;
-            padding:1rem;
-        }
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/dataTables.responsive.min.js"></script>
 
+    <script>
+        let BASE_URL = "<?= BASE_URL ?>";
+    </script>
+    <script>
+        $(document).ready(function() {
 
-        .teachingRequestButton{
-            border: 1px solid #2684ff;
-            background-color: var(--secondary-color);
-            color: white;
-            width: 100%;
-            text-align:center;
-            text-decoration: none !important;
-        }
-
-        .divButtonSection a{
-            text-decoration: none !important;
-        }
-      
-        .requestDescription{
-            text-align: center;
-            width : 100%;
-            /* border:1px solid red; */
-            padding-bottom: 1rem;
-            color: black;
-        }
-
-        .onsite_alert {
-            text-decoration: none;
-            width: 100%;
-            padding: 0.75rem 1rem;
-            padding-right: 0;
-            background-color: #e5f9e5;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .onsite_alert .close_btn {
-            margin-left: auto;
-            cursor: pointer;
-            font-size: var(--rv-1-25);
-            padding: 0 1rem;
-        }
-
-        .onsite_alert .close_btn:hover {
-            color: red;
-        }
-
-        .onsite_alert.alert-success {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-    </style>
-
-</div>
-
-<?php $HTMLFooter = new HTMLFooter(); ?>
-<script>
-    let BASE_URL = "<?= BASE_URL ?>";
-</script>
-<script>
-    $(document).ready(function() {
-        $(document).on("click", ".delete-item", function() {
-            let id = $(this).attr("data-id");
-            let $this = $(this);
-
-            // confirm delete
-            if (!confirm("Are you sure you want to delete this course?"))
-                return;
-
-            $.ajax({
-                url: `${BASE_URL}/courses/delete/${id}`,
-                type: 'post',
-                data: {
-                    delete: true
+            let col_count = $("#products-datatable thead th").length;
+            $("#products-datatable").DataTable({
+                language: {
+                    paginate: {
+                        previous: "<i class='mdi mdi-chevron-left'>",
+                        next: "<i class='mdi mdi-chevron-right'>",
+                    },
+                    info: "Showing records _START_ to _END_ of _TOTAL_",
+                    lengthMenu: 'Display <select class=\'form-select form-select-sm\'><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="-1">All</option></select> records',
                 },
-                dataType: 'json',
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", response['desc'])
-                        $this.closest(".todo_item").remove();
-                    } else if (response['status'] == 403)
-                        alertUser("danger", response['desc'])
-                    else
-                        alertUser("warning", response['desc'])
+                responsive: true,
+                pageLength: 5,
+                columns: Array(col_count).fill({
+                    orderable: !0
+                }),
+                select: {
+                    style: "multi"
                 },
-                error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong")
-                }
+                order: [
+                    [0, "asc"]
+                ],
+                drawCallback: function() {
+                    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"),
+                        $("#products-datatable_length label").addClass("form-label");
+                },
             });
         });
+    </script>
+    <script>
 
-        $(document).on("click", ".teachingRequestButton", function() {
-            $.ajax({
-                url: `${BASE_URL}/Courses/clickToBeRole/teaching_student`,
-                type: 'post',
-                data: {
-                    request: true
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response['status'] == 200) {
-                        alertUser("success", response['desc'])
-                    } else if (response['status'] == 403)
-                        alertUser("danger", response['desc'])
-                    else
-                        alertUser("warning", response['desc'])
-                },
-                error: function(ajaxContext) {
-                    alertUser("danger", "Something Went Wrong")
-                }
-            });
-        });
-
-    });
-</script>
-<script>
-    
-</script>
+    </script>

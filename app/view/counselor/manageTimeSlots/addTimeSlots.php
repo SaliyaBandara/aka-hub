@@ -2,7 +2,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("manageTimeSlots");
+$sidebar = new Sidebar("counselorManageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -30,13 +30,18 @@ $calendar = new Calendar();
                       
                     <?php
                     if (empty($data["timeslots"])) {
-                        echo "NO TIME SLOTS AVAILABLE";
+                        echo "<p>NO TIME SLOTS AVAILABLE</p>";
                     } else {
                             foreach ($data["timeslots"] as $timeslot) {
                                 $class = "card-not-added";
                                 $buttonClass = "button-add";
-                                $button = "Add"; 
-                                if ($timeslot["added"] == 1){
+                                $button = "Add";
+                                
+                                //status = 0 => created
+                                //status = 1 => added
+                                //status = 2 => removed
+                                //status = 3 => booked
+                                if ($timeslot["status"] == 1){
                                     $class = "card-added";
                                     $buttonClass = "button-remove";
                                     $button = "Remove";
@@ -69,7 +74,7 @@ $calendar = new Calendar();
                             <a href="" class="close">&times;</a>
                             <div class="content">
                                 <div class="container">
-                                    <form class="form" action="" method="post" name="form1" onsubmit="return validateForm()">
+                                    <form class="form" action="" method="post" name="form1" >
 
                                         <?php
                                             foreach ($data["timeSlot_template"] as $key => $value) {
@@ -108,11 +113,8 @@ $calendar = new Calendar();
 
 
 <style>
-    .one{
-
-    }
     .main-grid .left {
-        width: 75%;
+        width: 100% !important;
         height: 150vh;
 
     }
@@ -467,6 +469,14 @@ $calendar = new Calendar();
         text-align: left;
         align-items: center;
     }
+    .wrapper p{
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        /* justify-self: center; */
+        /* justify-content: center; */
+    }
 </style>
 
 <?php $HTMLFooter = new HTMLFooter(); ?>
@@ -541,7 +551,7 @@ $calendar = new Calendar();
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/delete/${id}`,
+                url: `${BASE_URL}/counselorManageTimeSlots/delete/${id}`,
                 type: 'post',
                 data: {
                     delete: true
@@ -551,10 +561,12 @@ $calendar = new Calendar();
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
                         $this.closest(".timeslotcard").remove();
+                        location.reload();
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
                         alertUser("warning", response['desc'])
+                    
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
@@ -569,7 +581,7 @@ $calendar = new Calendar();
             // console.log(id); 
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/addToTimeslot/${id}`, 
+                url: `${BASE_URL}/counselorManageTimeSlots/addToTimeslot/${id}`, 
                 type: 'POST',
                 data: {
                     id: id
@@ -596,10 +608,13 @@ $calendar = new Calendar();
             event.preventDefault(); 
             let card = $(this).closest('.timeslotcard');
             let id = $(this).attr("data-id"); 
-            console.log(id); 
+            // console.log(id); 
+
+            if (!confirm("Are you sure you want to Remove this time slot?"))
+                return;
 
             $.ajax({
-                url: `${BASE_URL}/manageTimeSlots/removeTimeslot/${id}`, 
+                url: `${BASE_URL}/counselorManageTimeSlots/removeTimeslot/${id}`, 
                 type: 'POST',
                 data: {
                     id: id

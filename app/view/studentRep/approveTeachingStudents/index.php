@@ -17,6 +17,13 @@ $calendar = new Calendar();
                     <div class="title font-1-5 font-semibold left_side">
                         <i class='bx bxs-calendar-check me-0-5'></i> Approve Teaching Students
                     </div>
+                    <div class="approveRepresentativesButtonsLine">
+                        <div class="mb-1 form-group">
+                            <a href="<?= BASE_URL ?>/approveTeachingStudents/studentRepAccessControlView" class="btn btn-primary">
+                                <i class='bx bxs-lock-open'></i> Access Control
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="table-container">
@@ -114,6 +121,14 @@ $calendar = new Calendar();
 
                     .icons{
                         font-size: 24px;
+                    }
+
+                    .approveRepresentativesButtonsLine {
+                        display: flex;
+                        justify-content: right;
+                        align-items: center;
+                        width: 350px;
+                        /* border: 1px solid red; */
                     }
 
                 </style>

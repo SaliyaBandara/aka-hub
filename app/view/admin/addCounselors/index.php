@@ -21,14 +21,13 @@ $sidebar = new Sidebar("existingCounselors");
                 foreach ($data["user_template"] as $key => $value) {
                     if (isset($value["skip"]) && $value["skip"] == true)
                         continue;
-                    // print_r($data["user"][$key]);
                 ?>
                     <div class="mb-1 form-group">
                         <label for="name" class="form-label">
                             <?= $value["label"] ?>
-                            <?= $key == "password" ? "<span class='text-small text-muted'>(Leave blank if you don't want to change)</span>" : "" ?>
+                            <?= $key == "password" ? "<span class='text-small text-muted'></span>" : "" ?>
                         </label>
-                        <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                        <input <?= $id != 0 && $key == "password" ? "disabled" : "" ?> class="form-control" type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="<?= $id != 0 && $key == "password" ? "Password Edit Disabled" : "Enter " . $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?>>
                     </div>
                 <?php
                 }
@@ -45,8 +44,8 @@ $sidebar = new Sidebar("existingCounselors");
                 <?php
 
                 }
-                $professionalSelected = ($data["counselor"]["type"] == 'Professional Counselor') ? "selected" : "";
-                $studentSelected = ($data["counselor"]["type"] == 'Student Counselor') ? "selected" : "";
+                $professionalSelected = ($data["counselor"]["type"] == 1) ? "selected" : "";
+                $studentSelected = ($data["counselor"]["type"] == 2) ? "selected" : "";
                 ?>
                 <div class="mb-1 form-group">
                     <label for="type" class="form-label">

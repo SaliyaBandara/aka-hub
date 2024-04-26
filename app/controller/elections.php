@@ -10,7 +10,7 @@ class Elections extends Controller
 
     public function checkAdmin()
     {
-        if ($_SESSION["student_rep"] != 1 && $_SESSION["club_rep"] != 1)
+        if ($_SESSION["student_rep"] != 1 && $_SESSION["club_rep"] != 1 &&  $_SESSION["user_role"] != 1)
             $this->redirect();
     }
 
@@ -22,6 +22,9 @@ class Elections extends Controller
             return true;
 
         if ($_SESSION["club_rep"] == 1 && $election["type"] == 0)
+            return true;
+
+        if ($_SESSION["user_role"] == 1)
             return true;
 
         return false;
@@ -39,7 +42,7 @@ class Elections extends Controller
         $data["club_rep"] = $_SESSION["club_rep"];
 
         $data["edit_access"] = false;
-        if ($_SESSION["student_rep"] == 1 || $_SESSION["club_rep"] == 1)
+        if ($_SESSION["student_rep"] == 1 || $_SESSION["club_rep"] == 1 || $_SESSION["user_role"] == 1 )
             $data["edit_access"] = true;
 
         $data["items"] = $this->model('readModel')->getAll("elections");

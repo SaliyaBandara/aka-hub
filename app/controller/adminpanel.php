@@ -4,14 +4,19 @@ class AdminPanel extends Controller
     public function index()
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1)&&($_SESSION["user_role"]!=3))
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["user_role"] != 3)) {
+            //log Entry
+            $action = "Unauthorized user tried to access Adminpanel";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
+        }
         $data = [
             'title' => 'AdminPanel',
             'message' => 'Welcome to Aka Hub!'
         ];
-        if($_SESSION["user_role"] == 3)
-            $data["title"] = "Super Admin Panel"; 
+        if ($_SESSION["user_role"] == 3)
+            $data["title"] = "Super Admin Panel";
 
         $data["count_total_users"] = $this->model('readModel')->getCountAllUsers();
         $data["count_role_users"] = $this->model('readModel')->getCountRoleUsers();

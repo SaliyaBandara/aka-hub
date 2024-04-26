@@ -169,12 +169,6 @@ $sidebar = new Sidebar("courses");
                 return alertUser("warning", `Semester should be 1 or 2`);
             }
 
-            if (values["year"] != 1 && values["year"] != 2 && values["year"] != 3 && values["year"] != 4) {
-                empty_fields.push($("#year"));
-                $("#year").addClass("border-danger");
-                return alertUser("warning", `Year should be 1, 2, 3 or 4`);
-            }
-
             let completed = 0;
             let tables = ["cover_img"];
             $.each(tables, function(i, name) {

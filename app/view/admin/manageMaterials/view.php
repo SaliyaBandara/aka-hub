@@ -42,10 +42,11 @@ $sidebar = new Sidebar("manageMaterials");
                             if ($data["role"] == 1) {
                             ?>
                                 <div class="todo_item_actions flex">
-                                    <a href="<?= BASE_URL ?>/manageMaterials/material/add_edit/<?= $course_material->material_ID ?>/<?= $data["id"] ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
-                                    <div class="btn delete-item" data-id="<?= $course_material->id ?>">
+                                    <a href="<?= BASE_URL ?>/manageMaterials/material/add_edit/<?= $course_material->material_ID ?>/<?= $course_material->course_id ?>/edit" class="btn d-block m-1"> <i class='bx bx-edit'></i></a>
+                                    <div class="btn delete-item" data-id="<?= $course_material->material_ID ?>">
                                         <i class='bx bx-trash text-danger'></i>
                                     </div>
+
                                 </div>
 
                             <?php } ?>
@@ -111,19 +112,25 @@ $sidebar = new Sidebar("manageMaterials");
                 }
                 ?>
 
-                <a class="btn btn-sm btn-blue" href="<?= BASE_URL ?>/manageMaterials">
-                    <input type="button" class="profileButton" value="Back To Table" />
+                <a class="manageMaterialsLink" href="<?= BASE_URL ?>/manageMaterials">
+                    <input type="button" class="btn btn-info" value="Back To Table" />
                 </a>
 
                 <style>
-                    .profileButton{
+                    .manageMaterialsLink {
+                        text-decoration: none;
+                    }
+
+                    .profileButton {
                         background-color: #2d7bf4;
                         color: white !important;
-                        border:none;
+                        border: none;
                     }
-                    .profileButton:hover{
+
+                    .profileButton:hover {
                         cursor: pointer;
                     }
+
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;
@@ -219,17 +226,17 @@ $sidebar = new Sidebar("manageMaterials");
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/courses/delete_material/${id}`,
+                url: `${BASE_URL}/manageMaterials/delete_material/${id}`,
                 type: 'post',
                 data: {
                     delete: true
                 },
                 dataType: 'json',
                 success: function(response) {
-                    if (response['status'] == 200) {
+                    if (response.status == 200) {
                         alertUser("success", response['desc'])
                         $this.closest(".material-item").remove();
-                    } else if (response['status'] == 403)
+                    } else if (response.status == 403)
                         alertUser("danger", response['desc'])
                     else
                         alertUser("warning", response['desc'])

@@ -10,8 +10,11 @@
         <div class="container">
             <?php
                 $reservation_request = $data["reservationRequest"];
-                // $dataArray = $data["reservationRequest"];
-                $img_src = USER_IMG_PATH . $reservation_request["cover_img"];
+                
+                $img_src = USER_IMG_PATH . "default_avatar.jpg";
+                if ($reservation_request["profile_img"] != null || $reservation_request["profile_img"] != "") {
+                    $img_src = USER_IMG_PATH . $reservation_request["profile_img"];
+                }
             ?>
             <div class="img1"><img src="<?= $img_src ?>" class="center-top"></div>
             <form class="form-1">
@@ -56,7 +59,7 @@
                 
                 <div class="input-buttons">
                     <a href="#" class="accept accept-request" data-id="<?= $reservation_request['id'] ?>">Accept</a>
-                    <a href="#" class="decline" data-id="<?= $reservation_request['id'] ?>">Decline</a>
+                    <a href="#" class="decline decline-request" data-id="<?= $reservation_request['id'] ?>">Decline</a>
                 </div>
             </form>
         </div>
@@ -105,7 +108,7 @@
             position: relative;
         }
         form label{
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             font-weight: 600;
             letter-spacing: 2px;
         }
@@ -188,42 +191,3 @@
         }
 </style>
 
-<?php $HTMLFooter = new HTMLFooter(); ?>
-<script>
-    let BASE_URL = "<?= BASE_URL ?>";
-</script>
-
-<script>
-    $(document).on("click", ".accept-request", function(event) {
-        event.preventDefault(); 
-        // let card = $(this).closest('.timeslotcard');
-        let id = $(this).attr("data-id"); 
-        console.log(id); 
-
-        $.ajax({
-            url: `${BASE_URL}/reservationRequests/acceptReservation/${id}`, 
-            type: 'POST',
-            data: {
-                id: id
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === 200) {
-                    alertUser("success", response['desc'])
-                    // card.removeClass('card-not-added').addClass('card-added');
-                    // card.find('.button-add').text('Remove');
-                    // card.find('.button-add').removeClass('button-add').addClass('button-remove');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-            
-                } else {
-                    alertUser("warning", response['desc'])
-                }
-            },
-            error: function(ajaxContext) {
-                alertUser("danger", "Something Went Wrong")       
-            }
-        });
-    });        
-</script>

@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("manageTimeSlots");
+$sidebar = new Sidebar("counselorManageTimeSlots");
 $calendar = new Calendar();
 ?>
 
@@ -13,25 +13,18 @@ $calendar = new Calendar();
             <div class="calender-main">
                 <div class="calendarContainor">
                     <?php echo $calendar->render(); ?>
+                </div>  
+                <div class="date-range-picker">
                     <h2>Please select a Date or Date Range</h2>
-                    <!-- <form action="index.php?controller=calendar&action=filterDates" method="post">
-                        <div class="date-range">
-                            <p class="p1">
-                                <input type="date" name="start_date"> to 
-                                <input type="date" name="end_date">
-                                <button type="submit">Filter</button>
-                            </p>
-                        </div>
-                    </form> -->
                     <div class="date-range">
                         <p class="p1"><input type="date"> to <input type="date"></p>
                     </div>
                     <div class="manage-time-slots">
-                        <a href="manageTimeSlots/addTimeSlots">Manage Time Slots</a>
+                        <a href="#" class="filter-dates">Manage Time Slots</a>
                     </div>
                 </div>
-                
             </div>
+        </div>    
             
 
         </div>
@@ -41,14 +34,12 @@ $calendar = new Calendar();
 
     <style>
         .main-grid .left {
-            width: 75%;
-            height: 150vh;
+            width: 85% !important;
 
         }
 
         .main-grid .right {
             flex-grow: 1;
-            height: 150vh;
         }
 
         .threeCardDiv {
@@ -125,7 +116,7 @@ $calendar = new Calendar();
     <style>
         .calendarContainor{
             justify-content: space-between;
-            width: 30%;
+            /* width: 30%; */
             height: 400px;
         }
         .calender-main{
@@ -176,13 +167,90 @@ $calendar = new Calendar();
         margin: 1rem 1rem 1rem calc(var(--sidebar-width-actual) + 0.75rem);
         /* background-color: yellowgreen; */
         width: (100vw - var(--sidebar-width-actual));
-        /* height: 50vh; */
-
-        /* border: 2px solid red; */
-
-
+        height: calc(100vh - 2rem); /* Adjust the height as needed */
+        overflow-y: auto;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         border-radius: 10px;
-        overflow: hidden;
     }
 </style>
+
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the elements
+        var startDateInput = document.querySelector('.date-range input[type="date"]:first-child');
+        var endDateInput = document.querySelector('.date-range input[type="date"]:last-child');
+        var manageTimeSlotsButton = document.querySelector('.filter-dates');
+
+        // Disable the button initially
+        manageTimeSlotsButton.disabled = true;
+
+        // Function to check if both dates are selected
+        function checkDatesSelected() {
+            return startDateInput.value && endDateInput.value;
+        }
+
+        // // Function to handle button click
+        // function handleManageTimeSlotsClick(event) {
+        //     event.preventDefault();
+
+        //     // Redirect only if both dates are selected
+        //     if (checkDatesSelected()) {
+        //         var startDate = startDateInput.value;
+        //         var endDate = endDateInput.value;
+
+        //         // Redirect to the "manageTimeSlots/addTimeSlots" page with dates as parameters
+        //         window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+        //     }
+        // }
+
+        // // Event listeners
+        // startDateInput.addEventListener('change', function() {
+        //     manageTimeSlotsButton.disabled = !checkDatesSelected();
+        // });
+
+        // endDateInput.addEventListener('change', function() {
+        //     manageTimeSlotsButton.disabled = !checkDatesSelected();
+        // });
+
+        // // manageTimeSlotsButton.addEventListener('click', handleManageTimeSlotsClick);
+
+        var filterDates = document.querySelectorAll('.filter-dates');
+
+        filterDates.forEach(function(button) {
+            // button.addEventListener('click', function(event) {
+            button.addEventListener('click', function(event) {    
+                event.preventDefault();
+                // Redirect only if both dates are selected
+                if (checkDatesSelected()) {
+                    var startDate = startDateInput.value;
+                    var endDate = endDateInput.value;
+
+                    // Redirect to the "manageTimeSlots/addTimeSlots" page with dates as parameters
+                    // window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+                }
+                startDateInput.addEventListener('change', function() {
+                    manageTimeSlotsButton.disabled = !checkDatesSelected();
+                });
+
+                endDateInput.addEventListener('change', function() {
+                    manageTimeSlotsButton.disabled = !checkDatesSelected();
+                });
+
+                // var user_id = button.getAttribute('user-id');
+                // console.log(startDateInput);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', BASE_URL + '/counselorManageTimeSlots/filterDates' + startDate&endDate, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        window.location.href = BASE_URL + '/counselorManageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });   
+</script>

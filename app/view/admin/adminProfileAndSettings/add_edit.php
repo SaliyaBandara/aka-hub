@@ -1,42 +1,52 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("manageMaterials");
+$sidebar = new Sidebar("adminProfileAndSettings");
 // print_r($data);
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch(); ?>
+    <?php $welcomeSearch = new WelcomeSearch();
+    ?>
     <div class="my-2 mx-2">
-        <h3 class="text-muted"><?= $data["action"] == "create" ? "Create New Course" : "Edit Course" ?></h3>
-
-
+        <h3 class="text-muted">Edit Profile</h3>
         <form action="" method="post" class="form">
+            <div class="mb-1 form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="<?= $data["user"]["name"] ?>" placeholder="Enter Name">
+            </div>
+            <div class="mb-1 form-group">
+                <label for="name" class="form-label">Email Address</label>
+                <input type="text" id="email" name="email" class="form-control" value="<?= $data["user"]["email"] ?>" disabled placeholder="Enter Email">
+            </div>
+            <div class="mb-1 form-group">
+                <label for="name" class="form-label">Alternative Email Address</label>
+                <input type="text" id="alt_email" name="alt_email" class="form-control" value="<?= $data["user"]["alt_email"] ?>" placeholder="Enter Alternative Email">
+            </div>
             <?php
-
-            foreach ($data["course_template"] as $key => $value) {
+            foreach ($data["admin_profile_template"] as $key => $value) {
                 if (isset($value["skip"]) && $value["skip"] == true)
                     continue;
             ?>
                 <div class="mb-1 form-group">
                     <label for="name" class="form-label"><?= $value["label"] ?></label>
-                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["course"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["admin_profile"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                 </div>
             <?php
             }
             ?>
 
             <div class="mb-1">
-                <label class="form-label">Course Image</label>
+                <label class="form-label">Profile Image</label>
                 <p class="text-muted font-14">
-                    Upload course cover image (Maximum 1 image)
+                    Upload profile image (Maximum 1 image)
                 </p>
-                <div action="/uploadFiles/img/course_cover" data-name="cover_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
+                <div action="/uploadFiles/img/profile_img" data-name="profile_img" data-maxFiles="1" class="dropzone imgDropZone"></div>
             </div>
 
             <div class="mb-1">
                 <div class="table-responsive">
-                    <table <?= ($data['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="cover_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
+                    <table <?= ($data["user"]['id'] == 0 ? 'style="display: none;"' : "") ?> data-name="profile_img" class="table table-custom2 custom-table table-borderless image-preview-table sortableTable" width="100%" cellspacing="0">
                         <thead class="cent">
                             <tr>
                                 <th class="text-center py-1">Image</th>
@@ -51,13 +61,13 @@ $sidebar = new Sidebar("manageMaterials");
                         </tfoot>
                         <tbody class="ui-sortable">
                             <?php
-                            if ($data['id'] != 0 && !empty($data['course']['cover_img'])) {
-                                $img = USER_IMG_PATH . $data['course']['cover_img'];
+                            if ($data["user"]['id'] != 0 && !empty($data["user"]['profile_img'])) {
+                                $img_src = USER_IMG_PATH . $data["user"]["profile_img"];
                             ?>
                                 <tr class='ui-sortable-handle'>
                                     <td>
-                                        <div class='preview-img preview-img-small' data-filename='<?= $data['course']['cover_img'] ?>' data-fancybox='group' href='<?= $img ?>'>
-                                            <img src='<?= $img ?>' class='' alt='..'>
+                                        <div class='preview-img preview-img-small' data-filename='<?= $data["user"]['profile_img'] ?>' data-fancybox='group' href='<?= $img_src ?>'>
+                                            <img src='<?= $img_src ?>' class='' alt='..'>
                                         </div>
                                     </td>
                                     <td>
@@ -71,9 +81,8 @@ $sidebar = new Sidebar("manageMaterials");
                     </table>
                 </div>
             </div>
-
             <div class="mt-1-5 form-group">
-                <a href="<?= BASE_URL ?>/manageMaterials" class="btn btn-info">Back</a>
+                <a href="<?= BASE_URL ?>/adminProfileAndSettings" class="btn btn-info">Back</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
 
@@ -90,7 +99,6 @@ $sidebar = new Sidebar("manageMaterials");
     "use strict";
     Dropzone.autoDiscover = false;
     $(document).ready(function() {
-
         let imgCount = 0;
         let dropZoneImgsArr = [];
         $('.dropzone.imgDropZone').each(function() {
@@ -135,6 +143,7 @@ $sidebar = new Sidebar("manageMaterials");
             });
         })
 
+
         $('form').submit(function(event) {
             event.preventDefault();
             var input = $(this);
@@ -158,25 +167,8 @@ $sidebar = new Sidebar("manageMaterials");
                 empty_fields.forEach(element => element.removeClass("border-danger"));
             }, 6000);
 
-            if (empty_fields.length > 0) {
-                empty_fields[0].focus();
-                return alertUser("warning", `Please fill all the fields`);
-            }
-
-            if (values["semester"] != 1 && values["semester"] != 2) {
-                empty_fields.push($("#semester"));
-                $("#semester").addClass("border-danger");
-                return alertUser("warning", `Semester should be 1 or 2`);
-            }
-
-            if (values["year"] != 1 && values["year"] != 2 && values["year"] != 3 && values["year"] != 4) {
-                empty_fields.push($("#year"));
-                $("#year").addClass("border-danger");
-                return alertUser("warning", `Year should be 1, 2, 3 or 4`);
-            }
-
             let completed = 0;
-            let tables = ["cover_img"];
+            let tables = ["profile_img"];
             $.each(tables, function(i, name) {
                 let table = $(`.table-responsive .image-preview-table[data-name='${name}'] tbody`)
                 let images = get_preview_imgs(table)
@@ -190,6 +182,11 @@ $sidebar = new Sidebar("manageMaterials");
 
             if (completed < tables.length)
                 return;
+
+            if (empty_fields.length > 0) {
+                empty_fields[0].focus();
+                return alertUser("warning", `Please fill all the fields`);
+            }
 
             $.ajax({
                 // url: url,

@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("upcomingReservations");
+$sidebar = new Sidebar("counselorReservations");
 $calendar = new Calendar();
 // $reservationTable = new reservationTable();
 ?>
@@ -16,7 +16,7 @@ $calendar = new Calendar();
             <div class="main-container">
                 <?php
                 if (empty($data["reservation_requests"])) {
-                    echo "NO RESERVATIONS AVAILABLE";
+                    echo "<p>NO RESERVATIONS AVAILABLE</p>";
                 } else {
                         //sorting function to sort reservation requests by date and time
                         function sortByDateTime($a, $b) {
@@ -34,13 +34,17 @@ $calendar = new Calendar();
                         usort($data["reservation_requests"], 'sortByDateTime');
                         
                         foreach ($data["reservation_requests"] as $reservation_requests) {
-                        $img_src = USER_IMG_PATH . $reservation_requests["cover_img"];
+                            $img_src = USER_IMG_PATH . "default_avatar.jpg";
+                            if ($reservation_requests["profile_img"] != null || $reservation_requests["profile_img"] != "") {
+                                $img_src = USER_IMG_PATH . $reservation_requests["profile_img"];
+                            }
+                        
                 ?>
                     
                     <div class="card-content">
                         <div class="card">
                             <div class="image-content">
-                                <span class="overlay"></span>
+                                <span class="overlay1"></span>
 
                                 <div class="card-image">
                                     <img src="<?= $img_src ?>" alt="" class="card-img">
@@ -49,7 +53,7 @@ $calendar = new Calendar();
                             <div class="card-content">
                                 <h2 class="name"><?= $reservation_requests["name"] ?></h2>
                                 <label class="description">Date: <?= date("Y/m/d", strtotime($reservation_requests["date"])) ?></label>
-                                <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["start_time"])) ?></label>
+                                <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["end_time"])) ?></label>
                                 <button class="button button-completed" data-id="<?= $reservation_requests["id"] ?>">Completed <i class='bx bxs-user-check'></i></button>
                                 <button class="button button-cancel" data-id="<?= $reservation_requests["id"] ?>">Cancel <i class='bx bxs-user-x'></i></button>
                             </div>
@@ -57,6 +61,9 @@ $calendar = new Calendar();
                     </div>
                    
                 <?php }} ?>
+            </div>
+            <div class="new">
+                <div class="overlay" id="divone"></div>
             </div>
             
 
@@ -169,7 +176,7 @@ $calendar = new Calendar();
     
     <style>
         .main-grid .left {
-            width: 75%;
+            width: 75% !important;
             height: 150vh;
 
         }
@@ -269,6 +276,7 @@ $calendar = new Calendar();
             flex-grow: 1;
             height: 1000px;
         } */
+      
     </style>
 
     <style>
@@ -317,9 +325,13 @@ $calendar = new Calendar();
     <style>
         .main-container {
             min-height: 100vh;
-            display: flex;
-            flex-wrap: wrap;
+            /* display: flex;
+            flex-wrap: wrap; */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px; 
             /* align-items: center; */
+            /* justify-content: center; */
         }
         .card-content{
             margin: 10px 30px;
@@ -342,7 +354,7 @@ $calendar = new Calendar();
             position: relative;
             row-gap: 5px;
         }
-        .overlay{
+        .overlay1{
             position: absolute;
             left: 0;
             top: 0;
@@ -410,7 +422,34 @@ $calendar = new Calendar();
         .button-completed:hover{
             background-color: #265df2;
         }
+        .main-container p{
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            /* justify-self: center; */
+            /* justify-content: center; */
+        }
     </style>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        .overlay:target {
+            visibility: visible;
+            opacity: 1;
+        }
+</style>
 
 </div>
 
@@ -424,7 +463,7 @@ $calendar = new Calendar();
         let id = $(this).attr("data-id");  
 
         $.ajax({
-            url: `${BASE_URL}/upcomingReservations/completedReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/completedReservation/${id}`, 
             type: 'POST',
             data: {
                 id: id
@@ -446,17 +485,50 @@ $calendar = new Calendar();
             }
         });
     });  
-    $(document).on("click", ".button-cancel", function(event) {
-        event.preventDefault(); 
-        let id = $(this).attr("data-id");
-        
-        // confirm cancellation
-        if (!confirm("Are you sure you want to cancel this Reservation?"))
-                return;
 
+    // $(document).on("click", ".button-cancel", function(event) {
+    //     event.preventDefault(); 
+    //     let id = $(this).attr("data-id");
+        
+    //     // confirm cancellation
+    //     if (!confirm("Are you sure you want to cancel this Reservation?"))
+    //             return;
+
+
+    //     $.ajax({
+    //         url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`, 
+    //         type: 'POST',
+    //         data: {
+    //             id: id
+    //         },
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             if (response.status === 200) {
+    //                 alertUser("success", response['desc'])
+    //                 setTimeout(() => {
+    //                     location.reload();
+    //                 }, 1000);
+            
+    //             } else {
+    //                 alertUser("warning", response['desc'])
+    //             }
+    //         },
+    //         error: function(ajaxContext) {
+    //             alertUser("danger", "Something Went Wrong")       
+    //         }
+    //     });
+    // });
+
+    $(document).on("click", ".button-cancel", function(event) {
+        event.preventDefault();
+        let id = $(this).attr("data-id");
+        console.log(id);
+
+        if (!confirm("Are you sure you want to Cancel this Reservation?"))
+            return;
 
         $.ajax({
-            url: `${BASE_URL}/upcomingReservations/cancelledReservation/${id}`, 
+            url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`,
             type: 'POST',
             data: {
                 id: id
@@ -464,18 +536,34 @@ $calendar = new Calendar();
             dataType: 'json',
             success: function(response) {
                 if (response.status === 200) {
-                    alertUser("success", response['desc'])
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-            
+                    // Load popup form
+                    loadPopupForm(id);
+                    // Display success message
+                    alertUser("success", response['desc']);
                 } else {
-                    alertUser("warning", response['desc'])
+                    alertUser("warning", response['desc']);
                 }
             },
             error: function(ajaxContext) {
-                alertUser("danger", "Something Went Wrong")       
+                alertUser("danger", "Something Went Wrong");
             }
         });
     });
+
+    function loadPopupForm(reservationId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', BASE_URL + '/counselorReservations/sendEmail/' + reservationId, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                // Load popup form with email input
+                document.getElementById('divone').innerHTML = response; 
+                // set opacity to default
+                document.getElementById('divone').style.opacity = 1;
+                // set visibility to visible
+                document.getElementById('divone').style.visibility = 'visible';
+            }
+        };
+        xhr.send();
+    }
 </script>

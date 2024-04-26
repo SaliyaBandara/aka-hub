@@ -11,13 +11,16 @@ $sidebar = new Sidebar("feedsSelection");
     <div class="main-grid flex">
         <div class="left">
             <div class="divTileRow">
-                <div class="divTile">
-                    <a href="<?= BASE_URL ?>/clubEventFeed/index" class="mwb-form-submit-btn">Club Event Feed</a>
-                </div>
-                <div class="divTile">
-                    <a href="<?= BASE_URL ?>/counselorFeed/index" class="mwb-form-submit-btn">Counselor Feed</a>
-                </div>
-
+                <a href="<?= BASE_URL ?>/eventFeed/index" class="mwb-form-submit-btn tile">
+                    <div class="divTile">
+                        Club Event Feed
+                    </div>
+                </a>
+                <a href="<?= BASE_URL ?>/counselorFeed/index" class="mwb-form-submit-btn tile">
+                    <div class="divTile">
+                        Counselor Feed
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -41,7 +44,7 @@ $sidebar = new Sidebar("feedsSelection");
             margin-left: 25px;
         }
 
-        .divTile {
+        .tile {
             width: 25%;
             height: 175px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -52,14 +55,16 @@ $sidebar = new Sidebar("feedsSelection");
             align-items: center;
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
-            color: black;
+            color: inherit;
             /* background-image: linear-gradient(45deg, #ff9b2d, #ff5755); */
             opacity: 0.7;
+            text-decoration: none;
+
             /* background-image: url('http://127.0.0.1/aka-hub/public/assets/img/common/elections.jpg');
             background-size: cover; */
         }
 
-        .divTile:hover {
+        .tile:hover {
             width: 25%;
             height: 175px;
             transform: scale(1.025);
@@ -73,7 +78,7 @@ $sidebar = new Sidebar("feedsSelection");
             cursor: pointer;
             font-size: 18px;
             text-decoration: none;
-            color: white;
+            color: inherit;
         }
 
         .main-grid .left {
