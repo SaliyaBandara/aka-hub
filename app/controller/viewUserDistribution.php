@@ -1,5 +1,6 @@
 <?php
-class ViewUserDistribution extends Controller{
+class ViewUserDistribution extends Controller
+{
     public function index()
     {
         $this->requireLogin();
@@ -33,6 +34,38 @@ class ViewUserDistribution extends Controller{
             'message' => 'Welcome to Aka Hub!'
         ];
         $data["user"] = $this->model('readModel')->getPreviewUser($id);
+        $data["id"] = $id;
+        $data["isRestricted"] = $this->model('readModel')->findWhetherRestricted($id);
         $this->view->render('admin/viewUserDistribution/previewUser', $data);
+    }
+
+    public function restrictUser($id)
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to Restrict User";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
+
+        $isRestricted = $this->model('readModel')->findWhetherRestricted($id);
+
+        if($isRestricted){
+            $result = $this->model('updateModel')->removeRestriction($id);
+        }else{
+            $result = $this->model('updateModel')->restrictUser($id);
+        }
+
+        if ($result) {
+            $action = "User with ID: " . $id . " has been restricted";
+            $status = "607";
+            $this->model("createModel")->createLogEntry($action, $status);
+        } else {
+            $action = "User with ID: " . $id . " could not be restricted";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+        }
+        $this->redirect('viewUserDistribution');
     }
 }

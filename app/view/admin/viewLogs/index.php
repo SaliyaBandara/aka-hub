@@ -17,8 +17,14 @@ $calendar = new Calendar();
                     <div class="title font-1-5 font-semibold flex align-center">
                         <i class='bx bxs-calendar-check me-0-5'></i> Manage User Logs
                     </div>
+                    <div class="approveRepresentativesButtonsLine">
+                        <div class="mb-1 form-group right_side">
+                            <a href="<?= BASE_URL ?>/viewlogs/userlogsAnalytics" class="btn btn-primary">
+                                <i class='bx bxs-search-alt-2'></i> UserLog Analytics
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="table-container">
                     <div class="table-responsive">
                         <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
@@ -59,6 +65,19 @@ $calendar = new Calendar();
                 </div>
 
                 <style>
+                    .section_header {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .approveRepresentativesButtonsLine {
+                        display: flex;
+                        justify-content: right;
+                        align-items: center;
+                        width: 350px;
+                    }
+
                     .btn-blue {
                         background-color: #2d7bf4;
                         color: white !important;

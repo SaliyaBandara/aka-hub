@@ -335,4 +335,14 @@ class createModel extends Model
         $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
         file_put_contents("userlog.txt", $contents);
     }
+    public function createReport($webpage)
+    {
+        require("../../public/dompdf/autoload.inc.php");
+        $dompdf = new Dompdf\Dompdf();
+        $htmlContent = file_get_contents($webpage);
+        $dompdf->loadHtml($htmlContent);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream("report.pdf", ['Attachment' => false]);
+    }
 }
