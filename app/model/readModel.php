@@ -67,6 +67,264 @@ class readModel extends Model
         return false;
     }
 
+
+    // CREATE TABLE elections (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     name VARCHAR(255) NOT NULL,
+    //     description TEXT DEFAULT NULL,
+    //     start_date DATETIME NOT NULL,
+    //     end_date DATETIME NOT NULL,
+    //     cover_img VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     type TINYINT(1) NOT NULL DEFAULT 0,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    // -- election questions table
+
+    // CREATE TABLE election_questions (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     question VARCHAR(255) NOT NULL,
+    //     question_type VARCHAR(255) NOT NULL,
+    //     question_options TEXT DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id)
+    // );
+
+    // -- election votes table
+
+    // CREATE TABLE election_votes (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     user_id INT NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id),
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    // -- election responses table
+
+    // CREATE TABLE election_responses (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     election_id INT NOT NULL,
+    //     user_id INT NOT NULL,
+    //     question_id INT NOT NULL,
+    //     response_option VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (election_id) REFERENCES elections(id),
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
+    // );
+
+    // election analytics
+    public function getElectionAnalytics($election_id)
+    {
+
+        $analytics = [];
+
+        // for each election question get the unique responses and their counts
+        $question = $this->getAllByColumn("election_questions", "election_id", $election_id, "i");
+        if ($question) {
+            foreach ($question as $q) {
+                $question_id = $q['id'];
+                $question_type = $q['question_type'];
+                $question_options = json_decode($q['question_options'], true);
+
+                $has_images = 0;
+                if (is_array($question_options)) {
+                    foreach ($question_options as $option) {
+                        if (isset($option['cover_img']) && $option['cover_img'] != "") {
+                            $has_images = 1;
+                            break;
+                        }
+                    }
+                }
+
+                $responses = $this->getAllByColumn("election_responses", "question_id", $question_id, "i");
+                // Voter Turnout Over Time chart over each 2 hours of the election period
+                $vote_times = [];
+
+                if ($responses) {
+                    $response_count = [];
+
+                    // count the responses for each option
+                    foreach ($responses as $response) {
+                        $response_count[$response['response_option']] = isset($response_count[$response['response_option']]) ? $response_count[$response['response_option']] + 1 : 1;
+                    
+                        // get the time of the vote
+                        $vote_times[] = $response['created_at'];
+                    }
+
+                    // sort the vote times to groups of 2 hours
+                    $vote_times = array_map(function ($time) {
+                        return date("Y-m-d H:00:00", strtotime($time));
+                    }, $vote_times);
+
+                    // print_r($vote_times);
+                    // die;
+
+                    // set the counts for each option
+                    $option_index = 1;
+                    $images = [];
+                    foreach ($question_options as $key => $option) {
+                        if (isset($response_count[$option_index]))
+                            $question_options[$key]['count'] = $response_count[$option_index];
+                        else
+                            $question_options[$key]['count'] = 0;
+
+                        if ($has_images)
+                            $images[] = $option['cover_img'];
+
+                        $option_index++;
+                    }
+
+                    // sort responses_count in ascending order of keys
+                    ksort($response_count);
+
+                    $analytics[] = [
+                        "question" => $q['question'],
+                        "question_id" => $question_id,
+                        "question_type" => $question_type,
+                        "has_images" => $has_images,
+                        "images" => $images, // "images" => "img1.jpg, img2.jpg, img3.jpg
+                        "question_options" => $question_options,
+                        "response_count" => $response_count
+                    ];
+                }
+            }
+        }
+
+        // print_r($analytics);
+        // die;
+
+        // format the counts for chartjs
+        $chart_data = [];
+        foreach ($analytics as $question) {
+            $question_data = [
+                "labels" => [],
+                "count" => [],
+                "has_images" => $question['has_images'],
+                "images" => $question['images']
+            ];
+            // $question_data = [
+            //     "question" => $question['question'],
+            //     "question_id" => $question['question_id'],
+            //     "question_type" => $question['question_type'],
+            //     "has_images" => $question['has_images'],
+            //     "question_options" => [],
+            //     "response_count" => []
+            // ];
+
+            foreach ($question['question_options'] as $option) {
+                $question_data['labels'][] = $option['option'];
+                $question_data['count'][] = $option['count'];
+            }
+
+            $chart_data[] = $question_data;
+        }
+
+        // print_r($chart_data);
+        // die;
+
+        $analytics["all"] = $analytics;
+        $analytics["chart_data"] = $chart_data;
+
+        return $analytics;
+    }
+
+    function getElectionAnalyticsAlt($election_id)
+    {
+        $analytics = [];
+        $result = $this->db_handle->runQuery(
+            "SELECT eq.id AS question_id, eq.question, eq.question_type, eq.question_options,
+                eo.option_id, eo.option_text
+                FROM election_questions eq
+                LEFT JOIN (
+                    SELECT question_id, JSON_ARRAYAGG(JSON_OBJECT('id', id, 'text', text)) AS option_text
+                    FROM election_question_options
+                    GROUP BY question_id
+                ) eo ON eq.id = eo.question_id
+                WHERE eq.election_id = ?",
+            "i",
+            [$election_id]
+        );
+
+        if ($result) {
+            foreach ($result as $question) {
+
+                $question_id = $question['question_id'];
+                $question = $question['question'];
+                $question_type = $question['question_type'];
+                $question_options = json_decode($question['question_options'], true);
+
+                $has_images = 0;
+                foreach ($question_options as $option) {
+                    if (isset($option['cover_img']) && $option['cover_img'] != "") {
+                        $has_images = 1;
+                        break;
+                    }
+                }
+
+                $response_count = [];
+                $responses = $this->db_handle->runQuery(
+                    "SELECT response_option, COUNT(*) AS response_count
+                        FROM election_responses
+                        WHERE question_id = ?
+                        GROUP BY response_option",
+                    "i",
+                    [$question_id]
+                );
+
+                if ($responses) {
+                    foreach ($responses as $response) {
+                        $response_count[$response['response_option']] = $response['count'];
+                    }
+
+                    // set the counts for each option
+                    $option_index = 1;
+                    foreach ($question_options as $key => $option) {
+                        if (isset($response_count[$option_index]))
+                            $question_options[$key]['count'] = $response_count[$option_index];
+                        else
+                            $question_options[$key]['count'] = 0;
+                        $option_index++;
+                    }
+
+                    // sort responses_count in ascending order of keys
+                    ksort($response_count);
+
+                    $analytics[] = [
+                        "question" => $question['question'],
+                        "question_id" => $question_id,
+                        "question_type" => $question_type,
+                        "has_images" => $has_images,
+                        "question_options" => $question_options,
+                        "response_count" => $response_count
+                    ];
+                }
+            }
+        }
+
+        print_r($analytics);
+    }
+
+    // $sql = "
+    //         SELECT eq.id, eq.question, eq.question_type, eq.question_options, 
+    //         (SELECT COUNT(er.id) FROM election_responses er WHERE er.question_id = eq.id GROUP BY er.question_id) AS responsesCount
+    //         FROM election_questions eq
+    //         WHERE eq.election_id = ?";
+    //     $result = $this->db_handle->runQuery($sql, "i", [$election_id]);
+
+    //     if ($result !== false) {
+    //         return $result;
+    //     }
+
+    //     return false;
+
     public function getAllChatUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE ?", "i", [1]);
@@ -128,7 +386,7 @@ class readModel extends Model
 
         return false;
     }
-    
+
 
     public function getAvailableReservationRequests()
     {

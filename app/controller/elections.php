@@ -80,63 +80,8 @@ class Elections extends Controller
         if (!$data["questions"])
             $data["questions"] = [];
 
-        // values.push({
-        //     question_id: question_id,
-        //     question_type: question_type,
-        //     question_answer: question_answers
-        // });
-
         if (isset($_POST["vote"])) {
             $values = $_POST["vote"];
-            // print_r($values);
-            // die;
-
-            // Array
-            // (
-            //     [0] => Array
-            //         (
-            //             [question_id] => 7
-            //             [question_type] => 2
-            //             [question_answer] => Array
-            //                 (
-            //                     [0] => 1
-            //                 )
-
-            //         )
-
-            //     [1] => Array
-            //         (
-            //             [question_id] => 10
-            //             [question_type] => 3
-            //             [question_answer] => Array
-            //                 (
-            //                     [0] => 2
-            //                     [1] => 4
-            //                 )
-
-            //         )
-
-            // CREATE TABLE election_votes (
-            //     id INT AUTO_INCREMENT PRIMARY KEY,
-            //     election_id INT NOT NULL,
-            //     user_id INT NOT NULL,
-            //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            //     FOREIGN KEY (election_id) REFERENCES elections(id),
-            //     FOREIGN KEY (user_id) REFERENCES user(id)
-            // );
-
-            // -- election responses table
-
-            // CREATE TABLE election_responses (
-            //     id INT AUTO_INCREMENT PRIMARY KEY,
-            //     election_id INT NOT NULL,
-            //     question_id INT NOT NULL,
-            //     response_option VARCHAR(255) DEFAULT NULL,
-            //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            //     FOREIGN KEY (election_id) REFERENCES elections(id),
-            //     FOREIGN KEY (user_id) REFERENCES user(id),
-            //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
-            // );
 
             $data["election_response"] = $this->model('readModel')->getEmptyElectionResponse();
             $data["election_response_template"] = $data["election_response"]["template"];
@@ -190,15 +135,71 @@ class Elections extends Controller
                 }
             }
 
-            // print_r($answers);
-            // die;
-
             $result = $this->model('createModel')->insert_election_answers($id, $answers, $data["election_response_template"]);
             if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Votes Cast Successfully")));
 
             die(json_encode(array("status" => "400", "desc" => "Error while voting")));
         }
+
+
+        // CREATE TABLE elections (
+        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     user_id INT NOT NULL,
+        //     name VARCHAR(255) NOT NULL,
+        //     description TEXT DEFAULT NULL,
+        //     start_date DATETIME NOT NULL,
+        //     end_date DATETIME NOT NULL,
+        //     cover_img VARCHAR(255) DEFAULT NULL,
+        //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     type TINYINT(1) NOT NULL DEFAULT 0,
+        //     FOREIGN KEY (user_id) REFERENCES user(id)
+        // );
+
+        // -- election questions table
+
+        // CREATE TABLE election_questions (
+        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     election_id INT NOT NULL,
+        //     question VARCHAR(255) NOT NULL,
+        //     question_type VARCHAR(255) NOT NULL,
+        //     question_options TEXT DEFAULT NULL,
+        //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     FOREIGN KEY (election_id) REFERENCES elections(id)
+        // );
+
+        // -- election votes table
+
+        // CREATE TABLE election_votes (
+        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     election_id INT NOT NULL,
+        //     user_id INT NOT NULL,
+        //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     FOREIGN KEY (election_id) REFERENCES elections(id),
+        //     FOREIGN KEY (user_id) REFERENCES user(id)
+        // );
+
+        // -- election responses table
+
+        // CREATE TABLE election_responses (
+        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     election_id INT NOT NULL,
+        //     user_id INT NOT NULL,
+        //     question_id INT NOT NULL,
+        //     response_option VARCHAR(255) DEFAULT NULL,
+        //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     FOREIGN KEY (election_id) REFERENCES elections(id),
+        //     FOREIGN KEY (user_id) REFERENCES user(id),
+        //     FOREIGN KEY (question_id) REFERENCES election_questions(id)
+        // );
+
+        // get election analytics
+
+        $data["analytics"] = $this->model('readModel')->getElectionAnalytics($id);
+        // print_r($data["analytics"]);
+        // die;
 
         $this->view->render('election/view/view', $data);
     }

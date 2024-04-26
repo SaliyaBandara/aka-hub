@@ -57,7 +57,7 @@ $calendar = new Calendar();
 
                                 <?php
 
-                                if (isset($data["items"])) {
+                                if (isset($data["items"]) && is_array($data["items"])) {
                                     $i = 1;
                                     foreach ($data["items"] as $election) {
                                         $election["start_date"] = date("d M Y H:i", strtotime($election["start_date"]));
