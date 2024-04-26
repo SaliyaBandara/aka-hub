@@ -181,6 +181,13 @@ $sidebar = new Sidebar("existingCounselors");
             box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
             margin: 25px;
             border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .counselorCard:hover{
+            transform: translateY(-10px);
+            background-color: #f5f5f5;
+            cursor: pointer;
         }
 
         .counselor-image-containor {
