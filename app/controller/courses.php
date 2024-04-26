@@ -61,7 +61,8 @@ class Courses extends Controller
         $this->view->render('student/courses/index', $data);
     }
 
-    public function filter(){
+    public function filter()
+    {
 
         $this->requireLogin();
         $data = [
@@ -77,53 +78,51 @@ class Courses extends Controller
         $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
         $year = $data["student"][0]["year"];
 
-        if($semester == 0){
+        if ($semester == 0) {
             $data["courses"] = $this->model('readModel')->getCoursesByYear($year);
+        } else {
+
+            $data["courses"] = $this->model('readModel')->getCoursesBySemester($year, (int)$semester);
         }
-        else{
 
-            $data["courses"] = $this->model('readModel')->getCoursesBySemester($year,(int)$semester);
-        }
+        $BASE_URL =  BASE_URL;
 
-        $BASE_URL =  BASE_URL ;
-
-        if(empty($data["courses"])){
+        if (empty($data["courses"])) {
             echo "<div class='font-meidum text-muted'> No courses added! </div>";
-        }
-        else{
-            foreach ($data["courses"] as $course) {     
+        } else {
+            foreach ($data["courses"] as $course) {
                 echo '
-                    <div href="./courses/view/'.$course["id"].'" class="js-link todo_item flex align-center">
+                    <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
-                                    <img src= '.USER_IMG_PATH . $course["cover_img"].' alt="">
+                                    <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
                                 </div>
                             </div>
                             <div class="todo_item_text">
-                                <div class="font-1-25 font-semibold"> '.$course["name"] .'</div>
-                                <div class="font-1 font-medium text-muted"> '.$course["code"].'</div>
-                                <div class="font-0-8 text-muted">Year '. $course["year"].' Semester '. $course["semester"] .'</div>
+                                <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
+                                <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
+                                <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
                             </div>
                 ';
 
-                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
-                                echo '
+                if (($data["teaching_student"] == 1) || ($data["student_rep"])) {
+                    echo '
                                     <div class="todo_item_actions">
-                                        <a href="'. $BASE_URL.'/courses/add_edit/'. $course["id"] .'/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
-                                        <div class="btn delete-item" data-id= '.$course["id"].'>
+                                        <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                        <div class="btn delete-item" data-id= ' . $course["id"] . '>
                                             <i class="bx bx-trash text-danger"></i>
                                         </div>
                                     </div>
                                 ';
-                             }
+                }
 
-                    echo '</div>';
+                echo '</div>';
             }
         }
-
     }
 
-    public function filterBelow(){
+    public function filterBelow()
+    {
 
         $this->requireLogin();
         $data = [
@@ -140,61 +139,54 @@ class Courses extends Controller
         $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
         $year = $data["student"][0]["year"];
 
-        if($yearA == 0 && $semesterA == 0){
+        if ($yearA == 0 && $semesterA == 0) {
             $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
-        }
-        else if($yearA > $year){
+        } else if ($yearA > $year) {
             $data["courses"] = 1;
-        }
-        else if($yearA == 0 && $semesterA != 0){
+        } else if ($yearA == 0 && $semesterA != 0) {
             $data["courses"] = $this->model('readModel')->getCoursesByOnlySemester($semesterA);
-        }
-        else if($yearA != 0 && $semesterA == 0){
+        } else if ($yearA != 0 && $semesterA == 0) {
             $data["courses"] = $this->model('readModel')->getCoursesByYear($yearA);
-        }
-        else{
-            $data["courses"] = $this->model('readModel')->getCoursesBySemester($yearA,$semesterA);
+        } else {
+            $data["courses"] = $this->model('readModel')->getCoursesBySemester($yearA, $semesterA);
         }
 
-        $BASE_URL =  BASE_URL ;
+        $BASE_URL =  BASE_URL;
 
-        if(empty($data["courses"])){
+        if (empty($data["courses"])) {
             echo "<div class='font-meidum text-muted'> No courses added! </div>";
-        }
-        else if($data["courses"] == 1){
+        } else if ($data["courses"] == 1) {
             echo "<div class='font-meidum text-muted'> Can't access this year! </div>";
-        }
-        else{
-            foreach ($data["courses"] as $course) {     
+        } else {
+            foreach ($data["courses"] as $course) {
                 echo '
-                    <div href="./view/'.$course["id"].'" class="js-link todo_item flex align-center">
+                    <div href="./view/' . $course["id"] . '" class="js-link todo_item flex align-center">
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
-                                    <img src= '.USER_IMG_PATH . $course["cover_img"].' alt="">
+                                    <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
                                 </div>
                             </div>
                             <div class="todo_item_text">
-                                <div class="font-1-25 font-semibold"> '.$course["name"] .'</div>
-                                <div class="font-1 font-medium text-muted"> '.$course["code"].'</div>
-                                <div class="font-0-8 text-muted">Year '. $course["year"].' Semester '. $course["semester"] .'</div>
+                                <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
+                                <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
+                                <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
                             </div>
                 ';
 
-                            if (($data["teaching_student"] == 1)||($data["student_rep"])) {
-                                echo '
+                if (($data["teaching_student"] == 1) || ($data["student_rep"])) {
+                    echo '
                                     <div class="todo_item_actions">
-                                        <a href="'. $BASE_URL.'/courses/add_edit/'. $course["id"] .'/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
-                                        <div class="btn delete-item" data-id= '.$course["id"].'>
+                                        <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                        <div class="btn delete-item" data-id= ' . $course["id"] . '>
                                             <i class="bx bx-trash text-danger"></i>
                                         </div>
                                     </div>
                                 ';
-                             }
+                }
 
-                    echo '</div>';
+                echo '</div>';
             }
         }
-
     }
 
     public function view($id = 0)
@@ -234,7 +226,7 @@ class Courses extends Controller
     public function material($action = "add_edit", $course_id = 0, $id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+        if (($_SESSION["teaching_student"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $task = "Unauthorized User tried to add edit material without permission";
             $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
@@ -269,12 +261,12 @@ class Courses extends Controller
 
             $this->validate_template($values, $data["data_template"]);
 
-            if ($id == 0){
+            if ($id == 0) {
                 $task = "Course material created successfully";
                 $state = "201";
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('createModel')->insert_db("course_materials", $values, $data["data_template"]);
-            }else{
+            } else {
                 $task = "Course material updated successfully";
                 $state = "200";
                 $this->model("createModel")->createLogEntry($task, $state);
@@ -305,7 +297,7 @@ class Courses extends Controller
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+        if (($_SESSION["teaching_student"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $task = "Unauthorized User tried to delete material without permission";
             $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
@@ -315,7 +307,7 @@ class Courses extends Controller
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid course material id")));
 
         $result = $this->model('deleteModel')->deleteOne("course_materials", $id);
-        if ($result){
+        if ($result) {
             $task = "Course material deleted successfully";
             $state = "200";
             $this->model("createModel")->createLogEntry($task, $state);
@@ -327,7 +319,7 @@ class Courses extends Controller
     public function add_edit($id = 0, $action = "create")
     {
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+        if (($_SESSION["teaching_student"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $task = "Unauthorized User tried to add edit course without permission";
             $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
@@ -352,12 +344,12 @@ class Courses extends Controller
 
             $this->validate_template($values, $data["course_template"]);
 
-            if ($id == 0){
+            if ($id == 0) {
                 $task = "Course created successfully";
                 $state = "201";
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('createModel')->insert_db("courses", $values, $data["course_template"]);
-            }else{
+            } else {
                 $task = "Course updated successfully";
                 $state = "200";
                 $this->model("createModel")->createLogEntry($task, $state);
@@ -389,7 +381,7 @@ class Courses extends Controller
     {
 
         $this->requireLogin();
-        if (($_SESSION["teaching_student"] != 1)&&($_SESSION["student_rep"]!=1)){
+        if (($_SESSION["teaching_student"] != 1) && ($_SESSION["student_rep"] != 1)) {
             $task = "Unauthorized User tried to delete course without permission";
             $state = "401";
             $this->model("createModel")->createLogEntry($task, $state);
@@ -399,7 +391,7 @@ class Courses extends Controller
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid course id")));
 
         $result = $this->model('deleteModel')->deleteOne("courses", $id);
-        if ($result){
+        if ($result) {
             $task = "Course deleted successfully";
             $state = "200";
             $this->model("createModel")->createLogEntry($task, $state);
@@ -411,6 +403,12 @@ class Courses extends Controller
     public function clickToBeRole($role)
     {
         $this->requireLogin();
+        if ($_SESSION["user_role"] !== 0) {
+            $task = "Unauthorized User tried to be a role without permission";
+            $state = "401";
+            $this->model("createModel")->createLogEntry($task, $state);
+            $this->redirect();
+        }
 
         if ($_SESSION["$role"] == 1) {
             die(json_encode(array("status" => "400", "desc" => "You are already a $role")));
@@ -424,12 +422,12 @@ class Courses extends Controller
                 $_SESSION["user_id"],
                 2
             );
-            if ($result){
+            if ($result) {
                 $task = "User requested to be a role";
                 $state = "200";
                 $this->model("createModel")->createLogEntry($task, $state);
                 die(json_encode(array("status" => "200", "desc" => "Successfully requested")));
-            }else {
+            } else {
                 die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
             }
         }

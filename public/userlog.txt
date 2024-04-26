@@ -1,36 +1,30 @@
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 06:19PM	Student profile edited	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3	200
+samanbandara@gmail.com	127.0.0.1	04/25/24 10:56PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 07:05PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
+samanbandara@gmail.com	127.0.0.1	04/26/24 07:42AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 07:06PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+samanbandara@gmail.com	127.0.0.1	04/26/24 07:49AM	User posted a comment in event feed	http://127.0.0.1/aka-hub/eventFeed/postComment/19url=eventFeed/postComment/19	201
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 07:06PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+samanbandara@gmail.com	127.0.0.1	04/26/24 07:50AM	User posted a comment in event feed	http://127.0.0.1/aka-hub/eventFeed/postComment/19url=eventFeed/postComment/19	201
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:27PM	Course created successfully	http://localhost/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+samanbandara@gmail.com	127.0.0.1	04/26/24 07:50AM	User liked a post in event feed	http://127.0.0.1/aka-hub/eventFeed/like/19url=eventFeed/like/19	200
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:28PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+2021is096@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 07:53AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:28PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+samanbandara@gmail.com	127.0.0.1	04/26/24 07:56AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:29PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/1/editurl=courses/add_edit/1/edit	200
+2021is096@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 07:58AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:29PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+Not logged in	127.0.0.1	04/26/24 08:06AM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:30PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+Not logged in	127.0.0.1	04/26/24 08:06AM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:30PM	Course updated successfully	http://localhost/aka-hub/courses/add_edit/8/editurl=courses/add_edit/8/edit	200
+samanbandara@gmail.com	127.0.0.1	04/26/24 08:07AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:32PM	Course material created successfully	http://localhost/aka-hub/courses/material/add_edit/8/0/createurl=courses/material/add_edit/8/0/create	201
+2021is096@stu.ucsc.cmb.ac.lk	127.0.0.1	04/26/24 08:08AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-2021cs138@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:33PM	Course material deleted successfully	http://localhost/aka-hub/courses/delete_material/2url=courses/delete_material/2	200
+samanbandara@gmail.com	127.0.0.1	04/26/24 08:29AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
-Not logged in	::1	04/25/24 08:35PM	User entered invalid email or password	http://localhost/aka-hub/auth/loginurl=auth/login	401
-
-2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:35PM	User logged in as Student with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
-
-2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 08:40PM	Reservation created by student	http://localhost/aka-hub/counselorView/bookReservation/47url=counselorView/bookReservation/47	201
-
-2021is096@stu.ucsc.cmb.ac.lk	::1	04/25/24 09:22PM	Unauthorized user tried to edit Student profile	http://localhost/aka-hub/studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3url=studentProfile/add_edit/3	401
+samanbandara@gmail.com	127.0.0.1	04/26/24 08:36AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
 
 kasunsilva@gmail.com	::1	04/25/24 11:02PM	User logged in as Counselor with email	http://localhost/aka-hub/auth/loginurl=auth/login	603
 

@@ -1,56 +1,44 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("approveRepresentatives");
-$candidateCard = new CandidateCard();
+$sidebar = new Sidebar("counselorSettings");
+// $candidateCard = new CandidateCard();
 ?>
 
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <?php
-    if ($data["previewRepresentative"]) {
-        $userDetails = $data["previewRepresentative"][0];
-        $img_src = USER_IMG_PATH . $userDetails["profile_img"];
+    if ($data["admin_details"]) {
+        $userDetails = $data["admin_details"][0];
     }
     ?>
+
+    <?php
+    $img_src = USER_IMG_PATH . $userDetails["profile_img"];
+    ?>
+
     <div class="main-grid flex">
         <div class="left">
             <div class="title font-1-5 font-semibold flex align-center">
-                <i class='bx bxs-user-circle me-0-5'></i> Preview Details of User
+                <i class='bx bxs-user-circle me-0-5'></i> Your Profile
             </div>
             <div class="profileArea">
                 <div class="profileImageArea profileRow">
-                    <div class="profileImage"><img src="<?= $img_src ?>" alt="No Image Uploaded"></div>
+                    <div class="profileImage"><img src="<?= $img_src ?>" alt=""></div>
                 </div>
 
                 <div class="profileDetailNames profileRow font-medium">
                     <div>Name:</div>
                     <div>Email Address:</div>
-                    <div>Index Number:</div>
-                    <div>Registration Number:</div>
-                    <div>Faculty:</div>
-                    <div>Degree:</div>
-                    <div>Study Year:</div>
                     <div>Alternative Email:</div>
-                    <?php if($userDetails["club_rep"]==1){
-                        echo '<div>Club Name:</div>';
-                    } ?>
+                    <div>Contact Number:</div>
+                    <div>Counselor Type:</div>
                 </div>
+
                 <div class="profileDetailValues profileRow">
                     <div><?= $userDetails["name"] ?></div>
                     <div><?= $userDetails["email"] ?></div>
-                    <?php
-                    if ($userDetails["index_number"] == " ") {
-                        echo '<div class = "text-danger" > Not Specified </div>';
-                    } else {
-                        echo '<div>' . $userDetails["index_number"] . '</div>';
-                    }
-                    ?>
-                    <div><?= $userDetails["student_id"] ?></div>
-                    <div><?= $userDetails["faculty"] ?></div>
-                    <div><?= $userDetails["degree"] ?></div>
-                    <div>Year <?= $userDetails["year"] ?></div>
                     <?php
                     if ($userDetails["alt_email"] == NULL) {
                         echo '<div class = "text-danger" > Not Specified </div>';
@@ -58,20 +46,24 @@ $candidateCard = new CandidateCard();
                         echo '<div>' . $userDetails["alt_email"] . '</div>';
                     }
                     ?>
+                    <div><?= $userDetails["contact"] ?></div>
                     <?php
-                    if ($userDetails["club_rep"] == 1) {
-                        echo '<div>' . $userDetails["club_name"] . '</div>';
+                    if ($userDetails["type"] == 1) {
+                        echo '<div> Professional Counselor </div>';
+                    } else {
+                        echo '<div> Student Counselor </div>';
                     }
                     ?>
                 </div>
-                <div class="flex notificationSettings">
-                    <div>
-                        <a href="<?= BASE_URL ?>/approveRepresentatives/adminAccessControlView" class="btn btn-primary">
-                            Back
-                        </a>
-                    </div>
+            </div>
+            <div class="flex notificationSettings">
+                <div>
+                    <a href="<?= BASE_URL ?>/counselorSettings/add_edit/<?= $userDetails["id"] ?>" class="btn btn-primary">
+                        Edit Details
+                    </a>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -86,10 +78,10 @@ $candidateCard = new CandidateCard();
 
         .profileImage {
             border-radius: 200px;
-            border: 1px solid black;
             width: 15rem;
             height: 15rem;
             margin: 0 auto;
+            border: 5px solid rgba(38, 132, 255, 0.5);
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -98,8 +90,12 @@ $candidateCard = new CandidateCard();
 
         .profileImage img {
             display: block;
-            width: 30rem;
-            height: 30rem;
+            width: 250px;
+            height:250px;
+        }
+
+        .profileImage img .img{
+            object-fit: cover;
         }
 
         .profileImageArea {
@@ -135,6 +131,15 @@ $candidateCard = new CandidateCard();
             flex-direction: column;
             width: 20% !important;
         }
+
+        .notificationSettings {
+            margin: 2rem;
+            justify-content: flex-end;
+        }
     </style>
 
 </div>
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>

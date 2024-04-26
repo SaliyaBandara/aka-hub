@@ -37,7 +37,7 @@ class Sidebar
                     'feedsSelection' => ['Feeds', 'bxs-dock-left'],
                     'forum' => ['Forum', 'bxs-chat'],
                     'viewlogs' => ['User Logs', 'bxs-dashboard'],
-                    'viewUserDistribution' => ['User Distribution', 'bxs-user-circle'],
+                    'viewUserDistribution' => ['User Details', 'bxs-user-circle'],
                     'adminProfileAndSettings' => ['Admin Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $adminPages);
@@ -61,6 +61,7 @@ class Sidebar
                     'counselorManageTimeSlots' => ['Manage Time Slots', 'bxs-time-five'],
                     'counselorChat' => ['Messages', 'bxs-chat'],
                     'counselorFeed' => ['Counselor Feed', 'bxs-photo-album'],
+                    'counselorSettings' => ['Profile Settings', 'bxs-cog'],
                 ];
 
                 $pages = array_merge($pages, $counselorPages);

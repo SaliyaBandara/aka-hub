@@ -155,7 +155,11 @@ class readModel extends Model
 
     public function getTimeSlotsByCounselorId($id)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+        $query = "SELECT * FROM timeslots WHERE counselor_id = ?  AND status != ?  AND date >= CURDATE() AND start_time > CURTIME()";
+
+        $result = $this->db_handle->runQuery($query, "ii", [$id, 3]);
+
         if (count($result) > 0)
             return $result;
 
@@ -584,6 +588,16 @@ class readModel extends Model
         return false;
     }
 
+    // public function getOneCounselor($id)
+    // {
+    //     $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
+    //     $result = $this->db_handle->runQuery($sql, "ii", [1, $id]);
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
+
     public function getCounselorPosts($type, $posted_by)
     {
         $sql = "
@@ -784,6 +798,28 @@ class readModel extends Model
             return $result;
         }
         return false;
+    }
+
+    public function getPreviewRepresentativeWithClub($id)
+    {
+        $userdata = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
+        $result = [];
+        if ($userdata[0]['club_rep'] == 1) {
+            $result = $this->db_handle->runQuery("SELECT u.*, s.*, cr.*, c.id AS club_id, c.name AS club_name
+            FROM user u
+            JOIN student s ON u.id = s.id
+            JOIN club_representative cr ON u.id = cr.user_id
+            JOIN clubs c ON cr.club_id = c.id
+            WHERE u.id = ?
+                ", "i", [$id]);
+        } else {
+            $result = $this->db_handle->runQuery("SELECT * FROM user u, student s WHERE u.id = s.id AND u.id = ?", "i", [$id]);
+        }
+        if (count($result) > 0) {
+            return $result;
+        } else {
+            return false;
+        }
     }
 
     public function getOngoingElections($table)
