@@ -209,6 +209,7 @@ class readModel extends Model
     }
 
     // CREATE TABLE elections (
+    // CREATE TABLE elections (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     user_id INT NOT NULL,
     //     name VARCHAR(255) NOT NULL,
@@ -840,14 +841,14 @@ class readModel extends Model
         $userdata = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
 
         if ($userdata[0]['role'] == 1) {
-            $result = $this->db_handle->runQuery("SELECT * FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
+            $result = $this->db_handle->runQuery("SELECT u.*,a.contact_number, a.whatsapp_number, a.address  FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
         } else if ($userdata[0]['role'] == 5) {
-            $result = $this->db_handle->runQuery("SELECT * FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
+            $result = $this->db_handle->runQuery("SELECT u.*, c.type, c.contact FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
         } else if ($userdata[0]['role'] == 3) {
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
         } else {
             if ($userdata[0]['club_rep'] == 1) {
-                $result = $this->db_handle->runQuery("SELECT u.*, s.*, cr.*, c.id, c.name AS club_name
+                $result = $this->db_handle->runQuery("SELECT u.*, s.index_number, s.faculty, s.degree, s.year, cr.club_id, cr.user_id, cr.status, c.name AS club_name
                 FROM user u
                 JOIN student s ON u.id = s.id
                 JOIN club_representative cr ON u.id = cr.user_id
@@ -1299,6 +1300,211 @@ class readModel extends Model
         }
 
         return $logEntries;
+    }
+
+    public function getLogAnalyticsChartOne()
+    {
+        $dataPoints = array(
+            array("label" => "12 PM", "y" => 0),
+            array("label" => "01 PM", "y" => 0),
+            array("label" => "02 PM", "y" => 0),
+            array("label" => "03 PM", "y" => 0),
+            array("label" => "04 PM", "y" => 0),
+            array("label" => "05 PM", "y" => 0),
+            array("label" => "06 PM", "y" => 0),
+            array("label" => "07 PM", "y" => 0),
+            array("label" => "08 PM", "y" => 0),
+            array("label" => "09 PM", "y" => 0),
+            array("label" => "10 PM", "y" => 0),
+            array("label" => "11 PM", "y" => 0),
+            array("label" => "12 AM", "y" => 0),
+            array("label" => "01 AM", "y" => 0),
+            array("label" => "02 AM", "y" => 0),
+            array("label" => "03 AM", "y" => 0),
+            array("label" => "04 AM", "y" => 0),
+            array("label" => "05 AM", "y" => 0),
+            array("label" => "06 AM", "y" => 0),
+            array("label" => "07 AM", "y" => 0),
+            array("label" => "08 AM", "y" => 0),
+            array("label" => "09 AM", "y" => 0),
+            array("label" => "10 AM", "y" => 0),
+            array("label" => "11 AM", "y" => 0)
+        );
+
+        $filename = "userlog.txt";
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            $parts = explode("\t", $line);
+            $timestamp = strtotime($parts[2]);
+            $statusCode = (int) substr($parts[5], 0, 3);
+            if (($statusCode === 603) || ($statusCode === "603")) {
+                $hour = date('h A', $timestamp);
+                foreach ($dataPoints as &$point) {
+                    if ($point["label"] === $hour) {
+                        $point["y"]++;
+                        break;
+                    }
+                }
+            }
+        }
+        $dataPoints=array_reverse($dataPoints);
+        return $dataPoints;
+    }
+
+    public function getLogAnalyticsChartTwo()
+    {
+        $dataPoints = array(
+            array("label" => "Success (200)", "y" => 0),
+            array("label" => "Created (201)", "y" => 0),
+            array("label" => "Bad Request (400)", "y" => 0),
+            array("label" => "Unauthorized (401)", "y" => 0),
+            array("label" => "User Created (600)", "y" => 0),
+            array("label" => "User Updated (601)", "y" => 0),
+            array("label" => "User Deleted (602)", "y" => 0),
+            array("label" => "User Logged In (603)", "y" => 0),
+            array("label" => "User Logged Out (604)", "y" => 0),
+            array("label" => "User Password Changed (605)", "y" => 0),
+            array("label" => "User Granted Permission (606)", "y" => 0),
+            array("label" => "User Revoked Permission (607)", "y" => 0)
+        );
+        $filename = "userlog.txt";
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            preg_match('/(\d{3})\s*$/', $line, $matches);
+            $statusCode = isset($matches[1]) ? (int)$matches[1] : null;
+            if ($statusCode !== null) {
+                foreach ($dataPoints as &$point) {
+                    if (strpos($point["label"], $statusCode) !== false) {
+                        $point["y"]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $dataPoints;
+    }
+
+
+
+
+    public function getLogAnalyticsChartThree()
+    {
+        $dataPoints = array(
+            array("label" => "Unauthorized (401)", "y" => 0),
+            array("label" => "User Created (600)", "y" => 0),
+            array("label" => "User Updated (601)", "y" => 0),
+            array("label" => "User Deleted (602)", "y" => 0),
+            array("label" => "User Logged In (603)", "y" => 0),
+            array("label" => "User Logged Out (604)", "y" => 0),
+            array("label" => "User Password Changed (605)", "y" => 0),
+            array("label" => "User Granted Permission (606)", "y" => 0),
+            array("label" => "User Revoked Permission (607)", "y" => 0)
+        );
+        $filename = "userlog.txt";
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            preg_match('/(\d{3})\s*$/', $line, $matches);
+            $statusCode = isset($matches[1]) ? (int)$matches[1] : null;
+            if ($statusCode !== null) {
+                foreach ($dataPoints as &$point) {
+                    if (strpos($point["label"], $statusCode) !== false) {
+                        $point["y"]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $dataPoints;
+    }
+
+    public function getLogAnalyticsChartFour()
+    {
+        $dataPoints = array(
+            array("label" => "Success (200)", "y" => 0),
+            array("label" => "Created (201)", "y" => 0),
+            array("label" => "Bad Request (400)", "y" => 0),
+        );
+        $filename = "userlog.txt";
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            preg_match('/(\d{3})\s*$/', $line, $matches);
+            $statusCode = isset($matches[1]) ? (int)$matches[1] : null;
+            if ($statusCode !== null) {
+                foreach ($dataPoints as &$point) {
+                    if (strpos($point["label"], $statusCode) !== false) {
+                        $point["y"]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $dataPoints;
+    }
+
+    public function getLogAnalyticsChartFive()
+    {
+        $dataPoints = array(
+            array("label" => "Granted Permission (606)", "y" => 0),
+            array("label" => "Revoked Permission (607)", "y" => 0)
+        );
+        $filename = "userlog.txt";
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            preg_match('/(\d{3})\s*$/', $line, $matches);
+            $statusCode = isset($matches[1]) ? (int)$matches[1] : null;
+            if ($statusCode !== null) {
+                foreach ($dataPoints as &$point) {
+                    if (strpos($point["label"], $statusCode) !== false) {
+                        $point["y"]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $dataPoints;
+    }
+
+    public function getLogAnalytics()
+    {
+
+        $filename = "userlog.txt";
+        $statusCodes = [
+            401 => "Unauthorized",
+            600 => "User Created",
+            602 => "User Deleted",
+            603 => "User Logged In",
+            606 => "User Granted Permission",
+            607 => "User Revoked Permission"
+        ];
+        $statusCounts = array_fill_keys(array_keys($statusCodes), 0);
+        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            $parts = explode("\t", $line);
+            $statusCode = intval(trim(end($parts)));
+            if (isset($statusCounts[$statusCode])) {
+                $statusCounts[$statusCode]++;
+            }
+        }
+        $analytics = [];
+        foreach ($statusCounts as $code => $count) {
+            $analytics[] = [
+                "status_code" => $code,
+                "description" => $statusCodes[$code],
+                "count" => $count
+            ];
+        }
+
+        return $analytics;
     }
 
 

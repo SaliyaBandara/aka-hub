@@ -5,12 +5,6 @@ class CounselorView extends Controller
     public function index($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 0){
-            $action = "Unauthorized User tried to access counselor view without permission";
-            $status = "401";
-            $this->model("createModel")->createLogEntry($action, $status);
-            $this->redirect();
-        }
         $data = [
             'title' => 'Counselor Details',
             'message' => 'Welcome to Aka Hub!'

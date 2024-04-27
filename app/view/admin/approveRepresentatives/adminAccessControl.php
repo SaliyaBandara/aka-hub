@@ -110,7 +110,7 @@ $calendar = new Calendar();
                 </div>
                 <div class="editImageButton">
                     <a href="<?= BASE_URL ?>/approveRepresentatives">
-                        <input type="button" class="btn btn-primary" value="Back To Table" />
+                        <input type="button" class="btn btn-info" value="Back" />
                     </a>
                 </div>
                 <style>

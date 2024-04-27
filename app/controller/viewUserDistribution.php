@@ -53,19 +53,30 @@ class ViewUserDistribution extends Controller
 
         if($isRestricted){
             $result = $this->model('updateModel')->removeRestriction($id);
+            if ($result) {
+                $action = "User with ID: " . $id . "restriction has been removed";
+                $status = "606";
+                $this->model("createModel")->createLogEntry($action, $status);
+                die(json_encode(array("status" => "200", "desc" => "Restriction removed Successfully")));
+            } else {
+                $action = "User with ID: " . $id . " could not be restricted";
+                $status = "400";
+                $this->model("createModel")->createLogEntry($action, $status);
+                die(json_encode(array("status" => "400", "desc" => "Restriction removing Unsuccessfull")));
+            }
         }else{
             $result = $this->model('updateModel')->restrictUser($id);
+            if ($result) {
+                $action = "User with ID: " . $id . " has been restricted";
+                $status = "607";
+                $this->model("createModel")->createLogEntry($action, $status);
+                die(json_encode(array("status" => "200", "desc" => "Restricting Successfull")));
+            } else {
+                $action = "User with ID: " . $id . " could not be restricted";
+                $status = "400";
+                $this->model("createModel")->createLogEntry($action, $status);
+                die(json_encode(array("status" => "400", "desc" => "Restricting Unsuccessfull")));
+            }
         }
-
-        if ($result) {
-            $action = "User with ID: " . $id . " has been restricted";
-            $status = "607";
-            $this->model("createModel")->createLogEntry($action, $status);
-        } else {
-            $action = "User with ID: " . $id . " could not be restricted";
-            $status = "400";
-            $this->model("createModel")->createLogEntry($action, $status);
-        }
-        $this->redirect('viewUserDistribution');
     }
 }

@@ -36,9 +36,9 @@ $calendar = new Calendar();
             </div>
             <div class="fourGraphsContainor">
                 <div class="printDiv">
-                    <div class="printInnerDiv btn btn-info mx-2" style="max-width: 10%;">
-                        <i class='bx bxs-printer'></i> Print
-                    </div>
+                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">
+                        Export
+                    </a>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
@@ -132,10 +132,14 @@ $calendar = new Calendar();
             text-align: center;
             display: flex;
             margin-left: 50px;
+            transition-duration: 0.5s;
+            ccursor : pointer;
         }
 
         .cardTotalUsers:hover {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
         .cardActiveUsers {
@@ -148,10 +152,14 @@ $calendar = new Calendar();
             justify-content: center;
             align-items: center;
             display: flex;
+            transition-duration: 0.5s;
+            cursor:pointer;
         }
 
         .cardActiveUsers:hover {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
         .cardNewUsers {
@@ -165,10 +173,14 @@ $calendar = new Calendar();
             align-items: center;
             margin-right: 50px;
             display: flex;
+            transition-duration: 0.5s;
+            cursor:pointer;
         }
 
         .cardNewUsers:hover {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
         .divUsersContainor {

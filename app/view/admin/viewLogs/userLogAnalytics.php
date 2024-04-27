@@ -13,38 +13,85 @@ $calendar = new Calendar();
         <div class="left w-100">
             <div class="section_header mb-1 flex">
                 <div class="title font-1-5 font-semibold flex align-center">
-                    <i class='bx bxs-calendar-check me-0-5'></i> UserLog Analytics
+                    <i class='bx bxs-calendar-check me-0-5'></i> User Logs and Analytics
+                </div>
+                <div class="mb-1 form-group right_side">
+                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">Back
+                    </a>
+                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">
+                        Export
+                    </a>
                 </div>
             </div>
             <div class="cardRowPanel">
                 <div class="cardOdd">
-                    <div class="cardOddContainor">
-                        100 Unauthorized Attempts
-                    </div>
+                    <?php if ($data["unauthorized"] !== null) : ?>
+                        <div class="cardOddContainor">
+                            <?= $data["unauthorized"] ?> Unauthorized Attempts
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardEven">
-                    <div class="cardEvenContainor">
-                        100 Users Created
-                    </div>
+                    <?php if ($data["created"] !== null) : ?>
+                        <div class="cardEvenContainor">
+                            <?= $data["created"] ?> Users Created
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardOdd">
-                    <div class="cardOddContainor">
-                        100 Users Deleted
-                    </div>
+                    <?php if ($data["deleted"] !== null) : ?>
+                        <div class="cardOddContainor">
+                            <?= $data["deleted"] ?> Users Deleted
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardEven">
-                    <div class="cardEvenContainor">
-                        100 Users Logged In
-                    </div>
+                    <?php if ($data["logged"] !== null) : ?>
+                        <div class="cardEvenContainor">
+                            <?= $data["logged"] ?> Logged In Count
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardOdd">
-                    <div class="cardOddContainor">
-                        100 Permissions Grants
-                    </div>
+                    <?php if ($data["granted"] !== null) : ?>
+                        <div class="cardOddContainor">
+                            <?= $data["granted"] ?> Permissions Grants
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardEven">
-                    <div class="cardEvenContainor">
-                        100 Permissions Revoked
+                    <?php if ($data["revoked"] !== null) : ?>
+                        <div class="cardEvenContainor">
+                            <?= $data["revoked"] ?> Permissions Revoked
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="graphsContainor">
+                <div class="graphLineContainor">
+                    <div class="graphContainor">
+                        <p class="mb-1"><b>Loging time periods to platform</b></p>
+                        <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
+                    </div>
+                    <div class="graphContainor">
+                        <p class="mb-1"><b>Status Codes Frequency Distribution</b></p>
+                        <div id="chartContainer2" style="height: 220px; width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="graphLineContainor">
+                    <div class="graphContainor">
+                        <p class="mb-1"><b>Success Rate of Operations</b></p>
+                        <div id="chartContainer4" style="height: 220px; width: 100%;"></div>
+                    </div>
+                    <div class="graphContainor">
+                        <p class="mb-1"><b>User activity on User Accounts</b></p>
+                        <div id="chartContainer3" style="height: 220px; width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="graphLineContainor">
+                    <div class="graphContainorFive">
+                        <p class="mb-1"><b>Permission Grants And Revokes</b></p>
+                        <div id="chartContainer5" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
             </div>
@@ -57,6 +104,15 @@ $calendar = new Calendar();
     </div>
 
     <style>
+        .graphsContainor {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+        }
+
         .section_header {
             width: 100%;
             display: flex;
@@ -65,7 +121,7 @@ $calendar = new Calendar();
 
         .main-grid .left {
             width: 100%;
-            height: 150vh;
+            height: auto;
             padding-bottom: 50px;
         }
 
@@ -98,10 +154,14 @@ $calendar = new Calendar();
             align-items: center;
             text-align: center;
             display: flex;
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
         .cardOdd:hover {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
         .cardEven {
@@ -114,10 +174,14 @@ $calendar = new Calendar();
             justify-content: center;
             align-items: center;
             display: flex;
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
         .cardEven:hover {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            transition-duration: 0.5s;
+            cursor: pointer;
         }
 
 
@@ -181,14 +245,13 @@ $calendar = new Calendar();
             backgroundColor: "transparent",
             animationEnabled: true,
             exportEnabled: true,
-            axisY: {
-                title: "Yearly Users",
-            },
             data: [{
-                type: "spline",
-                markerSize: 5,
-                xValueFormatString: "DD",
-                xValueType: "dateTime",
+                type: "column",
+                // showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 10,
+                indexLabel: "{label} - #percent%",
+                yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]
         });
@@ -229,7 +292,7 @@ $calendar = new Calendar();
             exportEnabled: true,
             theme: "light2",
             axisY: {
-                title: "Number of Students"
+                title: "User Activity Count"
             },
             data: [{
                 type: "column",

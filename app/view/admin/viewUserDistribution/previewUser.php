@@ -4,20 +4,18 @@ $HTMLHead = new HTMLHead($data['title']);
 $sidebar = new Sidebar("viewUserDistribution");
 ?>
 
+<?php
 
+if (isset($data["user"]) && is_array($data["user"]) && count($data["user"]) > 0) {
+    $userDetails = $data["user"];
+    $id = $data["id"];
+}
+
+?>
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
-
-    <?php
-
-    if (isset($data["user"]) && is_array($data["user"]) && count($data["user"]) > 0) {
-        $userDetails = $data["user"];
-    }
-
-    ?>
     <?php
     $img_src = USER_IMG_PATH . $userDetails["profile_img"];
-    $id = $userDetails["id"];
     ?>
     <div class="main-grid flex">
         <div class="left">
@@ -63,7 +61,7 @@ $sidebar = new Sidebar("viewUserDistribution");
                     }
                     ?>
                     <?php if ($userDetails["club_rep"] === 1) {
-                        echo '<div>Club Name:</div>';
+                        echo '<div>' . $userDetails["club_name"] . '</div>';
                     } ?>
                     <?php
                     if ($userDetails["role"] == 1) {
@@ -99,14 +97,15 @@ $sidebar = new Sidebar("viewUserDistribution");
                     <div class="">
                         <?php
                         $isRestricted = $data["isRestricted"];
-                        $buttonClass = ($isRestricted == 1) ? 'btn-primary' : 'btn-danger';
+                        $buttonClass = ($isRestricted == 1) ? 'btn btn-primary' : 'btn btn-danger';
                         $buttonText = ($isRestricted == 1) ? 'Enable' : 'Restrict';
                         $buttonLink = ($isRestricted == 1) ? BASE_URL . '/viewUserDistribution/restrictUser/' . $userDetails["id"] : BASE_URL . '/viewUserDistribution/restrictUser/' . $userDetails["id"];
                         ?>
-                        <a class="btn restrictButton <?= $buttonClass ?> mx-0.5" href="<?= $buttonLink ?>">
+                        <a class="restrictButton <?= $buttonClass ?> mx-0.5" href="<?= $buttonLink ?>">
                             <?= $buttonText ?>
                         </a>
                     </div>
+
 
                 </div>
             </div>
@@ -185,18 +184,21 @@ $sidebar = new Sidebar("viewUserDistribution");
     $(document).on("click", ".restrictButton", function(event) {
         event.preventDefault();
         let button = $(this);
-        let url = button.attr("href");
-        if (!confirm("Are you sure you want to remove access from this user?")) {
+        let urlParts = $(this).attr("href").split('/');
+        let url = $(this).attr("href");
+        let id = urlParts[urlParts.length - 1];
+        if (!confirm("Are you sure you want to restrit or enable this user?")) {
             return;
         }
+
         $.ajax({
             url: `${BASE_URL}/viewUserDistribution/restrictUser/${id}`,
             type: 'post',
             dataType: 'json',
             success: function(response) {
                 if (response.status == 200) {
-                    alertUser("success", response.message);
-                    button.closest("div").find(".restrictButton").toggleClass("btn-danger btn-success").text("Enable");
+                    alertUser("success", response.desc);
+                    // button.toggleClass("btn-danger btn-primary").text("Enable");
                 } else {
                     alertUser("warning", response.desc);
                 }

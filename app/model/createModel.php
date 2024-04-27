@@ -369,6 +369,7 @@ class createModel extends Model
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
+
         $ip = $_SERVER['REMOTE_ADDR'];
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'];
@@ -376,7 +377,9 @@ class createModel extends Model
         $time = date("m/d/y h:iA", time());
         $contents = file_get_contents("userlog.txt");
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
+
         $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
+
         file_put_contents("userlog.txt", $contents);
     }
     public function createReport($webpage)
