@@ -6,6 +6,12 @@ $HTMLHead = new HTMLHead($data['title']);
     <div class="reportContainor">
         <div class="reportInnerContainor">
             <h1 class="text-center"><span> ඇක </span><span class="colorOrange"> HUB </span> Platform Analytics</h1>
+            <p class="text-center">
+                <b><span class="colorOrange">Administrator - </span><?php echo $_SESSION["user_name"]; ?></b>
+            </p>
+            <p class="text-center">
+                <b><span class="colorOrange">Time - </span><?php echo date("Y-m-d h:i:sa"); ?></b>
+            </p>
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <?php if ($data["count_total_users"] !== null) : ?>
