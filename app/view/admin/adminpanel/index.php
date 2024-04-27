@@ -36,9 +36,10 @@ $calendar = new Calendar();
             </div>
             <div class="fourGraphsContainor">
                 <div class="printDiv">
-                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">
+                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" onclick="downloadPDF()">
                         Export
                     </a>
+
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
@@ -133,7 +134,7 @@ $calendar = new Calendar();
             display: flex;
             margin-left: 50px;
             transition-duration: 0.5s;
-            ccursor : pointer;
+            ccursor: pointer;
         }
 
         .cardTotalUsers:hover {
@@ -153,7 +154,7 @@ $calendar = new Calendar();
             align-items: center;
             display: flex;
             transition-duration: 0.5s;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .cardActiveUsers:hover {
@@ -174,7 +175,7 @@ $calendar = new Calendar();
             margin-right: 50px;
             display: flex;
             transition-duration: 0.5s;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .cardNewUsers:hover {
@@ -344,4 +345,40 @@ $calendar = new Calendar();
 
         chart5.render();
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script>
+    function downloadPDF() {
+        // Capture the entire webpage body
+        html2canvas(document.body, {
+            useCORS: true
+        }).then(canvas => {
+            downloadCanvasAsPDF(canvas, 'webpage.pdf');
+        });
+    }
+
+    function downloadCanvasAsPDF(canvas, filename) {
+        const dpi = window.devicePixelRatio || 1;
+        const pdfWidth = canvas.width * 25.4 / dpi / 96; // 1 inch = 96 pixels
+        const pdfHeight = canvas.height * 25.4 / dpi / 96;
+        const scale = 1;
+
+        const pdf = new window.jspdf.jsPDF({
+            orientation: 'portrait', // Adjust orientation as needed
+            unit: 'mm',
+            format: [pdfWidth * scale, pdfHeight * scale],
+        });
+
+        pdf.addImage(
+            canvas.toDataURL('image/png'),
+            'PNG',
+            0,
+            0,
+            pdfWidth * scale,
+            pdfHeight * scale
+        );
+
+        pdf.save(filename);
+    }
 </script>

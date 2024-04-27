@@ -1,0 +1,24 @@
+Not logged in	127.0.0.1	04/27/24 09:39PM	Unauthorized user tried to access Adminpanel	http://127.0.0.1/aka-hub/report/userlogsAnalyticsurl=report/userlogsAnalytics	401
+
+Not logged in	127.0.0.1	04/27/24 09:39PM	Unauthorized user tried to access Adminpanel	http://127.0.0.1/aka-hub/report/url=report/	401
+
+Not logged in	127.0.0.1	04/27/24 09:39PM	Unauthorized user tried to access Adminpanel	http://127.0.0.1/aka-hub/adminpanelurl=adminpanel	401
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 09:39PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:42PM	Admin successfully removed Access	http://127.0.0.1/aka-hub/approveRepresentatives/removeAccess/57/student_repurl=approveRepresentatives/removeAccess/57/student_rep	607
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:42PM	Admin successfully removed Access	http://127.0.0.1/aka-hub/approveRepresentatives/removeAccess/63/student_repurl=approveRepresentatives/removeAccess/63/student_rep	607
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:43PM	Club created by admin	http://127.0.0.1/aka-hub/clubs/add_edit/0url=clubs/add_edit/0	201
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:43PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/6url=manageMaterials/courseEdit/6	200
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:45PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:50PM	User updated a post in event feed	http://127.0.0.1/aka-hub/eventFeed/add_edit/3url=eventFeed/add_edit/3	200
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:50PM	User posted a comment in event feed	http://127.0.0.1/aka-hub/eventFeed/postComment/19url=eventFeed/postComment/19	201
+
+samanbandara@gmail.com	127.0.0.1	04/27/24 10:50PM	User posted a comment in event feed	http://127.0.0.1/aka-hub/eventFeed/postComment/3url=eventFeed/postComment/3	201
+
