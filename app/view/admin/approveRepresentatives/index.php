@@ -273,6 +273,7 @@ $calendar = new Calendar();
                 event.preventDefault();
                 let button = $(this);
                 let urlParts = $(this).attr("href").split('/');
+                let url = $(this).attr("href");
                 let id = urlParts[urlParts.length - 2];
 
                 if (!confirm("Are you sure you want to accept this role?"))
@@ -311,7 +312,7 @@ $calendar = new Calendar();
                     type: 'post',
                     dataType: 'json',
                     success: function(response) {
-                        if (response['status'] == 200) {
+                        if (response.status == 200) {
                             alertUser("success", `Accepted successfully.`);
                             button.closest("tr").remove();
                         } else {
