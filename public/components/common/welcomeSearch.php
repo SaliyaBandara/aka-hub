@@ -29,8 +29,22 @@ class WelcomeSearch
                             <div class="red-dot"></div>
 
                             <div class="list__wrapper">
-                                <ul>
-                                    <li><a href="<?= BASE_URL ?>/dashboard">You have 3 upcoming events</a></li>
+
+                                <div class="notification-header flex justify-between">
+                                    <div>Notifications</div>
+                                    <div class="clear-all-btn">Clear All</div>
+                                </div>
+
+
+                                <ul class="pointer" id="notification-list">
+                                    <li>
+                                        <a href="<?= BASE_URL ?>/dashboard">
+                                            <span class="notif-icon">
+                                                <i class='bx bx-calendar'></i>
+                                            </span>
+                                            You have 3 upcoming events
+                                        </a>
+                                    </li>
                                     <li><a href="<?= BASE_URL ?>/dashboard">PDC01: LSEG Tech Talk Session: "Market Surveillance in Financial Markets and AI applications in the domain</a></li>
                                 </ul>
                             </div>
@@ -75,6 +89,24 @@ class WelcomeSearch
                     </div>
 
                     <style>
+                        .notification-header {
+                            margin-top: 0.75rem;
+                            padding: 0.75rem 1rem;
+                            /* padding-bottom: 0;
+                            margin-bottom: 1rem; */
+                            color: var(--secondary-color-faded);
+                            font-weight: 600;
+
+                            background: #ffffff;
+                            border-radius: 5px 5px 0 0;
+                        }
+
+                        .notification-header .clear-all-btn {
+                            cursor: pointer;
+                            text-decoration: underline;
+                            font-size: var(--rv-0-75);
+                        }
+
                         .items-center {
                             align-items: center;
                         }
@@ -118,15 +150,23 @@ class WelcomeSearch
                             width: 100%;
                             list-style: none;
                             background: #ffffff;
-                            border-radius: 5px;
+                            border-radius: 0 0 5px 5px;
+                            margin-top: 0 !important;
                             margin: 1rem 0;
                             padding: 0;
-                            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                            /* border: 1px solid #f5f5f5; */
+                            /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
                         }
+
+                        /* .notification-bell .list__wrapper {
+                            display: block;
+                            width: 320px;
+                        } */
 
                         .notification-bell:hover .list__wrapper {
                             display: block;
-                            width: 200px;
+                            width: 320px;
                         }
 
                         .notification-bell ul li a {
@@ -135,14 +175,25 @@ class WelcomeSearch
                             font-weight: 500;
                             color: #000000;
                             cursor: pointer;
+
+                            display: flex;
+                            align-items: center;
                         }
 
                         .notification-bell ul li a:hover {
                             background: #f5f5f5;
                         }
 
+                        .notification-bell .notif-icon{
+                            margin-right: 0.5rem;
+                            display: none;
+                        }
+                        .notification-bell .notif-icon i{
+                            font-size: var(--rv-1);
+                        }
+
                         .notification-bell ul li a {
-                            display: block;
+                            /* display: block; */
                             width: 100%;
                             color: #000000;
                             text-decoration: none;

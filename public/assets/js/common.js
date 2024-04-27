@@ -160,7 +160,69 @@ function isInternalLink(url) {
 //     return url.indexOf(currentDomain) !== -1;
 // }
 
+function arraysEqual(a1, a2) {
+    return JSON.stringify(a1) == JSON.stringify(a2);
+}
+
+// update notifications
+let last_notifications;
+let count_get_notifications = 0;
+function updateNotifications() {
+
+    // check if BASE_URL is defined
+    if (typeof BASE_URL === 'undefined')
+        return;
+
+    count_get_notifications++;
+    let notification_template = `<li><a href="{{notif_url}}">{{notif_desc}}</a></li>`
+
+    // get notifications
+    $.ajax({
+        url: BASE_URL + '/notifications/get_notifications',
+        type: 'post',
+        data: {
+            "get_notifications": "true"
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response['status'] == 200) {
+                // console.log(response['notifications']);
+                // console.log(`Count: ${count_get_notifications}`)
+
+                if (count_get_notifications == 1) last_notifications = response['notifications'];
+                if (arraysEqual(response['notifications'], last_notifications) == false && count_get_notifications > 1) {
+                    // console.log("New notifications");
+                    alertUser("warning", "You have new notifications")
+                    last_notifications = response['notifications'];
+                }
+
+                if (response['notifications'].length > 0) {
+                    $("#notification-list").empty();
+                    response['notifications'].forEach(function (notif) {
+                        let notif_html = notification_template;
+                        notif_html = notif_html.replace("{{notif_url}}", notif['link']);
+                        notif_html = notif_html.replace("{{notif_desc}}", notif['description']);
+                        $("#notification-list").append(notif_html);
+                    });
+                }
+
+
+            } else if (response['status'] == 403)
+                alertUser("danger", response['desc'])
+            else
+                alertUser("warning", response['desc'])
+        },
+        error: function (ajaxContext) {
+            alertUser("danger", "Error on retrieving notifications")
+        }
+    });
+}
+
 $(document).ready(function () {
+
+    // update notifications for every 5 seconds
+    updateNotifications();
+    setInterval(updateNotifications, 5000);
 
     // sidebar menu
     $("#check").change(function () {

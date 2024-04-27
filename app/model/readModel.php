@@ -117,6 +117,98 @@ class readModel extends Model
         return false;
     }
 
+    public function getNotifications()
+    {
+        // -- Type
+        // --     1 - Exam
+        // --     2 - Reminder
+        // --     3 - Events
+        // --     4 - Materials
+        // --     5 - Election
+
+        // -- is_broadcast
+        // --     0 - Personal
+        // --     1 - Broadcast
+
+        // -- Target
+        // --    0 - All
+        // --    5 - All Students
+        // --      1 - Student - 1st Year
+        // --      2 - Student - 2nd Year
+        // --      3 - Student - 3rd Year
+        // --      4 - Student - 4th Year
+        // --    6 - Counsellor
+
+        // -- parent id
+        // --   the notification redirection id
+
+        // CREATE TABLE notifications (
+        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     is_broadcast TINYINT(1) NOT NULL DEFAULT 0,
+        //     target TINYINT(1) NOT NULL DEFAULT 0,
+        //     user_id INT DEFAULT NULL,
+        //     parent_id INT DEFAULT NULL,
+        //     title VARCHAR(255) NOT NULL,
+        //     description TEXT DEFAULT NULL,
+        //     link VARCHAR(255) DEFAULT NULL,
+        //     type TINYINT(1) NOT NULL,
+        //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     sent_email TINYINT(1) NOT NULL DEFAULT 0,
+        //     viewed TINYINT(1) NOT NULL DEFAULT 0,
+        //     FOREIGN KEY (user_id) REFERENCES user(id)
+        // );
+
+        // check if student or counselor
+        $user_id = $_SESSION["user_id"];
+        $user_role = $_SESSION["user_role"];
+        $role = "";
+        if ($user_role == 5)
+            $role = "counselor";
+        else if ($user_role != 1 && $user_role != 3)
+            $role = "student";
+
+        $notifications = [];
+
+        if ($role == "student") {
+            $user_year = $_SESSION["year"];
+            // get all notifications for this user by user_id and target
+            $notifications = $this->db_handle->runQuery(
+                "SELECT * FROM notifications WHERE 
+                    (is_broadcast = ? AND user_id = ?) OR 
+                    (is_broadcast = ? AND (target = ? OR target = ? OR target = ?))
+                    ORDER BY created_at DESC",
+                "iiiiii",
+                [0, $user_id, 1, 0, $user_year, 5]
+            );
+
+            if (count($notifications) > 0) {
+                foreach ($notifications as $key => $notification) {
+                    $url = "";
+                    if ($notification['link'] != "") 
+                        $url = BASE_URL . $notification['link'];
+                    
+                    $notifications[$key] = [
+                        "title" => $notification['title'],
+                        "description" => $notification['description'],
+                        "link" => $url,
+                        "created_at" => $notification['created_at'],
+                    ];
+                    // $notifications[$key+1] = [
+                    //     "title" => $notification['title'],
+                    //     "description" => $notification['description'],
+                    //     "link" => $url,
+                    //     "created_at" => $notification['created_at'],
+                    // ];
+                }
+            }
+
+            // print_r($notifications);
+        }
+
+        die(json_encode(array("status" => "200", "desc" => "Success", "notifications" => $notifications)));
+    }
+
+    // CREATE TABLE elections (
     // CREATE TABLE elections (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     user_id INT NOT NULL,
@@ -1871,6 +1963,7 @@ class readModel extends Model
             "start_date" => "",
             "end_date" => "",
             "type" => "",
+            "target" => ""
         ];
 
         $template = [
@@ -1910,6 +2003,12 @@ class readModel extends Model
                 "label" => "Election Type",
                 "type" => "number",
                 "validation" => "",
+                "skip" => true
+            ],
+            "target" => [
+                "label" => "Target",
+                "type" => "number",
+                "validation" => "required",
                 "skip" => true
             ],
         ];
