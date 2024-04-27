@@ -32,6 +32,24 @@ class ViewLogs extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data['userLogs'] = $this->model('readModel')->getLogAnalytics();
+        $data["unauthorized"] = $data['userLogs'][0]["count"];
+        $data["created"] = $data['userLogs'][1]["count"];
+        $data["deleted"] = $data['userLogs'][2]["count"];   
+        $data["logged"] = $data['userLogs'][3]["count"];
+        $data["granted"] = $data['userLogs'][4]["count"];
+        $data["revoked"] = $data['userLogs'][5]["count"];
+
+        $data["chartOne"]=$this->model('readModel')->getLogAnalyticsChartOne();
+        
+        $data["chartTwo"]=$this->model('readModel')->getLogAnalyticsChartTwo();
+
+        $data["chartThree"]=$this->model('readModel')->getLogAnalyticsChartThree();
+
+        $data["chartFour"]=$this->model('readModel')->getLogAnalyticsChartFour();
+
+        $data["chartFive"]=$this->model('readModel')->getLogAnalyticsChartFive();
+
         $this->view->render('admin/viewLogs/userLogAnalytics', $data);
     }
 }
