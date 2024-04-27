@@ -9,25 +9,30 @@ $sidebar = new Sidebar("existingCounselors");
 
     <div class="main-grid flex">
         <div class="leftContent">
-            <div class = "counselorArticlesPanel">
-                <div class = "panelTitle">
-                    <h4 class = "text-center"> Published Articles </h4>
-                </div>
+            <div class = "counselorArticlesPanel flex flex-column">
+                    <div class="section_header mb-1 flex">
+                        <div class="title font-1-5 font-semibold flex align-center">
+                            <i class='bx bxs-donate-heart me-0-5'></i> Published Articles
+                        </div>
+                    </div>
+                    <div class="flex flex-row elections-grid">
                 <?php 
                 if (is_array($data["posts"])) {
                         foreach ($data["posts"] as $posts) {
                         $img_src = USER_IMG_PATH . $posts["post_image"];
                     ?>
-                    <a class = "articleCard" href = "#">
-                        <div class = "articleImage">
-                            <img src="<?= $img_src ?>" alt="">
-                        </div>
-                        <div class = "articleTitle"> <?= $posts["title"] ?></div> 
-                        <div class="articleDescription"><?= substr($posts["description"], 0, 50) . (strlen($posts["description"]) > 100 ? '...' : '') ?></div>
+                    
+                        <a class = "election-item" href = "<?= BASE_URL?>/counselorFeed/postView/<?=$posts["id"]?>">
+                            <div class = "img">
+                                <img src="<?= $img_src ?>" alt="">
+                            </div>
+                            <div class = "title"> <?= $posts["title"] ?></div> 
+                            <div class="desc"><?= substr($posts["description"], 0, 50) . (strlen($posts["description"]) > 100 ? '...' : '') ?></div>
 
-                    </a>
-                <?php }
-                }else{
+                        </a>
+                <?php } ?>
+                    </div>
+                <?php }else{
                     echo "<div class='font-meidum text-muted'>No articles are published by this counselor</div>";
                 }
                 ?>
@@ -41,7 +46,7 @@ $sidebar = new Sidebar("existingCounselors");
                     $img_src = USER_IMG_PATH . $counselor["profile_img"];
                 ?>
                 <div class = "descriptionPanelLeft">
-                    <div class = "profileImageContainor">
+                    <div class = "profileImageContainor img">
                         <img src="<?= $img_src ?>" alt="">
                     </div>
                 </div>
@@ -59,14 +64,16 @@ $sidebar = new Sidebar("existingCounselors");
 
                     </div>
                     <div class = "font-1 text-muted ms-1 mt-0-5">You can now talk with the professional counselors to reserve a date for your appointment</div>
-                    <div href="#" class = "chatButtonContainer">
-                        <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center">
-                            Chat Now
+                    <div class="flex flex-row">
+                        <div href="#" class = "me-1 mt-1 ms-1">
+                            <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center">
+                                Chat Now
+                            </div>
                         </div>
-                    </div>
-                    <div class = "chatButtonContainer">
-                        <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center load-timeslots" href="#" user-id="<?= $counselor['id'] ?>">
-                            Book an appointment
+                        <div class = "mt-1">
+                            <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center load-timeslots" href="#" user-id="<?= $counselor['id'] ?>">
+                                Book an appointment
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,63 +106,6 @@ $sidebar = new Sidebar("existingCounselors");
             height: auto !important;
             margin-right: 0.75rem;
             
-        }
-
-        .counselorArticlesPanel{
-            width: 100%;
-            /* border: 1px solid var(--secondary-color-faded); */
-            /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
-            /* height: 500px; */
-            display: flex;
-            flex-wrap: wrap;
-            border-radius: 10px;
-            /* border : 1px solid red; */
-
-        }
-
-        .panelTitle{
-            width: 100%;
-        }
-
-        .articleCard {
-            width: 30%;
-            min-width: 150px;
-            height: 100%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-            margin: 25px;
-            border-radius : 10px;
-            /* border: 1px solid red; */
-            text-decoration : none;
-            color : black;
-        }
-
-        .articleImage {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .articleImage img{
-            width: 150px;
-            height: 150px;
-            margin : 0.5rem;
-        }
-
-        .articleTitle{
-            text-align : center;
-            margin : 0.5rem;
-            font-size: 12px;
-            font-weight: bold;
-            text-decoration : none;
-            /* border: 1px solid red; */
-        }
-
-        .articleDescription{
-            text-align : center;
-            margin : 0.5rem;
-            font-size: 10px;
-            /* border: 1px solid red; */
         }
 
         .profileDescriptionPanel{
@@ -221,6 +171,66 @@ $sidebar = new Sidebar("existingCounselors");
             align-items: left ;
             display:flex;
             margin: 1rem 0 0 1rem;
+        }
+
+        .elections-grid {
+            padding: var(--rv-1);
+            padding-top: var(--rv-0-5);
+
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .elections-grid .election-item {
+            position: relative;
+            display: block;
+            text-decoration: none;
+
+            margin: 1rem 0.5rem;
+            width: calc(50% - (0.5rem * 2));
+            padding: 1.5rem;
+            padding: 1.2vw;
+
+            /* margin-bottom: 2rem; */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0px 18.83px 47.08px rgba(47, 50, 125, 0.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+
+            font-size: clamp(12px, 0.9vw, 18px);
+            color: #19191b;
+        }
+
+        .elections-grid .election-item>div:not(:last-child) {
+            margin-bottom: var(--rv-0-75);
+        }
+
+        .elections-grid .election-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .elections-grid .election-item .img {
+            height: 230px;
+            height: clamp(170px, 24vh, 240px);
+            margin-bottom: 1rem;
+        }
+
+        .elections-grid .election-item .img img {
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .elections-grid .election-item .title {
+            font-size: clamp(14px, 1.1vw, 20px);
+            font-weight: 600;
+        }
+
+        .elections-grid .election-item .desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
 

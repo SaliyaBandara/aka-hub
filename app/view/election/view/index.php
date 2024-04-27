@@ -23,7 +23,7 @@ $calendar = new Calendar();
 
             <div class="elections-grid">
 
-                <a href="./" class="election-item cat_2">
+                <!-- <a href="./" class="election-item cat_2">
                     <div class="img">
                         <img src="<?= BASE_URL ?>/public/assets/user_uploads/img/election_cover_2024020419363765bf99ed2168e01368490017070555971790.png" alt="">
                     </div>
@@ -36,7 +36,7 @@ $calendar = new Calendar();
                     <div class="end-date">
                         <i class="bx bx-calendar text--primary"></i> 2022-02-28
                     </div>
-                </a>
+                </a> -->
 
                 <?php
 

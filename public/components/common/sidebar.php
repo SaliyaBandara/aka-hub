@@ -17,12 +17,11 @@ class Sidebar
             if ($role == 0) { //student
                 $studentPages = [
                     'dashboard' => ['Dashboard', 'bxs-dashboard'],
-                    'courses' => ['Courses', 'bxs-book'],
+                    'courses' => ['Courses', 'bxs-graduation'],
                     'eventFeed' => ['Events', 'bxs-calendar-star'],
                     'counselorFeed' => ['Counselor Articles', 'bxs-donate-heart'],
                     'chat' => ['Forum', 'bxs-chat'],
                     'elections' => ['Elections', 'bxs-chat'],
-                    'studentProfile' => ['Settings', 'bxs-cog'],
                 ];
                 $pages = array_merge($pages, $studentPages);
             }
@@ -70,7 +69,7 @@ class Sidebar
             if ($student_rep == 1) { //student-rep
                 $studentrepPages = [
                     'approveTeachingStudents' => ['Teaching Students', 'bxs-pen'],
-                    'manageMaterials' => ['Materials', 'bxs-book'],
+                    'manageMaterials' => ['Manage Materials', 'bxs-book'],
                 ];
                 $pages = array_merge($pages, $studentrepPages);
             }
@@ -152,18 +151,18 @@ class Sidebar
             <?php 
                 if($_SESSION["user_role"] == 0){
             ?>
-                <div class="fixed__bottom">
+                <div class="fixed__bottom font-medium">
                     Do you need counselor support?
-                    Click <a href="<?= BASE_URL ?>/existingCounselors">here</a>
+                    Click <a href="<?= BASE_URL ?>/existingCounselors" class="text-secondary">here</a>
                     to talk with a counselor.
                 </div>
             <?php
                 }
             ?>
 
-            <div class="fixed__bottom">
+            <!-- <div class="fixed__bottom">
                 <a class="logout" href="<?= BASE_URL ?>/logout">Logout <i class='bx bx-log-out'></i> </a>
-            </div>
+            </div> -->
 
         </div>
 
