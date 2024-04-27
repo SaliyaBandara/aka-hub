@@ -169,4 +169,17 @@ class Model extends Database
 
         return false;
     }
+
+    public function getOneByColumns($table, $columns, $values, $types)
+    {
+        $query = "SELECT * FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
 }

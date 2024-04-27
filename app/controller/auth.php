@@ -64,6 +64,10 @@ class Auth extends Controller
                     $status = "603";
                     $this->model("createModel")->createLogEntry($action, $status);
 
+                    // get student details and set year
+                    $student = $this->model('readModel')->getOne("student", $result["id"]);
+                    $_SESSION["year"] = $student["year"];
+
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/dashboard")));
                 }
             }

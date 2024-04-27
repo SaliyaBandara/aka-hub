@@ -42,7 +42,7 @@ class Elections extends Controller
         $data["club_rep"] = $_SESSION["club_rep"];
 
         $data["edit_access"] = false;
-        if ($_SESSION["student_rep"] == 1 || $_SESSION["club_rep"] == 1 || $_SESSION["user_role"] == 1 )
+        if ($_SESSION["student_rep"] == 1 || $_SESSION["club_rep"] == 1 || $_SESSION["user_role"] == 1)
             $data["edit_access"] = true;
 
         $data["items"] = $this->model('readModel')->getAll("elections");
@@ -232,10 +232,13 @@ class Elections extends Controller
             $values["user_id"] = $_SESSION["user_id"];
             $this->validate_template($values, $data["item_template"]);
 
+
             // CREATE TABLE elections (
             //     id INT AUTO_INCREMENT PRIMARY KEY,
             //     user_id INT NOT NULL,
+            //     target TINYINT(1) NOT NULL DEFAULT 1,
             //     name VARCHAR(255) NOT NULL,
+            //     description TEXT DEFAULT NULL,
             //     start_date DATETIME NOT NULL,
             //     end_date DATETIME NOT NULL,
             //     cover_img VARCHAR(255) DEFAULT NULL,
@@ -252,6 +255,10 @@ class Elections extends Controller
             $values["type"] = 0;
             if ($id == 0 && $_SESSION["student_rep"] == 1)
                 $values["type"] = 1;
+
+            // target should be int within 1 to 5
+            if ($values["target"] < 1 || $values["target"] > 5)
+                die(json_encode(array("status" => "400", "desc" => "Invalid target")));
 
             if ($start_date == false)
                 die(json_encode(array("status" => "400", "desc" => "Invalid start date")));
@@ -270,8 +277,17 @@ class Elections extends Controller
             else
                 $result = $this->model('updateModel')->update_one("elections", $values, $data["item_template"], "id", $id, "i");
 
-            if ($result)
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    // create notification
+                    $values["start_date"] = date("jS M Y", strtotime($values["start_date"]));
+                    $notif_message = "Upcoming election: $values[name] starting on $values[start_date]";
+                    $this->model('createModel')->notification(5, $id, 0, $values["name"], $notif_message, $values["target"], "/elections/view/$id");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing election")));
         }

@@ -90,6 +90,11 @@ class StudentProfile extends Controller
                 $result1 = $this->model('updateModel')->update_one("student", $values, $data["student_profile_template"], "id", $id, "i");
                 $result2 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
+                // update the profile image in session variable
+                if (isset($values["profile_img"])){
+                    $_SESSION["user_img"] = $values["profile_img"][0];
+                }
+
                 if ($result1 && $result2){
                     $task = "Student profile edited";
                     $this->model("createModel")->createLogEntry($task, 200);
