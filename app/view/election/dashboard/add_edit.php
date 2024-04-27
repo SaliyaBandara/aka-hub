@@ -27,6 +27,17 @@ $sidebar = new Sidebar("elections");
             ?>
 
             <div class="mb-1 form-group">
+                <label class="form-label">Target Audience</label>
+                <select name="target" class="form-control" data-validation="required">
+                    <option value="5" <?= $data["item"]["target"] == 5 ? "selected" : "" ?>>All Students</option>
+                    <option value="1" <?= $data["item"]["target"] == 1 ? "selected" : "" ?>>Student - 1st Year</option>
+                    <option value="2" <?= $data["item"]["target"] == 2 ? "selected" : "" ?>>Student - 2nd Year</option>
+                    <option value="3" <?= $data["item"]["target"] == 3 ? "selected" : "" ?>>Student - 3rd Year</option>
+                    <option value="4" <?= $data["item"]["target"] == 4 ? "selected" : "" ?>>Student - 4th Year</option>
+                </select>
+            </div>
+
+            <div class="mb-1 form-group">
                 <label class="form-label">Description</label>
                 <textarea name="description" id="description" class="form-control" placeholder="Enter Description" data-validation="required"><?= $data["item"]["description"] ?></textarea>
             </div>

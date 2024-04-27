@@ -30,3 +30,21 @@ kasunsilva@gmail.com	::1	04/26/24 11:06PM	User tried to like post multiple times
 
 kasunsilva@gmail.com	::1	04/26/24 11:28PM	Post updated by counselor	http://localhost/aka-hub/counselorFeed/add_edit/23url=counselorFeed/add_edit/23	200
 
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:03PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:03PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:05PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:05PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:05PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:05PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 03:05PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/1url=studentProfile/add_edit/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 06:58PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 07:15PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+

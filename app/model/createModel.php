@@ -42,7 +42,10 @@ class createModel extends Model
         // die;
 
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
-        return $this->db_handle->insert($query, $types, $params);
+        $result = $this->db_handle->insert($query, $types, $params);
+        // get last inserted id
+        $last_id = $this->db_handle->getLastInsertedID();
+        return $last_id;
     }
 
     // CREATE TABLE election_votes (
@@ -137,7 +140,7 @@ class createModel extends Model
         // if (session_id()) session_write_close();
     }
 
-    public function notification($type, $user_id, $title, $message, $link = "")
+    public function notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
     {
 
         /*
@@ -150,11 +153,37 @@ class createModel extends Model
             6 - Counsellor Reservations - High Priority (Ignore Preference)
         */
 
+        // -- notifications table
+
+        // -- Type
+        // --     1 - Exam
+        // --     2 - Reminder
+        // --     3 - Events
+        // --     4 - Materials
+        // --     5 - Election
+
+        // -- is_broadcast
+        // --     0 - Personal
+        // --     1 - Broadcast
+
+        // -- Target
+        // --    0 - All
+        // --    5 - All Students
+        // --      1 - Student - 1st Year
+        // --      2 - Student - 2nd Year
+        // --      3 - Student - 3rd Year
+        // --      4 - Student - 4th Year
+        // --    6 - Counsellor
+
         // CREATE TABLE notifications (
         //     id INT AUTO_INCREMENT PRIMARY KEY,
-        //     user_id INT NOT NULL,
+        //     is_broadcast TINYINT(1) NOT NULL DEFAULT 0,
+        //     target TINYINT(1) NOT NULL DEFAULT 0,
+        //     user_id INT DEFAULT NULL,
+        //     parent_id INT DEFAULT NULL,
         //     title VARCHAR(255) NOT NULL,
         //     description TEXT DEFAULT NULL,
+        //     link VARCHAR(255) DEFAULT NULL,
         //     type TINYINT(1) NOT NULL,
         //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         //     sent_email TINYINT(1) NOT NULL DEFAULT 0,
@@ -162,30 +191,45 @@ class createModel extends Model
         //     FOREIGN KEY (user_id) REFERENCES user(id)
         // );
 
-        $result = $this->insert_db("notifications", [
-            "user_id" => $user_id,
-            "title" => $title,
-            "description" => $message,
-            "type" => $type
-        ], [
-            "user_id" => ["type" => "number"],
-            "title" => ["type" => "string"],
-            "description" => ["type" => "string"],
-            "type" => ["type" => "number"]
-        ]);
+
+        // if election
+        if ($type == 5) {
+            $this->insert_db("notifications", [
+                "is_broadcast" => 1,
+                "target" => $target,
+                "user_id" => $user_id,
+                "parent_id" => $id,
+                "title" => $title,
+                "description" => $message,
+                "link" => $link,
+                "type" => $type
+            ], [
+                "is_broadcast" => ["type" => "number"],
+                "target" => ["type" => "number"],
+                "user_id" => ["type" => "number"],
+                "parent_id" => ["type" => "number"],
+                "title" => ["type" => "string"],
+                "description" => ["type" => "string"],
+                "link" => ["type" => "string"],
+                "type" => ["type" => "number"]
+            ]);
+
+            // TODO: Send emails to eligible users
+
+            return true;
+        }
 
         // TODO: 
         // handle notification preferences
 
-        if ($result) {
-            $notification_id = $this->db_handle->getLastInsertedID();
-            if ($link != "")
-                $link = BASE_URL . $link;
+        // if ($result) {
+        //     $notification_id = $this->db_handle->getLastInsertedID();
+        //     if ($link != "")
+        //         $link = BASE_URL . $link;
 
-            $this->sendNotificationEmail($user_id, $title, $message, $link);
-            return true;
-        }
-
+        //     $this->sendNotificationEmail($user_id, $title, $message, $link);
+        //     return true;
+        // }
 
         return true;
     }
