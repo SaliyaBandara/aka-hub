@@ -20,7 +20,7 @@ $calendar = new Calendar();
                     <div class="approveRepresentativesButtonsLine">
                         <div class="mb-1 form-group right_side">
                             <a href="<?= BASE_URL ?>/manageMaterials" class="btn btn-info">
-                                <i class=''></i> Back to Table
+                                <i class=''></i> Back
                             </a>
                         </div>
                     </div>

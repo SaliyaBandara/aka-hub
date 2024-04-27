@@ -62,7 +62,7 @@ $sidebar = new Sidebar("manageMaterials");
                 ?>
 
                 <a class="manageMaterialsLink" href="<?= BASE_URL ?>/manageMaterials/courses">
-                    <input type="button" class="btn btn-info my-1" value="Back To Table" />
+                    <input type="button" class="btn btn-info my-1" value="Back" />
                 </a>
 
                 <style>
