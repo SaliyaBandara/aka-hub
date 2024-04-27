@@ -117,7 +117,7 @@ class readModel extends Model
         return false;
     }
 
-     // CREATE TABLE elections (
+    // CREATE TABLE elections (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     user_id INT NOT NULL,
     //     name VARCHAR(255) NOT NULL,
@@ -203,7 +203,7 @@ class readModel extends Model
                     // count the responses for each option
                     foreach ($responses as $response) {
                         $response_count[$response['response_option']] = isset($response_count[$response['response_option']]) ? $response_count[$response['response_option']] + 1 : 1;
-                    
+
                         // get the time of the vote
                         $vote_times[] = $response['created_at'];
                     }
@@ -461,7 +461,7 @@ class readModel extends Model
         return false;
     }
 
-    public function getReservationsByStudent($user_id,$counselor_id)
+    public function getReservationsByStudent($user_id, $counselor_id)
     {
         $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.student_id = ? AND t.counselor_id = ?", "ii", [$user_id, $counselor_id]);
         if (count($result) > 0)
@@ -749,14 +749,14 @@ class readModel extends Model
         $userdata = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
 
         if ($userdata[0]['role'] == 1) {
-            $result = $this->db_handle->runQuery("SELECT * FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
+            $result = $this->db_handle->runQuery("SELECT u.*,a.contact_number, a.whatsapp_number, a.address  FROM user u, administrator a WHERE u.id = a.id AND u.id = ?", "i", [$id]);
         } else if ($userdata[0]['role'] == 5) {
-            $result = $this->db_handle->runQuery("SELECT * FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
+            $result = $this->db_handle->runQuery("SELECT u.*, c.type, c.contact FROM user u, counselor c WHERE u.id = c.id AND u.id = ?", "i", [$id]);
         } else if ($userdata[0]['role'] == 3) {
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$id]);
         } else {
             if ($userdata[0]['club_rep'] == 1) {
-                $result = $this->db_handle->runQuery("SELECT u.*, s.*, cr.*, c.id, c.name AS club_name
+                $result = $this->db_handle->runQuery("SELECT u.*, s.index_number, s.faculty, s.degree, s.year, cr.club_id, cr.user_id, cr.status, c.name AS club_name
                 FROM user u
                 JOIN student s ON u.id = s.id
                 JOIN club_representative cr ON u.id = cr.user_id
@@ -992,7 +992,7 @@ class readModel extends Model
 
     public function getClubRepByUser($user_id, $status)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM club_representative cr WHERE user_id = ? AND status = ? ", "ii", [$user_id,$status]);
+        $result = $this->db_handle->runQuery("SELECT * FROM club_representative cr WHERE user_id = ? AND status = ? ", "ii", [$user_id, $status]);
         if (count($result) > 0)
             return $result;
 
