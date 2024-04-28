@@ -9,7 +9,7 @@ $calendar = new Calendar();
 
     <div class="main-grid flex">
         <div class="left">
-            
+
             <!-- ===VIRAJITH=== -->
 
 
@@ -19,13 +19,13 @@ $calendar = new Calendar();
                         <div class="search">
                             <span class="text">Select an user to start chat</span>
                             <input type="text" placeholder="Enter name to search...">
-                            <button><i class='bx bx-search-alt-2' ></i></button>
+                            <button><i class='bx bx-search-alt-2'></i></button>
                         </div>
-                        <div class="users-list" id="userList">                         
+                        <div class="users-list" id="userList">
 
                         </div>
                     </section>
-                    
+
                 </div>
                 <div class=" wrapper-chat">
                     <section class="chat-area" id="chat-area">
@@ -134,7 +134,7 @@ $calendar = new Calendar();
                 </div>
             </div>
         </div>
-        
+
         <div class="right">
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
@@ -146,7 +146,7 @@ $calendar = new Calendar();
         .main-grid .left {
             width: 75% !important;
             height: 150vh;
-            
+
         }
 
         .main-grid .right {
@@ -226,45 +226,50 @@ $calendar = new Calendar();
 
         .card-container {
             display: flex;
-            flex-direction: column; /* Display cards vertically */
+            flex-direction: column;
+            /* Display cards vertically */
         }
 
         .card {
-            width: 100%; /* Make cards take full width */
+            width: 100%;
+            /* Make cards take full width */
             height: 150px;
             width: 550px;
             margin-left: 90px;
             margin-right: 150px;
             background-color: #f0f0f0;
-            margin-bottom: 20px; /* Increase vertical space between cards */
+            margin-bottom: 20px;
+            /* Increase vertical space between cards */
             padding: 20px;
             box-sizing: border-box;
         }
 
-        .sub-container{
+        .sub-container {
             display: flex;
             flex-direction: row;
-            background: #fff; 
+            background: #fff;
         }
     </style>
     <style>
-        .main-container{
+        .main-container {
             display: flex;
-            flex-direction: row; 
+            flex-direction: row;
             background: #fff;
             width: 85%;
             /* height: 199px ; */
             border-radius: 16px;
             margin-left: 100px;
-            box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
-                        0 32px 64px -48px rgba(0,0,0,0.5);
+            box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+                0 32px 64px -48px rgba(0, 0, 0, 0.5);
         }
-        *{
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             text-decoration: none
         }
+
         body {
             display: flex;
             justify-content: center;
@@ -272,6 +277,7 @@ $calendar = new Calendar();
             min-height: 100vh;
             background: #f7f7f7;
         }
+
         /* .wrapper {
             display: flex;
             flex-direction: row; 
@@ -281,27 +287,31 @@ $calendar = new Calendar();
             box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
                         0 32px 64px -48px rgba(0,0,0,0.5);
         } */
-        .wrapper-user{
+        .wrapper-user {
             width: 50%;
         }
-        .wrapper-chat{
+
+        .wrapper-chat {
             width: 60%;
         }
 
         /* SignUp form CSS code */
-        .form{
+        .form {
             padding: 25px 30px;
         }
-        .form header{
+
+        .form header {
             font-size: 25px;
             font-weight: 600;
             padding-bottom: 10px;
             border-bottom: 1px solid #e6e6e6;
         }
-        .form form{
+
+        .form form {
             margin: 20px 0;
         }
-        .form form .error-txt{
+
+        .form form .error-txt {
             color: #721c24;
             background: #f8d7da;
             padding: 8px 10px;
@@ -310,28 +320,35 @@ $calendar = new Calendar();
             margin-bottom: 10px;
             border: 1px solid #f5c6cb;
         }
-        .form form .name-details{
+
+        .form form .name-details {
             display: flex;
         }
-        form .name-details .field:first-child{
+
+        form .name-details .field:first-child {
             margin-right: 10px;
         }
-        form .name-details .field:last-child{
+
+        form .name-details .field:last-child {
             margin-left: 10px;
         }
-        .form form .field{
+
+        .form form .field {
             display: flex;
             position: relative;
             flex-direction: column;
             margin-bottom: 10px;
         }
-        .form form .field label{
+
+        .form form .field label {
             margin-bottom: 2px;
         }
-        .form form .field input{
+
+        .form form .field input {
             outline: none;
         }
-        .form form .input input{
+
+        .form form .input input {
             height: 40px;
             width: 100%;
             border: 1px solid #ccc;
@@ -339,10 +356,12 @@ $calendar = new Calendar();
             font-size: 16px;
             border-radius: 5px;
         }
-        .form form .image input{
+
+        .form form .image input {
             font-size: 17px;
         }
-        .form form .button input{
+
+        .form form .button input {
             margin-top: 13px;
             height: 45px;
             border: none;
@@ -353,7 +372,8 @@ $calendar = new Calendar();
             border-radius: 5px;
             cursor: pointer;
         }
-        .form form .field i{
+
+        .form form .field i {
             position: absolute;
             right: 15px;
             color: #ccc;
@@ -361,23 +381,27 @@ $calendar = new Calendar();
             transform: translateY(-50%);
             cursor: pointer;
         }
-        .form .link{
+
+        .form .link {
             margin: 10px 0;
             text-align: center;
             font-size: 17px;
         }
-        .form .link a{
+
+        .form .link a {
             color: #333;
         }
-        .form .link a:hover{
+
+        .form .link a:hover {
             text-decoration: underline;
         }
 
         /* Users area CSS */
-        .users{
+        .users {
             padding: 25px 30px;
         }
-        .users .header{
+
+        .users .header {
             display: flex;
             align-items: center;
             padding-bottom: 20px;
@@ -385,7 +409,8 @@ $calendar = new Calendar();
             text-decoration: none;
             border-bottom: 1px solid #e6e6e6;
         }
-        .users-list a{
+
+        .users-list a {
             display: flex;
             align-items: center;
             padding-bottom: 20px;
@@ -393,34 +418,41 @@ $calendar = new Calendar();
             text-decoration: none;
             border-bottom: 1px solid #e6e6e6;
         }
+
         .wrapper-user img,
-        .wrapper-chat img{
+        .wrapper-chat img {
             object-fit: cover;
             border-radius: 50%;
         }
-        :is(.users, .users-list) .content{
+
+        :is(.users, .users-list) .content {
             display: flex;
             align-items: center;
         }
-        .users .header .content img{
-            height:50px;
-            width:50px;
+
+        .users .header .content img {
+            height: 50px;
+            width: 50px;
         }
-        :is(.users, .users-list) .details{
+
+        :is(.users, .users-list) .details {
             color: #000;
             margin-left: 15px;
         }
-        :is(.users, .users-list) .details span{
+
+        :is(.users, .users-list) .details span {
             font-size: 18px;
             font-weight: 500;
         }
-        :is(.users, .users-list) .details p{
+
+        :is(.users, .users-list) .details p {
             font-size: 15px;
             color: #666;
             margin-top: 3px;
         }
-        .users .header .logout{
-            color:#fff;
+
+        .users .header .logout {
+            color: #fff;
             font-size: 17px;
             padding: 7px 15px;
             background: #333;
@@ -428,24 +460,28 @@ $calendar = new Calendar();
             text-decoration: none;
             /* margin-left: 1000px; */
         }
-        .users .search{
+
+        .users .search {
             margin: 20px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .users .search{
+
+        .users .search {
             margin: 20px 0;
             display: flex;
             position: relative;
             align-items: center;
             justify-content: space-between;
         }
-        .users .search .text{
+
+        .users .search .text {
             font-size: 18px;
         }
-        .users .search input{
-            position:absolute;
+
+        .users .search input {
+            position: absolute;
             height: 42px;
             width: calc(100% - 50px);
             border: 1px solid #ccc;
@@ -454,7 +490,8 @@ $calendar = new Calendar();
             border-radius: 5px;
             outline: none;
         }
-        .users .search button{
+
+        .users .search button {
             width: 47px;
             height: 42px;
             border: none;
@@ -465,15 +502,18 @@ $calendar = new Calendar();
             font-size: 17px;
             border-radius: 0 5px 5px 0;
         }
-        .users-list{
+
+        .users-list {
             max-height: 580px;
             overflow-y: auto;
         }
-        :is(.users-list, .chat-box)::-webkit-scrollbar{
+
+        :is(.users-list, .chat-box)::-webkit-scrollbar {
             width: 0px;
             display: flex;
         }
-        .users-list a{
+
+        .users-list a {
             /* display: inline; */
             margin-bottom: 5px !important;
             page-break-after: 10px;
@@ -482,27 +522,33 @@ $calendar = new Calendar();
             /* border-bottom:  1px solid #6c6c6c !important; */
             position: relative;
         }
-        .users-list a:last-child{
+
+        .users-list a:last-child {
             border: none;
             margin-bottom: 0px;
         }
-        .users-list a .content img{
+
+        .users-list a .content img {
             height: 40px;
             width: 40px;
         }
-        .users-list a .content p{
+
+        .users-list a .content p {
             color: #67676a;
         }
-        .users-list a .status-dot i{
+
+        .users-list a .status-dot i {
             margin-right: 30px;
         }
-        .users-list a .status-dot{
+
+        .users-list a .status-dot {
             font-size: 12px;
             color: #468669;
             /* margin-left: 50px; */
             margin-right: 30px;
         }
-        .users-list a .status-dot.offline{
+
+        .users-list a .status-dot.offline {
             color: #ccc;
         }
 
@@ -513,72 +559,87 @@ $calendar = new Calendar();
             padding: 18px 30px;
             margin-left: -20px;
         }
-        .chat-area header .back-icon{
+
+        .chat-area header .back-icon {
             font-size: 18px;
             color: #333;
         }
-        .chat-area header img{
+
+        .chat-area header img {
             height: 45px;
             width: 45px;
             margin: 0 15px;
         }
-        .chat-area header span{
+
+        .chat-area header span {
             font-size: 17px;
             font-weight: 500;
         }
-        .chat-box{
+
+        .chat-box {
             height: 550px;
             overflow-y: auto;
             background: #f0f0f0;
             padding: 10px 30px 20px 30px;
             box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
-                        inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
+                inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
         }
-        .chat-box .chat{
+
+        .chat-box .chat {
             margin: 15px 0;
         }
-        .chat-box .chat p{
+
+        .chat-box .chat p {
             word-wrap: break-word;
             padding: 8px 16px;
-            box-shadow:  0 0 32px rgb(0 0 0 / 8%),
-                        0 16px 16px -16px rgb(0 0 0 / 10%);
+            box-shadow: 0 0 32px rgb(0 0 0 / 8%),
+                0 16px 16px -16px rgb(0 0 0 / 10%);
         }
-        .chat-box .outgoing{
+
+        .chat-box .outgoing {
             display: flex;
         }
-        .outgoing .details{
+
+        .outgoing .details {
             margin-left: auto;
             max-width: calc(100% - 130px);
         }
-        .outgoing .details p{
+
+        .outgoing .details p {
             background: #333;
-            color: #fff;  
+            color: #fff;
             border-radius: 18px 18px 0 18px;
         }
-        .chat-box .incoming{
+
+        .chat-box .incoming {
             display: flex;
             align-items: flex-end;
         }
-        .chat-box .incoming img{
+
+        .chat-box .incoming img {
             height: 35px;
             width: 35px;
         }
-        .incoming .details{
+
+        .incoming .details {
             margin-left: 10px;
             margin-right: auto;
             max-width: calc(100% - 130px);
         }
-        .incoming .details p{
+
+        .incoming .details p {
             color: #333;
             background: #fff;
             border-radius: 18px 18px 18px 0;
         }
-        .chat-area .typing-area{
+
+        .chat-area .typing-area {
             padding: 18px 30px;
             display: flex;
             justify-content: space-between;
         }
-        .typing-area input{
+
+        .typing-area input {
             height: 45px;
             width: calc(100% - 58px);
             font-size: 17px;
@@ -587,7 +648,8 @@ $calendar = new Calendar();
             border-radius: 5px 0 0 5px;
             outline: none;
         }
-        .typing-area button{
+
+        .typing-area button {
             width: 55px;
             border: none;
             outline: none;
@@ -595,11 +657,11 @@ $calendar = new Calendar();
             color: #fff;
             font-size: 19px;
             cursor: pointer;
-            border-radius: 0 5px 5px 0 ;
+            border-radius: 0 5px 5px 0;
         }
     </style>
 
-    
+
 
 </div>
 
@@ -612,11 +674,15 @@ $calendar = new Calendar();
 </script>
 <script>
     const searchBar = document.querySelector(".users .search input"),
-    searchBtn = document.querySelector(".users .search button"),
-    usersList = document.querySelector(".users-list"),
-    chatArea = document.querySelector('.chat-area'),
-    form = document.querySelector('.typing-area'),
-    chatBox = document.querySelector('.chat-box');
+        searchBtn = document.querySelector(".users .search button"),
+        usersList = document.querySelector(".users-list"),
+        chatArea = document.querySelector('.chat-area'),
+        form = document.querySelector('.typing-area'),
+        chatBox = document.querySelector('.chat-box');
+        
+        inputField = form.querySelector('.input-field'),
+        sendBtn =  form.querySelector('button'),
+        chatBox = document.querySelector('.chat-box');
 
     // searchBtn.onclick = ()=>{
     //     searchBar.classList.toggle("active");
@@ -625,18 +691,35 @@ $calendar = new Calendar();
     //     searchBar.value = "";
     // }
 
-    searchBar.onkeyup = ()=>{
+    sendBtn.onclick = () => {
+        // Strating of the Ajax part
+        let xhr = new XMLHttpRequest(); //Creating XML object
+        xhr.open("POST", "counselorChat/chat_messages", true);
+        xhr.onload = ()=>{
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
+                    inputField.value = ""; //once message inserted into database then leave the input field blank
+                    scrollToBottom();
+                }
+            }
+        }    
+        //we have to send the form data through ajax to php
+        let formData = new FormData(form); //Creating new formData object
+        xhr.send(formData); //Sending the form data to php
+    }
+
+    searchBar.onkeyup = () => {
         let searchTerm = searchBar.value;
-        if(searchTerm != ""){
+        if (searchTerm != "") {
             searchBar.classList.add("active");
-        }else{
+        } else {
             searchBar.classList.remove("active");
         }
         let xhr = new XMLHttpRequest(); //Creating XML object
         xhr.open("POST", "php/search.php", true);
-        xhr.onload = ()=>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if(xhr.status === 200){
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
                     let data = xhr.response;
                     usersList.innerHTML = data;
                 }
@@ -646,28 +729,28 @@ $calendar = new Calendar();
         xhr.send("searchTerm=" + searchTerm);
     }
 
-    setInterval(()=>{
+    setInterval(() => {
         // console.log("hello world!");
         // Strating of the Ajax part
         let xhr = new XMLHttpRequest(); //Creating XML object
         xhr.open("GET", "counselorChat/chat_users", true);
-        xhr.onload = ()=>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if(xhr.status === 200){
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
                     let data = JSON.parse(xhr.responseText); // Parse JSON response
                     // let data = xhr.response;
-                    console.log(data);
+                    // console.log(data);
                     if (!searchBar.classList.contains("active")) {
-                    let userListHTML = '';
-                    if (data.length === 0) {
-                        // Display a message if no users are available
-                        userListHTML = '<div class="details"><p>No Users Available</p></div>';
-                    } else {
-                        data.forEach(user => {
-                            let img_src = "http://<?php echo $_SERVER['SERVER_NAME']; ?>/aka-hub/public/assets/user_uploads/img/" + user.image;
-                            console.log(img_src);
-                            userListHTML += `
-                            <a href="#" user-id="${user.unique_id}">
+                        let userListHTML = '';
+                        if (data.length === 0) {
+                            // Display a message if no users are available
+                            userListHTML = '<div class="details"><p>No Users Available</p></div>';
+                        } else {
+                            data.forEach(user => {
+                                let img_src = "http://<?php echo $_SERVER['SERVER_NAME']; ?>/aka-hub/public/assets/user_uploads/img/" + user.image;
+                                console.log(img_src);
+                                userListHTML += `
+                            <a href="#" class="user-card" id="${user.unique_id}" userId="${user.unique_id}">
                                 <div class="content">
                                     <img src="${img_src}" alt="">
                                     <div class="details">
@@ -677,69 +760,98 @@ $calendar = new Calendar();
                                 </div>
                             </a>   
                             `;
-                        });
+                            });
+                        }
+                        usersList.innerHTML = userListHTML;
                     }
-                    usersList.innerHTML = userListHTML;
+                } else {
+                    console.error("Error fetching chat users: " + xhr.status);
                 }
-            } else {
-                console.error("Error fetching chat users: " + xhr.status);
             }
-            }
-        } 
+        }
         xhr.send();
     }, 500); //this function will run frequently after 500ms
 
-    setInterval(()=>{
-        // console.log("hello world!");
-        // Strating of the Ajax part
-        let xhr = new XMLHttpRequest(); //Creating XML object
-        xhr.open("POST", "counselorChat/chat_messages", true);
-        xhr.onload = ()=>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if(xhr.status === 200){
-                    let data = xhr.response;
-                    chatBox.innerHTML = data;
-                    if(!chatBox.classList.contains("active")){ //if active class is not in chat box then scroll to bottom
-                        scrollToBottom();
-                    }
-                }
-            }
-        } 
-
-        //we have to send the form data through ajax to php
-        let formData = new FormData(form); //Creating new formData object
-        xhr.send(formData); //Sending the form data to php
-    }, 500); //this function will run frequently after 500ms
-
-    // function handleUserClick(event) {
-    //     event.preventDefault();
-    //     let userId = event.currentTarget.getAttribute('user-id');
-    //     console.log(userId);
-
-    //     // Make an AJAX request to fetch chat messages for the selected user
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.open("GET", `counselorChat/chat_messages/${userId}`, true);
+    // setInterval(() => {
+    //     // console.log("hello world!");
+    //     // Strating of the Ajax part
+    //     let xhr = new XMLHttpRequest(); //Creating XML object
+    //     xhr.open("POST", "counselorChat/chat_messages", true);
     //     xhr.onload = () => {
     //         if (xhr.readyState === XMLHttpRequest.DONE) {
     //             if (xhr.status === 200) {
-    //                 let data = JSON.parse(xhr.responseText);
-    //                 // Populate the chat-box with the retrieved messages
+    //                 let data = xhr.response;
     //                 chatBox.innerHTML = data;
-    //                 // Scroll to the bottom of the chat-box
-    //                 scrollToBottom();
-    //             } else {
-    //                 console.error("Error fetching chat messages: " + xhr.status);
+    //                 if (!chatBox.classList.contains("active")) { //if active class is not in chat box then scroll to bottom
+    //                     scrollToBottom();
+    //                 }
     //             }
     //         }
-    //     };
-    //     xhr.send();
-    // }
+    //     }
 
-    // // Attach click event listener to each user
-    // document.querySelectorAll('.users-list a').forEach(user => {
-    //     user.addEventListener('click', handleUserClick);
-    // });
-    function scrollToBottom(){
+    //     //we have to send the form data through ajax to php
+    //     let formData = new FormData(form); //Creating new formData object
+    //     xhr.send(formData); //Sending the form data to php
+    // }, 500); //this function will run frequently after 500ms
+
+    // Function to load chat messages for a specific user
+    function loadChatMessages(userId) {
+        // Make an AJAX request to fetch chat messages for the selected user
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", `counselorChat/chat_messages/${userId}`, true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    // Populate the chat-box with the retrieved messages
+                    chatBox.innerHTML = data;
+                    // Scroll to the bottom of the chat-box
+                    scrollToBottom();
+                } else {
+                    console.error("Error fetching chat messages: " + xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+
+    // var chat_data = document.querySelectorAll(".users-list .user-card");
+
+    // console.log(chat_data);
+
+    setInterval(() => {
+        // Attach click event listener to each user in the users list
+        document.querySelectorAll(".users-list .user-card").forEach(user => {
+
+            
+            console.log(user);
+            user.addEventListener('click', function(event) {
+                // user.on("click", ".decline-request", function(event) {    
+                event.preventDefault();
+                let userId = user.getAttribute('userId');
+                // let userId = $(this).attr("userId");
+                console.log("Selected user ID: " + userId);
+                // Load chat messages for the selected user
+                loadChatMessages(userId);
+            });
+
+        });
+    }, 500);
+
+
+    // Function to periodically update chat messages
+    function updateChatMessages() {
+        // Get the user ID of the currently selected user (if any)
+        let selectedUserId = document.querySelector('.users-list a.active').getAttribute('user-id');
+        // Load chat messages for the selected user
+        loadChatMessages(selectedUserId);
+    }
+
+    // Set interval to update chat messages every 5 seconds (adjust as needed)
+    setInterval(updateChatMessages, 5000);
+
+    function scrollToBottom() {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
