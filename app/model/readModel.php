@@ -583,6 +583,30 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllTimeSlotsByDateRange($id, $startDate, $endDate)
+    {
+        // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE date >= ? AND date <= ?", "ss", [$startDate, $endDate]);4
+        // $query = "SELECT * FROM timeslots WHERE counselor_id = ? AND status != ? AND `date` >= ? AND `date` <= ? AND CONCAT(`date`, ' ', start_time) >= NOW()";
+        $query = "SELECT * FROM timeslots WHERE counselor_id = ? AND status != ? AND `date` >= ? AND `date` <= ? ";
+        $result = $this->db_handle->runQuery($query, "iiss", [$id, 3, $startDate, $endDate]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+    // public function getTimeSlotsByCounselorId($id)
+    // {
+    //     // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
+    //     $query = "SELECT * FROM timeslots WHERE counselor_id = ?  AND status != ?  AND CONCAT(date, ' ', start_time) >= NOW()";
+
+    //     $result = $this->db_handle->runQuery($query, "ii", [$id, 3]);
+
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
+
     public function getAllChatMessages()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM messages WHERE ?", "i", [1]);
@@ -602,7 +626,7 @@ class readModel extends Model
         OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         ORDER BY msg_id
         ";
-        $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id, $incoming_id, $outgoing_id, $incoming_id]);
+        $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id, $incoming_id, $incoming_id, $outgoing_id]);
         if (count($result) > 0)
             return $result;
 
@@ -623,7 +647,7 @@ class readModel extends Model
     public function getTimeSlotsByCounselorId($id)
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE counselor_id = ? AND status != ?", "ii", [$id,  3]);
-        $query = "SELECT * FROM timeslots WHERE counselor_id = ?  AND status != ?  AND date >= CURDATE() AND start_time > CURTIME()";
+        $query = "SELECT * FROM timeslots WHERE counselor_id = ?  AND status != ?  AND CONCAT(date, ' ', start_time) >= NOW()";
 
         $result = $this->db_handle->runQuery($query, "ii", [$id, 3]);
 
@@ -2138,7 +2162,7 @@ class readModel extends Model
             "type" => [
                 "label" => "Type",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
         ];

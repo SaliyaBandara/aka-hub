@@ -19,7 +19,7 @@ $calendar = new CalendarComponent();
                     <h1>Manage Time Slots</h1>
                 </div>
                 <div class="date-range">
-                    <p class="p2">From<input type="date"> to <input type="date"><a href="#" class="button-select">Show</a></p>
+                    <p class="p2">From<input type="date" value=""> to <input type="date"><a href="#" class="button-select">Show</a></p>
                     <p class="p1">Please add your available time slots here</p>
                 </div>
                 <div class="custom-button-div">

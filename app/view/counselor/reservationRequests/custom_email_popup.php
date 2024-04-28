@@ -8,11 +8,16 @@
     <a href="" class="close">&times;</a>
     <div class="content">
         <div class="container">
+            <?php
+                // $user = $data["user"];
+                // print_r($user);
+                // echo($user["email"]);
+            ?>
             
             <form class="form-1">
                 <div class="label-container">
                     <form action="" class="contact-left">
-                        <label for="email">Sends to: <?= $user["email"] ?></label>
+                        <label for="email">Sends to: </label>
                         <textarea name="message" placeholder="Enter message" class="contact-textarea" required></textarea>
                         <div class="input-buttons">
                             <a href="#" class="email send-email">Send Email <i class='bx bx-envelope'></i></a>
@@ -152,7 +157,7 @@
             font-weight: 500;
             border-radius: 10px;
         }
-        .contact-textarea{
+        .popup-form .contact-textarea{
             width: 400px;
             height: 140px;
             border: 1px solid #686868;
