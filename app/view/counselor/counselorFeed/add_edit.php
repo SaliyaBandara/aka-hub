@@ -37,6 +37,11 @@ else{
                 <textarea rows="10" cols="10" id="description" name="description" placeholder="Enter Description" class="form-control"><?= $data["post"]["description"] ?></textarea>
             </div>
 
+            <div class="mb-1 form-group">
+                <label for="description" class="form-label">Add a link if necessary</label>
+                <input type="url" id="link" name="link" placeholder="Paste Link Here" class="form-control" value = "<?= $data["post"]["link"] ?>"></input>
+            </div>
+
             <div class="mb-1">
                 <label for = "post_image" class="form-label">Post Image</label>
                 <p class="text-muted font-14">

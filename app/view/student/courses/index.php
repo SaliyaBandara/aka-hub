@@ -34,17 +34,26 @@ $sidebar = new Sidebar("courses");
                                 <i class='bx <?= $data["iClass"] ?>'></i> <?= $data["buttonValue"] ?>
                             </a>
                         </div>
+                        <div>
+                            <div class="mb-1 form-group me-1 flex flex-row text-center" style = "min-width: 300px !important;" id = "<?=$data["filter"] ?>">
+                                <label for="name" class="form-label text-center justify-center mt-0-5 me-1"><i class='bx bx-search-alt-2' style = "font-size: 22px; color : black;"></i></label>
+                                <input type="text" id="searchBar" name="searchBar" value="" class="form-control" placeholder="Search by Course Name or Code">
+                            </div>
+                        </div>
                     </div>
 
                     <?php
                     if ($data["filter"] == 1) {
                     ?>
-                    <div class="flex flex-row mb-1" style="align-items: last baseline ">
-                        <select id="semester" name="semester" style="width: 20%; " data-validation="required" class="form-control ">
-                            <option value=0>All</option>
-                            <option value=1>Semester 1</option>
-                            <option value=2>Semester 2</option>
-                        </select>
+                    <div class="flex flex-row">
+                        <label for="name" class="form-label text-center justify-center mt-0-5 me-1"><i class='bx bx-filter-alt' style = "font-size: 22px;"></i></label>
+                        <div class="flex flex-row mb-1" style="align-items: last baseline ">
+                            <select id="semester" name="semester"  data-validation="required" class="form-control ">
+                                <option value=0>All</option>
+                                <option value=1>Semester 1</option>
+                                <option value=2>Semester 2</option>
+                            </select>
+                        </div>
                     </div>
                 
 
@@ -336,6 +345,32 @@ $sidebar = new Sidebar("courses");
                     } else {
                         // Handle empty or invalid response
                         alertUser("warning", "No courses found for this semester.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+        $(document).on("keyup", "#searchBar", function() {
+
+            let selectedValue = $("#searchBar").val();
+            var page = $('#searchBar').closest('div').attr('id');
+
+            $.ajax({
+                url: `${BASE_URL}/courses/search`,
+                type: 'post',
+                data: {
+                    searchValue: selectedValue,
+                    page: page
+                },
+                success: function(data) {
+                    if (data) {
+                        $('#courses').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No courses found.");
                     }
                 },
                 error: function(ajaxContext) {

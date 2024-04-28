@@ -15,7 +15,6 @@ else{
     <div class="my-2 mx-2">
         <h3 class="text-muted"><?= $data["id"] == 0 ? "Create New Post" : "Edit Post" ?></h3>
 
-
         <form action="" method="post" class="form">
             <?php
 
@@ -35,6 +34,11 @@ else{
             <div class="mb-1 form-group">
                 <label for="description" class="form-label">Description</label>
                 <textarea rows="10" cols="10" id="description" name="description" placeholder="Enter Description" class="form-control"><?= $data["post"]["description"] ?></textarea>
+            </div>
+
+            <div class="mb-1 form-group">
+                <label for="description" class="form-label">Add a link if necessary</label>
+                <input type="url" id="link" name="link" placeholder="Paste Link Here" class="form-control" value = "<?= $data["post"]["link"] ?>"></input>
             </div>
 
             <div class="mb-1">

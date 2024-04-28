@@ -87,6 +87,16 @@ class readModel extends Model
         return false;
     }
 
+    public function getCoursesBySearch($year,$searchValue)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
 
     public function findWhetherRestricted($id)
     {
@@ -101,6 +111,16 @@ class readModel extends Model
     {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year < ? ", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesBelowYearSearch($year,$searchValue)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -688,7 +708,7 @@ class readModel extends Model
 
     public function getReservationsByStudent($user_id, $counselor_id)
     {
-        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.student_id = ? AND t.counselor_id = ?", "ii", [$user_id, $counselor_id]);
+        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id, r.id as reservation_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.student_id = ? AND t.counselor_id = ? AND (r.status != ? AND r.status != ? AND r.status != ?)", "iiiii", [$user_id, $counselor_id, 2, 4, 5]);
         if (count($result) > 0)
             return $result;
 
@@ -697,7 +717,7 @@ class readModel extends Model
 
     public function getReservationsByStatus($status, $user_id, $counselor_id)
     {
-        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = ? AND r.student_id = ? AND t.counselor_id = ?", "iii", [$status, $user_id, $counselor_id]);
+        $result = $this->db_handle->runQuery("SELECT t.*, r.status as reservation_status, r.timeslot_id as timeslot_id, r.student_id as student_id, r.id as reservation_id FROM reservation_requests r, timeslots t WHERE r.timeslot_id = t.id AND r.status = ? AND r.student_id = ? AND t.counselor_id = ?", "iii", [$status, $user_id, $counselor_id]);
         if (count($result) > 0)
             return $result;
 
@@ -738,6 +758,24 @@ class readModel extends Model
         ", "iii", [0, $counselor_id, $id]);
         if (count($result) > 0)
             return $result[0];
+
+        return false;
+    }
+
+    public function getReservationRequestsByStatus($status,$id)
+    {
+        // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
+        $result = $this->db_handle->runQuery("
+            SELECT r.*, u.name, u.email, u.profile_img, s.year , t.date, t.start_time, t.end_time
+            FROM reservation_requests r
+            JOIN user u ON r.student_id = u.id
+            JOIN student s ON r.student_id = s.id
+            JOIN timeslots t ON r.timeslot_id = t.id
+            WHERE r.status = ?
+            AND t.counselor_id = ?
+        ", "ii", [$status, $id]);
+        if (count($result) > 0)
+            return $result;
 
         return false;
     }
@@ -1071,7 +1109,7 @@ class readModel extends Model
 
     public function getOneCounselor($id)
     {
-        $sql = "SELECT u.*, c.id as counselor_id, c.type as type from user u , counselor c where c.id = u.id AND u.id = ?";
+        $sql = "SELECT u.*, c.id as counselor_id, c.type as type, c.contact as contact from user u , counselor c where c.id = u.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
@@ -1168,10 +1206,34 @@ class readModel extends Model
         return false;
     }
 
+    public function getPostsOfClubsBySearch($searchValue)
+    {
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u , club_representative as cr, clubs as c
+            WHERE p.type = 2 
+            AND p.posted_by = u.id
+            AND p.posted_by = cr.user_id
+            AND cr.club_id = c.id
+            AND c.name LIKE ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "s", ["%$searchValue%"]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getOnePost($post_id)
     {
         $result = $this->db_handle->runQuery("
-        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name, p.link as link,
             (SELECT COUNT(l.id) 
             FROM post_likes l 
             WHERE l.post_id = p.id
@@ -2322,6 +2384,7 @@ class readModel extends Model
         $empty = [
             "title" => "",
             "description" => "",
+            "link" => "",
             "post_image" => "",
             "posted_by" => "",
             "type" => "",
@@ -2337,6 +2400,12 @@ class readModel extends Model
                 "label" => "Description",
                 "type" => "text",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "link" => [
+                "label" => "Link",
+                "type" => "text",
+                "validation" => "",
                 "skip" => true
             ],
             "post_image" => [

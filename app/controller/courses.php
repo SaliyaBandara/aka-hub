@@ -191,6 +191,74 @@ class Courses extends Controller
         }
     }
 
+
+    public function search()
+    {
+
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
+
+        $searchValue = $_POST['searchValue'];
+        $page = $_POST['page'];
+
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+        $year = $data["student"][0]["year"];
+
+        if ($searchValue == "") {
+            if($page == 1)
+                $data["courses"] = $this->model('readModel')->getCoursesByYear($year);
+            else
+                $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
+        } else if($page == 1){
+
+            $data["courses"] = $this->model('readModel')->getCoursesBySearch($year,$searchValue);
+        }
+        else{
+            $data["courses"] = $this->model('readModel')->getCoursesBelowYearSearch($year,$searchValue);
+        }
+
+        $BASE_URL =  BASE_URL;
+
+        if (empty($data["courses"])) {
+            echo "<div class='font-medium text-muted'> No results found! </div>";
+        } else {
+            foreach ($data["courses"] as $course) {
+                echo '
+                        <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                            <div>
+                                <div class="todo_item_date flex align-center justify-center">
+                                    <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
+                                </div>
+                            </div>
+                            <div class="todo_item_text">
+                                <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
+                                <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
+                                <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
+                            </div>
+                ';
+
+                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                    echo '
+                            <div class="todo_item_actions">
+                                <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                <div class="btn delete-item" data-id= ' . $course["id"] . '>
+                                    <i class="bx bx-trash text-danger"></i>
+                                </div>
+                            </div>
+                        ';
+                }
+
+                echo '</div>';
+            }
+        }
+    }
+
     public function view($id = 0)
     {
         $this->requireLogin();
@@ -243,6 +311,7 @@ class Courses extends Controller
         ];
 
         $data["course"] = $this->model('readModel')->getOne("courses", $course_id);
+        $target = $data["course"]["year"];
         if (!$data["course"])
             $this->redirect();
 
@@ -256,8 +325,9 @@ class Courses extends Controller
             $values["course_id"] = $course_id;
             $values["user_id"] = $_SESSION["user_id"];
             // $values["reference_links"] = json_encode($values["reference_links"]);
-            if (isset($values["kuppi_video"]))
+            if (isset($values["kuppi_video"])){
                 $values["video_links"] = json_encode($values["kuppi_video"]);
+            }
             if (isset($values["course_materials"]))
                 $values["short_notes"] = json_encode($values["course_materials"]);
 
@@ -274,8 +344,17 @@ class Courses extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
             }
-            if ($result)
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    $course_name = $data["course"]["name"];
+                    $notif_message = "A new material has been added to the course $course_name";
+                    $this->model('createModel')->notification(4, $id, 0, $values["description"], $notif_message, $target, "/courses/view/$id");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
@@ -356,8 +435,17 @@ class Courses extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("courses", $values, $data["course_template"], "id", $id, "i");
             }
-            if ($result)
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    $course_name = $values["name"];
+                    $notif_message = "A new course : $course_name is added to your year";
+                    $this->model('createModel')->notification(4, $id, 0, $course_name, $notif_message, $values["year"], "/courses/index");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
