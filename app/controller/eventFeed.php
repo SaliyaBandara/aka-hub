@@ -550,7 +550,7 @@ class eventFeed extends Controller
             // }
 
             $values["posted_by"] = $_SESSION["user_id"];
-            $values["post_image"] = $values["post_image"];
+            // $values["post_image"] = $values["post_image"];
             $values["type"] = '2';
             $values["updated_datetime"] = date('Y-m-d H:i:s');
 
@@ -571,8 +571,21 @@ class eventFeed extends Controller
 
                 $result = $this->model('updateModel')->update_one("posts", $values, $data["post_template"], "id", $id, "i");
             }
-            if ($result)
+
+            $club = $this->model('readModel')->getClubRep($values['posted_by']);
+            $club_name = $club[0]["name"];
+            $postTitle = $values["title"];
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    
+                    $notif_message = "The $club_name has posted about $postTitle";
+                    $this->model('createModel')->notification(3, $id, 0, $postTitle, $notif_message, 5, "/eventFeed/index");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Something went wrong")));
         }
@@ -723,10 +736,9 @@ class eventFeed extends Controller
         $values['user_id'] = $_SESSION["user_id"];
         $values['comment'] = $comment;
 
-        // print_r($comment);
-        // die();
-
-        $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+        if($comment != " "){
+            $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+        }
 
         if ($result) {
             $task = "User posted a comment in event feed";

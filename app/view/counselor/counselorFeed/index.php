@@ -503,7 +503,7 @@ else{
         $(document).on("click", ".addCommentButton", function() {
 
             var postId = $(this).attr("id");
-            var comment = $(this).closest(".feedPost").find(".textBox").val();
+            var comment = $(this).closest(".feedPost").find(".textBox").val().trim();
             console.log(comment);
 
             // comment = encodeURIComponent(comment);

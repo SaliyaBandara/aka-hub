@@ -73,7 +73,6 @@ class CounselorFeed extends Controller
             $values = $_POST["add_edit"];
 
             $values["posted_by"] = $_SESSION["user_id"];
-            $values["post_image"] = $values["post_image"];
             $values["type"] = '1';
 
             $this->validate_template($values, $data["post_template"]);
@@ -199,8 +198,9 @@ class CounselorFeed extends Controller
         $values['comment'] = $comment;
 
         // print_r($comment);
-
-        $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+        if($comment != " "){
+            $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+        }
 
         if ($result){
             $action = "Comment posted";
