@@ -104,6 +104,25 @@ class Auth extends Controller
             if (!preg_match($pattern, $data["email"]))
                 die(json_encode(array("status" => "400", "desc" => "Please enter a valid UCSC email")));
 
+            // check if student id is valid
+            $student_id = $data["student_id"];
+            $email = $data["email"];
+
+            $student_id_prefix = substr($student_id, 0, 4);
+            $student_id_lower_case = strtolower(substr($student_id, 5, 2));
+            $student_id_suffix = substr($student_id, 8, 3);
+            $email_prefix = substr($email, 0, 4);
+            $email_lower_case = substr($email, 4, 2);
+            $email_suffix = substr($email, 6, 3);
+
+            if (
+                $email_prefix !== $student_id_prefix ||
+                $email_lower_case !== $student_id_lower_case ||
+                $email_suffix !== $student_id_suffix
+            ) {
+                die(json_encode(array("status" => "400", "desc" => "Email and student ID do not match")));
+            }
+
             $result = $this->model('authModel')->register($data);
             if ($result) {
                 // TODO send email verification

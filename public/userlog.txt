@@ -105,3 +105,35 @@ samanbandara@gmail.com	127.0.0.1	04/28/24 01:51PM	Admin successfully accepted ro
 
 samanbandara@gmail.com	127.0.0.1	04/28/24 02:11PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 02:17PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 02:29PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 02:31PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+Not logged in	127.0.0.1	04/28/24 05:27PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/28/24 05:27PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/28/24 05:28PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/28/24 05:32PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/28/24 05:37PM	User tried to register with an existing email	http://127.0.0.1/aka-hub/auth/registerurl=auth/register	400
+
+2021cs010@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 05:37PM	User Registered with email	http://127.0.0.1/aka-hub/auth/registerurl=auth/register	600
+
+2021cs026@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 06:56PM	User Registered with email	http://127.0.0.1/aka-hub/auth/registerurl=auth/register	600
+
+2021cs199@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 06:57PM	User Registered with email	http://127.0.0.1/aka-hub/auth/registerurl=auth/register	600
+
+Not logged in	127.0.0.1	04/28/24 06:58PM	User tried to register with an existing email	http://127.0.0.1/aka-hub/auth/registerurl=auth/register	400
+
+Not logged in	127.0.0.1	04/28/24 07:01PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/28/24 07:04PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+Not logged in	127.0.0.1	04/28/24 07:06PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 07:07PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
