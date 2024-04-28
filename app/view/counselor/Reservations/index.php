@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("counselorReservations");
-$calendar = new Calendar();
+$calendar = new CalendarComponent();
 // $reservationTable = new reservationTable();
 ?>
 

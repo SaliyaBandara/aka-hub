@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("manageMaterials");
-$calendar = new Calendar();
+$calendar = new CalendarComponent();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">

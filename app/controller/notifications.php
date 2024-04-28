@@ -18,6 +18,7 @@ class Notifications extends Controller
     {
         $this->requireLogin();
         $notifications = $this->model('readModel')->getNotifications();
-        print_r($notifications);
+        die(json_encode(array("status" => "200", "desc" => "Success", "notifications" => $notifications)));
+        // print_r($notifications);
     }
 }

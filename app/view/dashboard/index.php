@@ -2,7 +2,7 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("dashboard");
-$calendar = new Calendar();
+$calendar = new CalendarComponent();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
@@ -166,7 +166,10 @@ $calendar = new Calendar();
             </section>
 
         </div>
-        <div class="right">
+        <div class="right flex flex-column align-end">
+
+            <?= $calendar->render(); ?>
+
             <?php if ($_SESSION["user_role"] === 0 && !($_SESSION["student_rep"] === 1)) { ?>
                 <div class="flex-column justify-center align-center divButtonSection">
                     <div class="title font-1-5 font-bold flex align-center justify-center requestDescription">

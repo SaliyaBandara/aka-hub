@@ -184,9 +184,9 @@ class readModel extends Model
             if (count($notifications) > 0) {
                 foreach ($notifications as $key => $notification) {
                     $url = "";
-                    if ($notification['link'] != "") 
+                    if ($notification['link'] != "")
                         $url = BASE_URL . $notification['link'];
-                    
+
                     $notifications[$key] = [
                         "title" => $notification['title'],
                         "description" => $notification['description'],
@@ -205,7 +205,115 @@ class readModel extends Model
             // print_r($notifications);
         }
 
-        die(json_encode(array("status" => "200", "desc" => "Success", "notifications" => $notifications)));
+        return $notifications;
+    }
+
+    // get calendar events
+    public function getAllPublicEvents()
+    {
+
+        // -- is_broadcast
+        // --     0 - Personal
+        // --     1 - Broadcast
+
+
+        // -- target
+        // --    0 - All
+        // --    5 - All Students
+        // --      1 - Student - 1st Year
+        // --      2 - Student - 2nd Year
+        // --      3 - Student - 3rd Year
+        // --      4 - Student - 4th Year
+        // --    6 - Counsellor
+
+        // CREATE TABLE calendar (
+        //     id INT AUTO_INCREMENT PRIMARY KEY,
+        //     user_id INT DEFAULT NULL,
+        //     is_broadcast TINYINT(1) NOT NULL DEFAULT 0,
+        //     target TINYINT(1) NOT NULL DEFAULT 0,
+        //     title VARCHAR(255) NOT NULL,
+        //     module VARCHAR(255) DEFAULT NULL,
+        //     description TEXT DEFAULT NULL,
+        //     date DATETIME NOT NULL,
+        //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        //     FOREIGN KEY (user_id) REFERENCES user(id)
+        // );
+
+        $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE is_broadcast = ?", "i", [1]);
+        // print_r($events);
+        // die;
+        if (count($events) > 0)
+            return $events;
+    }
+
+    public function getAllCalendarEvents()
+    {
+        $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
+        if (count($events) > 0)
+            return $events;
+
+        return false;
+    }
+
+    public function getUserCalendarEvents($date = "")
+    {
+        $user_id = $_SESSION["user_id"];
+        $user_role = $_SESSION["user_role"];
+        $role = "";
+        if ($user_role == 5)
+            $role = "counselor";
+        else if ($user_role != 1 && $user_role != 3)
+            $role = "student";
+
+        $events = [];
+        if ($role == "student") {
+            $user_year = $_SESSION["year"];
+            // get all notifications for this user by user_id and target
+            $events = $this->db_handle->runQuery(
+                "SELECT * FROM calendar WHERE 
+                    (is_broadcast = ? AND user_id = ?) OR 
+                    (is_broadcast = ? AND (target = ? OR target = ? OR target = ?))
+                    ORDER BY date DESC",
+                "iiiiii",
+                [0, $user_id, 1, 0, $user_year, 5]
+            );
+        } else if ($role == "counselor") {
+            $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE user_id = ? AND is_broadcast = ?", "ii", [$user_id, 0]);
+            // TODO: get counsellor reservations as well
+        }
+
+        if (count($events) > 0) {
+            foreach ($events as $key => $event) {
+                $events[$key] = [
+                    "title" => $event['title'],
+                    // "description" => $event['description'],
+                    "date" => $event['date'],
+                ];
+            }
+        }
+
+        // if date is set, filter events for that date
+        if ($date != "") {
+
+            $timestampSeconds = $date / 1000; // Convert milliseconds to seconds
+            $date = date("Y-m-d", $timestampSeconds);
+
+            if (strtotime($date) === false)
+                return [];
+
+            $date = date("Y-m-d", strtotime($date));
+            $filtered_events = [];
+            foreach ($events as $event) {
+                if (date("Y-m-d", strtotime($event['date'])) == $date)
+                    $filtered_events[] = $event;
+            }
+            $events = $filtered_events;
+        }
+
+        // print_r($events);
+        // die;
+
+        return $events;
     }
 
     // CREATE TABLE elections (
@@ -1348,7 +1456,7 @@ class readModel extends Model
                 }
             }
         }
-        $dataPoints=array_reverse($dataPoints);
+        $dataPoints = array_reverse($dataPoints);
         return $dataPoints;
     }
 
@@ -1767,6 +1875,94 @@ class readModel extends Model
             "template" => $template
         ];
     }
+
+    // -- is_broadcast
+    // --     0 - Personal
+    // --     1 - Broadcast
+
+
+    // -- target
+    // --    0 - All
+    // --    5 - All Students
+    // --      1 - Student - 1st Year
+    // --      2 - Student - 2nd Year
+    // --      3 - Student - 3rd Year
+    // --      4 - Student - 4th Year
+    // --    6 - Counsellor
+
+    // CREATE TABLE calendar (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT DEFAULT NULL,
+    //     is_broadcast TINYINT(1) NOT NULL DEFAULT 0,
+    //     target TINYINT(1) NOT NULL DEFAULT 0,
+    //     title VARCHAR(255) NOT NULL,
+    //     module VARCHAR(255) DEFAULT NULL,
+    //     description TEXT DEFAULT NULL,
+    //     date DATETIME NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    public function getEmptyCalendarEvent()
+    {
+        $empty = [
+            "user_id" => "",
+            "is_broadcast" => "",
+            "target" => "",
+            "title" => "",
+            "module" => "",
+            "description" => "",
+            "date" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "is_broadcast" => [
+                "label" => "Broadcast",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "target" => [
+                "label" => "Target",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "title" => [
+                "label" => "Title",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "module" => [
+                "label" => "Module Name (Optional)",
+                "type" => "text",
+                "validation" => ""
+            ],
+            "description" => [
+                "label" => "Description (Optional)",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "date" => [
+                "label" => "Date",
+                "type" => "datetime-local",
+                "validation" => "required"
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
 
     /**
      * User Model

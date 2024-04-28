@@ -218,11 +218,151 @@ function updateNotifications() {
     });
 }
 
+let calendar_events = [];
+
+const daysTag = document.querySelector(".days");
+const currentDate = document.querySelector(".current-date");
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const renderCalendar = () => {
+    const date = new Date(currYear, currMonth, 1);
+    let firstDayofMonth = date.getDay();
+    let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate();
+    let lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay();
+    let lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
+
+    let liTag = "";
+
+    for (let i = firstDayofMonth; i > 0; i--) {
+        let eventClass = checkEvent(new Date(currYear, currMonth - 1, lastDateofLastMonth - i + 1), "inactive");
+        // console.log(lastDateofLastMonth - i + 1);
+        temp = lastDateofLastMonth - i + 1
+        // console.log(new Date(currYear, currMonth - 1, temp));
+        // console.log(new Date(2024, 3, 31));
+        // console.log(currYear, currMonth, lastDateofLastMonth - i + 1);
+        // liTag += `<li class="inactive ${eventClass}">${lastDateofLastMonth - i + 1}</li>`;
+        liTag += `<li class="inactive ${eventClass[0]}"><span>${lastDateofLastMonth - i + 1}</span>${eventClass[1]}</li>`;
+    }
+
+    for (let i = 1; i <= lastDateofMonth; i++) {
+        let isToday = i === new Date().getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
+        let eventClass = checkEvent(new Date(currYear, currMonth, i), "active");
+        // liTag += `<li class="${isToday} ${eventClass}">${i}</li>`;
+        liTag += `<li class="${isToday} ${eventClass[0]}"><span>${i}</span>${eventClass[1]}</li>`;
+    }
+
+    for (let i = lastDayofMonth; i < 6; i++) {
+        let eventClass = checkEvent(new Date(currYear, currMonth + 1, i - lastDayofMonth + 1), "inactive");
+        // liTag += `<li class="inactive ${eventClass}">${i - lastDayofMonth + 1}</li>`;
+        liTag += `<li class="inactive ${eventClass[0]}"><span>${i - lastDayofMonth + 1}</span>${eventClass[1]}</li>`;
+    }
+
+    currentDate.innerText = `${months[currMonth]} ${currYear}`;
+    daysTag.innerHTML = liTag;
+};
+
+let popover_wrapper_template = `<div class="popover-wrapper" data-link='{{date}}'>
+        <div class="title">{{date}} events</div><div class="event_list">{{popovers_list}}</div></div>`;
+let popover_template = `<div class="popover" role="tooltip">{{content}}</div>`;
+const checkEvent = (date, isActive) => {
+    let return_class = "";
+    // console.log(date);
+    let popovers = "";
+    for (let event of calendar_events) {
+        let eventDate = new Date(event.date);
+        if (eventDate.getFullYear() === date.getFullYear() && eventDate.getMonth() === date.getMonth() && eventDate.getDate() === date.getDate()) {
+            // set popover content by replacing {{content}} with event.description
+            popovers += popover_template.replace("{{content}}", event.title);
+            return_class = isActive === "active" ? "active-event" : "inactive-event";
+        }
+    }
+
+    if (popovers != "") {
+        let date_str = new Date(date);
+        let formattedDate = date_str.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
+        popover_wrapper  = popover_wrapper_template.replace("{{date}}", Date.parse(date_str));
+        popover_wrapper  = popover_wrapper.replace("{{date}}", formattedDate);
+        return [return_class, popover_wrapper.replace("{{popovers_list}}", popovers)];
+    }
+
+    return [return_class, ""];
+
+    // return "";
+};
+
+
+let currYear = new Date().getFullYear();
+let currMonth = new Date().getMonth();
+let calendar_active = false;
+function updateCalendarEvents() {
+    if (typeof BASE_URL === 'undefined')
+        return;
+
+    console.log("Updating calendar events")
+
+    $.ajax({
+        url: BASE_URL + '/calendar/get_events',
+        type: 'post',
+        data: {
+            "get_events": "true"
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response['status'] == 200) {
+                // console.log(response['events']);
+
+                if (calendar_active == false)
+                    return;
+
+                calendar_events = response['events'];
+                renderCalendar();
+            } else if (response['status'] == 403)
+                alertUser("danger", response['desc'])
+            else
+                alertUser("warning", response['desc'])
+        },
+        error: function (ajaxContext) {
+            alertUser("danger", "Error on retrieving calendar events")
+        }
+    });
+}
+
 $(document).ready(function () {
 
     // update notifications for every 5 seconds
     updateNotifications();
     setInterval(updateNotifications, 5000);
+
+    // check if .calendar-wrapper exists
+    if ($(".calendar-wrapper").length > 0) {
+        calendar_active = true;
+
+        const prevNextIcon = document.querySelectorAll(".icons span");
+
+        renderCalendar();
+
+        prevNextIcon.forEach(icon => {
+            icon.addEventListener("click", () => {
+                currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+                console.log(currMonth);
+
+                if (currMonth < 0 || currMonth > 11) {
+                    currYear = icon.id === "prev" ? currYear - 1 : currYear + 1;
+                    currMonth = currMonth < 0 ? 11 : 0;
+                }
+
+                renderCalendar();
+            });
+        });
+
+        updateCalendarEvents();
+        // setInterval(updateCalendarEvents, 10000);
+    }
+
+    // on click popover-wrapper
+    $(document).on("click", ".popover-wrapper", function () {
+        let date = $(this).attr("data-link");
+        window.location.href = BASE_URL + "/calendar/view/" + date;
+    });
 
     // sidebar menu
     $("#check").change(function () {

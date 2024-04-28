@@ -70,6 +70,7 @@ class Sidebar
                 $studentrepPages = [
                     'approveTeachingStudents' => ['Teaching Students', 'bxs-pen'],
                     'manageMaterials' => ['Manage Materials', 'bxs-book'],
+                    'calendar' => ['Calendar', 'bxs-calendar-star'],
                 ];
                 $pages = array_merge($pages, $studentrepPages);
             }

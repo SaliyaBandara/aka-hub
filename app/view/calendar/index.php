@@ -1,7 +1,7 @@
 <?php
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
-$sidebar = new Sidebar("elections");
+$sidebar = new Sidebar("calendar");
 $calendar = new CalendarComponent();
 ?>
 
@@ -15,27 +15,43 @@ $calendar = new CalendarComponent();
             <section>
 
                 <div class="mb-1 form-group">
-                    <a href="<?= BASE_URL ?>/elections/add_edit/0/create" class="btn btn-primary">
-                        <i class='bx bx-plus'></i> Add Election
+                    <a href="<?= BASE_URL ?>/calendar/add_edit/0/" class="btn btn-primary">
+                        <i class='bx bx-plus'></i> Add Calendar Event
                     </a>
                 </div>
 
                 <div class="section_header mb-1 flex">
                     <div class="title font-1-5 font-semibold flex align-center">
-                        <i class='bx bxs-calendar-check me-0-5'></i> Elections List
+                        <i class='bx bxs-calendar-check me-0-5'></i> Calendar Events List
                     </div>
                 </div>
 
                 <?php
-                // CREATE TABLE elections (
+                // -- calendar table
+
+                // -- is_broadcast
+                // --     0 - Personal
+                // --     1 - Broadcast
+
+                // -- target
+                // --    0 - All
+                // --    5 - All Students
+                // --      1 - Student - 1st Year
+                // --      2 - Student - 2nd Year
+                // --      3 - Student - 3rd Year
+                // --      4 - Student - 4th Year
+                // --    6 - Counsellor
+
+                // CREATE TABLE calendar (
                 //     id INT AUTO_INCREMENT PRIMARY KEY,
-                //     user_id INT NOT NULL,
-                //     name VARCHAR(255) NOT NULL,
-                //     start_date DATETIME NOT NULL,
-                //     end_date DATETIME NOT NULL,
-                //     cover_img VARCHAR(255) DEFAULT NULL,
+                //     user_id INT DEFAULT NULL,
+                //     is_broadcast TINYINT(1) NOT NULL DEFAULT 0,
+                //     target TINYINT(1) NOT NULL DEFAULT 0,
+                //     title VARCHAR(255) NOT NULL,
+                //     module VARCHAR(255) DEFAULT NULL,
+                //     description TEXT DEFAULT NULL,
+                //     date DATETIME NOT NULL,
                 //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 //     FOREIGN KEY (user_id) REFERENCES user(id)
                 // );
                 ?>
@@ -46,11 +62,11 @@ $calendar = new CalendarComponent();
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Cover Image</th>
-                                    <th>Action</th>
+                                    <th>Title</th>
+                                    <th>Module</th>
+                                    <th>Date</th>
+                                    <th>Target</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,26 +75,25 @@ $calendar = new CalendarComponent();
 
                                 if (isset($data["items"]) && is_array($data["items"])) {
                                     $i = 1;
-                                    foreach ($data["items"] as $election) {
-                                        $election["start_date"] = date("d M Y H:i", strtotime($election["start_date"]));
-                                        $election["end_date"] = date("d M Y H:i", strtotime($election["end_date"]));
+                                    foreach ($data["items"] as $event) {
+                                        $event["date"] = date("d M Y H:i", strtotime($event["date"]));
+                                        $target = $event["target"];
+                                        if ($event["target"] > 0 && $event["target"] < 5)
+                                            $target = $target . ['th', 'st', 'nd', 'rd', "th"][$target] . " Year";
+                                        if ($event["target"] == 5) $target = "All Students";
+
                                 ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
-                                            <td><?= $election["name"] ?></td>
-                                            <td><?= $election["start_date"] ?></td>
-                                            <td><?= $election["end_date"] ?></td>
-                                            <td>
-                                                <div class='table-img-preview preview-img preview-img-small' data-filename='<?= $election["cover_img"] ?>' data-fancybox='group' href='<?= USER_IMG_PATH . $election["cover_img"] ?>'>
-                                                    <img src='<?= USER_IMG_PATH . $election["cover_img"] ?>' class='' alt='..'>
-                                                </div>
-                                            </td>
+                                            <td><?= $event["title"] ?></td>
+                                            <td><?= $event["module"] ?></td>
+                                            <td><?= $event["date"] ?></td>
+                                            <td><?= $target ?></td>
                                             <td>
                                                 <div class="action-list">
-                                                    <a title="View Election" class="dropdown-item text-secondary" href="<?= BASE_URL ?>/elections/view/<?= $election["id"] ?>"><i class='bx bx-show'></i></a>
-                                                    <a title="Modify Election" class="dropdown-item text-muted" href="<?= BASE_URL ?>/elections/modify/<?= $election["id"] ?>"><i class='bx bx-cog'></i></a>
-                                                    <a title="Edit Election" class="dropdown-item" href="<?= BASE_URL ?>/elections/add_edit/<?= $election["id"] ?>/edit"><i class='bx bx-edit'></i></a>
-                                                    <a title="Delete Election" class="dropdown-item delete-item text-danger" data-id="<?= $election["id"] ?>" href="javascript: void(0);"><i class='bx bx-trash'></i></a>
+                                                    <a title="View Event" class="dropdown-item text-secondary" href="<?= BASE_URL ?>/elections/view/<?= $event["id"] ?>"><i class='bx bx-show'></i></a>
+                                                    <a title="Edit Event" class="dropdown-item" href="<?= BASE_URL ?>/calendar/add_edit/<?= $event["id"] ?>/edit"><i class='bx bx-edit'></i></a>
+                                                    <a title="Delete Event" class="dropdown-item delete-item text-danger" data-id="<?= $event["id"] ?>" href="javascript: void(0);"><i class='bx bx-trash'></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -165,7 +180,6 @@ $calendar = new CalendarComponent();
                 },
             });
 
-
             $(document).on("click", ".delete-item", function() {
                 let id = $(this).attr("data-id");
                 let $this = $(this);
@@ -175,7 +189,7 @@ $calendar = new CalendarComponent();
                     return;
 
                 $.ajax({
-                    url: `${BASE_URL}/elections/delete/${id}`,
+                    url: `${BASE_URL}/calendar/delete/${id}`,
                     type: 'post',
                     data: {
                         delete: true
