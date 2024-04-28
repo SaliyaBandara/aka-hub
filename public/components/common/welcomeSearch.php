@@ -65,8 +65,8 @@ class WelcomeSearch
                                 <img src="<?= USER_IMG_PATH ?><?= $_SESSION["user_img"] ?>" alt="student profile image">
                             </div>
                             <?php
-                            $dashboardController = "";
-                            $profile = "";
+                            $dashboardController = "dashboard";
+                            $profile = "studentProfile";
                             if (($_SESSION["user_role"]) == 1) {
                                 $dashboardController = "adminpanel";
                                 $profile = "adminProfileAndSettings";
@@ -79,8 +79,8 @@ class WelcomeSearch
                             } ?>
                             <div class="list__wrapper">
                                 <ul>
-                                    <li><a href="<?= BASE_URL ?><?php $dashboardController ?>">Dashboard</a></li>
-                                    <li><a href="<?= BASE_URL ?><?php $profile ?>">Profile</a></li>
+                                    <li><a href="<?= BASE_URL . "/" . $dashboardController ?>">Dashboard</a></li>
+                                    <li><a href="<?= BASE_URL . "/" . $profile ?>">Profile</a></li>
                                     <li><a href="<?= BASE_URL ?>/logout">Logout</a></li>
                                 </ul>
                             </div>
@@ -184,11 +184,12 @@ class WelcomeSearch
                             background: #f5f5f5;
                         }
 
-                        .notification-bell .notif-icon{
+                        .notification-bell .notif-icon {
                             margin-right: 0.5rem;
                             display: none;
                         }
-                        .notification-bell .notif-icon i{
+
+                        .notification-bell .notif-icon i {
                             font-size: var(--rv-1);
                         }
 
