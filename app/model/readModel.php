@@ -1070,7 +1070,7 @@ class readModel extends Model
 
     public function getOneCounselor($id)
     {
-        $sql = "SELECT u.*, c.id as counselor_id, c.type as type from user u , counselor c where c.id = u.id AND u.id = ?";
+        $sql = "SELECT u.*, c.id as counselor_id, c.type as type, c.contact as contact from user u , counselor c where c.id = u.id AND u.id = ?";
         $result = $this->db_handle->runQuery($sql, "i", [$id]);
         if (count($result) > 0)
             return $result;
