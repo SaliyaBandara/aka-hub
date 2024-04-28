@@ -8,11 +8,6 @@
     <a href="" class="close">&times;</a>
     <div class="content">
         <div class="container">
-            <?php
-                // $user = $data["user"];
-                // print_r($user);
-                // echo($user["email"]);
-            ?>
             
             <form class="form-1">
                 <div class="label-container">
@@ -157,7 +152,7 @@
             font-weight: 500;
             border-radius: 10px;
         }
-        .popup-form .contact-textarea{
+        .contact-textarea{
             width: 400px;
             height: 140px;
             border: 1px solid #686868;
