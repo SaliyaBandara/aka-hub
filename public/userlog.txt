@@ -73,3 +73,35 @@ kasunsilva@gmail.com	::1	04/26/24 11:28PM	Post updated by counselor	http://local
 2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/27/24 07:15PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
 
+2021cs201@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 09:49AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs002@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 09:50AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 09:51AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 09:57AM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 12:50PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 12:50PM	deleted a specific counselor	http://127.0.0.1/aka-hub/existingCounselors/delete/61url=existingCounselors/delete/61	200
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 01:07PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 01:41PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 01:51PM	User requested to be a role	http://127.0.0.1/aka-hub/Courses/clickToBeRole/student_repurl=Courses/clickToBeRole/student_rep	200
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 01:51PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 01:51PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/66/student_repurl=approveRepresentatives/acceptRole/66/student_rep	606
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 01:52PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs021@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 01:56PM	User Registered with email	http://127.0.0.1/aka-hub/auth/registerurl=auth/register	600
+
+2021cs021@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 01:57PM	Student profile edited	http://127.0.0.1/aka-hub/studentProfile/add_edit/70url=studentProfile/add_edit/70	200
+
+2021cs021@stu.ucsc.cmb.ac.lk	127.0.0.1	04/28/24 02:09PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/28/24 02:11PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+

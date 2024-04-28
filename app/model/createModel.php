@@ -151,6 +151,9 @@ class createModel extends Model
             4 - Materials
             5 - Election
             6 - Counsellor Reservations - High Priority (Ignore Preference)
+            7 - Promotion in Role
+            8 - Demotion in Role
+            9 - 401 Unauthorized Attempt
         */
 
         // -- notifications table
