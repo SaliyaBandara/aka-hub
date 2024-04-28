@@ -311,6 +311,7 @@ class Courses extends Controller
         ];
 
         $data["course"] = $this->model('readModel')->getOne("courses", $course_id);
+        $target = $data["course"]["year"];
         if (!$data["course"])
             $this->redirect();
 
@@ -343,8 +344,17 @@ class Courses extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
             }
-            if ($result)
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    $course_name = $data["course"]["name"];
+                    $notif_message = "A new material has been added to the course $course_name";
+                    $this->model('createModel')->notification(4, $id, 0, $values["description"], $notif_message, $target, "/courses/view/$id");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
@@ -425,8 +435,17 @@ class Courses extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("courses", $values, $data["course_template"], "id", $id, "i");
             }
-            if ($result)
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    $course_name = $values["name"];
+                    $notif_message = "A new course : $course_name is added to your year";
+                    $this->model('createModel')->notification(4, $id, 0, $course_name, $notif_message, $values["year"], "/courses/index");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }

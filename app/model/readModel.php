@@ -90,7 +90,7 @@ class readModel extends Model
     public function getCoursesBySearch($year,$searchValue)
     {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND name LIKE ? OR code LIKE ?", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -120,7 +120,7 @@ class readModel extends Model
     public function getCoursesBelowYearSearch($year,$searchValue)
     {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND name LIKE ? OR code LIKE ?", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
