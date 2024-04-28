@@ -19,7 +19,7 @@ class counselorSettings extends Controller
 
         $user_id = $_SESSION['user_id'];
 
-        $data["admin_details"] = $this->model("readModel")->getOneCounselor($user_id);
+        $data["counselor_details"] = $this->model("readModel")->getOneCounselor($user_id);
         $this->view->render('counselor/settings/index', $data);
     }
 

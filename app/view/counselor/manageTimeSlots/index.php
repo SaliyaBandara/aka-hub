@@ -177,82 +177,82 @@ $calendar = new CalendarComponent();
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
 <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     // Get references to the elements
-    //     var startDateInput = document.querySelector('.date-range input[type="date"]:first-child');
-    //     var endDateInput = document.querySelector('.date-range input[type="date"]:last-child');
-    //     var manageTimeSlotsButton = document.querySelector('.filter-dates');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the elements
+        var startDateInput = document.querySelector('.date-range input[type="date"]:first-child');
+        var endDateInput = document.querySelector('.date-range input[type="date"]:last-child');
+        var manageTimeSlotsButton = document.querySelector('.filter-dates');
 
-    //     // Disable the button initially
-    //     manageTimeSlotsButton.disabled = true;
+        // Disable the button initially
+        manageTimeSlotsButton.disabled = true;
 
-    //     // Function to check if both dates are selected
-    //     function checkDatesSelected() {
-    //         return startDateInput.value && endDateInput.value;
-    //     }
+        // Function to check if both dates are selected
+        function checkDatesSelected() {
+            return startDateInput.value && endDateInput.value;
+        }
 
-    //     // // Function to handle button click
-    //     // function handleManageTimeSlotsClick(event) {
-    //     //     event.preventDefault();
+        // Function to handle button click
+        function handleManageTimeSlotsClick(event) {
+            event.preventDefault();
 
-    //     //     // Redirect only if both dates are selected
-    //     //     if (checkDatesSelected()) {
-    //     //         var startDate = startDateInput.value;
-    //     //         var endDate = endDateInput.value;
+            // Redirect only if both dates are selected
+            if (checkDatesSelected()) {
+                var startDate = startDateInput.value;
+                var endDate = endDateInput.value;
 
-    //     //         // Redirect to the "manageTimeSlots/addTimeSlots" page with dates as parameters
-    //     //         window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
-    //     //     }
-    //     // }
+                // Redirect to the "manageTimeSlots/addTimeSlots" page with dates as parameters
+                window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+            }
+        }
 
-    //     // // Event listeners
-    //     // startDateInput.addEventListener('change', function() {
-    //     //     manageTimeSlotsButton.disabled = !checkDatesSelected();
-    //     // });
+        // Event listeners
+        startDateInput.addEventListener('change', function() {
+            manageTimeSlotsButton.disabled = !checkDatesSelected();
+        });
 
-    //     // endDateInput.addEventListener('change', function() {
-    //     //     manageTimeSlotsButton.disabled = !checkDatesSelected();
-    //     // });
+        endDateInput.addEventListener('change', function() {
+            manageTimeSlotsButton.disabled = !checkDatesSelected();
+        });
 
-    //     // // manageTimeSlotsButton.addEventListener('click', handleManageTimeSlotsClick);
+        // manageTimeSlotsButton.addEventListener('click', handleManageTimeSlotsClick);
 
-    //     var filterDates = document.querySelectorAll('.filter-dates');
+        var filterDates = document.querySelectorAll('.filter-dates');
 
         
 
-    //     filterDates.forEach(function(button) {
-    //         // button.addEventListener('click', function(event) {
-    //         button.addEventListener('click', function(event) {    
-    //             event.preventDefault();
-    //             // Redirect only if both dates are selected
-    //             if (checkDatesSelected()) {
-    //                 var startDate = startDateInput.value;
-    //                 var endDate = endDateInput.value;
+        filterDates.forEach(function(button) {
+            // button.addEventListener('click', function(event) {
+            button.addEventListener('click', function(event) {    
+                event.preventDefault();
+                // Redirect only if both dates are selected
+                if (checkDatesSelected()) {
+                    var startDate = startDateInput.value;
+                    var endDate = endDateInput.value;
 
-    //                 // Redirect to the "manageTimeSlots/addTimeSlots" page with dates as parameters
-    //                 // window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
-    //             }
-    //             startDateInput.addEventListener('change', function() {
-    //                 manageTimeSlotsButton.disabled = !checkDatesSelected();
-    //             });
+                    // Redirect to the "manageTimeSlots/addTimeSlots" page with dates as parameters
+                    // window.location.href = BASE_URL + '/manageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+                }
+                startDateInput.addEventListener('change', function() {
+                    manageTimeSlotsButton.disabled = !checkDatesSelected();
+                });
 
-    //             endDateInput.addEventListener('change', function() {
-    //                 manageTimeSlotsButton.disabled = !checkDatesSelected();
-    //             });
+                endDateInput.addEventListener('change', function() {
+                    manageTimeSlotsButton.disabled = !checkDatesSelected();
+                });
 
-    //             // var user_id = button.getAttribute('user-id');
-    //             // console.log(startDateInput);
-    //             var xhr = new XMLHttpRequest();
-    //             xhr.open('GET', BASE_URL + `/counselorManageTimeSlots/filterDates/${endDate}/${endDate}`, true);
-    //             xhr.onreadystatechange = function() {
-    //                 if (xhr.readyState == 4 && xhr.status == 200) {
-    //                     window.location.href = BASE_URL + '/counselorManageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
-    //                 }
-    //             };
-    //             xhr.send();
-    //         });
-    //     });
-    // });  
+                // var user_id = button.getAttribute('user-id');
+                // console.log(startDateInput);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', BASE_URL + `/counselorManageTimeSlots/filterDates/${endDate}/${endDate}`, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        window.location.href = BASE_URL + '/counselorManageTimeSlots/addTimeSlots?start_date=' + startDate + '&end_date=' + endDate;
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });  
     
     // $(document).on("click", ".filter-dates", function() {
     //     let startDate = $(this).attr("data-id");
@@ -282,36 +282,39 @@ $calendar = new CalendarComponent();
     //     });
     // });  
 
-    $(document).on("click", ".filter-dates", function() {
-        let startDate = $(".start_date").val();
-        let endDate = $(".end_date").val();
 
-        $.ajax({
-            url: `${BASE_URL}/counselorManageTimeSlots/addTimeSlots/${startDate}/${endDate}`,
-            type: 'post',
-            data: {
-                startDate: startDate,
-                endDate: endDate
-            },
-            dataType: 'json',
+    //this is the working one
+
+    // $(document).on("click", ".filter-dates", function() {
+    //     let startDate = $(".start_date").val();
+    //     let endDate = $(".end_date").val();
+
+    //     $.ajax({
+    //         url: `${BASE_URL}/counselorManageTimeSlots/filterDates/${startDate}/${endDate}`,
+    //         type: 'post',
+    //         data: {
+    //             startDate: startDate,
+    //             endDate: endDate
+    //         },
+    //         dataType: 'json',
             
-            success: function(response) {
-                if (response.status === 200) {
-                    alertUser("success", response.desc);
-                    // // Load the time slots page with passing start date and end date
-                    // window.location.href = `${BASE_URL}/counselorManageTimeSlots/addTimeSlots?start_date=${startDate}&end_date=${endDate}`;
+    //         success: function(response) {
+    //             if (response.status === 200) {
+    //                 alertUser("success", response.desc);
+    //                 // // Load the time slots page with passing start date and end date
+    //                 // window.location.href = `${BASE_URL}/counselorManageTimeSlots/addTimeSlots?start_date=${startDate}&end_date=${endDate}`;
                    
-                    window.location.href = `${BASE_URL}/counselorManageTimeSlots/addTimeSlots/${startDate}/${endDate}`;
+    //                 window.location.href = `${BASE_URL}/counselorManageTimeSlots/filterDates/${startDate}/${endDate}`;
                     
-                } else if (response.status === 403) {
-                    alertUser("danger", response.desc);
-                } else {
-                    alertUser("warning", response.desc);
-                }
-            },
-            error: function(ajaxContext) {
-                alertUser("danger", "Something Went Wrong");
-            }
-        });
-    });
+    //             } else if (response.status === 403) {
+    //                 alertUser("danger", response.desc);
+    //             } else {
+    //                 alertUser("warning", response.desc);
+    //             }
+    //         },
+    //         error: function(ajaxContext) {
+    //             alertUser("danger", "Something Went Wrong");
+    //         }
+    //     });
+    // });
 </script>
