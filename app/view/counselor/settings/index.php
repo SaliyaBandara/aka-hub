@@ -2,14 +2,16 @@
 $HTMLHead = new HTMLHead($data['title']);
 // $header = new header();
 $sidebar = new Sidebar("counselorSettings");
+
 ?>
 
 
 <div id="sidebar-active" class="hideScrollbar">
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <?php
-    if ($data["admin_details"]) {
-        $userDetails = $data["admin_details"][0];
+    
+    if ($data["counselor_details"]) {
+        $userDetails = $data["counselor_details"][0];
     }
     ?>
 

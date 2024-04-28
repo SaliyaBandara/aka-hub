@@ -131,6 +131,52 @@ class CounselorView extends Controller
         $this->view->render('student/counselor/viewBookings', $data);
     }
 
+    public function cancelledReservation($id)
+    {
+        $this->requireLogin();
+        // if (($_SESSION["user_role"] != 5))
+        //     $this->redirect();
+
+        $data["reservation_data"] = $this->model('readModel')->getEmptyReservation();
+        $data["reservation"] = $data["reservation_data"]["empty"];
+        $data["reservation_template"] = $data["reservation_data"]["template"];
+
+        $data["values"] = $this->model('readModel')->getOne("reservation_requests", $id);
+        if($data["values"] == null) 
+            die(json_encode(["status" => 400, "desc" => "Reservation not found."]));
+
+        $timeslot_id = $data["values"]["timeslot_id"];
+
+        $data["timeslot_data"] = $this->model('readModel')->getEmptyTimeSlot();
+        $data["timeslot"] = $data["timeslot_data"]["empty"];
+        $data["timeslot_template"] = $data["timeslot_data"]["template"];
+
+        $data["timeslotValues"] = $this->model('readModel')->getOne("timeslots", $timeslot_id);
+        if($data["timeslotValues"] == null) 
+            die(json_encode(["status" => 400, "desc" => "Time Slot not found."]));
+
+        //status = 0 => created
+        //status = 1 => accepted
+        //status = 2 => declined
+        //status = 3 => accepted and completed
+        //status = 4 => accepted and canceled 
+        //status = 5 => canceled by the student  
+     
+        $data["values"]["status"] = 5;
+
+        $result = $this->model('updateModel')->update_one("reservation_requests", $data["values"], $data["reservation_template"], "id", $id, "i");
+
+        $data["timeslotValues"]["status"] = 1;
+
+        $result1 = $this->model('updateModel')->update_one("timeslots", $data["timeslotValues"], $data["timeslot_template"], "id", $timeslot_id, "i");
+
+        if ($result && $result1) {
+            die(json_encode(["status" => 200, "desc" => "Reservation Cancelled."]));
+        } else {
+            die(json_encode(["status" => 400, "desc" => "Error cancelling Reservation."]));
+        } 
+    }
+
     public function filter(){
 
         $this->requireLogin();
@@ -163,8 +209,8 @@ class CounselorView extends Controller
             echo "<div class='font-meidum text-muted'> No reservations found! </div>";
         }
         else{
-            foreach ($data["reservations"] as $reservation) {     
-
+            foreach ($data["reservations"] as $reservation) { 
+                
                         if($reservation["reservation_status"] == 1){
                             $class = "primary";
                             $button = "Accepted";
@@ -199,7 +245,7 @@ class CounselorView extends Controller
                                     echo'
                                         <div class="buttons flex flex-column" style = "width: 30%; margin: 0 !important;">
                                             <div href="#" class=" btn btn-'.$class.' mb-1 form form-group justify-center align-center text-center" style = "max-width: 120px !important;">'.$button.'</div>
-                                            <div href="#" class=" btn btn-danger form form-group justify-center align-center text-center" style = "max-width: 120px !important;">Cancel</div>
+                                            <div href="#" class=" btn btn-danger form form-group justify-center align-center text-center button-cancel" style = "max-width: 120px !important;" data-id='.$reservation["reservation_id"].'>Cancel</div>
                                         </div>';
                                 }
                         echo '</div>'; 
