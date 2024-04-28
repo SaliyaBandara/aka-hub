@@ -170,7 +170,8 @@ class readModel extends Model
         $notifications = [];
 
         if ($role == "student") {
-            $user_year = $_SESSION["year"];
+
+            $user_year = $this->db_handle->runQuery("SELECT year FROM student WHERE id = ?", "i", [$user_id])[0]['year'];
             // get all notifications for this user by user_id and target
             $notifications = $this->db_handle->runQuery(
                 "SELECT * FROM notifications WHERE 
@@ -267,7 +268,7 @@ class readModel extends Model
 
         $events = [];
         if ($role == "student") {
-            $user_year = $_SESSION["year"];
+            $user_year = $this->db_handle->runQuery("SELECT year FROM student WHERE id = ?", "i", [$user_id])[0]['year'];
             // get all notifications for this user by user_id and target
             $events = $this->db_handle->runQuery(
                 "SELECT * FROM calendar WHERE 
