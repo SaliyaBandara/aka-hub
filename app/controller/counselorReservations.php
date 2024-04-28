@@ -30,8 +30,8 @@ class counselorReservations extends Controller
      
         if ($id != 0) {
             $data["user"] = $this->model('readModel')->getOne("user", $id);
-            if (!$data["user"])
-                $this->redirect();
+            // if (!$data["user"])
+            //     $this->redirect();
         }
 
         $this->view->render('counselor/Reservations/custom_email_popup', $data); 
@@ -96,6 +96,7 @@ class counselorReservations extends Controller
         //status = 2 => declined
         //status = 3 => accepted and completed
         //status = 4 => accepted and canceled   
+        //status = 5 => canceled by student
      
         $data["values"]["status"] = 4;
 
@@ -106,4 +107,106 @@ class counselorReservations extends Controller
             die(json_encode(["status" => 400, "desc" => "Error cancelling Reservation."]));
         } 
     }
+
+    public function filter(){
+
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $status = $_POST['status'];
+        $counselor_id = $_SESSION["user_id"];
+
+        if($status == 1){
+            $data["reservation_requests"] = $this->model('readModel')->getReservationRequestsByStatus(1,$counselor_id);
+        }
+        else if($status == 3){
+            $data["reservation_requests"] = $this->model('readModel')->getReservationRequestsByStatus(3,$counselor_id);
+        }
+        else if($status == 4){
+            $data["reservation_requests"] = $this->model('readModel')->getReservationRequestsByStatus(4,$counselor_id);
+            // print_r($data["reservations"]);
+        }
+        else if($status == 5){
+            $data["reservation_requests"] = $this->model('readModel')->getReservationRequestsByStatus(5,$counselor_id);
+        }
+
+        // print_r($data["reservation_requests"]);
+        // die;
+        // $BASE_URL =  BASE_URL ;
+
+        if(empty($data["reservation_requests"])){
+            echo "<div class='font-meidum text-muted'> No reservations found! </div>";
+        }
+        else{
+            foreach ($data["reservation_requests"] as $reservation) {    
+                        
+                $img_src = USER_IMG_PATH . $reservation["profile_img"]; 
+                $class1 = 'bx bxs-user-check';
+                $class2 = "bx bxs-user-x";
+
+                       echo '<div class="card-content">
+                                <div class="card">
+                                    <div class="image-content">
+                                        <span class="overlay1"></span>
+
+                                        <div class="card-image">
+                                            <img src="'. $img_src.'" alt="" class="card-img">
+                                        </div>
+                                    </div>';
+
+                                    if($reservation["status"] == 3){
+                                        echo'
+                                        <div class="card-content">
+                                        <h2 class="name">'. $reservation["name"].'</h2>
+                                        <label class="description">Date: '. date("Y.m.d", strtotime($reservation["date"])) .'</label>
+                                        <label class="description">Time Slot: '.date("H:i", strtotime($reservation["start_time"])) .' to '. date("H:i", strtotime($reservation["end_time"])) .'</label>
+                                        <label class="description">Email: '. $reservation["email"].' </label>
+                                        <button class="button button-completed">Completed</button>
+                                    </div>
+                                </div>';
+                                    } 
+                                    else if($reservation["status"] == 4){ 
+                                        echo'
+                                        <div class="card-content">
+                                        <h2 class="name">'. $reservation["name"].'</h2>
+                                        <label class="description">Date: '. date("Y.m.d", strtotime($reservation["date"])) .'</label>
+                                        <label class="description">Time Slot: '.date("H:i", strtotime($reservation["start_time"])) .' to '. date("H:i", strtotime($reservation["end_time"])) .'</label>
+                                        <label class="description">Email: '. $reservation["email"].' </label>
+                                        <button class="button button-cancelled" data-id='. $reservation["id"].'>Cancelled </i></button>
+                                    </div>
+                                </div>';
+                                    }
+                                    else if($reservation["status"] == 5){ 
+                                        echo'
+                                        <div class="card-content">
+                                        <h2 class="name">'. $reservation["name"].'</h2>
+                                        <label class="description">Date: '. date("Y.m.d", strtotime($reservation["date"])) .'</label>
+                                        <label class="description">Time Slot: '.date("H:i", strtotime($reservation["start_time"])) .' to '. date("H:i", strtotime($reservation["end_time"])) .'</label>
+                                        <label class="description">Email: '. $reservation["email"].' </label>
+                                        <button class="button button-cancelled" data-id='. $reservation["id"].'>Cancelled </i></button>
+                                    </div>
+                                </div>';
+                                    }
+                                    else{ 
+                                        echo'
+                                        <div class="card-content">
+                                        <h2 class="name">'. $reservation["name"].'</h2>
+                                        <label class="description">Date: '. date("Y.m.d", strtotime($reservation["date"])) .'</label>
+                                        <label class="description">Time Slot: '.date("H:i", strtotime($reservation["start_time"])) .' to '. date("H:i", strtotime($reservation["end_time"])) .'</label>
+                                        <label class="description">Email: '. $reservation["email"].' </label>
+                                        <button class="button button-complete" data-id='. $reservation["id"].'>Complete <i class="bx bxs-user-check"></i></button>
+                                        <button class="button button-cancel" data-id='. $reservation["id"].'>Cancel <i class="bx bxs-user-x"></i></button>
+                                    </div>
+                                </div>';
+                                    }
+                        echo '</div>';     
+                    
+            }
+        }
+
+    }
+
 }

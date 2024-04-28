@@ -45,12 +45,7 @@ $calendar = new CalendarComponent();
                                     $class = "card-added";
                                     $buttonClass = "button-remove";
                                     $button = "Remove";
-                                }  
-                                // if ($timeslot["added"] == 0){
-                                //     $class = "card-not-added";
-                                //     $buttonClass = "button-add";
-                                //     $button = "Add";
-                                // }   
+                                }    
                     ?>
                     
                         <div class="card timeslotcard <?= $class ?>" data-id="<?= $timeslot["id"] ?>">
@@ -515,6 +510,7 @@ $calendar = new CalendarComponent();
 
                 $.ajax({
                     // url: url,
+                    // url: `${BASE_URL}/counselorManageTimeSlots/addtimeslots`,
                     type: 'post',
                     data: {
                         addtimeslots: values 
