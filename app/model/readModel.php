@@ -87,6 +87,16 @@ class readModel extends Model
         return false;
     }
 
+    public function getCoursesBySearch($year,$searchValue)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND name LIKE ? OR code LIKE ?", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
 
     public function findWhetherRestricted($id)
     {
@@ -101,6 +111,16 @@ class readModel extends Model
     {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year < ? ", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesBelowYearSearch($year,$searchValue)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND name LIKE ? OR code LIKE ?", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -1186,10 +1206,34 @@ class readModel extends Model
         return false;
     }
 
+    public function getPostsOfClubsBySearch($searchValue)
+    {
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u , club_representative as cr, clubs as c
+            WHERE p.type = 2 
+            AND p.posted_by = u.id
+            AND p.posted_by = cr.user_id
+            AND cr.club_id = c.id
+            AND c.name LIKE ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "s", ["%$searchValue%"]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getOnePost($post_id)
     {
         $result = $this->db_handle->runQuery("
-        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name, p.link as link,
             (SELECT COUNT(l.id) 
             FROM post_likes l 
             WHERE l.post_id = p.id
@@ -2340,6 +2384,7 @@ class readModel extends Model
         $empty = [
             "title" => "",
             "description" => "",
+            "link" => "",
             "post_image" => "",
             "posted_by" => "",
             "type" => "",
@@ -2355,6 +2400,12 @@ class readModel extends Model
                 "label" => "Description",
                 "type" => "text",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "link" => [
+                "label" => "Link",
+                "type" => "text",
+                "validation" => "",
                 "skip" => true
             ],
             "post_image" => [

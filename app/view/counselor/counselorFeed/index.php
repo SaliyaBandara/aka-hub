@@ -73,6 +73,9 @@ else{
                                         <p style="white-space: pre-line;">
                                             <?= substr($posts["description"], 0, 500) . (strlen($posts["description"]) > 500 ? '...' : '') ?>
                                         </p>
+                                        <div style="white-space: pre-line; text-align:left;" class="mx-1 link mb-1">
+                                            <a href="<?=$posts["link"] ?>" target="_blank" rel="noopener" ><?=$posts["link"] ?></a>
+                                        </div>
                                         <a href = "<?= BASE_URL ?>/counselorFeed/postView/<?= $posts['id']?>" style = "text-decoration: none !important; color: inherit;"> 
                                             <div class = "flex justify-left mx-1 font-bold text-secondary"> <em> Read More... </em> </div>
                                         </a>
@@ -204,6 +207,13 @@ else{
         width: 100%;
         display: flex;
         flex-direction: row;
+    }
+
+    .link a{
+        text-decoration: none;
+        color: var(--secondary-color);
+        font-style: italic;
+        text-decoration: underline;
     }
 
     .detailsLeft{

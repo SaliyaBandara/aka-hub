@@ -36,18 +36,27 @@ if ($_SESSION["user_role"] == 1) {
             if ($data["filter"] == 1) {
             ?>
                 <div class='font-medium text-muted mb-1 mt-2'>Select a club to filter posts</div>
-                <select id="club" name="club" placeholder="Select Your Club/Society" data-validation="required" class="form-control mb-2">
-                    <?php
-                    if (empty($data["clubs"])) {
-                        echo "<option value = '' class='font-medium text-muted'> There are no excisting clubs </option>";
-                    } else {
-                        echo "<option selected value=''> Select your club/society </option>";
-                        foreach ($data["clubs"] as $club) {
-                            echo "<option value='{$club['id']}'>{$club['name']}</option>";
+                <div class="flex flex-row">
+                    <label for="name" class="form-label text-center justify-center mt-0-5 me-1"><i class='bx bx-filter-alt' style = "font-size: 22px;"></i></label>
+                    <select id="club" name="club" placeholder="Select Your Club/Society" data-validation="required" class="form-control mb-2" style = "max-width: 300px !important;">
+                        <?php
+                        if (empty($data["clubs"])) {
+                            echo "<option value = '' class='font-medium text-muted'> There are no excisting clubs </option>";
+                        } else {
+                            echo "<option selected value=''> Select your club/society </option>";
+                            foreach ($data["clubs"] as $club) {
+                                echo "<option value='{$club['id']}'>{$club['name']}</option>";
+                            }
                         }
-                    }
-                    ?>
-                </select>
+                        ?>
+                    </select>
+                    <div>
+                        <div class="mb-1 form-group ms-1 flex flex-row text-center" style = "max-width: 300px !important;" id = "<?=$data["filter"] ?>">
+                            <label for="name" class="form-label text-center justify-center mt-0-5 me-1"><i class='bx bx-search-alt-2' style = "font-size: 22px; color : black;"></i></label>
+                            <input type="text" id="searchBar" name="searchBar" value="" class="form-control" placeholder="Search by Club Name">
+                        </div>
+                    </div>
+                </div>
             <?php } ?>
             <div class="divFeed">
                 <div class="divCounselorFeed">
@@ -107,6 +116,9 @@ if ($_SESSION["user_role"] == 1) {
                                     <!-- <img class="eventPost" src="<?= BASE_URL ?>/public/assets/user_uploads/ClubEventFeed/sample post 1.jpg" alt=""> -->
                                     <div style="white-space: pre-line; text-align:left;" class="mx-1">
                                         <?= substr($posts["description"], 0, 500) . (strlen($posts["description"]) > 500 ? '...' : '') ?>
+                                    </div>
+                                    <div style="white-space: pre-line; text-align:left;" class="mx-1 link mb-1">
+                                        <a href="<?=$posts["link"] ?>" target="_blank" rel="noopener" ><?=$posts["link"] ?></a>
                                     </div>
 
                                     <div class="postDetails">
@@ -309,6 +321,13 @@ if ($_SESSION["user_role"] == 1) {
     /* .textBox, .addCommentButton{
         width: 50% !important;
     } */
+
+    .link a{
+        text-decoration: none;
+        color: var(--secondary-color);
+        font-style: italic;
+        text-decoration: underline;
+    }
 
     .editDeleteButton {
         display: flex;
@@ -710,6 +729,30 @@ if ($_SESSION["user_role"] == 1) {
                     } else {
                         // Handle empty or invalid response
                         alertUser("warning", "No posts found for the selected club.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+        $(document).on("keyup", "#searchBar", function() {
+
+            let selectedValue = $("#searchBar").val();
+
+            $.ajax({
+                url: `${BASE_URL}/eventFeed/search`,
+                type: 'post',
+                data: {
+                    searchValue: selectedValue,
+                },
+                success: function(data) {
+                    if (data) {
+                        $('.feedContainer').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No courses found.");
                     }
                 },
                 error: function(ajaxContext) {

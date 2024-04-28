@@ -63,6 +63,9 @@ else{
                 <div class="postContent">
                     <p style="white-space: pre-line;" ><?= $post["description"]?></p>
                 </div>
+                <div style="white-space: pre-line; text-align:left !important;" class="mx-1 link mb-1">
+                    <a href="<?=$post["link"] ?>" target="_blank" rel="noopener" style="text-align:left !important;" ><?=$post["link"] ?></a>
+                </div>
             </div>
             
         </div>
@@ -77,9 +80,17 @@ else{
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
+    .link a{
+        text-decoration: none;
+        color: var(--secondary-color);
+        font-style: italic;
+        text-decoration: underline;
+        text-align: left;
+    }
+
     .postButtons{
         /* border: 1px solid red; */
-        width: 40%;
+        width: 60%;
         margin: 1rem;
         border-radius: 10px;
         border: 1px solid #6c757d;
@@ -109,7 +120,7 @@ else{
         /* border: 1px solid red; */
         padding: 1rem;
         font-size: 20px;
-        width: 20%;
+        width: 30%;
     }
 
     
