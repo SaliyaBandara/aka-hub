@@ -2417,7 +2417,7 @@ class readModel extends Model
             "posted_by" => [
                 "label" => "User",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "type" => [
@@ -2447,7 +2447,7 @@ class readModel extends Model
             "comment" => [
                 "label" => "Comment",
                 "type" => "text",
-                "validation" => "",
+                "validation" => "required",
                 "skip" => true
             ],
             "post_id" => [
