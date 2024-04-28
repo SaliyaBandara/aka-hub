@@ -25,20 +25,23 @@ class CounselorFeed extends Controller
         $data["comments"] = [];
         $data["liked"] = [];
 
-        foreach ($data["posts"] as $post) {
+        if(!empty($date["posts"])){
+            foreach ($data["posts"] as $post) {
 
-            $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
-            $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
-
-            if (!empty($commentsForPost)) {
-                // print_r($commentsForPost);
-                $data['comments'] = array_merge($data['comments'], $commentsForPost);
-            }
-
-            if (!empty($liked)) {
-                $data['liked'] = array_merge($data['liked'], $liked);
+                $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+                $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
+    
+                if (!empty($commentsForPost)) {
+                    // print_r($commentsForPost);
+                    $data['comments'] = array_merge($data['comments'], $commentsForPost);
+                }
+    
+                if (!empty($liked)) {
+                    $data['liked'] = array_merge($data['liked'], $liked);
+                }
             }
         }
+
 
         // print_r($data["comments"]);
         // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
