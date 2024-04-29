@@ -264,7 +264,7 @@ class readModel extends Model
             $role = "counselor";
         else if ($user_role != 1 && $user_role != 3)
             $role = "student";
-        else if($user_role == 1 || $user_role == 3)
+        else if ($user_role == 1 || $user_role == 3)
             $role = "admin";
 
         $events = [];
@@ -282,7 +282,7 @@ class readModel extends Model
         } else if ($role == "counselor") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE user_id = ? AND is_broadcast = ?", "ii", [$user_id, 0]);
             // TODO: get counsellor reservations as well
-        }else if($_SESSION["admin"]){
+        } else if ($role == "admin") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
         }
 
