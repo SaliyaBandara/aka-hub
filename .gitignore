@@ -22,6 +22,7 @@ secret.php
 /PHPMailer-master
 
 !/public/assets/user_uploads/img/.gitkeep
+!/public/assets/user_uploads/img/avatar.png
 !/public/assets/user_uploads/pdf/.gitkeep
 /app/Config/secret.php
 /app/Config/db.php

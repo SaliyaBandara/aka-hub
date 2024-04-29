@@ -558,6 +558,8 @@ class eventFeed extends Controller
             // $values["post_image"] = $values["post_image"];
             $values["type"] = '2';
             $values["updated_datetime"] = date('Y-m-d H:i:s');
+            
+            $values["updated_datetime"] = date('Y-m-d H:i:s', strtotime($values["updated_datetime"]));
 
             $this->validate_template($values, $data["post_template"]);
             // print_r($values);
