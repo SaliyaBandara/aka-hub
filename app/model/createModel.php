@@ -48,6 +48,60 @@ class createModel extends Model
         return $last_id;
     }
 
+    // insert_multiple("calendar", $cleaned_timetable, $data["item_template"]);
+    public function insert_multiple($table, $data, $template = [])
+    {
+        $columns = "";
+        $values = "";
+        $types = "";
+        $params = [];
+
+        // start transaction
+        $this->start_transaction();
+
+        $success = true;
+        foreach ($data as $key => $value) {
+            $columns = "";
+            $values = "";
+            $types = "";
+            $params = [];
+
+            foreach ($value as $key => $val) {
+                if ($val == "" || $val == null)
+                    continue;
+
+                if (!isset($template[$key]) || !isset($template[$key]["type"]))
+                    continue;
+
+                $columns .= $key . ",";
+                $values .= "?, ";
+                $types .= $template[$key]["type"] == "number" ? "i" : "s";
+
+                if (is_array($val))
+                    $val = implode(",", $val);
+                array_push($params, $val);
+            }
+
+            $columns = rtrim($columns, ",");
+            $values = rtrim($values, ", ");
+
+            $query = "INSERT INTO $table ($columns) VALUES ($values)";
+            $result = $this->db_handle->insert($query, $types, $params);
+            if (!$result) {
+                $success = false;
+                break;
+            }
+        }
+
+        if ($success) {
+            $this->commit_transaction();
+            return true;
+        }
+
+        $this->rollback_transaction();
+        return false;
+    }
+
     // CREATE TABLE election_votes (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     election_id INT NOT NULL,
