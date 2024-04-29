@@ -4,7 +4,7 @@ class ManageMaterials extends Controller
     public function index()
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $action = "Unauthorized User tried to view manage materials page";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -23,7 +23,7 @@ class ManageMaterials extends Controller
     public function view($id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $action = "Unauthorized User tried to view a specific material";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -48,7 +48,7 @@ class ManageMaterials extends Controller
     public function material($action = "add_edit", $id = 0, $course_id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $task = "Unauthorized User tried to add edit material without permission";
             $state = 401;
             $this->model("createModel")->createLogEntry($task, $state);
@@ -105,7 +105,7 @@ class ManageMaterials extends Controller
     public function delete_material($id = 0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $action = "Unauthorized user tried to delete material without permission";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -128,7 +128,7 @@ class ManageMaterials extends Controller
     {
 
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $action = "Unauthorized User tried to view manage courses page";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -147,7 +147,7 @@ class ManageMaterials extends Controller
     public function courseView($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $action = "Unauthorized User tried to view a specific course";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
@@ -170,7 +170,7 @@ class ManageMaterials extends Controller
     public function courseEdit($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $task = "Unauthorized User tried to edit a specific course";
             $state = 401;
             $this->model("createModel")->createLogEntry($task, $state);
@@ -209,7 +209,7 @@ class ManageMaterials extends Controller
     public function deleteCourse($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1)) {
+        if (($_SESSION["user_role"] != 1) && ($_SESSION["student_rep"] != 1) && ($_SESSION["teaching_student"] != 1)) {
             $action = "Unauthorized User tried to delete a course";
             $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
