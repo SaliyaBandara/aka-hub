@@ -105,7 +105,7 @@ $HTMLHead = new HTMLHead($data['title']);
                 type: "pie",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
+                indexLabel: "{label}",
                 yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]
@@ -146,7 +146,7 @@ $HTMLHead = new HTMLHead($data['title']);
                 type: "pie",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
+                indexLabel: "{label}",
                 yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]

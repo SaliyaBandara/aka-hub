@@ -267,3 +267,11 @@ kasunsilva@gmail.com	127.0.0.1	04/28/24 11:52PM	Post updated by counselor	http:/
 
 2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 01:32AM	Course material created successfully	http://127.0.0.1/aka-hub/courses/material/add_edit/6/0/createurl=courses/material/add_edit/6/0/create	201
 
+kasunsilva@gmail.com	127.0.0.1	04/29/24 09:56AM	User logged in as Counselor with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 10:02AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 11:32AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 11:47AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
