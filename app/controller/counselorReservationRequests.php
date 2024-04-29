@@ -6,9 +6,11 @@ class counselorReservationRequests extends Controller
     public function index()
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access reservation requests page for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+        }
         $data = [
             'title' => 'Reservation requests',
             'message' => 'Welcome to Aka Hub!'
@@ -22,8 +24,11 @@ class counselorReservationRequests extends Controller
     public function view($id=0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access view reservation request page for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
+        }
 
         $data["reservationRequest_data"] = $this->model('readModel')->getEmptyReservation();
         $data["reservationRequest"] = $data["reservationRequest_data"]["empty"];
@@ -43,9 +48,11 @@ class counselorReservationRequests extends Controller
     public function sendEmail($id=0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access send email function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-      
+        }
         if ($id != 0) {
             $data["user"] = $this->model('readModel')->getOne("user", $id);
             // if (!$data["user"])
@@ -58,8 +65,11 @@ class counselorReservationRequests extends Controller
     public function acceptReservation($id=0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access accept reservation function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
+        }
 
         $data["reservation_data"] = $this->model('readModel')->getEmptyReservation();
         $data["reservation"] = $data["reservation_data"]["empty"];
@@ -86,6 +96,8 @@ class counselorReservationRequests extends Controller
         // die;
 
         if ($result) {
+            $task = "Counselor accepted a reservation.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(["status" => 200, "desc" => "Reservation Accepted."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error accepting Reservation."]));
@@ -95,8 +107,11 @@ class counselorReservationRequests extends Controller
     public function declineReservation($id=0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access decline reservation function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
+        }
 
         $data["reservation_data"] = $this->model('readModel')->getEmptyReservation();
         $data["reservation"] = $data["reservation_data"]["empty"];
@@ -123,6 +138,8 @@ class counselorReservationRequests extends Controller
         // die;
 
         if ($result) {
+            $task = "Counselor declined a reservation.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(["status" => 200, "desc" => "Reservation Declined."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error Declining Reservation."]));

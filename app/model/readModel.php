@@ -58,6 +58,13 @@ class readModel extends Model
         return false;
     }
 
+    public function isEmailExist($email){
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
+        if (count($result) > 0)
+            return true;
+        return false;
+    }
+
     public function getAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);

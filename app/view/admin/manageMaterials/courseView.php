@@ -74,8 +74,8 @@ $sidebar = new Sidebar("manageMaterials");
 
                     .coverImage img {
                         border-radius: 5px;
-                        width: 70%;
-                        height: auto;
+                        width: 200px;
+                        height: 75px;
                     }
 
                     .section_header {

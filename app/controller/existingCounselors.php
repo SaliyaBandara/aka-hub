@@ -25,8 +25,8 @@ class ExistingCounselors extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 1){
-            $action = "deleted a specific counselor";
-            $state = 200;
+            $action = "Unauthorized user tried to delete a specific counselor";
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }
@@ -36,7 +36,7 @@ class ExistingCounselors extends Controller
         $result = $this->model('deleteModel')->deleteOne("user", $id);
         if ($result){
             $action = "deleted a specific counselor";
-            $state = 200;
+            $state = 602;
             $this->model("createModel")->createLogEntry($action, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
         }
