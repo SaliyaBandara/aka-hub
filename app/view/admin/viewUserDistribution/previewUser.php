@@ -179,6 +179,10 @@ if (isset($data["user"]) && is_array($data["user"]) && count($data["user"]) > 0)
     </style>
 
 </div>
+<?php $HTMLFooter = new HTMLFooter(); ?>
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
 
 <script>
     $(document).on("click", ".restrictButton", function(event) {
@@ -198,7 +202,12 @@ if (isset($data["user"]) && is_array($data["user"]) && count($data["user"]) > 0)
             success: function(response) {
                 if (response.status == 200) {
                     alertUser("success", response.desc);
-                    // button.toggleClass("btn-danger btn-primary").text("Enable");
+                    button.toggleClass("btn-danger btn-primary").text("Enable");
+                    if (button.hasClass("btn-danger")) {
+                        button.text("Restrict");
+                    } else {
+                        button.text("Enable");
+                    }
                 } else {
                     alertUser("warning", response.desc);
                 }
