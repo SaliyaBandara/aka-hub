@@ -27,7 +27,8 @@ class authModel extends Model
             "student_id" => [$data["student_id"], "s"],
             "password" => [$data["password"], "s"],
             "email" => [$data["email"], "s"],
-            "name" => [$data["fname"] . " " . $data["lname"], "s"]
+            "name" => [$data["fname"] . " " . $data["lname"], "s"],
+            "profile_img" => ["avatar.png", "s"]
         ];
 
         // print_r($data);

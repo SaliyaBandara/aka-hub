@@ -290,7 +290,8 @@ class readModel extends Model
             foreach ($events as $key => $event) {
                 $events[$key] = [
                     "title" => $event['title'],
-                    // "description" => $event['description'],
+                    "description" => $event['description'],
+                    "module" => $event['module'],
                     "date" => $event['date'],
                 ];
             }
@@ -2313,6 +2314,7 @@ class readModel extends Model
             "post_image" => "",
             "posted_by" => "",
             "type" => "",
+            "updated_datetime" => ""
         ];
 
         $template = [
@@ -2342,6 +2344,12 @@ class readModel extends Model
             "type" => [
                 "label" => "Type",
                 "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "updated_datetime" => [
+                "label" => "Updated Date Time",
+                "type" => "datetime-local",
                 "validation" => "required",
                 "skip" => true
             ],
@@ -2743,7 +2751,7 @@ class readModel extends Model
 
             "updated_datetime" => [
                 "label" => "Post Updated Time",
-                "type" => "timestamp",
+                "type" => "text",
                 "validation" => "",
                 "skip" => true
             ],

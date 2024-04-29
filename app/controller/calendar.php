@@ -259,9 +259,21 @@ class Calendar extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
-        $data["items"] = $this->model('readModel')->getUserCalendarEvents($date);
-        print_r($data["items"]);
-        die;
+        $date = filter_var($date, FILTER_SANITIZE_NUMBER_INT);
+        $unixTimestamp = $date;
+
+        $timestampSeconds = $date / 1000;
+        $date = date("Y-m-d", $timestampSeconds);
+        if (strtotime($date) === false)
+            $this->redirect();
+
+        // Wednesday, 10 April 2024
+        $date = date("l, j F Y", strtotime($date));
+        $data["date"] = $date;
+
+        $data["items"] = $this->model('readModel')->getUserCalendarEvents($unixTimestamp);
+        // print_r($data["items"]);
+        // die;
 
         $this->view->render('calendar/view', $data);
     }

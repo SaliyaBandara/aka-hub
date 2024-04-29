@@ -94,7 +94,7 @@ $calendar = new CalendarComponent();
                                             <td><?= $target ?></td>
                                             <td>
                                                 <div class="action-list">
-                                                    <a title="View Event" class="dropdown-item text-secondary" href="<?= BASE_URL ?>/elections/view/<?= $event["id"] ?>"><i class='bx bx-show'></i></a>
+                                                    <!-- <a title="View Event" class="dropdown-item text-secondary" href="<?= BASE_URL ?>/elections/view/<?= $event["id"] ?>"><i class='bx bx-show'></i></a> -->
                                                     <a title="Edit Event" class="dropdown-item" href="<?= BASE_URL ?>/calendar/add_edit/<?= $event["id"] ?>/edit"><i class='bx bx-edit'></i></a>
                                                     <a title="Delete Event" class="dropdown-item delete-item text-danger" data-id="<?= $event["id"] ?>" href="javascript: void(0);"><i class='bx bx-trash'></i></a>
                                                 </div>

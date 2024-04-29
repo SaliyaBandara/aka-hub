@@ -340,6 +340,8 @@ class eventFeed extends Controller
             $values["post_image"] = $values["post_image"];
             $values["type"] = '2';
             $values["updated_datetime"] = date('Y-m-d H:i:s');
+            
+            $values["updated_datetime"] = date('Y-m-d H:i:s', strtotime($values["updated_datetime"]));
 
             // print_r($values["updated_datetime"]);
             // die();
