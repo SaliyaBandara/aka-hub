@@ -234,7 +234,8 @@ class Calendar extends Controller
                         "description" => $description,
                         "date" => $date,
                         "target" => $year,
-                        "is_broadcast" => 1
+                        "is_broadcast" => 1,
+                        "type" => 1
                     ];
                 }
             }

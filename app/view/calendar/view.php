@@ -58,10 +58,25 @@ $calendar = new CalendarComponent();
 
                         // print_r($data["items"]);
                         // $data["items"]
-                        
+
                         foreach ($data["items"] as $item) {
                             $date = date_create($item["date"]);
                             $date = date_format($date, "l, d F, h:i A");
+
+                            // -- Type
+                            // --     1 - Exam
+                            // --     2 - Course Event
+                            // --     3 - Club Event
+                            // --     4 - Counsellor Event
+
+                            // $type = $item["type"];
+                            $type = "Examination";
+                            if ($item["type"] == 2)
+                                $type = "Course Event";
+                            else if ($item["type"] == 3)
+                                $type = "Club Event";
+                            else if ($item["type"] == 4)
+                                $type = "Counsellor Event";
 
                         ?>
 
@@ -71,6 +86,7 @@ $calendar = new CalendarComponent();
                                 <div><i class="bx bx-time me-0-5"></i> <?= $date ?></div>
                                 <div><i class="bx bx-calendar me-0-5"></i> <?= $item["module"] ?></div>
                                 <div><i class="bx bxs-graduation me-0-5"></i> <?= $item["description"] ?></div>
+                                <div><i class="bx bx-sitemap me-0-5"></i> <?= $type ?></div>
                             </div>
 
                         <?php
