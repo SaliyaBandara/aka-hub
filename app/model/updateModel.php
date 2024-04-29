@@ -128,4 +128,15 @@ class updateModel extends Model
         $result = $this->db_handle->update($query, $valueTypesString, $values);
         return $result;
     }
+
+    public function update_system_variable($name, $value)
+    {
+        $query = "UPDATE system_variables SET value = ? WHERE name = ?";
+        $values = [$value, $name];
+        $valueTypes = ["s", "s"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
 }
