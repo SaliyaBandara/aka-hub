@@ -54,6 +54,12 @@ class AddAdmin extends Controller
 
             if ($id == 0) {
                 $result = 0;
+
+                $isEmailExist = $this->model('readModel')->isEmailExist($values["email"]);
+
+                if ($isEmailExist)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
                     $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
