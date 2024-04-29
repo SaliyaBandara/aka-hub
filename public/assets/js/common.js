@@ -355,7 +355,7 @@ $(document).ready(function () {
         });
 
         updateCalendarEvents();
-        // setInterval(updateCalendarEvents, 10000);
+        setInterval(updateCalendarEvents, 10000);
     }
 
     // on click popover-wrapper

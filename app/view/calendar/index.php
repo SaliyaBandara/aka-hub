@@ -18,6 +18,9 @@ $calendar = new CalendarComponent();
                     <a href="<?= BASE_URL ?>/calendar/add_edit/0/" class="btn btn-primary">
                         <i class='bx bx-plus'></i> Add Calendar Event
                     </a>
+                    <a href="<?= BASE_URL ?>/calendar/parse_timetable" class="btn btn-primary">
+                        <i class='bx bx-upload'></i> Upload Exam Timetable
+                    </a>
                 </div>
 
                 <div class="section_header mb-1 flex">

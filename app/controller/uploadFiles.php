@@ -123,7 +123,7 @@ class UploadFiles extends Controller
             $newFilename = $file_prefix . "_";
             $uploadPath = "./assets/user_uploads/pdf/";
 
-            $allowed_prefixes = ["course_materials"];
+            $allowed_prefixes = ["course_materials", "exam_timetable"];
             if (!in_array($file_prefix, $allowed_prefixes))
                 $this->errorImg401("Invalid Request");
 
