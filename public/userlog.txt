@@ -327,3 +327,9 @@ Not logged in	127.0.0.1	04/29/24 01:21PM	User entered invalid email or password	
 
 samanbandara@gmail.com	127.0.0.1	04/29/24 03:06PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 09:01PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 09:48PM	Admin Account Created for email : 2021cs245@stu.ucsc.cmb.ac.lk	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 09:49PM	Admin Account Created for email : 2021cs246@stu.ucsc.cmb.ac.lk	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+

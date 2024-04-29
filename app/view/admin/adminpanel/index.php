@@ -112,11 +112,11 @@ $calendar = new CalendarComponent();
                 </div>
             </div>
         </div>
-        <!-- <div class="right">
+        <div class="right">
             <div class="calendarContainor">
                 <?php echo $calendar->render(); ?>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <style>
@@ -142,7 +142,7 @@ $calendar = new CalendarComponent();
         } */
 
         .main-grid .left {
-            width: 100%;
+            width: 75%;
             height: 150vh;
             padding-bottom: 50px;
         }
@@ -150,6 +150,7 @@ $calendar = new CalendarComponent();
         .main-grid .right {
             flex-grow: 1;
             height: 150vh;
+            border: 1px solid red;
         }
 
         .threeCardDiv {

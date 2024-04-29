@@ -27,6 +27,9 @@ class AdminPanel extends Controller
         $data["chartFour"] = $this->model('readModel')->getChartFour();
         $data["chartFive"] = $this->model('readModel')->getChartFive();
 
+
+        $data["main_events"] = $this->model('readModel')->getAllEvents("main_events");
+
         $this->view->render('admin/adminpanel/index', $data);
     }
 
