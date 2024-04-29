@@ -36,7 +36,7 @@ $calendar = new CalendarComponent();
             </div>
             <div class="fourGraphsContainor">
                 <div class="printDiv">
-                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" onclick="downloadPDF()">
+                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" href="javascript:window.print()">
                         Export
                     </a>
 
@@ -351,34 +351,34 @@ $calendar = new CalendarComponent();
 <script>
     function downloadPDF() {
         // Capture the entire webpage body
-        html2canvas(document.body, {
-            useCORS: true
-        }).then(canvas => {
-            downloadCanvasAsPDF(canvas, 'webpage.pdf');
-        });
+        // html2canvas(document.body, {
+        //     useCORS: true
+        // }).then(canvas => {
+        //     downloadCanvasAsPDF(canvas, 'webpage.pdf');
+        // });
     }
 
-    function downloadCanvasAsPDF(canvas, filename) {
-        const dpi = window.devicePixelRatio || 1;
-        const pdfWidth = canvas.width * 25.4 / dpi / 96; // 1 inch = 96 pixels
-        const pdfHeight = canvas.height * 25.4 / dpi / 96;
-        const scale = 1;
+    // function downloadCanvasAsPDF(canvas, filename) {
+    //     const dpi = window.devicePixelRatio || 1;
+    //     const pdfWidth = canvas.width * 25.4 / dpi / 96; // 1 inch = 96 pixels
+    //     const pdfHeight = canvas.height * 25.4 / dpi / 96;
+    //     const scale = 1;
 
-        const pdf = new window.jspdf.jsPDF({
-            orientation: 'portrait', // Adjust orientation as needed
-            unit: 'mm',
-            format: [pdfWidth * scale, pdfHeight * scale],
-        });
+    //     const pdf = new window.jspdf.jsPDF({
+    //         orientation: 'portrait', // Adjust orientation as needed
+    //         unit: 'mm',
+    //         format: [pdfWidth * scale, pdfHeight * scale],
+    //     });
 
-        pdf.addImage(
-            canvas.toDataURL('image/png'),
-            'PNG',
-            0,
-            0,
-            pdfWidth * scale,
-            pdfHeight * scale
-        );
+    //     pdf.addImage(
+    //         canvas.toDataURL('image/png'),
+    //         'PNG',
+    //         0,
+    //         0,
+    //         pdfWidth * scale,
+    //         pdfHeight * scale
+    //     );
 
-        pdf.save(filename);
-    }
+    //     pdf.save(filename);
+    // }
 </script>

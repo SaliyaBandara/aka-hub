@@ -1834,6 +1834,33 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyAcademinEndDateStartDate(){
+        $empty = [
+            "academic_start_date" => "",
+            "academic_end_date" => ""
+        ];
+
+        $template = [
+            "start_date" => [
+                "label" => "Start Date",
+                "type" => "date",
+                "validation" => "required"
+            ],
+            "end_date" => [
+                "label" => "End Date",
+                "type" => "date",
+                "validation" => "required"
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+
     /**
      * Course Material Model
      */

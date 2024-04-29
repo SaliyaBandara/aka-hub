@@ -275,3 +275,55 @@ samanbandara@gmail.com	127.0.0.1	04/29/24 10:02AM	User logged in as Admin with e
 
 samanbandara@gmail.com	127.0.0.1	04/29/24 11:47AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:19PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:22PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:22PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:24PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:24PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:25PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:25PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:25PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:25PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:25PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:25PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:26PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:26PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:26PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:26PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:26PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:28PM	User with ID: 23 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/23url=viewUserDistribution/restrictUser/23	607
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 12:28PM	User with ID: 23restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/23url=viewUserDistribution/restrictUser/23	606
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 12:30PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 01:18PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+Not logged in	127.0.0.1	04/29/24 01:21PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 01:22PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 01:42PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 01:44PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/29/24 02:36PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/29/24 03:06PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+

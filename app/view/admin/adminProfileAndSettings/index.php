@@ -68,16 +68,16 @@ $sidebar = new Sidebar("adminProfileAndSettings");
                 </div>
                 <div class="notificationValues notificationRow">
                     <div>
-                        <input type="date" id="datePicker1" name="startDate">
+                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["system_variables"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                     </div>
                     <div>
-                        <input type="date" id="datePicker2" name="endDate">
+                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["system_variables"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
                     </div>
                 </div>
             </div>
             <div class="flex notificationSettings">
                 <div>
-                    <a href="<?= BASE_URL ?>/adminProfileAndSettings/add_edit_settings" class="btn btn-primary">
+                    <a href="<?= BASE_URL ?>/adminProfileAndSettings/add_edit_settings/$value1/$value2" class="btn btn-primary">
                         Edit Settings
                     </a>
                 </div>

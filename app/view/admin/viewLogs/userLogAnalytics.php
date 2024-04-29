@@ -18,7 +18,7 @@ $calendar = new CalendarComponent();
                 <div class="mb-1 form-group right_side">
                     <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">Back
                     </a>
-                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">
+                    <a href="javascript:window.print()" class="btn btn-info">
                         Export
                     </a>
                 </div>
