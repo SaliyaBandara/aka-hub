@@ -135,6 +135,8 @@ $sidebar = new Sidebar("courses");
             });
         })
 
+        
+
         $('form').submit(function(event) {
             event.preventDefault();
             var input = $(this);

@@ -436,6 +436,12 @@ class Courses extends Controller
                 $result = $this->model('updateModel')->update_one("courses", $values, $data["course_template"], "id", $id, "i");
             }
 
+            $existingCourse = $this->model('readModel')->getCoursesByCode($values["code"]);
+            // if(empty($existingCourse))
+            //     print_r("empty");
+            // print_r($existingCourse);
+            // die();
+
             if ($result) {
                 if ($id == 0) {
                     $id = $result;
@@ -445,6 +451,10 @@ class Courses extends Controller
                     $this->model('createModel')->notification(4, $id, 0, $course_name, $notif_message, $values["year"], "/courses/index");
                 }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
+
+            else if($existingCourse){
+                die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
             }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
