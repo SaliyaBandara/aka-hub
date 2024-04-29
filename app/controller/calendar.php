@@ -10,10 +10,9 @@ class Calendar extends Controller
 
     public function checkAdmin()
     {
-        if ($_SESSION["student_rep"] != 1)
+        if ($_SESSION["student_rep"] != 1 && $_SESSION["club_rep"] != 1)
             $this->redirect();
     }
-
 
     public function index()
     {
@@ -213,14 +212,31 @@ class Calendar extends Controller
                 if ($value["Year"] < 1 || $value["Year"] > 4)
                     $value["Year"] = 5;
 
-                $cleaned_timetable[] = [
-                    "title" => $value["Subject Code"] . " - " . $value["Subject Name"],
-                    "module" => $value["Subject Code"] . " - " . $value["Subject Name"],
-                    "description" => $description,
-                    "date" => $date,
-                    "target" => $value["Year"],
-                    "is_broadcast" => 1
-                ];
+                $year = $value["Year"];
+                $title = $value["Subject Code"] . " - " . $value["Subject Name"];
+
+                // check if values already exists in cleaned timetable with same title and date
+                $exists = false;
+                foreach ($cleaned_timetable as $key => $value) {
+                    if ($value["title"] == $title && $value["date"] == $date) {
+                        $exists = true;
+                        break;
+                    }
+                }
+
+                // print_r($value);
+                // die;
+
+                if (!$exists) {
+                    $cleaned_timetable[] = [
+                        "title" => $title,
+                        "module" => $title,
+                        "description" => $description,
+                        "date" => $date,
+                        "target" => $year,
+                        "is_broadcast" => 1
+                    ];
+                }
             }
 
             // print_r($cleaned_timetable);
@@ -238,8 +254,6 @@ class Calendar extends Controller
     public function view($date = "")
     {
         $this->requireLogin();
-        $this->checkAdmin();
-
         $data = [
             'title' => 'Calendar',
             'message' => 'Welcome to Aka Hub!'

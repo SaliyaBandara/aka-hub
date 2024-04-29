@@ -68,11 +68,11 @@ $sidebar = new Sidebar("calendar");
         </form>
 
         <style>
-            form{
+            form {
                 max-width: unset !important;
             }
 
-            .form-element{
+            .form-element {
                 max-width: 600px;
             }
         </style>
@@ -230,6 +230,7 @@ $sidebar = new Sidebar("calendar");
 
                             // json parse the data
                             parsed_data = JSON.parse(parsed_data)
+                            // console.log(parsed_data)
 
                             // show table
                             $(".table-container").css("opacity", 1)
@@ -239,9 +240,43 @@ $sidebar = new Sidebar("calendar");
                             table.empty()
                             $.each(parsed_data, function(i, data) {
 
+                                // check if all the data is set
+                                // Subject Name - Subject Code - Date - Time - Venue
+                                let table_headers = ["Subject Name", "Subject Code", "Date", "Time", "Venue"]
+                                if (Object.keys(data).length != table_headers.length) {
+                                    // console.log("Data is missing")
+                                    let count_errors = 0
+                                    table_headers.forEach(header => {
+                                        if (!data.hasOwnProperty(header)) {
+                                            if (++count_errors > 1)
+                                                return;
+                                            data[header] = "-"
+                                        }
+                                    })
+
+                                    if (count_errors > 1)
+                                        return;
+                                }
+
+                                // if any val is undefined, set to empty string
+                                // check for all header if any is undefined and set to empty string
+
+
+                                // console.log(data)
+
                                 // if any of the data is empty, skip
                                 if (Object.values(data).some(val => val === ""))
                                     return;
+
+                                table_headers.forEach(header => {
+                                    if (data[header] == undefined || data[header] == "undefined")
+                                        data[header] = ""
+                                })
+
+                                // if (data['Venue'] == undefined || data['Venue'] == "undefined")
+                                //     data['Venue'] = ""
+
+                                console.log(data['Subject Name'], data['Subject Code'], data['Date'], data['Time'], data['Venue'])
 
                                 data_table.row.add([
                                     i + 1,
@@ -302,5 +337,14 @@ $sidebar = new Sidebar("calendar");
             }
 
         });
+
+        // if delete button is clicked reset parsed_table to 0
+        $(document).on('click', '.delete-preview-btn', function() {
+            parsed_table = 0;
+            parsed_data = [];
+            // reset table
+            data_table.clear().draw();
+            $(".table-container").css("opacity", 0)
+        })
     });
 </script>

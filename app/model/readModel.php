@@ -264,6 +264,8 @@ class readModel extends Model
             $role = "counselor";
         else if ($user_role != 1 && $user_role != 3)
             $role = "student";
+        else if($user_role == 1 || $user_role == 3)
+            $role = "admin";
 
         $events = [];
         if ($role == "student") {
@@ -280,6 +282,8 @@ class readModel extends Model
         } else if ($role == "counselor") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE user_id = ? AND is_broadcast = ?", "ii", [$user_id, 0]);
             // TODO: get counsellor reservations as well
+        }else if($_SESSION["admin"]){
+            $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
         }
 
         if (count($events) > 0) {
@@ -1898,6 +1902,7 @@ class readModel extends Model
     //     title VARCHAR(255) NOT NULL,
     //     module VARCHAR(255) DEFAULT NULL,
     //     description TEXT DEFAULT NULL,
+    //     type TINYINT(1) NOT NULL DEFAULT 1,
     //     date DATETIME NOT NULL,
     //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     //     FOREIGN KEY (user_id) REFERENCES user(id)
@@ -1912,7 +1917,8 @@ class readModel extends Model
             "title" => "",
             "module" => "",
             "description" => "",
-            "date" => ""
+            "date" => "",
+            "type" => ""
         ];
 
         $template = [
@@ -1954,6 +1960,12 @@ class readModel extends Model
                 "label" => "Date",
                 "type" => "datetime-local",
                 "validation" => "required"
+            ],
+            "type" => [
+                "label" => "Type",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
             ],
         ];
 
@@ -2177,7 +2189,8 @@ class readModel extends Model
             "description" => [
                 "label" => "Description",
                 "type" => "text",
-                "validation" => ""
+                "validation" => "required",
+                "skip" => true
             ],
             "start_date" => [
                 "label" => "Start Date",
