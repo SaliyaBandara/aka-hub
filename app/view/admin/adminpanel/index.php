@@ -5,6 +5,49 @@ $sidebar = new Sidebar("adminpanel");
 $calendar = new CalendarComponent();
 ?>
 
+<style>
+    /* css quiery for print */
+    @page {
+        size: A4 portrait;
+        margin: 1%;
+        margin: 50px 0% 0 0%;
+        margin-top: 50px;
+    }
+
+
+    @media print {
+        .noprint {
+            display: none !important;
+        }
+
+        #sidebar {
+            display: none;
+        }
+
+        /* show background colors */
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+
+        #sidebar-active {
+            width: 100vw;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .main-grid .left {
+            width: 100% !important;
+        }
+
+        .main-grid .right {
+            flex-grow: 1;
+            /* height: 100vh; */
+        }
+
+    }
+</style>
+
 <div id="sidebar-active" class="hideScrollbar">
 
     <?php $welcomeSearch = new WelcomeSearch(); ?>
@@ -36,7 +79,7 @@ $calendar = new CalendarComponent();
             </div>
             <div class="fourGraphsContainor">
                 <div class="printDiv">
-                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" onclick="downloadPDF()">
+                    <a class="btn btn-info btn-download noprint" style="color:white; text-decoration:none;" href="javascript:window.print()">
                         Export
                     </a>
 

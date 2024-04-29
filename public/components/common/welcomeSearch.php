@@ -8,7 +8,7 @@ class WelcomeSearch
         if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true)
             $user_name = $_SESSION["user_name"];
 ?>
-        <div class="welcome-back fixed">
+        <div class="welcome-back fixed noprint">
             <div class="flex flex_container">
                 <div class="flex_item">
                     <div class="title pb-0-5">Welcome back</div>
@@ -210,7 +210,7 @@ class WelcomeSearch
             </div>
         </div>
 
-        <div class="welcome-back opacity-0 pointer-events-none">
+        <div class="welcome-back opacity-0 pointer-events-none noprint">
             <div class="flex flex_container">
                 <div class="flex_item">
                     <div class="title pb-0-5"></div>
