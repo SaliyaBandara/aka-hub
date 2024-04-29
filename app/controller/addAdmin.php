@@ -16,7 +16,7 @@ class AddAdmin extends Controller
             //log Entry
             $action = "Unauthorized user tried to access Admin Account Creation";
             $status = "401";
-            $this->model("createModel")->createLogEntry($action,$status);
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
 
@@ -51,40 +51,46 @@ class AddAdmin extends Controller
             $this->validate_template($values, $data["user_template"]);
             $this->validate_template($values, $data["admin_template"]);
 
+
             if ($id == 0) {
-                $result = false;
+                $result = 0;
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
                     $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
                     $result2 = $this->model('createModel')->insert_db("administrator", $values, $data["admin_template"]);
-                    $result = $result1 && $result2;
+                    if ($result2) {
+                        $result = 1;
+                    }
                 }
                 if ($result) {
                     //log Entry
                     $action = "Admin Account Created for email : " . $values["email"];
                     $status = "600";
-                    $this->model("createModel")->createLogEntry($action,$status);
+                    $this->model("createModel")->createLogEntry($action, $status);
+                    die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+                } else {
+                    die(json_encode(array("status" => "400", "desc" => "Error while creating user")));
                 }
             } else {
-                $result = false;
+                $result = 0;
                 $result1 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
                 if ($result1) {
                     $values["id"] = $id;
                     $result2 = $this->model('updateModel')->update_one("administrator", $values, $data["admin_template"], "id", $id, "i");
-                    $result = $result1 && $result2;
+                    if ($result2) {
+                        $result = 1;
+                    }
                 }
                 if ($result) {
                     //log Entry
                     $action = "Admin Account Updated for email : " . $values["email"];
                     $status = "601";
-                    $this->model("createModel")->createLogEntry($action,$status);
+                    $this->model("createModel")->createLogEntry($action, $status);
+                    die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+                } else {
+                    die(json_encode(array("status" => "400", "desc" => "Error while updating user")));
                 }
             }
-
-            if ($result)
-                die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
-            die(json_encode(array("status" => "400", "desc" => "Error while creating user")));
         }
 
         if ($id != 0) {

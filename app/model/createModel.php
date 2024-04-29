@@ -45,7 +45,7 @@ class createModel extends Model
         $result = $this->db_handle->insert($query, $types, $params);
         // get last inserted id
         $last_id = $this->db_handle->getLastInsertedID();
-        return $last_id;
+        return $result;
     }
 
     // insert_multiple("calendar", $cleaned_timetable, $data["item_template"]);
