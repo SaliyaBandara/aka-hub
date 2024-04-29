@@ -36,6 +36,16 @@ $sidebar = new Sidebar("calendar");
             </div>
 
             <div class="mb-1 form-group">
+                <label class="form-label">Event Type</label>
+                <select name="type" class="form-control" data-validation="required">
+                    <option value="2" <?= $data["item"]["type"] == 2 && $_SESSION["student_rep"] == 1 ? "selected" : "" ?>>Course Event</option>
+                    <option value="1" <?= $data["item"]["type"] == 1 && $_SESSION["student_rep"] == 1 ? "selected" : "" ?>>Exam</option>
+                    <option value="3" <?= $data["item"]["type"] == 3 ? "selected" : "" ?>>Club Event</option>
+                    <option value="4" <?= $data["item"]["type"] == 4 && $_SESSION["student_rep"] == 1 ? "selected" : "" ?>>Counsellor Event</option>
+                </select>
+            </div>
+
+            <div class="mb-1 form-group">
                 <label class="form-label">Description</label>
                 <textarea name="description" id="description" class="form-control" placeholder="Enter Description" data-validation="required"><?= $data["item"]["description"] ?></textarea>
             </div>

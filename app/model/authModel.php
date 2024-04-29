@@ -34,7 +34,7 @@ class authModel extends Model
 
         $result = $this->insert_db("user", $data);
 
-        if($result){
+        if ($result) {
 
             $newID = $this->db_handle->runQuery("SELECT id FROM  user WHERE ? ORDER BY id DESC LIMIT 1", "i", [1]);
             // print_r($newID);
@@ -73,7 +73,6 @@ class authModel extends Model
 
             $resultStudent = $this->insert_db("student", $dataStudent);
             $resultNotification = $this->insert_db("notification_settings", $dataNotification);
-
         }
 
 
@@ -82,14 +81,14 @@ class authModel extends Model
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$data["email"][0]]);
             // print_r($result);
             return $result[0];
-        }       
+        }
 
         return false;
     }
 
     public function login($email, $password)
     {
-        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ? AND status = ?", "si", [$email, 1]);
         if (count($result) > 0 && password_verify($password, $result[0]["password"]))
             return $result[0];
 
