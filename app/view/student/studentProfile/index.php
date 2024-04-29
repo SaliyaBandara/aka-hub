@@ -71,6 +71,11 @@ $sidebar = new Sidebar("studentProfile");
             </div>
             <div class="flex notificationSettings">
                 <div>
+                    <a href="<?= BASE_URL ?>/studentProfile/changePassword" class="btn btn-danger me-1">
+                        Change Password
+                    </a>
+                </div>
+                <div>
                     <a href="<?= BASE_URL ?>/studentProfile/add_edit/<?= $userDetails["id"] ?>" class="btn btn-primary">
                         Edit Details
                     </a>

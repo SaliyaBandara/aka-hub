@@ -67,10 +67,29 @@ class readModel extends Model
         return false;
     }
 
+    public function getPassword($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT password FROM user WHERE id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getCoursesByYear($year)
     {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ?", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesByCode($code)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
         if (count($result) > 0)
             return $result;
 
