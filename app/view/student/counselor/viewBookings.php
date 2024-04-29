@@ -77,7 +77,7 @@ $sidebar = new Sidebar("Settings");
                                         echo'
                                             <div class="buttons flex flex-column" style = "width: 30%; margin: 0 !important;">
                                                 <div href="#" class=" btn btn-'.$class.' mb-1 form form-group justify-center align-center text-center" style = "max-width: 120px !important;">'.$button.'</div>
-                                                <div href="#" class=" btn btn-danger form form-group justify-center align-center text-center" style = "max-width: 120px !important;">Cancel</div>
+                                                <div href="#" class=" btn btn-danger form form-group justify-center align-center text-center button-cancel" style = "max-width: 120px !important;" data-id='.$reservation["reservation_id"].'>Cancel</div>
                                             </div>';
                                     }
                                 ?>
@@ -270,6 +270,36 @@ $sidebar = new Sidebar("Settings");
                     alertUser("danger", "Something Went Wrong");
                 }
             });
+        });
+    });
+
+    $(document).on("click", ".button-cancel", function(event) {
+        event.preventDefault();
+        let id = $(this).attr("data-id");
+        console.log(id);
+
+        if (!confirm("Are you sure you want to Cancel this Reservation?"))
+            return;
+
+        $.ajax({
+            url: `${BASE_URL}/counselorView/cancelledReservation/${id}`,
+            type: 'POST',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 200) {
+                    // Display success message
+                    alertUser("success", response['desc']);
+                    location.reload();
+                } else {
+                    alertUser("warning", response['desc']);
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong");
+            }
         });
     });
 

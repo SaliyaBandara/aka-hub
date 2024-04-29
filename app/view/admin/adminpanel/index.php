@@ -5,6 +5,49 @@ $sidebar = new Sidebar("adminpanel");
 $calendar = new CalendarComponent();
 ?>
 
+<style>
+    /* css quiery for print */
+    @page {
+        size: A4 portrait;
+        margin: 1%;
+        margin: 50px 0% 0 0%;
+        margin-top: 50px;
+    }
+
+
+    @media print {
+        .noprint {
+            display: none !important;
+        }
+
+        #sidebar {
+            display: none;
+        }
+
+        /* show background colors */
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+
+        #sidebar-active {
+            width: 100vw;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .main-grid .left {
+            width: 100% !important;
+        }
+
+        .main-grid .right {
+            flex-grow: 1;
+            /* height: 100vh; */
+        }
+
+    }
+</style>
+
 <div id="sidebar-active" class="hideScrollbar">
 
     <?php $welcomeSearch = new WelcomeSearch(); ?>
@@ -36,9 +79,10 @@ $calendar = new CalendarComponent();
             </div>
             <div class="fourGraphsContainor">
                 <div class="printDiv">
-                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">
+                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" href="javascript:window.print()">
                         Export
                     </a>
+
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
@@ -133,7 +177,7 @@ $calendar = new CalendarComponent();
             display: flex;
             margin-left: 50px;
             transition-duration: 0.5s;
-            ccursor : pointer;
+            ccursor: pointer;
         }
 
         .cardTotalUsers:hover {
@@ -153,7 +197,7 @@ $calendar = new CalendarComponent();
             align-items: center;
             display: flex;
             transition-duration: 0.5s;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .cardActiveUsers:hover {
@@ -174,7 +218,7 @@ $calendar = new CalendarComponent();
             margin-right: 50px;
             display: flex;
             transition-duration: 0.5s;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .cardNewUsers:hover {
@@ -344,4 +388,40 @@ $calendar = new CalendarComponent();
 
         chart5.render();
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script>
+    function downloadPDF() {
+        // Capture the entire webpage body
+        // html2canvas(document.body, {
+        //     useCORS: true
+        // }).then(canvas => {
+        //     downloadCanvasAsPDF(canvas, 'webpage.pdf');
+        // });
+    }
+
+    // function downloadCanvasAsPDF(canvas, filename) {
+    //     const dpi = window.devicePixelRatio || 1;
+    //     const pdfWidth = canvas.width * 25.4 / dpi / 96; // 1 inch = 96 pixels
+    //     const pdfHeight = canvas.height * 25.4 / dpi / 96;
+    //     const scale = 1;
+
+    //     const pdf = new window.jspdf.jsPDF({
+    //         orientation: 'portrait', // Adjust orientation as needed
+    //         unit: 'mm',
+    //         format: [pdfWidth * scale, pdfHeight * scale],
+    //     });
+
+    //     pdf.addImage(
+    //         canvas.toDataURL('image/png'),
+    //         'PNG',
+    //         0,
+    //         0,
+    //         pdfWidth * scale,
+    //         pdfHeight * scale
+    //     );
+
+    //     pdf.save(filename);
+    // }
 </script>

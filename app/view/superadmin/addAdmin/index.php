@@ -47,7 +47,7 @@ $sidebar = new Sidebar("adminAccount");
 
 
                 <div class="mt-1-5 form-group">
-                    <a href="<?= BASE_URL ?>/" class="btn btn-info">Back</a>
+                    <a href="<?= BASE_URL ?>/adminAccount" class="btn btn-info">Back</a>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
                 

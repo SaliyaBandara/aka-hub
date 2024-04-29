@@ -22,7 +22,7 @@ class ApproveRepresentatives extends Controller
     {
 
         $this->requireLogin();
-        if($_SESSION["user_role"] != 1){
+        if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to preview Representatives page";
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
@@ -38,7 +38,7 @@ class ApproveRepresentatives extends Controller
     public function previewAdminAccessControl($id)
     {
         $this->requireLogin();
-        if($_SESSION["user_role"] != 1){
+        if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to preview Admin Access Control page";
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
@@ -54,14 +54,14 @@ class ApproveRepresentatives extends Controller
     public function acceptRole($id, $role)
     {
         $this->requireLogin();
-        if($_SESSION["user_role"] != 1){
+        if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to accept Role";
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
 
-        if($role == "club_rep"){
+        if ($role == "club_rep") {
             $resultUserUpdate = $this->model('updateModel')->to_get_role(
                 "user",
                 $role,
@@ -69,18 +69,18 @@ class ApproveRepresentatives extends Controller
                 1
             );
 
-            $resultStatusUpdate = $this->model('updateModel')->to_update_status("club_representative",$id);
+            $resultStatusUpdate = $this->model('updateModel')->to_update_status("club_representative", $id);
 
-            if ($resultUserUpdate && $resultStatusUpdate){
+            if ($resultUserUpdate && $resultStatusUpdate) {
                 $action = "Admin successfully accepted role of Club Representative";
                 $status = "606";
                 $this->model("createModel")->createLogEntry($action, $status);
+                // $this->model("createModel")->notification();
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
-            }else {
+            } else {
                 die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
             }
-        }
-        else if($role == "student_rep"){
+        } else if ($role == "student_rep") {
             $resultUserUpdate = $this->model('updateModel')->to_get_role(
                 "user",
                 $role,
@@ -88,22 +88,20 @@ class ApproveRepresentatives extends Controller
                 1
             );
 
-            if ($resultUserUpdate){
+            if ($resultUserUpdate) {
                 $action = "Admin successfully accepted role of Student Representative";
                 $status = "606";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
-            }else {
+            } else {
                 die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
             }
         }
-
-
     }
     public function declineRole($id = 0, $role = 0)
     {
         $this->requireLogin();
-        if($_SESSION["user_role"] != 1){
+        if ($_SESSION["user_role"] != 1) {
             $action = "Unauthorized user tried to decline Role";
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
@@ -116,30 +114,26 @@ class ApproveRepresentatives extends Controller
             0
         );
 
-        if($role == "club_rep"){
+        if ($role == "club_rep") {
             $result1 = $this->model('deleteModel')->deleteOne("club_representative", $id);
 
-            if ($result && $result1){
+            if ($result && $result1) {
                 $action = "Admin successfully declined role";
                 $status = "200";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
-            }else {
+            } else {
                 die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
             }
-            
-        }
-
-        else if($role == "student_rep"){
-            if ($result){
+        } else if ($role == "student_rep") {
+            if ($result) {
                 $action = "Admin successfully declined role";
                 $status = "200";
                 $this->model("createModel")->createLogEntry($action, $status);
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
-            }else {
+            } else {
                 die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
             }
-            
         }
     }
 

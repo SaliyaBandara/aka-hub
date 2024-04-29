@@ -24,37 +24,41 @@ class CounselorChat extends Controller
         // Return only the chat users data as JSON
         header('Content-Type: application/json');
         echo json_encode($chat_users);
+
     }
 
-    public function chat_messages()
+    public function chat_messages($id)
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 5) {
             $this->redirect();
         }
-        // print_r($this->model('readModel')->getAllChatMessages("outgoing_id"));
-        $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id")[0]['outgoing_msg_id'];
-        $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id")[0]['incoming_msg_id'];
+
+        // // print_r($this->model('readModel')->getAllChatMessages("outgoing_id"));
+        // $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id")[0]['outgoing_msg_id'];
+        // $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id")[0]['incoming_msg_id'];
+
+        // print_r($id);
+ 
+
+        $user_id = $_SESSION["user_id"];
+        $outgoing_id = $id;
+        $incoming_id = $user_id;
 
         $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id);
-        // print_r($messages);
 
-        if(isset($_SESSION['user_id'])){
-            // $outgoing_id = $this->model('readModel')->getAllChatMessages("outgoing_id");
-            // $incoming_id = $this->model('readModel')->getAllChatMessages("incoming_id");
-            $output = "";
-
-            $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id);
-    
+        if(is_array($messages)) { // Check if $messages is an array
             if(count($messages) > 0){
+                $output = "";
+
                 foreach($messages as $row){ 
-                    if($row['outgoing_msg_id'] === $outgoing_id){ // if this is equal to then he is a msg sender
+                    if($row['outgoing_msg_id'] === $id){ 
                         $output .= '<div class="chat outgoing">
                                         <div class="details">
                                             <p>'. $row['msg'] .'</p>
                                         </div>
                                     </div>';
-                    }else{ // he is a msg receiver
+                    } else { 
                         $output .= '<div class="chat incoming">
                                         <img src="php/images/'. $row['img'] .'" alt="">
                                         <div class="details">
@@ -63,15 +67,19 @@ class CounselorChat extends Controller
                                     </div>';
                     }
                 }
-                // Return the chat messages as JSON
+                
                 header('Content-Type: application/json');
-                echo ($output);
-            }   
-           
+                echo $output;
+            } else {
+                // Handle case when $messages is an empty array
+                header('Content-Type: application/json');
+                echo json_encode(["message" => "No messages found"]);
+            }
+        } else {
+            // Handle case when $messages is not an array
+            header('Content-Type: application/json');
+            echo json_encode(["error" => "Messages not found"]);
         }
-        //  // Return the chat messages as JSON
-        //  header('Content-Type: application/json');
-        //  echo json_encode($messages);
-
     }
+
 }

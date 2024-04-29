@@ -19,7 +19,7 @@ class counselorSettings extends Controller
 
         $user_id = $_SESSION['user_id'];
 
-        $data["admin_details"] = $this->model("readModel")->getOneCounselor($user_id);
+        $data["counselor_details"] = $this->model("readModel")->getOneCounselor($user_id);
         $this->view->render('counselor/settings/index', $data);
     }
 
@@ -54,7 +54,7 @@ class counselorSettings extends Controller
             $this->validate_template($values, $data["counselor_profile_template"]);
             $this->validate_template($values, $data["user_template"]);
 
-            $result1 = $this->model('updateModel')->update_one("counselor", $values, $data["admin_profile_template"], "id", $id, "i");
+            $result1 = $this->model('updateModel')->update_one("counselor", $values, $data["counselor_profile_template"], "id", $id, "i");
             $result2 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
             if ($result1 && $result2) {

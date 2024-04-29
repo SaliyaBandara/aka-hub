@@ -11,14 +11,24 @@ $calendar = new CalendarComponent();
     <?php $welcomeSearch = new WelcomeSearch(); ?>
     <div class="main-grid flex">
         <div class="left">
+            <div class="section_header mb-1 flex flex-column">
+                <div class="title font-1-5 font-semibold flex align-center">
+                    <i class='bx bxs-calendar-check me-0-5'></i> Manage Reservations
+                </div>
+                <select id="status" name="status" style = "width: 20%; " data-validation="required" class="form-control my-1">
+                        <option value = 1 >Pending</option>
+                        <option value = 3 >Completed</option>
+                        <option value = 4 >Cancelled By Me</option>
+                        <option value = 5 >Cancelled By Student</option>
+                </select>
+            </div>
            
             <!-- ===VIRAJITH=== -->
-            <div class="main-container">
+            <div class="main-container" id="reservations">
                 <?php
                 if (empty($data["reservation_requests"])) {
-                    echo "<p>NO RESERVATIONS AVAILABLE</p>";
+                    echo "<div class='font-medium text-muted'>No pending reservations Available!</div>";
                 } else {
-                        //sorting function to sort reservation requests by date and time
                         function sortByDateTime($a, $b) {
                             // Compare reservation dates
                             $dateComparison = strcmp($a["date"], $b["date"]);
@@ -38,9 +48,7 @@ $calendar = new CalendarComponent();
                             if ($reservation_requests["profile_img"] != null || $reservation_requests["profile_img"] != "") {
                                 $img_src = USER_IMG_PATH . $reservation_requests["profile_img"];
                             }
-                        
                 ?>
-                    
                     <div class="card-content">
                         <div class="card">
                             <div class="image-content">
@@ -52,14 +60,14 @@ $calendar = new CalendarComponent();
                             </div>
                             <div class="card-content">
                                 <h2 class="name"><?= $reservation_requests["name"] ?></h2>
-                                <label class="description">Date: <?= date("Y/m/d", strtotime($reservation_requests["date"])) ?></label>
+                                <label class="description">Date: <?= date("Y.m.d", strtotime($reservation_requests["date"])) ?></label>
                                 <label class="description">Time Slot: <?= date("H:i", strtotime($reservation_requests["start_time"])) ?> to <?= date("H:i", strtotime($reservation_requests["end_time"])) ?></label>
-                                <button class="button button-completed" data-id="<?= $reservation_requests["id"] ?>">Completed <i class='bx bxs-user-check'></i></button>
+                                <label class="description">Email: <?= $reservation_requests["email"] ?></label>
+                                <button class="button button-complete" data-id="<?= $reservation_requests["id"] ?>">Complete <i class='bx bxs-user-check'></i></button>
                                 <button class="button button-cancel" data-id="<?= $reservation_requests["id"] ?>">Cancel <i class='bx bxs-user-x'></i></button>
                             </div>
                         </div>
                     </div>
-                   
                 <?php }} ?>
             </div>
             <div class="new">
@@ -405,7 +413,7 @@ $calendar = new CalendarComponent();
         .button-cancel:hover{
             background-color: #b30b0b;
         }
-        .button-completed{
+        .button-complete{
             border: none;
             font-size: 16px;
             color: #FFF;
@@ -419,8 +427,36 @@ $calendar = new CalendarComponent();
             min-width: 142px;
             min-height: 40px;
         }
-        .button-completed:hover{
+        .button-complete:hover{
             background-color: #265df2;
+        }
+        .button-completed{
+            border: none;
+            font-size: 16px;
+            color: #FFF;
+            padding: 8px 16px;
+            background-color: #333;
+            border-radius: 6px;
+            margin: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0;
+            min-width: 142px;
+            min-height: 40px;
+        }
+        .button-cancelled{
+            border: none;
+            font-size: 16px;
+            color: #FFF;
+            padding: 8px 16px;
+            background-color: #b30b0b;
+            border-radius: 6px;
+            margin: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0;
+            min-width: 142px;
+            min-height: 40px;
         }
         .main-container p{
             text-align: center;
@@ -458,7 +494,33 @@ $calendar = new CalendarComponent();
     let BASE_URL = "<?= BASE_URL ?>";
 </script>
 <script>
-    $(document).on("click", ".button-completed", function(event) {
+    $(document).ready(function() {
+        $(document).on("change", "#status", function() {
+
+            let selectedValue = $("#status").val();
+
+            $.ajax({
+                url: `${BASE_URL}/counselorReservations/filter`,
+                type: 'post',
+                data: {
+                    status: selectedValue
+                },
+                success: function(data) {
+                    if (data) {
+                        $('#reservations').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No reservations found.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+    });
+
+    $(document).on("click", ".button-complete", function(event) {
         event.preventDefault(); 
         let id = $(this).attr("data-id");  
 
@@ -485,39 +547,6 @@ $calendar = new CalendarComponent();
             }
         });
     });  
-
-    // $(document).on("click", ".button-cancel", function(event) {
-    //     event.preventDefault(); 
-    //     let id = $(this).attr("data-id");
-        
-    //     // confirm cancellation
-    //     if (!confirm("Are you sure you want to cancel this Reservation?"))
-    //             return;
-
-
-    //     $.ajax({
-    //         url: `${BASE_URL}/counselorReservations/cancelledReservation/${id}`, 
-    //         type: 'POST',
-    //         data: {
-    //             id: id
-    //         },
-    //         dataType: 'json',
-    //         success: function(response) {
-    //             if (response.status === 200) {
-    //                 alertUser("success", response['desc'])
-    //                 setTimeout(() => {
-    //                     location.reload();
-    //                 }, 1000);
-            
-    //             } else {
-    //                 alertUser("warning", response['desc'])
-    //             }
-    //         },
-    //         error: function(ajaxContext) {
-    //             alertUser("danger", "Something Went Wrong")       
-    //         }
-    //     });
-    // });
 
     $(document).on("click", ".button-cancel", function(event) {
         event.preventDefault();

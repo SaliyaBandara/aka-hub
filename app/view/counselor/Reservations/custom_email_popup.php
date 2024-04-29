@@ -12,7 +12,7 @@
             <form class="form-1">
                 <div class="label-container">
                     <form action="" class="contact-left">
-                        <label for="email">Sends to: <?= $user["email"] ?></label>
+                        <label for="email">Sends to: </label>
                         <textarea name="message" placeholder="Enter message" class="contact-textarea" required></textarea>
                         <div class="input-buttons">
                             <a href="#" class="email send-email">Send Email <i class='bx bx-envelope'></i></a>

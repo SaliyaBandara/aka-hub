@@ -11,6 +11,7 @@ class counselorManageTimeSlots extends Controller
 
         $this->view->render('counselor/manageTimeSlots/index', $data);
     }
+
     public function addtimeslots($id = 0, $action = "create")
     {
         $this->requireLogin();
@@ -83,8 +84,6 @@ class counselorManageTimeSlots extends Controller
         $user_id = $_SESSION["user_id"];    
 
         $data["timeslots"] = $this->model('readModel')->getTimeSlotsByCounselorId($user_id);
-
-        // $data["timeslots"] = $this->model('readModel')->getAddedTimeSlots("timeslots");
 
         $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
     }
@@ -187,4 +186,46 @@ class counselorManageTimeSlots extends Controller
             die(json_encode(["status" => 400, "desc" => "Error removing time slot."]));
         }
     }
+
+    // public function filterDates($start_date = null, $end_date = null) {
+    //     $this->requireLogin();
+    //     if ($_SESSION["user_role"] != 5) {
+    //         die(json_encode(["status" => 403, "desc" => "Access Forbidden."]));
+    //     }
+
+    //     $data = [
+    //         'title' => 'Manage Time Slots',
+    //         'message' => 'Welcome to Aka Hub!'
+    //     ];
+    
+    //     if ($start_date === null || $end_date === null) {
+    //         die(json_encode(["status" => 400, "desc" => "Please select a date range."]));
+    //     }
+
+    //     if ($start_date > $end_date) {
+    //         die(json_encode(["status" => 400, "desc" => "Start Date must be before End Date."]));
+    //     }
+
+    //     // print_r($start_date);
+    //     // print_r($end_date);
+    //     // print_r($_SESSION["user_id"]);
+    //     // die;
+
+    //     //user id
+    //     $data['start_date'] = $start_date;
+    //     $data['end_date'] = $end_date;
+
+    //     $user_id = $_SESSION["user_id"];
+
+    //     $data["timeslots"] = $this->model('readModel')->getAllTimeSlotsByDateRange($user_id, $start_date, $end_date);
+        
+    //     $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
+
+    //     if ($data) {
+    //         die(json_encode(["status" => 200, "desc" => "Time slots successfully loaded."]));
+    //     } else {
+    //         die(json_encode(["status" => 400, "desc" => "Error loading time slots."]));
+    //     }
+        
+    // }
 }

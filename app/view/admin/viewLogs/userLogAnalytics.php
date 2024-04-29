@@ -18,7 +18,7 @@ $calendar = new CalendarComponent();
                 <div class="mb-1 form-group right_side">
                     <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">Back
                     </a>
-                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">
+                    <a href="javascript:window.print()" class="btn btn-info">
                         Export
                     </a>
                 </div>
@@ -70,7 +70,7 @@ $calendar = new CalendarComponent();
             <div class="graphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <p class="mb-1"><b>Loging time periods to platform</b></p>
+                        <p class="mb-1"><b>User Signing Time Distribution</b></p>
                         <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
                     </div>
                     <div class="graphContainor">
@@ -250,7 +250,7 @@ $calendar = new CalendarComponent();
                 // showInLegend: "true",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
+                indexLabel: "{label}",
                 yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]

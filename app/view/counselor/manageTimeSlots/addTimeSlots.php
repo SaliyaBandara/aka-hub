@@ -19,7 +19,7 @@ $calendar = new CalendarComponent();
                     <h1>Manage Time Slots</h1>
                 </div>
                 <div class="date-range">
-                    <p class="p2">From<input type="date"> to <input type="date"><a href="#" class="button-select">Show</a></p>
+                    <p class="p2">From<input type="date" value=""> to <input type="date"><a href="#" class="button-select">Show</a></p>
                     <p class="p1">Please add your available time slots here</p>
                 </div>
                 <div class="custom-button-div">
@@ -45,12 +45,7 @@ $calendar = new CalendarComponent();
                                     $class = "card-added";
                                     $buttonClass = "button-remove";
                                     $button = "Remove";
-                                }  
-                                // if ($timeslot["added"] == 0){
-                                //     $class = "card-not-added";
-                                //     $buttonClass = "button-add";
-                                //     $button = "Add";
-                                // }   
+                                }    
                     ?>
                     
                         <div class="card timeslotcard <?= $class ?>" data-id="<?= $timeslot["id"] ?>">
@@ -515,6 +510,7 @@ $calendar = new CalendarComponent();
 
                 $.ajax({
                     // url: url,
+                    // url: `${BASE_URL}/counselorManageTimeSlots/addtimeslots`,
                     type: 'post',
                     data: {
                         addtimeslots: values 

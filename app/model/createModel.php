@@ -205,6 +205,7 @@ class createModel extends Model
             4 - Materials
             5 - Election
             6 - Counsellor Reservations - High Priority (Ignore Preference)
+            7 - misc
         */
 
         // -- notifications table
@@ -445,5 +446,18 @@ class createModel extends Model
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
         $dompdf->stream("report.pdf", ['Attachment' => false]);
+    }
+
+    public function add_system_variable($name, $value)
+    {
+        $result = $this->insert_db("system_variables", [
+            "name" => $name,
+            "value" => $value
+        ], [
+            "name" => ["type" => "string"],
+            "value" => ["type" => "string"]
+        ]);
+
+        return $result;
     }
 }
