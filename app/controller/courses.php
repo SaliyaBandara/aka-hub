@@ -186,7 +186,6 @@ class Courses extends Controller
                 }
 
                 echo '</div>';
-
             }
         }
     }
@@ -211,16 +210,15 @@ class Courses extends Controller
         $year = $data["student"][0]["year"];
 
         if ($searchValue == "") {
-            if($page == 1)
+            if ($page == 1)
                 $data["courses"] = $this->model('readModel')->getCoursesByYear($year);
             else
                 $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
-        } else if($page == 1){
+        } else if ($page == 1) {
 
-            $data["courses"] = $this->model('readModel')->getCoursesBySearch($year,$searchValue);
-        }
-        else{
-            $data["courses"] = $this->model('readModel')->getCoursesBelowYearSearch($year,$searchValue);
+            $data["courses"] = $this->model('readModel')->getCoursesBySearch($year, $searchValue);
+        } else {
+            $data["courses"] = $this->model('readModel')->getCoursesBelowYearSearch($year, $searchValue);
         }
 
         $BASE_URL =  BASE_URL;
@@ -325,7 +323,7 @@ class Courses extends Controller
             $values["course_id"] = $course_id;
             $values["user_id"] = $_SESSION["user_id"];
             // $values["reference_links"] = json_encode($values["reference_links"]);
-            if (isset($values["kuppi_video"])){
+            if (isset($values["kuppi_video"])) {
                 $values["video_links"] = json_encode($values["kuppi_video"]);
             }
             if (isset($values["course_materials"]))
@@ -422,6 +420,28 @@ class Courses extends Controller
             $year = $data["student"][0]["year"];
             $values["year"] = $year;
 
+            if ($action == "create") {
+                $result = $this->model('readModel')->isCodeExist($values["code"]);
+                if ($result) {
+                    die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
+                }
+
+                $result = $this->model('readModel')->isCourseExist($values["name"]);
+                if ($result) {
+                    die(json_encode(array("status" => "400", "desc" => "Course name already exists")));
+                }
+            } else {
+                $result = $this->model('readModel')->isCodeExist($values["code"]);
+                if ($result && $result["id"] != $id) {
+                    die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
+                }
+
+                $result = $this->model('readModel')->isCourseExist($values["name"]);
+                if ($result && $result["id"] != $id) {
+                    die(json_encode(array("status" => "400", "desc" => "Course name already exists")));
+                }
+            }
+
             $this->validate_template($values, $data["course_template"]);
 
             if ($id == 0) {
@@ -451,9 +471,7 @@ class Courses extends Controller
                     $this->model('createModel')->notification(4, $id, 0, $course_name, $notif_message, $values["year"], "/courses/index");
                 }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-            }
-
-            else if($existingCourse){
+            } else if ($existingCourse) {
                 die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
             }
 

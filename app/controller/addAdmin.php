@@ -57,6 +57,10 @@ class AddAdmin extends Controller
                 $result = $this->model('readModel')->isEmailExist($values["email"]);
                 if ($result)
                     die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+            }else{
+                $result = $this->model('readModel')->isEmailExist($values["email"]);
+                if ($result && $result[0]["id"] != $id)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
             }
 
             //check if valid phone number
@@ -74,12 +78,6 @@ class AddAdmin extends Controller
 
             if ($id == 0) {
                 $result = 0;
-
-                $isEmailExist = $this->model('readModel')->isEmailExist($values["email"]);
-
-                if ($isEmailExist)
-                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
-
                 $user_id = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($user_id) {
                     $values["id"] = $user_id;

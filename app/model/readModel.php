@@ -71,8 +71,24 @@ class readModel extends Model
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
         if (count($result) > 0)
-            return true;
-        return false;
+            return $result;
+        return $result;
+    }
+
+    public function isCodeExist($code)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
+        if (count($result) > 0)
+            return $result[0];
+        return $result[0];
+    }
+
+    public function isCourseExist($course_name)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE name = ?", "s", [$course_name]);
+        if (count($result) > 0)
+            return $result[0];
+        return $result[0];
     }
 
     public function getAllUsers()
