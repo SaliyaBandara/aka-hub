@@ -185,7 +185,7 @@ class Forum extends Controller
             $this->validate_template($values, $data["comment_template"]);
             $result = $this->model('createModel')->insert_db("forum_comments", $values, $data["comment_template"]);
             if ($result) 
-                die(json_encode(array("status" => "200", "desc" => "Comment Added to the Post Successfully")));
+                die(json_encode(array("status" => "200", "desc" => "Comment Added to the Post Successfully", "id" => $result)));
             
             die(json_encode(array("status" => "400", "desc" => "Error while adding comment")));
         }

@@ -614,7 +614,8 @@ $sidebar = new Sidebar("forum");
         var comment = '<div class="comment-content" contentEditable="true">Enter Your Comment</div><div class="reply"><a href="#reply" title="Reply to this comment">+</a></div>';
         var done = "<button class='reply-done btn btn-primary'>Done</button>";
 
-        $('.comments').on('click', '.reply', newCommentBlock).on('click', '.reply-done', submitHandler);
+        // $('.comments').on('click', '.reply', newCommentBlock).on('click', '.reply-done', submitHandler);
+        $(document).on('click', '.comments .reply', newCommentBlock).on('click', '.comments .reply-done', submitHandler);
         var newComment = "<li><article class='comment new-comment'>" + avatar + comment + done + "</div></li>";
 
 
@@ -653,6 +654,7 @@ $sidebar = new Sidebar("forum");
 
             // get content
             let content = $('.new-comment .comment-content').text().trim();
+            // console.log(content);
             if (content != "") {
                 // console.log(content);
 
@@ -677,6 +679,10 @@ $sidebar = new Sidebar("forum");
                     success: function(response) {
                         if (response['status'] == 200) {
                             alertUser("success", response['desc'])
+
+                            // find closest parent article and set parent id
+                            $this.closest('article.comment').attr('data-id', response['id']);
+                            
                         } else if (response['status'] == 403)
                             alertUser("danger", response['desc'])
                         else
@@ -747,6 +753,8 @@ $sidebar = new Sidebar("forum");
                             $this.closest(".post-item").find("#new_comment").val("");
                             console.log(new_comment);
 
+                            // set parent id
+                            $this.closest(".post-item").find(".comments li:last-child article").attr("data-id", response['id']);
 
                         } else if (response['status'] == 403)
                             alertUser("danger", response['desc'])
