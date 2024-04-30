@@ -57,12 +57,14 @@ class CalendarComponent
                 margin-top: 25px;
                 width: 380px !important;
                 height: 385px;
+                height: auto;
                 width: 100%;
                 min-height: 275px;
                 background: #fff;
                 border-radius: 10px;
                 -webkit-box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+                border: 1px solid #3d3d3d59;
             }
 
             .wrapper header {
@@ -82,7 +84,7 @@ class CalendarComponent
             }
 
             .wrapper header p {
-                color: #fff;
+                color: #000;
                 font-size: 1.3rem;
                 font-weight: 500;
             }
