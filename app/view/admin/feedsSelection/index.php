@@ -28,11 +28,14 @@ $sidebar = new Sidebar("feedsSelection");
     <style>
         .main-grid {}
 
+        .divTile {
+            text-align: center;
+            color: white;
+        }
         .divTile a {
             text-decoration: none;
-            color: black;
+            color: white;
         }
-
         .divTileRow {
             width: 100%;
             height: 200px;
@@ -56,21 +59,16 @@ $sidebar = new Sidebar("feedsSelection");
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
             color: inherit;
-            /* background-image: linear-gradient(45deg, #ff9b2d, #ff5755); */
             opacity: 0.7;
             text-decoration: none;
-
-            /* background-image: url('http://127.0.0.1/aka-hub/public/assets/img/common/elections.jpg');
-            background-size: cover; */
+            background-color: #1264ab;
         }
 
         .tile:hover {
             width: 25%;
             height: 175px;
             transform: scale(1.025);
-            background-color: #f5f5f5;
-            background-color: #eeecec;
-            background-color: #bdd2f138;
+            background-color: #1264aba9;
             margin: 30px;
             display: flex;
             justify-content: center;

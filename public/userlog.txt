@@ -411,3 +411,39 @@ samanbandara@gmail.com	127.0.0.1	04/30/24 02:34PM	User logged in as Admin with e
 
 samanbandara@gmail.com	127.0.0.1	04/30/24 02:36PM	Counselor Account Created for email : KasunKarunanayake@gmail.com	http://127.0.0.1/aka-hub/addCounselors/index/0url=addCounselors/index/0	600
 
+samanbandara@gmail.com	127.0.0.1	04/30/24 04:26PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:26PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:31PM	Post liked	http://127.0.0.1/aka-hub/counselorFeed/like/1url=counselorFeed/like/1	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:31PM	User tried to like post multiple times	http://127.0.0.1/aka-hub/counselorFeed/like/1url=counselorFeed/like/1	400
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:31PM	User tried to like post multiple times	http://127.0.0.1/aka-hub/counselorFeed/like/1url=counselorFeed/like/1	400
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:32PM	Post liked	http://127.0.0.1/aka-hub/counselorFeed/like/26url=counselorFeed/like/26	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:40PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 04:40PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 04:48PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 04:48PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 05:01PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 05:01PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 05:19PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 05:19PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 05:44PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 05:44PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 06:34PM	Admin successfully updated profile details samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/add_edit/105url=adminProfileAndSettings/add_edit/105	601
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 06:42PM	An Election created	http://127.0.0.1/aka-hub/elections/add_edit/0/createurl=elections/add_edit/0/create	201
+

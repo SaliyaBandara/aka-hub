@@ -119,7 +119,7 @@ $calendar = new CalendarComponent();
         </div>
         <!-- <div class="right">
             <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
+                <?= $calendar->render(); ?>
             </div>
         </div> -->
     </div>
