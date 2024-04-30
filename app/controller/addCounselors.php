@@ -38,6 +38,7 @@ class AddCounselors extends Controller
 
             $values["role"] = 5;
             $values["status"] = 1;
+
             if (isset($values["password"]) && $values["password"] != "")
                 $values["password"] = password_hash($values["password"], PASSWORD_DEFAULT);
 
@@ -45,14 +46,30 @@ class AddCounselors extends Controller
             if (!filter_var($values["email"], FILTER_VALIDATE_EMAIL))
                 die(json_encode(array("status" => "400", "desc" => "Please enter a valid email")));
 
+            // check if valid alt email
+            if (!filter_var($values["alt_email"], FILTER_VALIDATE_EMAIL))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid alt email")));
+
+            // check if email already exists
+            if ($id == 0) {
+                $result = $this->model('readModel')->isEmailExist($values["email"]);
+                if ($result)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+            }
+
+            //check if valid phone number
+            if (!preg_match("/^[0-9]{9}$/", $values["contact"]))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid phone number")));
+
+
             $this->validate_template($values, $data["user_template"]);
             $this->validate_template($values, $data["counselor_template"]);
 
             if ($id == 0) {
-                $result = false;
+                $result = 0;
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
-                    $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
+                    $values["id"] = $result1;
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
                     $result = $result1 && $result2;
                 }
@@ -65,7 +82,7 @@ class AddCounselors extends Controller
                     }
                 }
             } else {
-                $result = false;
+                $result = 0;
                 $result1 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
                 if ($result1) {
                     $values["id"] = $id;

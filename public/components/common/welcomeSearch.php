@@ -39,7 +39,7 @@ class WelcomeSearch
                                 <ul class="pointer" id="notification-list">
                                     <li>
                                         <?php
-                                        if ($_SESSION["user_role"] == 1) {
+                                        if (($_SESSION["user_role"] == 1)||($_SESSION["user_role"] == 3)) {
                                         ?>
                                             <a href="<?= BASE_URL ?>/calendarAdminView">
                                             <?php
@@ -56,7 +56,7 @@ class WelcomeSearch
                                                 </a>
                                     </li>
                                     <?php
-                                    if ($_SESSION["user_role"] == 1) {
+                                    if (($_SESSION["user_role"] == 1)||($_SESSION["user_role"] == 3)) {
                                     ?>
                                         <li><a href="<?= BASE_URL ?>/calendarAdminView">PDC01: LSEG Tech Talk Session: "Market Surveillance in Financial Markets and AI applications in the domain</a></li>
                                     <?php

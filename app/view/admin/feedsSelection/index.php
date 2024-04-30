@@ -68,7 +68,6 @@ $sidebar = new Sidebar("feedsSelection");
             width: 25%;
             height: 175px;
             transform: scale(1.025);
-            background-color: #1264aba9;
             margin: 30px;
             display: flex;
             justify-content: center;
