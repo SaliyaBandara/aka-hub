@@ -29,82 +29,83 @@ $sidebar = new Sidebar("forum");
                         // print_r($data['items']);
                         // die;
 
-                        foreach ($data['item'] as $key => $value) {
-                            $img = USER_IMG_PATH . $value['image'];
-                            $value['created_at'] = date("d M Y", strtotime($value['created_at']));
+                        if (count($data['item']) > 0) {
+                            foreach ($data['item'] as $key => $value) {
+                                $img = USER_IMG_PATH . $value['image'];
+                                $value['created_at'] = date("d M Y", strtotime($value['created_at']));
 
-                            $user_img = USER_IMG_PATH . $value['user']['profile_img'];
+                                $user_img = USER_IMG_PATH . $value['user']['profile_img'];
 
-                            // get user year with suffix
-                            $suffixes = ["st", "nd", "rd", "th"];
+                                // get user year with suffix
+                                $suffixes = ["st", "nd", "rd", "th"];
 
-                            $year = $value['user']['year'] . "th Year Student";
-                            if ($value['user']['year'] < 4)
-                                $year = $value['user']['year'] . $suffixes[$value['user']['year'] - 1] . " Year Student";
+                                $year = $value['user']['year'] . "th Year Student";
+                                if ($value['user']['year'] < 4)
+                                    $year = $value['user']['year'] . $suffixes[$value['user']['year'] - 1] . " Year Student";
 
                         ?>
 
-                            <div class="post-item" data-id="<?= $value['id'] ?>">
-                                <div class="user-details">
-                                    <div class="profile-img">
-                                        <img src="<?= $user_img ?>" alt="profile">
-                                    </div>
-                                    <div class="user-name font-semibold">
-                                        <?= $value['user']['name'] ?><br />
-                                        <span class="font-0-8"><?= $year ?></span>
-                                    </div>
-                                    <div class="spacer"></div>
-                                    <div class="date-time"><?= $value['created_at'] ?></div>
-                                </div>
-                                <div class="post-content">
-                                    <div class="post-title"><?= $value['title'] ?></div>
-                                    <div class="post-desc"><?= $value['content'] ?></div>
-                                    <?php if ($value['image'] != "") { ?>
-                                        <div class="post-img">
-                                            <img src="<?= $img ?>" alt="post image">
+                                <div class="post-item" data-id="<?= $value['id'] ?>">
+                                    <div class="user-details">
+                                        <div class="profile-img">
+                                            <img src="<?= $user_img ?>" alt="profile">
                                         </div>
-                                    <?php } ?>
-                                    <div class="post-actions">
-                                        <div class="action-item">
-                                            <i class='bx bx-comment'></i> 5
+                                        <div class="user-name font-semibold">
+                                            <?= $value['user']['name'] ?><br />
+                                            <span class="font-0-8"><?= $year ?></span>
                                         </div>
-                                        <!-- <div class="action-item">
+                                        <div class="spacer"></div>
+                                        <div class="date-time"><?= $value['created_at'] ?></div>
+                                    </div>
+                                    <div class="post-content">
+                                        <div class="post-title"><?= $value['title'] ?></div>
+                                        <div class="post-desc"><?= $value['content'] ?></div>
+                                        <?php if ($value['image'] != "") { ?>
+                                            <div class="post-img">
+                                                <img src="<?= $img ?>" alt="post image">
+                                            </div>
+                                        <?php } ?>
+                                        <div class="post-actions">
+                                            <div class="action-item">
+                                                <i class='bx bx-comment'></i> 5
+                                            </div>
+                                            <!-- <div class="action-item">
                                             <i class='bx bx-share'></i> 3
                                         </div> -->
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="new-comment-box">
-                                    <input type="text" id="new_comment" name="new_comment" placeholder="Add a comment" value="" data-validation="required" class="form-control">
-                                    <button type="submit" class="btn btn-primary new-comment-btn">Comment</button>
-                                </div>
+                                    <div class="new-comment-box">
+                                        <input type="text" id="new_comment" name="new_comment" placeholder="Add a comment" value="" data-validation="required" class="form-control">
+                                        <button type="submit" class="btn btn-primary new-comment-btn">Comment</button>
+                                    </div>
 
-                                <style>
-                                    .new-comment-box {
-                                        margin-top: 1rem;
-                                        display: flex;
-                                    }
+                                    <style>
+                                        .new-comment-box {
+                                            margin-top: 1rem;
+                                            display: flex;
+                                        }
 
-                                    .new-comment-box button {
-                                        margin-left: 0.5rem;
-                                    }
-                                </style>
+                                        .new-comment-box button {
+                                            margin-left: 0.5rem;
+                                        }
+                                    </style>
 
-                                <div class="post-comments">
+                                    <div class="post-comments">
 
-                                    <hr />
-                                    <h3>Comments</h3>
-                                    <ol class="comments">
-                                        <?php
-                                        function generateCommentHtml($comments)
-                                        {
-                                            $html = '';
-                                            foreach ($comments as $comment) {
+                                        <hr />
+                                        <h3>Comments</h3>
+                                        <ol class="comments">
+                                            <?php
+                                            function generateCommentHtml($comments)
+                                            {
+                                                $html = '';
+                                                foreach ($comments as $comment) {
 
-                                                $has_replies = !empty($comment['replies']) ? 'has-replies' : '';
+                                                    $has_replies = !empty($comment['replies']) ? 'has-replies' : '';
 
 
-                                                $html .= '<li class="' . $has_replies . '">
+                                                    $html .= '<li class="' . $has_replies . '">
                                                 <article class="comment" data-id="' . $comment['id'] . '">
                                                 <aside class="avatar">
                                                 <img src="' . USER_IMG_PATH . $comment['user']['profile_img'] . '" alt="' . $comment['user']['name'] . '">
@@ -114,228 +115,228 @@ $sidebar = new Sidebar("forum");
                                                 <div class="reply">
                                                 <a href="#reply" title="Reply to this comment">+</a>
                                                 </div>';
-                                                $html .= '</article>';
+                                                    $html .= '</article>';
 
 
-                                                if (!empty($comment['replies'])) {
-                                                    $html .= '<ol class="replies">';
+                                                    if (!empty($comment['replies'])) {
+                                                        $html .= '<ol class="replies">';
 
-                                                    // Recursively generate replies
-                                                    $html .= generateCommentHtml($comment['replies']);
-                                                    $html .= '</ol>';
+                                                        // Recursively generate replies
+                                                        $html .= generateCommentHtml($comment['replies']);
+                                                        $html .= '</ol>';
+                                                    }
+
+
+                                                    echo '</li>';
                                                 }
 
-
-                                                echo '</li>';
+                                                return $html;
                                             }
 
-                                            return $html;
-                                        }
-
-                                        foreach ($data['item'] as $value) {
-                                            if (!empty($value['comments'])) {
-                                                echo generateCommentHtml($value['comments']);
+                                            foreach ($data['item'] as $value) {
+                                                if (!empty($value['comments'])) {
+                                                    echo generateCommentHtml($value['comments']);
+                                                }
                                             }
-                                        }
-                                        ?>
-                                    </ol>
+                                            ?>
+                                        </ol>
+                                    </div>
                                 </div>
-                            </div>
 
 
-                            <style>
-                                .post-comments hr {
-                                    background: none;
-                                    border: none;
-                                    width: 100%;
-                                    margin: 0;
-                                    border-top: 1px solid #ccc;
-                                }
+                                <style>
+                                    .post-comments hr {
+                                        background: none;
+                                        border: none;
+                                        width: 100%;
+                                        margin: 0;
+                                        border-top: 1px solid #ccc;
+                                    }
 
-                                .post-comments {
-                                    /* max-width: 720px; */
-                                    border-radius: 5px;
-                                    padding: 0;
-                                    margin-top: 20px;
-                                    /* box-shadow: 0 0 20px rgba(0, 0, 0, .2), 0 5px 5px rgba(0, 0, 0, 0.2); */
-                                    /* margin: 40px auto 60px auto; */
-                                }
+                                    .post-comments {
+                                        /* max-width: 720px; */
+                                        border-radius: 5px;
+                                        padding: 0;
+                                        margin-top: 20px;
+                                        /* box-shadow: 0 0 20px rgba(0, 0, 0, .2), 0 5px 5px rgba(0, 0, 0, 0.2); */
+                                        /* margin: 40px auto 60px auto; */
+                                    }
 
-                                .post-comments .comments,
-                                .post-comments .replies {
-                                    list-style-type: none;
-                                    margin: 0;
-                                    padding: 0;
-                                }
+                                    .post-comments .comments,
+                                    .post-comments .replies {
+                                        list-style-type: none;
+                                        margin: 0;
+                                        padding: 0;
+                                    }
 
-                                .post-comments .replies {
-                                    margin-left: 40px;
-                                }
+                                    .post-comments .replies {
+                                        margin-left: 40px;
+                                    }
 
-                                .post-comments .comments li {
-                                    clear: both;
-                                }
+                                    .post-comments .comments li {
+                                        clear: both;
+                                    }
 
-                                .post-comments .comment {
-                                    margin: 20px 0;
-                                }
+                                    .post-comments .comment {
+                                        margin: 20px 0;
+                                    }
 
-                                .post-comments .name {
-                                    font-weight: bold;
-                                }
+                                    .post-comments .name {
+                                        font-weight: bold;
+                                    }
 
-                                /* .post-comments .name:after {
+                                    /* .post-comments .name:after {
                                     content: " says:";
                                 } */
 
-                                .post-comments .avatar img {
-                                    border-radius: 50%;
-                                    float: left;
-                                    margin-right: 5px;
+                                    .post-comments .avatar img {
+                                        border-radius: 50%;
+                                        float: left;
+                                        margin-right: 5px;
 
-                                    width: 30px;
-                                    height: 30px;
-                                    object-fit: cover;
-                                }
+                                        width: 30px;
+                                        height: 30px;
+                                        object-fit: cover;
+                                    }
 
-                                .post-comments .comment-content {
-                                    overflow: hidden;
-                                    font-size: var(--rv-0-9);
-                                    padding-left: 0.75rem;
-                                }
+                                    .post-comments .comment-content {
+                                        overflow: hidden;
+                                        font-size: var(--rv-0-9);
+                                        padding-left: 0.75rem;
+                                    }
 
-                                .post-comments .comment {
-                                    position: relative;
-                                    /* min-height: 100px; */
-                                }
+                                    .post-comments .comment {
+                                        position: relative;
+                                        /* min-height: 100px; */
+                                    }
 
-                                .post-comments .comment:hover .reply {
-                                    /* display: block; */
+                                    .post-comments .comment:hover .reply {
+                                        /* display: block; */
 
-                                    transform: scale(1);
-                                    transition: transform 0.2s cubic-bezier(0.5, -0.5, 0.5, 1.5);
-                                }
+                                        transform: scale(1);
+                                        transition: transform 0.2s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+                                    }
 
-                                .post-comments .comment .reply {
-                                    transform-origin: 50% -10px;
-                                    transition: transform 0.2s cubic-bezier(0.5, -0.5, 0.5, 1.5);
-                                    transform: scale(0);
-                                    /* display: none; */
+                                    .post-comments .comment .reply {
+                                        transform-origin: 50% -10px;
+                                        transition: transform 0.2s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+                                        transform: scale(0);
+                                        /* display: none; */
 
-                                    position: absolute;
-                                    top: 46px;
-                                    left: 16px;
-                                    width: 20px;
-                                    height: 20px;
-                                    border: 2px solid #ccc;
-                                    background: #fff;
-                                    margin-left: -12px;
-                                    z-index: 99;
-                                    text-align: center;
-                                    line-height: 20px;
-                                    font-size: var(--rv-0-8);
-                                    color: #ccc;
-                                    border-radius: 50%;
-                                }
+                                        position: absolute;
+                                        top: 46px;
+                                        left: 16px;
+                                        width: 20px;
+                                        height: 20px;
+                                        border: 2px solid #ccc;
+                                        background: #fff;
+                                        margin-left: -12px;
+                                        z-index: 99;
+                                        text-align: center;
+                                        line-height: 20px;
+                                        font-size: var(--rv-0-8);
+                                        color: #ccc;
+                                        border-radius: 50%;
+                                    }
 
-                                .post-comments .reply:before {
-                                    content: "";
-                                    position: absolute;
-                                    top: -12px;
-                                    left: 6px;
-                                    border-left: 2px solid #ccc;
-                                    height: 10px;
-                                }
+                                    .post-comments .reply:before {
+                                        content: "";
+                                        position: absolute;
+                                        top: -12px;
+                                        left: 6px;
+                                        border-left: 2px solid #ccc;
+                                        height: 10px;
+                                    }
 
-                                .post-comments .reply a {
-                                    position: absolute;
-                                    top: 0;
-                                    right: 0;
-                                    bottom: 0;
-                                    left: 0;
-                                    margin: auto;
-                                    text-decoration: none;
-                                    color: #ccc;
-                                }
+                                    .post-comments .reply a {
+                                        position: absolute;
+                                        top: 0;
+                                        right: 0;
+                                        bottom: 0;
+                                        left: 0;
+                                        margin: auto;
+                                        text-decoration: none;
+                                        color: #ccc;
+                                    }
 
-                                .post-comments .comment .reply:hover {
-                                    transform: scale(1.2);
-                                }
+                                    .post-comments .comment .reply:hover {
+                                        transform: scale(1.2);
+                                    }
 
-                                .post-comments .replies .comment {
-                                    position: relative;
-                                }
+                                    .post-comments .replies .comment {
+                                        position: relative;
+                                    }
 
-                                .post-comments .replies .comment:before {
-                                    content: "";
-                                    display: block;
-                                    width: 27px;
-                                    height: 25px;
-                                    height: 15px;
-                                    position: absolute;
-                                    border: 2px solid #ccc;
-                                    border-radius: 0 0 0 25px;
-                                    border-top: 0;
-                                    border-right: 0;
-                                    left: -28px;
-                                    bottom: 100%;
-                                    margin-bottom: -16px;
-                                    z-index: 9;
-                                }
+                                    .post-comments .replies .comment:before {
+                                        content: "";
+                                        display: block;
+                                        width: 27px;
+                                        height: 25px;
+                                        height: 15px;
+                                        position: absolute;
+                                        border: 2px solid #ccc;
+                                        border-radius: 0 0 0 25px;
+                                        border-top: 0;
+                                        border-right: 0;
+                                        left: -28px;
+                                        bottom: 100%;
+                                        margin-bottom: -16px;
+                                        z-index: 9;
+                                    }
 
-                                .post-comments .comment:hover .avatar img {
-                                    box-shadow: 0 0 0 5px #fff, 0 0 0 7px #ccc;
-                                }
+                                    .post-comments .comment:hover .avatar img {
+                                        box-shadow: 0 0 0 5px #fff, 0 0 0 7px #ccc;
+                                    }
 
-                                .post-comments .replies {
-                                    position: relative;
-                                }
+                                    .post-comments .replies {
+                                        position: relative;
+                                    }
 
-                                .post-comments .has-replies>.comment {
-                                    position: relative;
-                                }
+                                    .post-comments .has-replies>.comment {
+                                        position: relative;
+                                    }
 
-                                .post-comments .has-replies>.comment:after {
-                                    content: "";
-                                    display: block;
-                                    position: absolute;
-                                    left: 12px;
-                                    width: 0;
-                                    border-left: 2px solid #ccc;
-                                    height: 100%;
-                                    top: 30px;
-                                    z-index: 1;
-                                }
+                                    .post-comments .has-replies>.comment:after {
+                                        content: "";
+                                        display: block;
+                                        position: absolute;
+                                        left: 12px;
+                                        width: 0;
+                                        border-left: 2px solid #ccc;
+                                        height: 100%;
+                                        top: 30px;
+                                        z-index: 1;
+                                    }
 
-                                .post-comments .replies>li:last-child:before {
-                                    content: "";
-                                    display: block;
-                                    width: 0;
-                                    height: 100%;
-                                    position: absolute;
-                                    border-left: 2px solid #ccc;
-                                    border-top: 0;
-                                    border-right: 0;
-                                    left: -28px;
-                                    top: 0;
-                                }
+                                    .post-comments .replies>li:last-child:before {
+                                        content: "";
+                                        display: block;
+                                        width: 0;
+                                        height: 100%;
+                                        position: absolute;
+                                        border-left: 2px solid #ccc;
+                                        border-top: 0;
+                                        border-right: 0;
+                                        left: -28px;
+                                        top: 0;
+                                    }
 
-                                .post-comments .replies>li:last-child>.comment:after {
-                                    content: "";
-                                    display: block;
-                                    position: absolute;
-                                    left: 0;
-                                    width: 10px;
-                                    height: 100%;
-                                    top: 0px;
-                                    background: #fff;
-                                    /* background: var(--off-white); */
-                                    left: -28px;
-                                    z-index: 1;
-                                }
+                                    .post-comments .replies>li:last-child>.comment:after {
+                                        content: "";
+                                        display: block;
+                                        position: absolute;
+                                        left: 0;
+                                        width: 10px;
+                                        height: 100%;
+                                        top: 0px;
+                                        background: #fff;
+                                        /* background: var(--off-white); */
+                                        left: -28px;
+                                        z-index: 1;
+                                    }
 
-                                .post-comments .btn {
-                                    /* padding: 10px;
+                                    .post-comments .btn {
+                                        /* padding: 10px;
                                     border: 1px solid #ccc;
                                     font-weight: bold;
                                     text-transform: uppercase;
@@ -345,50 +346,50 @@ $sidebar = new Sidebar("forum");
                                     cursor: pointer;
                                     margin-top: 5px; */
 
-                                    margin-top: 5px;
-                                }
+                                        margin-top: 5px;
+                                    }
 
-                                .post-comments .btn:hover {
-                                    color: #bbb;
-                                }
+                                    .post-comments .btn:hover {
+                                        color: #bbb;
+                                    }
 
-                                .post-comments .new-comment .reply {
-                                    display: none !important;
-                                }
+                                    .post-comments .new-comment .reply {
+                                        display: none !important;
+                                    }
 
-                                .post-comments [contentEditable] {
-                                    color: #333;
-                                    overflow: hidden;
-                                    box-shadow: none;
-                                    margin-left: 2.75rem;
+                                    .post-comments [contentEditable] {
+                                        color: #333;
+                                        overflow: hidden;
+                                        box-shadow: none;
+                                        margin-left: 2.75rem;
 
-                                    /* outline: 1px solid #eee; */
-                                }
+                                        /* outline: 1px solid #eee; */
+                                    }
 
-                                .post-comments .name {
-                                    color: #333;
-                                    overflow: hidden;
-                                    box-shadow: none;
-                                    margin-left: 2.75rem;
+                                    .post-comments .name {
+                                        color: #333;
+                                        overflow: hidden;
+                                        box-shadow: none;
+                                        margin-left: 2.75rem;
 
-                                    /* outline: 1px solid #eee; */
-                                }
+                                        /* outline: 1px solid #eee; */
+                                    }
 
-                                .post-comments [contentEditable]:focus {
-                                    outline-color: transparent;
-                                }
+                                    .post-comments [contentEditable]:focus {
+                                        outline-color: transparent;
+                                    }
 
-                                .post-comments .comment-content[contentEditable] {
-                                    /* min-height: 62px; */
-                                    outline: 1px solid #eee;
-                                    padding: 0.375rem 0.75rem;
-                                    height: calc(1.5em + 0.75rem + 2px);
-                                    /* margin-left: 0.5rem; */
-                                    margin-top: 0.5rem;
-                                    border: 1px solid #ced4da;
-                                    border-radius: 0.25rem;
+                                    .post-comments .comment-content[contentEditable] {
+                                        /* min-height: 62px; */
+                                        outline: 1px solid #eee;
+                                        padding: 0.375rem 0.75rem;
+                                        height: calc(1.5em + 0.75rem + 2px);
+                                        /* margin-left: 0.5rem; */
+                                        margin-top: 0.5rem;
+                                        border: 1px solid #ced4da;
+                                        border-radius: 0.25rem;
 
-                                    /* display: block;
+                                        /* display: block;
                                     width: 100%;
                                     padding: 0.375rem 0.75rem;
                                     height: calc(1.5em + 0.75rem + 2px);
@@ -402,45 +403,46 @@ $sidebar = new Sidebar("forum");
                                     border-radius: 0.25rem;
                                     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
 
-                                }
-
-                                .post-comments .comment-content[contentEditable]:focus {
-                                    color: #495057;
-                                    background-color: #fff;
-                                    border-color: #80bdff;
-                                    outline: 0;
-                                    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-                                }
-
-                                .post-comments .reply-done {
-                                    margin-left: 34px;
-                                    margin-left: 2.75rem;
-                                }
-
-                                .post-comments .new-comment {
-                                    min-height: 100%;
-                                    animation: new 0.4s ease-in-out;
-                                }
-
-                                @keyframes new {
-                                    0% {
-                                        opacity: 0;
-                                        height: 0;
                                     }
 
-                                    50% {
-                                        opacity: 0;
-                                        height: 100px;
+                                    .post-comments .comment-content[contentEditable]:focus {
+                                        color: #495057;
+                                        background-color: #fff;
+                                        border-color: #80bdff;
+                                        outline: 0;
+                                        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
                                     }
 
-                                    100% {
-                                        opacity: 1;
-                                        height: 100px;
+                                    .post-comments .reply-done {
+                                        margin-left: 34px;
+                                        margin-left: 2.75rem;
                                     }
-                                }
-                            </style>
+
+                                    .post-comments .new-comment {
+                                        min-height: 100%;
+                                        animation: new 0.4s ease-in-out;
+                                    }
+
+                                    @keyframes new {
+                                        0% {
+                                            opacity: 0;
+                                            height: 0;
+                                        }
+
+                                        50% {
+                                            opacity: 0;
+                                            height: 100px;
+                                        }
+
+                                        100% {
+                                            opacity: 1;
+                                            height: 100px;
+                                        }
+                                    }
+                                </style>
 
                         <?php
+                            }
                         }
 
 
@@ -682,7 +684,7 @@ $sidebar = new Sidebar("forum");
 
                             // find closest parent article and set parent id
                             $this.closest('article.comment').attr('data-id', response['id']);
-                            
+
                         } else if (response['status'] == 403)
                             alertUser("danger", response['desc'])
                         else
