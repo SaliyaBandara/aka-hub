@@ -40,6 +40,15 @@ class readModel extends Model
         return 0;
     }
 
+    public function getSystemDetails()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM system_variables WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAll($table)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE ?", "i", [1]);
@@ -58,7 +67,8 @@ class readModel extends Model
         return false;
     }
 
-    public function isEmailExist($email){
+    public function isEmailExist($email)
+    {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
         if (count($result) > 0)
             return true;
@@ -113,10 +123,10 @@ class readModel extends Model
         return false;
     }
 
-    public function getCoursesBySearch($year,$searchValue)
+    public function getCoursesBySearch($year, $searchValue)
     {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year, "%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -143,10 +153,10 @@ class readModel extends Model
         return false;
     }
 
-    public function getCoursesBelowYearSearch($year,$searchValue)
+    public function getCoursesBelowYearSearch($year, $searchValue)
     {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year, "%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -794,7 +804,7 @@ class readModel extends Model
         return false;
     }
 
-    public function getReservationRequestsByStatus($status,$id)
+    public function getReservationRequestsByStatus($status, $id)
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         $result = $this->db_handle->runQuery("
@@ -1866,7 +1876,8 @@ class readModel extends Model
         ];
     }
 
-    public function getEmptyAcademinEndDateStartDate(){
+    public function getEmptyAcademinEndDateStartDate()
+    {
         $empty = [
             "academic_start_date" => "",
             "academic_end_date" => ""
