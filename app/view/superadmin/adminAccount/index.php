@@ -275,11 +275,11 @@ $sidebar = new Sidebar("adminAccount");
             let $this = $(this);
 
             // confirm delete
-            if (!confirm("Are you sure you want to delete this counselor?"))
+            if (!confirm("Are you sure you want to delete this admin?"))
                 return;
 
             $.ajax({
-                url: `${BASE_URL}/existingCounselors/delete/${id}`,
+                url: `${BASE_URL}/adminAccount/delete/${id}`,
                 type: 'post',
                 data: {
                     delete: true

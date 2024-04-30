@@ -48,6 +48,26 @@ class AddAdmin extends Controller
             if (!filter_var($values["email"], FILTER_VALIDATE_EMAIL))
                 die(json_encode(array("status" => "400", "desc" => "Please enter a valid email")));
 
+            // check if valid alt email
+            if (!filter_var($values["alt_email"], FILTER_VALIDATE_EMAIL))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid alt email")));
+
+            // check if email already exists
+            if ($id == 0) {
+                $result = $this->model('readModel')->isEmailExist($values["email"]);
+                if ($result)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+            }
+
+            //check if valid phone number
+            if (!preg_match("/^[0-9]{9}$/", $values["contact_number"]))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid phone number")));
+
+            //check if valid phone number
+            if (!preg_match("/^[0-9]{9}$/", $values["whatsapp_number"]))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid whatsapp number")));
+
+
             $this->validate_template($values, $data["user_template"]);
             $this->validate_template($values, $data["admin_template"]);
 
@@ -64,7 +84,7 @@ class AddAdmin extends Controller
                 if ($user_id) {
                     $values["id"] = $user_id;
                     $admin_id = $this->model('createModel')->insert_db("administrator", $values, $data["admin_template"]);
-                    $result=$user_id&&$admin_id;
+                    $result = $user_id && $admin_id;
                 }
                 if ($result) {
                     //log Entry

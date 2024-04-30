@@ -26,20 +26,20 @@ class AdminAccount extends Controller
         $this->requireLogin();
         if ($_SESSION["user_role"] != 3) {
             $action = "Unauthorized user tried to delete Admin Account";
-            $status = "401";
+            $status = 401;
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
         }
         if ($id == 0)
             $this->redirect();
+
         $resultOne = $this->model('deleteModel')->deleteOne("administrator", $id);
         $resultTwo = $this->model('deleteModel')->deleteOne("user", $id);
-        if ($resultOne && $resultTwo){
-            //log Entry
-            $action = "Admin Account Deleted for id : " . $id;
-            $status = "602";
-            $this->model("createModel")->createLogEntry($action, $status);
 
+        if ($resultOne && $resultTwo){
+            $action = "Admin Account Deleted for id : " . $id;
+            $status = 602;
+            $this->model("createModel")->createLogEntry($action, $status);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
         }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
