@@ -49,6 +49,17 @@ class AdminProfileAndSettings extends Controller
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
 
+            if (!filter_var($values["alt_email"], FILTER_VALIDATE_EMAIL))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid alt email")));
+
+            //check if valid phone number
+            if (!preg_match("/^[0-9]{9}$/", $values["contact_number"]))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid phone number")));
+
+            //check if valid phone number
+            if (!preg_match("/^[0-9]{9}$/", $values["whatsapp_number"]))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid whatsapp number")));
+
             $this->validate_template($values, $data["admin_profile_template"]);
             $this->validate_template($values, $data["user_template"]);
 

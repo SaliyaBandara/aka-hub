@@ -669,3 +669,57 @@ samanbandara@gmail.com	127.0.0.1	04/30/24 11:23PM	deleted a specific counselor :
 
 samanbandara@gmail.com	127.0.0.1	04/30/24 11:23PM	deleted a specific counselor : 117	http://127.0.0.1/aka-hub/existingCounselors/delete/117url=existingCounselors/delete/117	602
 
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:27PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:28PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:28PM	Course material created successfully	http://127.0.0.1/aka-hub/courses/material/add_edit/19/0/createurl=courses/material/add_edit/19/0/create	201
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:29PM	Course material updated successfully	http://127.0.0.1/aka-hub/courses/material/add_edit/6/4/editurl=courses/material/add_edit/6/4/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:31PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:31PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:44PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/19url=manageMaterials/courseEdit/19	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:46PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/19url=manageMaterials/courseEdit/19	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:47PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/19url=manageMaterials/courseEdit/19	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:48PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/19url=manageMaterials/courseEdit/19	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:49PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/13url=manageMaterials/courseEdit/13	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:59PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/13url=manageMaterials/courseEdit/13	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:59PM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/13url=manageMaterials/courseEdit/13	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:00AM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/13url=manageMaterials/courseEdit/13	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:01AM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/13url=manageMaterials/courseEdit/13	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:01AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 12:01AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 12:03AM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/13/editurl=courses/add_edit/13/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 12:03AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:03AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:04AM	Course material updated successfully	http://127.0.0.1/aka-hub/manageMaterials/material/add_edit/6/6/editurl=manageMaterials/material/add_edit/6/6/edit	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:05AM	Course material updated successfully	http://127.0.0.1/aka-hub/manageMaterials/material/add_edit/6/6/editurl=manageMaterials/material/add_edit/6/6/edit	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:06AM	Course material updated successfully	http://127.0.0.1/aka-hub/manageMaterials/material/add_edit/7/6/editurl=manageMaterials/material/add_edit/7/6/edit	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:10AM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/6url=manageMaterials/courseEdit/6	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:10AM	Course updated successfully	http://127.0.0.1/aka-hub/manageMaterials/courseEdit/6url=manageMaterials/courseEdit/6	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:16AM	Course material updated successfully	http://127.0.0.1/aka-hub/manageMaterials/material/add_edit/4/6/editurl=manageMaterials/material/add_edit/4/6/edit	200
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 12:38AM	Admin successfully updated profile details samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/add_edit/121url=adminProfileAndSettings/add_edit/121	601
+
