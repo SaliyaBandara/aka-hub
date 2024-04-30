@@ -7,7 +7,7 @@ $calendar = new CalendarComponent();
 <style>
     /* css quiery for print */
     @page {
-        size: A2 landscape;
+        size: A3 landscape;
         margin: 1%;
         margin: 50px 0% 0 0%;
         margin-top: 50px;
@@ -33,7 +33,7 @@ $calendar = new CalendarComponent();
             margin: 0 !important;
             padding: 0 !important;
             box-shadow: none !important;
-            display: none !important;
+            /* display: none !important; */
         }
 
         .main-grid .left {
@@ -58,9 +58,9 @@ $calendar = new CalendarComponent();
                     <i class='bx bxs-calendar-check me-0-5'></i> User Logs and Analytics
                 </div>
                 <div class="mb-1 form-group right_side">
-                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">Back
+                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info noprint">Back
                     </a>
-                    <a href="javascript:window.print()" class="btn btn-info">
+                    <a href="javascript:window.print()" class="btn btn-info noprint">
                         Export
                     </a>
                 </div>

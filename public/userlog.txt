@@ -391,3 +391,23 @@ samanbandara@gmail.com	127.0.0.1	04/30/24 11:13AM	Admin successfully updated aca
 
 samanbandara@gmail.com	127.0.0.1	04/30/24 11:13AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
 
+samanbandara@gmail.com	127.0.0.1	04/30/24 12:09PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 12:09PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 02:16PM	Unauthorized user tried to delete a specific counselor	http://127.0.0.1/aka-hub/existingCounselors/delete/103url=existingCounselors/delete/103	401
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 02:17PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 02:17PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 02:33PM	Admin Account Created for email : samanbandara@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 02:34PM	Admin Account Updated for email : samanbandara@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/105url=addAdmin/index/105	601
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 02:34PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 02:34PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 02:36PM	Counselor Account Created for email : KasunKarunanayake@gmail.com	http://127.0.0.1/aka-hub/addCounselors/index/0url=addCounselors/index/0	600
+
