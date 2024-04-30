@@ -49,6 +49,16 @@ class readModel extends Model
         return false;
     }
 
+    // public function getAllSort("forum_posts", "created_at", "DESC")
+    public function getAllSort($table, $column, $order)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE ? ORDER BY $column $order", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAllByColumn($table, $column, $value, $type = "s")
     {
         $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE $column = ?", $type, [$value]);
@@ -87,10 +97,10 @@ class readModel extends Model
         return false;
     }
 
-    public function getCoursesBySearch($year,$searchValue)
+    public function getCoursesBySearch($year, $searchValue)
     {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year, "%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -117,10 +127,10 @@ class readModel extends Model
         return false;
     }
 
-    public function getCoursesBelowYearSearch($year,$searchValue)
+    public function getCoursesBelowYearSearch($year, $searchValue)
     {
 
-        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year,"%$searchValue%", "%$searchValue%"]);
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year, "%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -227,6 +237,116 @@ class readModel extends Model
         }
 
         return $notifications;
+    }
+
+    // get forum posts
+    public function getForumPosts()
+    {
+        // get all forum posts with user details
+        $posts = $this->db_handle->runQuery("SELECT * FROM forum_posts WHERE ? ORDER BY created_at DESC", "i", [1]);
+        if (count($posts) > 0) {
+            foreach ($posts as $key => $post) {
+
+                // select user name profile img and year from user and student tables
+                $user = $this->db_handle->runQuery(
+                    "SELECT u.name, u.profile_img, s.year FROM user u 
+                    LEFT JOIN student s ON u.id = s.id 
+                    WHERE u.id = ?",
+                    "i",
+                    [$post['user_id']]
+                )[0];
+
+                $posts[$key] = [
+                    "id" => $post['id'],
+                    "title" => $post['title'],
+                    "content" => $post['content'],
+                    "image" => $post['cover_img'],
+                    "created_at" => $post['created_at'],
+                    "user" => $user
+                ];
+            }
+
+            return $posts;
+        }
+
+        return [];
+    }
+
+    // get one forum post with user details and comments
+    public function getForumPost($id)
+    {
+        // get the forum post with user details
+        $post = $this->db_handle->runQuery("SELECT * FROM forum_posts WHERE id = ?", "i", [$id]);
+        if (count($post) > 0) {
+            $post = $post[0];
+
+            // select user name profile img and year from user and student tables
+            $user = $this->db_handle->runQuery(
+                "SELECT u.name, u.profile_img, s.year FROM user u 
+                LEFT JOIN student s ON u.id = s.id 
+                WHERE u.id = ?",
+                "i",
+                [$post['user_id']]
+            )[0];
+
+            // CREATE TABLE forum_comments (
+            //     id INT AUTO_INCREMENT PRIMARY KEY,
+            //     user_id INT NOT NULL,
+            //     post_id INT NOT NULL,
+            //     parent_id INT DEFAULT NULL,
+            //     content TEXT NOT NULL,
+            //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     FOREIGN KEY (user_id) REFERENCES user(id),
+            //     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
+            //     FOREIGN KEY (parent_id) REFERENCES forum_comments(id)
+            // );
+
+            $comments = $this->db_handle->runQuery(
+                "SELECT c.id, c.content, c.created_at, c.parent_id, u.name, u.profile_img, s.year 
+                FROM forum_comments c
+                LEFT JOIN user u ON c.user_id = u.id
+                LEFT JOIN student s ON u.id = s.id
+                WHERE c.post_id = ?",
+                "i",
+                [$id]
+            );
+
+            // recursively build threaded comments
+            function buildThreadedComments($comments, $parent_id = null) {
+                $threaded = [];
+                foreach ($comments as $comment) {
+                    if ($comment['parent_id'] == $parent_id) {
+                        $replies = buildThreadedComments($comments, $comment['id']);
+                        $comment['user'] = [
+                            "name" => $comment['name'],
+                            "profile_img" => $comment['profile_img'],
+                            "year" => $comment['year']
+                        ];
+                        $comment['replies'] = $replies;
+                        $threaded[] = $comment;
+                    }
+                }
+                return $threaded;
+            }
+
+            $threaded_comments = buildThreadedComments($comments);
+
+            $post = [
+                "id" => $post['id'],
+                "title" => $post['title'],
+                "content" => $post['content'],
+                "image" => $post['cover_img'],
+                "created_at" => $post['created_at'],
+                "user" => $user,
+                // "comments" => $comments,
+                "comments" => $threaded_comments
+            ];
+
+            return $post;
+        }
+
+        return false;
     }
 
     // get calendar events
@@ -768,7 +888,7 @@ class readModel extends Model
         return false;
     }
 
-    public function getReservationRequestsByStatus($status,$id)
+    public function getReservationRequestsByStatus($status, $id)
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         $result = $this->db_handle->runQuery("
@@ -1840,7 +1960,8 @@ class readModel extends Model
         ];
     }
 
-    public function getEmptyAcademinEndDateStartDate(){
+    public function getEmptyAcademinEndDateStartDate()
+    {
         $empty = [
             "academic_start_date" => "",
             "academic_end_date" => ""
@@ -1984,6 +2105,130 @@ class readModel extends Model
             ],
             "response_option" => [
                 "label" => "Response Option",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    // -- forum post
+    // CREATE TABLE forum_posts (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     title VARCHAR(255) NOT NULL,
+    //     content TEXT NOT NULL,
+    //     image VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    // -- forum comments
+    // -- thread style
+    // CREATE TABLE forum_comments (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     post_id INT NOT NULL,
+    //     parent_id INT DEFAULT NULL,
+    //     content TEXT NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
+    //     FOREIGN KEY (parent_id) REFERENCES forum_comments(id)
+    // );
+
+
+    public function getEmptyForumPost()
+    {
+        $empty = [
+            "user_id" => "",
+            "title" => "",
+            "content" => "",
+            "cover_img" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "title" => [
+                "label" => "Title",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "content" => [
+                "label" => "Content",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "cover_img" => [
+                "label" => "Image",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    // CREATE TABLE forum_comments (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     post_id INT NOT NULL,
+    //     parent_id INT DEFAULT NULL,
+    //     content TEXT NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
+    //     FOREIGN KEY (parent_id) REFERENCES forum_comments(id)
+    // );
+
+    public function getEmptyForumComment()
+    {
+        $empty = [
+            "user_id" => "",
+            "post_id" => "",
+            "parent_id" => "",
+            "content" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "post_id" => [
+                "label" => "Post",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "parent_id" => [
+                "label" => "Parent",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "content" => [
+                "label" => "Content",
                 "type" => "text",
                 "validation" => "required",
                 "skip" => true
