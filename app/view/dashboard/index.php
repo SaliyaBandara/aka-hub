@@ -6,7 +6,11 @@ $calendar = new CalendarComponent();
 ?>
 
 <div id="sidebar-active" class="hideScrollbar">
-    <?php $welcomeSearch = new WelcomeSearch(); ?>
+    <?php 
+        $welcomeSearch = new WelcomeSearch(); 
+        // if(empty($data["main_events"]))
+        //     $empty =  true;
+    ?>
 
     <div class="main-grid flex">
         <div class="left">
@@ -25,7 +29,7 @@ $calendar = new CalendarComponent();
                         <i class='bx bxs-calendar-check me-0-5'></i> To Do List
                     </div>
                 </div>
-
+            
                 <!-- todo flex wrap -->
                 <div class="todo_flex_wrap flex flex-wrap">
 
@@ -37,11 +41,11 @@ $calendar = new CalendarComponent();
                     else{
                         foreach ($data["main_events"] as $main_events) {
                     ?>
-                        <a href="#" class="todo_item flex align-center">
+                        <div href = "" class="todo_item flex align-center" data-link = <?= $main_events["id"] ?>>
                             <div>
                                 <?php
                                 $currentDate = new DateTime();
-                                $endDate = new DateTime($main_events["end_date"]);
+                                $endDate = new DateTime($main_events["date"]);
 
                                 $dateDiff = $currentDate->diff($endDate);
                                 $daysRemaining = $dateDiff->days;
@@ -74,11 +78,11 @@ $calendar = new CalendarComponent();
                             </div>
 
                             <div class="todo_item_text">
-                                <div class="font-1-25 font-semibold"><?= $main_events["name"] ?></div>
-                                <div class="font-1 font-meidum text-muted"><?= $main_events["title"] ?></div>
-                                <div class="font-1 text-muted">Deadline: <?= $main_events["end_date"] ?> </div>
+                                <div class="font-1-25 font-semibold"><?= $main_events["title"] ?></div>
+                                <div class="font-1 font-meidum text-muted"><?= $main_events["module"] ?></div>
+                                <div class="font-1 text-muted">Deadline: <?= $main_events["date"] ?> </div>
                             </div>
-                        </a>
+                        </div>
                     <?php } }?>
 
                 </div>
@@ -271,6 +275,12 @@ $calendar = new CalendarComponent();
                     alertUser("danger", "Something Went Wrong")
                 }
             });
+        });
+
+        $(document).on("click", ".todo_item", function () {
+            let id = $(this).attr("data-link");
+            // $date = strtotime(date);
+            window.location.href = BASE_URL + "/dashboard/view/" + id;
         });
 
     });
