@@ -204,8 +204,8 @@ $sidebar = new Sidebar("studentProfile");
     <div class="popupBackground"></div>
 
     <div class="popup flex flex-column">
-        <div class="popupHeader">Change Password</div>
-        <div class="popupForm">
+        <div class="popupHeader mb-2 text-secondary">Change Password</div>
+        <div class="popupForm mt-2">
             <form action="" method="post" class="form">
                 <div class="mb-1 form-group">
                     <label for="name" class="form-label">Old Password</label>
