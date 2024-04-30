@@ -182,4 +182,30 @@ class Model extends Database
 
         return false;
     }
+
+
+    public function encrypt($data)
+    {
+        /**
+         * Usage
+         * $msg_encrypted = $this->encrypt($msg);
+         */
+
+        $key = hash('sha256', ENCRYPTION_KEY, true);
+        $iv = openssl_random_pseudo_bytes(16);
+        $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+        return base64_encode($encrypted . '::' . $iv);
+    }
+
+    public function decrypt($data)
+    {
+        /**
+         * Usage
+         * $msg_decrypted = $this->decrypt($msg_encrypted);
+         */
+
+        $key = hash('sha256', ENCRYPTION_KEY, true);
+        list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
+        return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
+    }
 }
