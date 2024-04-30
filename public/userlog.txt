@@ -341,3 +341,53 @@ samanbandara@gmail.com	127.0.0.1	04/29/24 10:27PM	Counselor Account Created for 
 
 samanbandara@gmail.com	127.0.0.1	04/29/24 11:01PM	deleted a specific counselor	http://127.0.0.1/aka-hub/existingCounselors/delete/69url=existingCounselors/delete/69	602
 
+samanbandara@gmail.com	127.0.0.1	04/30/24 12:15AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 12:15AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 08:52AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 08:52AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:07AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:07AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:07AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:07AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:52AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:52AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:54AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:54AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:54AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:55AM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:55AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:55AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:57AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:57AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:08AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:09AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:09AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:10AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:11AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:13AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:13AM	Admin successfully updated academic end and start dates samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/edit_system_settingsurl=adminProfileAndSettings/edit_system_settings	200
+

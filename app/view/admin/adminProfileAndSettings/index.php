@@ -10,6 +10,7 @@ $sidebar = new Sidebar("adminProfileAndSettings");
     <?php
     if ($data["admin_details"]) {
         $userDetails = $data["admin_details"][0];
+        $systemDetails = $data["system_details"];
     }
     ?>
 
@@ -68,16 +69,18 @@ $sidebar = new Sidebar("adminProfileAndSettings");
                 </div>
                 <div class="notificationValues notificationRow">
                     <div>
-                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["system_variables"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                        <input type="date" id="academic_start_date" name="academic_start_date" placeholder="Enter academic start date" value="<?= date('Y-m-d', strtotime($systemDetails[1]["value"])) ?>" disabled />
                     </div>
                     <div>
-                    <input type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter <?= $value["label"] ?>" value="<?= $data["system_variables"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?> class="form-control">
+                        <input type="date" id="<?= $key ?>" name="<?= $key ?>" placeholder="Enter academic end date" value="<?= date('Y-m-d', strtotime($systemDetails[0]["value"])) ?>" disabled />
                     </div>
                 </div>
+
+
             </div>
             <div class="flex notificationSettings">
                 <div>
-                    <a href="<?= BASE_URL ?>/adminProfileAndSettings/add_edit_settings/$value1/$value2" class="btn btn-primary">
+                    <a href="<?= BASE_URL ?>/adminProfileAndSettings/add_edit_settings" class="btn btn-primary">
                         Edit Settings
                     </a>
                 </div>

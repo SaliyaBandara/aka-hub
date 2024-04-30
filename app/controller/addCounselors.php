@@ -53,7 +53,6 @@ class AddCounselors extends Controller
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
                     $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
-                    // print_r($values["id"]);
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
                     $result = $result1 && $result2;
                 }

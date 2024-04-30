@@ -16,6 +16,7 @@ class AdminProfileAndSettings extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["system_details"] = $this->model("readModel")->getSystemDetails();
         $data["admin_details"] = $this->model("readModel")->getOneAdmin($_SESSION['user_id']);
         $this->view->render('admin/adminProfileAndSettings/index', $data);
     }
@@ -76,5 +77,63 @@ class AdminProfileAndSettings extends Controller
                 $this->redirect();
         }
         $this->view->render('admin/adminProfileAndSettings/add_edit', $data);
+    }
+    public function add_edit_settings()
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to access Admin Settings";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
+        $data = [
+            'title' => 'Admin Profile And Settings',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["system_details"] = $this->model("readModel")->getSystemDetails();
+        $this->view->render('admin/adminProfileAndSettings/add_edit_admin_settings', $data);
+    }
+
+    public function edit_system_settings()
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to access Admin Settings";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
+            $this->redirect();
+        }
+
+        if (isset($_POST['academic_start_date']) && isset($_POST['academic_end_date'])) {
+            $values = [
+                "academic_start_date" => $_POST["academic_start_date"],
+                "academic_end_date" => $_POST["academic_end_date"]
+            ];
+
+            if ($values["academic_start_date"] >= $values["academic_end_date"]) {
+                http_response_code(400);
+                echo json_encode(["status" => 400, "desc" => "Academic start date cannot be greater or equal than academic end date"]);
+                exit;
+            }
+
+            $result1 = $this->model('updateModel')->update_system_variable("academic_start_date", $values["academic_start_date"]);
+            $result2 = $this->model('updateModel')->update_system_variable("academic_end_date", $values["academic_end_date"]);
+
+            if ($result1 && $result2) {
+                // Log entry
+                $action = "Admin successfully updated academic end and start dates " . $_SESSION['user_email'];
+                $status = "200";
+                $this->model("createModel")->createLogEntry($action, $status);
+                echo json_encode(["status" => 200, "desc" => "Operation successful"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["status" => 500, "desc" => "Error while updating profile"]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["status" => 400, "desc" => "Missing form data"]);
+        }
     }
 }
