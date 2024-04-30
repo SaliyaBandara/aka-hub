@@ -10,11 +10,8 @@ class Elections extends Controller
 
     public function checkAdmin()
     {
-        if ($_SESSION["student_rep"] != 1 && $_SESSION["club_rep"] != 1 &&  $_SESSION["user_role"] != 1) {
-            $task = "Unauthorized user tried to perform election operations";
-            $this->model("createModel")->createLogEntry($task, "401");
+        if ($_SESSION["student_rep"] != 1 && $_SESSION["club_rep"] != 1 &&  $_SESSION["user_role"] != 1)
             $this->redirect();
-        }
     }
 
     public function checkAccess($election)
@@ -275,22 +272,14 @@ class Elections extends Controller
             if ($start_date < $now)
                 die(json_encode(array("status" => "400", "desc" => "Start date cannot be in the past")));
 
-            if ($id == 0) {
+            if ($id == 0)
                 $result = $this->model('createModel')->insert_db("elections", $values, $data["item_template"]);
-                if ($result) {
-                    $task = "An Election created";
-                    $this->model("createModel")->createLogEntry($task, "201");
-                }
-            } else {
+            else
                 $result = $this->model('updateModel')->update_one("elections", $values, $data["item_template"], "id", $id, "i");
-                if ($result) {
-                    $task = "An Election updated";
-                    $this->model("createModel")->createLogEntry($task, "200");
-                }
-            }
+
             if ($result) {
                 if ($id == 0) {
-                    $id = $this->model("readModel")->lastInsertedId("elections", "id");
+                    $id = $result;
 
                     // create notification
                     $values["start_date"] = date("jS M Y", strtotime($values["start_date"]));
@@ -396,11 +385,9 @@ class Elections extends Controller
                 $data["item_template"],
                 array_map('intval', $removed_questions)
             );
-            if ($result) {
-                $task = "Election questions modified";
-                $this->model("createModel")->createLogEntry($task, "200");
+            if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-            }
+
             die(json_encode(array("status" => "400", "desc" => "Error while modifying election")));
         }
 

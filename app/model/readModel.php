@@ -1354,6 +1354,7 @@ class readModel extends Model
         return false;
     }
 
+    
 
     public function getAllEvents($table)
     {
