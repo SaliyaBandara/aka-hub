@@ -40,7 +40,7 @@ $sidebar = new Sidebar("calendar");
                 </div>
             </div>
 
-            <div class="table-container" style="opacity: 0;">
+            <div class="table-container" style="opacity: 0;height: 0;overflow-y: hidden;">
                 <div class="table-responsive">
                     <table class="table table-centered w-100 dt-responsive nowrap data-table" id="products-datatable">
                         <thead class="table-light">
@@ -48,6 +48,7 @@ $sidebar = new Sidebar("calendar");
                                 <th>#</th>
                                 <th>Subject Name</th>
                                 <th>Subject Code</th>
+                                <th>Year</th>
                                 <th>Date & Time</th>
                                 <th>Venue</th>
                             </tr>
@@ -230,10 +231,20 @@ $sidebar = new Sidebar("calendar");
 
                             // json parse the data
                             parsed_data = JSON.parse(parsed_data)
+
+                            // remove duplicate values with same date Subject Name and Subject Code
+                            parsed_data = parsed_data.filter((item, index, self) =>
+                                index === self.findIndex((t) => (
+                                    t['Date'] === item['Date'] && t['Subject Name'] === item['Subject Name'] && t['Subject Code'] === item['Subject Code']
+                                ))
+                            )
+                            
                             // console.log(parsed_data)
 
                             // show table
                             $(".table-container").css("opacity", 1)
+                            $(".table-container").css("height", "unset")
+                            $(".table-container").css("overflow-y", "unset")
 
                             // set data to table
                             let table = $("#products-datatable tbody")
@@ -242,7 +253,7 @@ $sidebar = new Sidebar("calendar");
 
                                 // check if all the data is set
                                 // Subject Name - Subject Code - Date - Time - Venue
-                                let table_headers = ["Subject Name", "Subject Code", "Date", "Time", "Venue"]
+                                let table_headers = ["Subject Name", "Year", "Subject Code", "Date", "Time", "Venue"]
                                 if (Object.keys(data).length != table_headers.length) {
                                     // console.log("Data is missing")
                                     let count_errors = 0
@@ -276,12 +287,13 @@ $sidebar = new Sidebar("calendar");
                                 // if (data['Venue'] == undefined || data['Venue'] == "undefined")
                                 //     data['Venue'] = ""
 
-                                console.log(data['Subject Name'], data['Subject Code'], data['Date'], data['Time'], data['Venue'])
+                                // console.log(data['Subject Name'], data['Subject Code'], data['Date'], data['Time'], data['Venue'])
 
                                 data_table.row.add([
                                     i + 1,
                                     data['Subject Name'],
                                     data['Subject Code'],
+                                    data['Year'],
                                     `${data['Date']} ${data['Time']}`,
                                     data['Venue']
                                 ]).draw(false);
@@ -345,6 +357,8 @@ $sidebar = new Sidebar("calendar");
             // reset table
             data_table.clear().draw();
             $(".table-container").css("opacity", 0)
+            $(".table-container").css("height", 0)
+            $(".table-container").css("overflow-y", "hidden")
         })
     });
 </script>

@@ -350,6 +350,7 @@ class readModel extends Model
                     "description" => $event['description'],
                     "module" => $event['module'],
                     "date" => $event['date'],
+                    "type" => $event['type'],
                 ];
             }
         }
