@@ -581,3 +581,91 @@ samanbandara@gmail.com	127.0.0.1	04/30/24 09:11PM	User logged out	http://127.0.0
 
 samanbandara@gmail.com	127.0.0.1	04/30/24 09:11PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:12PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:13PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:14PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:15PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 09:44PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:44PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:50PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:51PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 09:51PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:04PM	Course created successfully	http://127.0.0.1/aka-hub/courses/add_edit/0/createurl=courses/add_edit/0/create	201
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:09PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:09PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:30PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:30PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:30PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:31PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:32PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:32PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/19/editurl=courses/add_edit/19/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:39PM	Course updated successfully	http://127.0.0.1/aka-hub/courses/add_edit/6/editurl=courses/add_edit/6/edit	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:39PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 10:39PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 10:40PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:40PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:44PM	Admin Account Created for email : SamanSaman@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:46PM	Admin Account Created for email : SamanSamanUdaya@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 10:48PM	Admin Account Updated for email : SamanSamanUdaya@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/125url=addAdmin/index/125	601
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:03PM	Admin Account Created for email : samansamanudayah@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:06PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:07PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:07PM	Course deleted successfully	http://127.0.0.1/aka-hub/courses/delete/10url=courses/delete/10	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:07PM	Course deleted successfully	http://127.0.0.1/aka-hub/courses/delete/12url=courses/delete/12	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:07PM	Course deleted successfully	http://127.0.0.1/aka-hub/courses/delete/15url=courses/delete/15	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:07PM	Course deleted successfully	http://127.0.0.1/aka-hub/courses/delete/17url=courses/delete/17	200
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:09PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:09PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:10PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:10PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:11PM	Admin Account Created for email : samansamanudayahhh@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:18PM	Admin Account Created for email : samansamanudayahhh@gmail.com	http://127.0.0.1/aka-hub/addAdmin/index/0url=addAdmin/index/0	600
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	04/30/24 11:21PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:22PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:23PM	Counselor Account Created for email : samanbandara33@gmail.com	http://127.0.0.1/aka-hub/addCounselors/index/0url=addCounselors/index/0	600
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:23PM	deleted a specific counselor : 129	http://127.0.0.1/aka-hub/existingCounselors/delete/129url=existingCounselors/delete/129	602
+
+samanbandara@gmail.com	127.0.0.1	04/30/24 11:23PM	deleted a specific counselor : 117	http://127.0.0.1/aka-hub/existingCounselors/delete/117url=existingCounselors/delete/117	602
+

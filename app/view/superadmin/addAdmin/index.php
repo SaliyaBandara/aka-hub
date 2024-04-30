@@ -294,17 +294,19 @@ $sidebar = new Sidebar("adminAccount");
                 },
                 dataType: 'json',
                 success: function(response) {
-                    if (response['status'] == 200) {
+                    if (response['status'] == "200") {
                         alertUser("success", response['desc'])
                         setTimeout(function() {
                             history.go(-1);
                             window.close();
                         }, 2000);
 
-                    } else if (response['status'] == 403)
+                    } else if (response['status'] == "400")
+                        alertUser("warning", response['desc'])
+                    else if (response['status'] == "403")
                         alertUser("danger", response['desc'])
                     else
-                        alertUser("warning", response['desc'])
+                        alertUser("danger", "Something Went Wrong")
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")

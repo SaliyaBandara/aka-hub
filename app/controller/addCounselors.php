@@ -55,6 +55,10 @@ class AddCounselors extends Controller
                 $result = $this->model('readModel')->isEmailExist($values["email"]);
                 if ($result)
                     die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+            } else {
+                $result = $this->model('readModel')->isEmailExist($values["email"]);
+                if ($result && $result[0]["id"] != $id)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
             }
 
             //check if valid phone number

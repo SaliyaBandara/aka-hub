@@ -135,7 +135,7 @@ $sidebar = new Sidebar("courses");
             });
         })
 
-        
+
 
         $('form').submit(function(event) {
             event.preventDefault();
@@ -201,11 +201,13 @@ $sidebar = new Sidebar("courses");
                             history.go(-1);
                             window.close();
                         }, 2000);
-
-                    } else if (response['status'] == 403)
+                    } else if (response['status'] == 403) {
                         alertUser("danger", response['desc'])
-                    else
+                    } else if (response['status'] == 400) {
                         alertUser("warning", response['desc'])
+                    } else {
+                        alertUser("warning", response['desc'])
+                    }
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")

@@ -48,7 +48,6 @@ class Sidebar
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
                     'viewlogs' => ['User Logs', 'bxs-dashboard'],
-                    'superAdminProfileAndSettings' => ['Settings', 'bxs-cog'],
                     'calendarAdminView' => ['Calendar', 'bxs-calendar-star'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
