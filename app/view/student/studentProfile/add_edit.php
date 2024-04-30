@@ -244,6 +244,36 @@ $sidebar = new Sidebar("settings");
                 return alertUser("warning", `Year should be 1, 2, 3 or 4`);
             }
 
+            var digitsRegex = /^\d+$/;
+            if (!digitsRegex.test(values["index_number"])) {
+                $("#index_number").addClass("border-danger");
+                return alertUser("warning", "Index number can only contain digits");
+            }
+
+            if(values["index_number"].length > 8){
+                $("#index_number").addClass("border-danger");
+                alertUser("warning", `Index number cannot be more than 8 digits`);
+                return;
+            }
+
+            if(values["index_number"] == ""){
+                $("#index_number").addClass("border-danger");
+                alertUser("warning", `Index number cannot be blank`);
+                return;
+            }
+
+            var indexDigits = values["index_number"].substring(4, 7);
+
+            var regNumber = values["student_id"];
+            var lastDigits = regNumber.substring(regNumber.lastIndexOf("/") + 1);
+
+            if (indexDigits !== lastDigits) {
+                $("#index_number").addClass("border-danger");
+                return alertUser("warning", "The index number should match with the registration number");
+                $("#index_number").removeClass("border-danger"); 
+            }
+
+
             let completed = 0;
             let tables = ["profile_img"];
             $.each(tables, function(i, name) {

@@ -201,7 +201,7 @@ $calendar = new CalendarComponent();
                     success: function(response) {
                         if (response['status'] == 200) {
                             alertUser("success", response['desc'])
-                            $this.closest(".todo_item").remove();
+                            $this.closest("tr").remove();
                         } else if (response['status'] == 403)
                             alertUser("danger", response['desc'])
                         else

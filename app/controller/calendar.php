@@ -299,7 +299,7 @@ class Calendar extends Controller
         if ($id == 0)
             $this->redirect();
 
-        $result = $this->model('deleteModel')->delete_one("calendar", "id", $id, "i");
+        $result = $this->model('deleteModel')->deleteOne("calendar", $id);
 
         if ($result)
             die(json_encode(array("status" => "200", "desc" => "Calendar Event Deleted Successfully")));

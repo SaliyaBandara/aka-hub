@@ -198,7 +198,9 @@ class CounselorFeed extends Controller
         $values['comment'] = $comment;
 
         // print_r($comment);
-        if($comment != " "){
+        if($comment == ""){
+            die(json_encode(array("status" => "400", "desc" => "Comment cannont be blank")));
+        }else{
             $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
         }
 

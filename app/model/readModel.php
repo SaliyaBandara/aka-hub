@@ -2735,7 +2735,7 @@ class readModel extends Model
             "title" => [
                 "label" => "Post Title",
                 "type" => "text",
-                "validation" => ""
+                "validation" => "required"
             ],
             "description" => [
                 "label" => "Description",
@@ -3012,7 +3012,7 @@ class readModel extends Model
             ],
             "index_number" => [
                 "label" => "Index Number",
-                "type" => "text",
+                "type" => "number",
                 "validation" => "",
                 "skip" => true
             ],

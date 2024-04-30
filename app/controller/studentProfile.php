@@ -208,6 +208,14 @@ class StudentProfile extends Controller
             // echo "$hashedOldPassword\n$password";
             // die;
 
+            if($newPassword == ""){
+                die(json_encode(array("status" => "400", "desc" => "New password cannot be blank!")));
+            }
+            if($oldPassword == ""){
+                die(json_encode(array("status" => "400", "desc" => "Old password cannot be blank!")));
+            }
+
+
             if(password_verify($oldPassword, $password)){
             // if($hashedOldPassword == $password){
                 $values["password"] = $hashedNewPassword;
@@ -218,7 +226,7 @@ class StudentProfile extends Controller
                 }
             }
 
-            die(json_encode(array("status" => "403", "desc" => "Incorrect Password")));
+            die(json_encode(array("status" => "403", "desc" => "Incorrect Old Password")));
         }
 
         $this->view->render('student/studentProfile/changePassword', $data);
