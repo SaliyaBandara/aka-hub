@@ -142,11 +142,11 @@ class createModel extends Model
         $id_arr = [57, 2, 3, 4, 22, 58, 6, 5, 24, 23];
         $user_id = $_SESSION["user_id"];
 
-        if (!isset($_SESSION["count_dummy"]))
-            $_SESSION["count_dummy"] = 0;
+        // if (!isset($_SESSION["count_dummy"]))
+        //     $_SESSION["count_dummy"] = 0;
 
-        $user_id = $id_arr[$_SESSION["count_dummy"]];
-        $_SESSION["count_dummy"]++;
+        // $user_id = $id_arr[$_SESSION["count_dummy"]];
+        // $_SESSION["count_dummy"]++;
 
         // insert to election_votes
         $result = $this->insert_db("election_votes", [

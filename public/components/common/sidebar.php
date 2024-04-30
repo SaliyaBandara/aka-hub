@@ -20,7 +20,7 @@ class Sidebar
                     'courses' => ['Courses', 'bxs-graduation'],
                     'eventFeed' => ['Events', 'bxs-calendar-star'],
                     'counselorFeed' => ['Counselor Articles', 'bxs-donate-heart'],
-                    'chat' => ['Forum', 'bxs-chat'],
+                    'forum' => ['Forum', 'bxs-chat'],
                     'elections' => ['Elections', 'bxs-chat'],
                 ];
                 $pages = array_merge($pages, $studentPages);
