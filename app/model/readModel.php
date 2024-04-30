@@ -72,7 +72,7 @@ class readModel extends Model
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
         if (count($result) > 0)
             return $result;
-        return $result;
+        return false;
     }
 
     public function isCodeExist($code)
@@ -80,7 +80,7 @@ class readModel extends Model
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
         if (count($result) > 0)
             return $result[0];
-        return $result[0];
+        return false;
     }
 
     public function isCourseExist($course_name)
@@ -88,7 +88,7 @@ class readModel extends Model
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE name = ?", "s", [$course_name]);
         if (count($result) > 0)
             return $result[0];
-        return $result[0];
+        return false;
     }
 
     public function getAllUsers()
@@ -1938,6 +1938,53 @@ class readModel extends Model
     //     PRIMARY KEY (`id`),
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE
     //   );    
+
+    public function getEmptyCourseMaterialForAdmin(){
+        $empty = [
+            "course_id" => "",
+            "video_links" => "",
+            "reference_links" => "",
+            "short_notes" => "",
+            "description" => ""
+        ];
+
+        $template = [
+            "course_id" => [
+                "label" => "Course",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "video_links" => [
+                "label" => "Video Links",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "reference_links" => [
+                "label" => "Reference Links",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "short_notes" => [
+                "label" => "Short Notes",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => ""
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     public function getEmptyCourseMaterial()
     {

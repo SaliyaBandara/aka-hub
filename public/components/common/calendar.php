@@ -121,6 +121,7 @@ class CalendarComponent
             .calendar-wrapper header .current-date {
                 font-size: 15px;
                 font-weight: 500;
+                color: #fff;
             }
 
             .calendar {

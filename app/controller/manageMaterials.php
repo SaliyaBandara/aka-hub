@@ -63,15 +63,13 @@ class ManageMaterials extends Controller
         if (!$data["course"])
             $this->redirect();
 
-        $data["data_template"] = $this->model('readModel')->getEmptyCourseMaterial();
+        $data["data_template"] = $this->model('readModel')->getEmptyCourseMaterialForAdmin();
         $data["material"] = $data["data_template"]["empty"];
         $data["data_template"] = $data["data_template"]["template"];
 
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
-
             $values["course_id"] = $course_id;
-            $values["user_id"] = $_SESSION["user_id"];
             // $values["reference_links"] = json_encode($values["reference_links"]);
             if (isset($values["kuppi_video"]))
                 $values["video_links"] = json_encode($values["kuppi_video"]);
@@ -190,6 +188,23 @@ class ManageMaterials extends Controller
 
         if (isset($_POST['add_edit'])) {
             $values = $_POST["add_edit"];
+            if ($id != 0) {
+                $result = $this->model('readModel')->isCourseExist($values["name"]);
+                if ($result && $result["id"] != $id) {
+                    die(json_encode(array("status" => "400", "desc" => "Course exists with the same name")));
+                }
+                $result = $this->model('readModel')->isCodeExist($values["code"]);
+                if ($result && $result["id"] != $id) {
+                    die(json_encode(array("status" => "400", "desc" => "Course exists with the same code")));
+                }
+                if (($values["year"] < 1) || ($values["year"] > 4)) {
+                    die(json_encode(array("status" => "400", "desc" => "Please provide a valid year")));
+                }
+                if (($values["semester"] < 1) || ($values["semester"] > 2)) {
+                    die(json_encode(array("status" => "400", "desc" => "Please provide a valid semester")));
+                }
+            }
+
 
             $values["course_id"] = $id;
             $this->validate_template($values, $data["data_template"]);
