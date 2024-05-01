@@ -216,7 +216,7 @@ class createModel extends Model
             4 - Materials
             5 - Election
             6 - Counsellor Reservations - High Priority (Ignore Preference)
-            7 - misc
+            7 - misc - target only single user
         */
 
         // -- notifications table
@@ -258,8 +258,52 @@ class createModel extends Model
         // );
 
 
+        $template = [
+            "is_broadcast" => ["type" => "number"],
+            "target" => ["type" => "number"],
+            "user_id" => ["type" => "number"],
+            "parent_id" => ["type" => "number"],
+            "title" => ["type" => "string"],
+            "description" => ["type" => "string"],
+            "link" => ["type" => "string"],
+            "type" => ["type" => "number"]
+        ];
+
         // if election
         if ($type == 5) {
+            $this->insert_db("notifications", [
+                "is_broadcast" => 1,
+                "target" => $target,
+                "user_id" => $user_id,
+                "parent_id" => $id,
+                "title" => $title,
+                "description" => $message,
+                "link" => $link,
+                "type" => $type
+            ], $template);
+
+            return true;
+        }
+
+        // Counsellor Reservations
+        else if ($type == 6) {
+
+            $this->insert_db("notifications", [
+                "is_broadcast" => 0,
+                "target" => 0,
+                "user_id" => $user_id,
+                "parent_id" => $id,
+                "title" => $title,
+                "description" => $message,
+                "link" => $link,
+                "type" => $type
+            ], $template);
+
+            $this->sendNotificationEmail($user_id, $title, $message, $link);
+        }
+
+        // exam
+        else if ($type == 1) {
             $this->insert_db("notifications", [
                 "is_broadcast" => 1,
                 "target" => $target,
@@ -279,10 +323,6 @@ class createModel extends Model
                 "link" => ["type" => "string"],
                 "type" => ["type" => "number"]
             ]);
-
-            // TODO: Send emails to eligible users
-
-            return true;
         }
 
         // TODO: 
@@ -311,7 +351,7 @@ class createModel extends Model
 <?php
     }
 
-    public function sendNotificationEmail($user_id, $title, $message, $link)
+    public function sendNotificationEmail($user_id, $title, $message_str, $link = "")
     {
         $user = $this->getAllByColumn("user", "id", $user_id, "i")[0];
         $email = $user["email"];
@@ -321,8 +361,10 @@ class createModel extends Model
         $message = file_get_contents('../public/email_templates/notification_email.htm');
         $message = str_replace('{{name}}', $name, $message);
         $message = str_replace('{{title}}', $title, $message);
-        $message = str_replace('{{message}}', $message, $message);
-        $message = str_replace('{{link}}', $link, $message);
+        $message = str_replace('{{message}}', $message_str, $message);
+
+        if ($link != "")
+            $message = str_replace('{{link}}', $link, $message);
 
         $this->close_connection();
         $sendEmail = $this->sendEmail($email, $name, $subject, $message);

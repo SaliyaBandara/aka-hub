@@ -67,7 +67,7 @@ $sidebar = new Sidebar("forum");
                                         <?php } ?>
                                         <div class="post-actions">
                                             <div class="action-item">
-                                                <i class='bx bx-comment'></i> 5
+                                                <i class='bx bx-comment'></i> <?= $value['num_comments'] ?>
                                             </div>
                                             <!-- <div class="action-item">
                                             <i class='bx bx-share'></i> 3
