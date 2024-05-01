@@ -210,6 +210,21 @@ class createModel extends Model
         // flush();
         // fastcgi_finish_request();
         // if (session_id()) session_write_close();
+
+        // ob_start();
+
+        $size = ob_get_length();
+
+        header("Content-Encoding: none");
+        header("Content-Length: {$size}");
+
+        header("Connection: close");
+        ob_end_flush();
+        ob_flush();
+        flush();
+        if (session_id()) {
+            session_write_close();
+        }
     }
 
     public function notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")

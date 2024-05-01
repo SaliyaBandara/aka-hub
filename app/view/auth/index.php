@@ -3,6 +3,160 @@ $HTMLHead = new HTMLHead($data['title']);
 $header = new header();
 ?>
 
+<div class="fixed-overlay-model fixed-model forgot-password-model" style="display: none;">
+    <div class="container auth__section">
+        <div class="close-btn">
+            <i class='bx bx-x'></i>
+        </div>
+
+        <form class="form" id="reset-password" action="" method="post">
+            <div class="title">Forgot Your Password?</div>
+            <div class="form-desc mb-1-5">
+                Enter your email address and we'll send you a link to reset your password
+            </div>
+
+            <div class="form-group" style="">
+                <label>
+                    <input type="email" name="email" placeholder=" ">
+                    <p>Email address <span class="text-gold">*</span></p>
+                </label>
+            </div>
+
+            <div class="form-group" style="">
+                <button class="w-100 btn btn--secondary" type="submit">Reset Password</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="bg"></div>
+</div>
+
+<div class="fixed-overlay-model fixed-model notice-model" style="display: none;">
+    <div class="container auth__section">
+        <div class="close-btn close-model-btn">
+            <i class='bx bx-x'></i>
+        </div>
+
+        <form class="form" id="reset-password" action="" method="post">
+            <div class="title">Confirm Your Email Address</div>
+            <div class="form-desc mb-1-5">
+                We have sent you an email with a link to confirm your email address
+                <strong>{{email}}</strong>. Please check your email and click on the link to confirm your email address.
+            </div>
+
+            <div class="form-group" style="">
+                <button class="w-100 btn btn--secondary close-model-btn" type="submit">Okay</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="bg"></div>
+</div>
+
+<?php if (isset($data["email_verified"])) { ?>
+    <div class="fixed-overlay-model fixed-model notice-success-model" style="display: flex;">
+        <div class="container auth__section">
+            <div class="close-btn close-model-btn">
+                <i class='bx bx-x'></i>
+            </div>
+
+            <form class="form" id="reset-password" action="" method="post">
+                <div class="title"><?= $data["email_verified"] == 1 ? "Email Verified Successfully" : "Email Verification Failed" ?></div>
+                <div class="form-desc mb-1-5">
+                    <?= $data["email_verified"] == 1 ? "Your email has been verified successfully. You can now login to your account and enjoy the features of Aka Hub." : "Your email verification failed. Invalid or expired verification link." ?>
+                </div>
+                <div class="form-group" style="">
+                    <button class="w-100 btn btn--secondary close-model-btn" type="submit">Okay</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="bg"></div>
+    </div>
+<?php } ?>
+
+<style>
+    .fixed-overlay-model {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background-color: rgba(0, 0, 0, 0.5); */
+        z-index: 999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .fixed-overlay-model .container .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.75rem;
+        cursor: pointer;
+        font-size: var(--rv-1-5);
+    }
+
+    .fixed-overlay-model .container .close-btn:hover {
+        color: var(--primary-color);
+    }
+
+    .fixed-overlay-model .title {
+        text-align: center;
+        font-size: var(--rv-1-5);
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .fixed-overlay-model .flex__div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .fixed-overlay-model .flex__row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--rv-0-5);
+    }
+
+    /* secdon child */
+    .fixed-overlay-model .flex__row div:nth-child(2) {
+        text-align: end;
+        font-weight: bold;
+    }
+
+    .fixed-overlay-model .container {
+        position: relative;
+        width: 40vw;
+        width: clamp(400px, 40vw, 500px);
+        max-width: 92vw;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 15px;
+        font-size: var(--rv-1-new);
+
+        max-height: calc(100vh - 2rem);
+        margin: 1rem 0;
+        overflow: auto;
+    }
+
+    .fixed-overlay-model .btn--secondary {
+        padding: var(--rv-1) var(--rv-2);
+        border-radius: 40px;
+        font-size: clamp(12px, 0.9vw, 18px);
+    }
+
+    .fixed-overlay-model .bg {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        cursor: pointer;
+    }
+</style>
+
 <div id="root">
 
     <section class="default__section auth__section pt-0">
@@ -159,6 +313,7 @@ $HTMLFooter = new HTMLFooter();
 <script src="https://unpkg.com/feather-icons"></script>
 <script>
     feather.replace();
+    let BASE_URL_ALT = "<?= BASE_URL ?>";
     var hostname = "<?= "$_SERVER[HTTP_HOST]"; ?>";
 </script>
 
@@ -217,11 +372,11 @@ $HTMLFooter = new HTMLFooter();
 
         $(document).on("click", ".forget-password", function(event) {
             event.preventDefault();
-            $('.fixed-model').fadeIn();
+            $('.fixed-model.forgot-password-model').fadeIn();
             $('body').css('overflow', 'hidden');
         });
 
-        $(document).on("click", ".fixed-model .bg,.fixed-model .close-btn", function(event) {
+        $(document).on("click", ".fixed-model .bg,.fixed-model .close-btn, .fixed-model .close-model-btn", function(event) {
             event.preventDefault();
             $(this).closest('.fixed-model').fadeOut();
             $('body').css('overflow', 'auto');
@@ -289,7 +444,8 @@ $HTMLFooter = new HTMLFooter();
             else if (formId == "reset-password")
                 action = "reset-password";
 
-            var url = getBaseURL() + "/" + action;
+            // var url = getBaseURL() + "/" + action;
+            var url = BASE_URL_ALT + "/auth/" + action;
             // console.log(baseURL);
             console.log(values);
             // return;
@@ -305,23 +461,35 @@ $HTMLFooter = new HTMLFooter();
                 success: function(response) {
                     if (response['status'] == 200) {
 
+                        // check if response['register'] is set
                         alertUser("success", response['desc'])
-                        var redirUrl = GetURLParameter('redir');
-                        let customRedir = 0;
-                        if (redirUrl != null) {
-                            redirUrl = decodeURI(redirUrl);
-                            if (getHostname(redirUrl) == hostname) {
-                                customRedir = 1;
-                                setTimeout(function() {
-                                    window.location.replace(redirUrl)
-                                }, 2000);
-                                return;
-                            }
-                        }
+                        if (response['register'] == 1) {
+                            // open modal
+                            $('.fixed-model.notice-model .form-desc')
+                                .html($('.fixed-model.notice-model .form-desc')
+                                    .html().replace("{{email}}", values["email"]));
+                            $('.fixed-model.notice-model').fadeIn();
+                            $('body').css('overflow', 'hidden');
 
-                        setTimeout(function() {
-                            window.location.replace(response["redirect"]);
-                        }, 2000);
+                        } else {
+
+                            var redirUrl = GetURLParameter('redir');
+                            let customRedir = 0;
+                            if (redirUrl != null) {
+                                redirUrl = decodeURI(redirUrl);
+                                if (getHostname(redirUrl) == hostname) {
+                                    customRedir = 1;
+                                    setTimeout(function() {
+                                        window.location.replace(redirUrl)
+                                    }, 2000);
+                                    return;
+                                }
+                            }
+
+                            setTimeout(function() {
+                                window.location.replace(response["redirect"]);
+                            }, 2000);
+                        }
 
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
