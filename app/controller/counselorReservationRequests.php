@@ -16,6 +16,10 @@ class counselorReservationRequests extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["count_accepted_reservations"] = $this->model('readModel')->getCountAcceptedReservations();
+        $data["count_free_timeslots"] = $this->model('readModel')->getCountFreeTimeSlots();
+        $data["count_requests"] = $this->model('readModel')->getCountReservationRequests();
+
         $user_id = $_SESSION["user_id"];
         $data["reservation_requests"] = $this->model('readModel')->getAvailableReservationRequestsByCounselorId($user_id);
         $this->view->render('counselor/reservationRequests/index', $data);

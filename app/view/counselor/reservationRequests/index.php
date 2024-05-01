@@ -13,19 +13,25 @@ $calendar = new CalendarComponent();
         <div class="left">
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        6 Received Requests in this Week
-                    </div>
+                    <?php if ($data["count_accepted_reservations"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_accepted_reservations"] ?> Total Accepted Reservations
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
+                    <?php if ($data["count_free_timeslots"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_free_timeslots"] ?> Free Time Slots
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        2 Accepted Reservations in this Week
-                    </div>
+                    <?php if ($data["count_requests"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_requests"] ?> Total Requests
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

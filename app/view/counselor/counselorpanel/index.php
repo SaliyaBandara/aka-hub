@@ -10,39 +10,24 @@ $calendar = new CalendarComponent();
     <div class="main-grid flex">
         <div class="left">
             <div class="threeCardDiv">
-                <!-- <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
-                </div>
-                <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
-                </div>
-                <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        8 Total Requests in this week
-                    </div>
-                </div> -->
                 <div class="cardTotalUsers">
-                    <?php if ($data["count_total_users"] !== null) : ?>
+                    <?php if ($data["count_accepted_reservations"] !== null) : ?>
                         <div class="divUsersContainor">
-                            <?= $data["count_total_users"] ?> Total Users
+                            <?= $data["count_accepted_reservations"] ?> Total Accepted Reservations
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="cardActiveUsers">
-                    <?php if ($data["count_role_users"] !== null) : ?>
+                    <?php if ($data["count_free_timeslots"] !== null) : ?>
                         <div class="divUsersContainor">
-                            <?= $data["count_role_users"] ?> Users with Roles
+                            <?= $data["count_free_timeslots"] ?> Free Time Slots
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="cardNewUsers">
-                    <?php if ($data["count_new_users"] !== null) : ?>
+                    <?php if ($data["count_requests"] !== null) : ?>
                         <div class="divUsersContainor">
-                            <?= $data["count_new_users"] ?> New Users
+                            <?= $data["count_requests"] ?> Total Requests
                         </div>
                     <?php endif; ?>
                 </div>
@@ -53,27 +38,13 @@ $calendar = new CalendarComponent();
             <div class="fourGraphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <p class="mb-1"><b>User Registration For the System</b></p>
+                        <p class="mb-1"><b>Monthly Reservation Requests</b></p>
                         <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
-                    </div>
-                    <div class="graphContainor">
-                        <p class="mb-1"><b>Distribution of Users with Roles</b></p>
-                        <div id="chartContainer2" style="height: 220px; width: 100%;"></div>
-                    </div>
-                </div>
-                <div class="graphLineContainor">
-                    <div class="graphContainor">
-                        <p class="mb-1"><b>User engagement in the System</b></p>
-                        <div id="chartContainer4" style="height: 220px; width: 100%;"></div>
-                    </div>
-                    <div class="graphContainor">
-                        <p class="mb-1"><b>User Distribution in 4 years</b></p>
-                        <div id="chartContainer3" style="height: 220px; width: 100%;"></div>
                     </div>
                 </div>
                 <div class="graphLineContainor">
                     <div class="graphContainorFive">
-                        <p class="mb-1"><b>Counselor Resevation Requests</b></p>
+                        <p class="mb-1"><b>Counselor Resevations</b></p>
                         <div id="chartContainer5" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
@@ -234,7 +205,7 @@ $calendar = new CalendarComponent();
             animationEnabled: true,
             exportEnabled: true,
             axisY: {
-                title: "Yearly Users",
+                title: "Reservation Requests",
             },
             data: [{
                 type: "spline",
@@ -246,71 +217,6 @@ $calendar = new CalendarComponent();
         });
 
         chart1.render();
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var dataPoints = <?php echo json_encode($data["chartTwo"], JSON_NUMERIC_CHECK); ?>;
-        var chart2 = new CanvasJS.Chart("chartContainer2", {
-            backgroundColor: "transparent",
-            animationEnabled: true,
-            exportEnabled: true,
-            data: [{
-                type: "pie",
-                // showInLegend: "true",
-                legendText: "{label}",
-                indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
-                yValueFormatString: "฿#,##0",
-                dataPoints: dataPoints
-            }]
-        });
-
-        chart2.render();
-    });
-</script>
-
-<script>
-    // Initialize chart when the document is ready
-    document.addEventListener("DOMContentLoaded", function() {
-        var dataPoints = <?php echo json_encode($data["chartThree"], JSON_NUMERIC_CHECK); ?>;
-        var chart3 = new CanvasJS.Chart("chartContainer3", {
-            backgroundColor: "transparent",
-            animationEnabled: true,
-            exportEnabled: true,
-            theme: "light2",
-            axisY: {
-                title: "Number of Students"
-            },
-            data: [{
-                type: "column",
-                dataPoints: dataPoints
-            }]
-        });
-
-        chart3.render();
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var dataPoints = <?php echo json_encode($data["chartFour"], JSON_NUMERIC_CHECK); ?>;
-        var chart4 = new CanvasJS.Chart("chartContainer4", {
-            backgroundColor: "transparent",
-            animationEnabled: true,
-            exportEnabled: true,
-            data: [{
-                type: "pie",
-                // showInLegend: "true",
-                legendText: "{label}",
-                indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
-                yValueFormatString: "฿#,##0",
-                dataPoints: dataPoints
-            }]
-        });
-
-        chart4.render();
     });
 </script>
 

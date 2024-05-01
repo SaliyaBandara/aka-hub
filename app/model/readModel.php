@@ -1074,6 +1074,32 @@ class readModel extends Model
         return false;
     }
 
+    public function getCountAcceptedReservations()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as accepted_reservations FROM reservation_requests WHERE status = ?", "i", [1]);
+        if ($result !== null && isset($result[0]['accepted_reservations'])) {
+            return $result[0]['accepted_reservations'];
+        }
+        return false;
+    }
+
+    public function getCountFreeTimeSlots()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as free_timeslots FROM timeslots WHERE status = ? OR status = ? ", "ii", [0,1]);
+        if ($result !== null && isset($result[0]['free_timeslots'])) {
+            return $result[0]['free_timeslots'];
+        }
+        return false;
+    }
+
+    public function getCountReservationRequests()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as requests FROM reservation_requests WHERE status = ?", "i", [0]);
+        if ($result !== null && isset($result[0]['requests'])) {
+            return $result[0]['requests'];
+        }
+        return false;
+    }
 
 
     public function getCountRoleUsers()
@@ -1112,14 +1138,21 @@ class readModel extends Model
             $endOfMonth = strtotime('last day of', $timestamp);
             $startDate = date('Y-m-d', $startOfMonth);
             $endDate = date('Y-m-d', $endOfMonth);
-            $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM user WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            // $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM reservation_requests WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            $sql = "SELECT t.id as timeslot_id, COUNT(r.id) as reservation_count
+                    FROM timeslots t
+                    LEFT JOIN reservation_requests r ON r.timeslot_id = t.id
+                    WHERE t.date >= ? AND t.date <= ?";
+            
+            $result = $this->db_handle->runQuery($sql, "ss", [$startDate, $endDate]);
+
             if ($result === false) {
                 error_log("Error executing SQL query for period: $startDate to $endDate");
                 continue;
             }
             if (count($result) > 0) {
-                $userCount = (int) $result[0]['user_count'];
-                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $userCount);
+                $reservationCount = (int) $result[0]['reservation_count'];
+                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $reservationCount);
             } else {
                 error_log("No user creation records found for period: $startDate to $endDate");
             }
