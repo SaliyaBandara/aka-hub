@@ -75,6 +75,64 @@ $header = new header();
     </div>
 <?php } ?>
 
+<?php if (isset($data["reset_password"]) && $data["reset_password"] == 1) { ?>
+    <div class="fixed-overlay-model fixed-model reset-password-model" style="display: flex;">
+        <div class="container auth__section">
+            <div class="close-btn close-model-btn">
+                <i class='bx bx-x'></i>
+            </div>
+
+            <form class="form" id="reset-password-save" action="" method="post">
+                <div class="title">Reset Your Password</div>
+                <div class="form-desc mb-1-5">
+                    Please enter your new password
+                </div>
+
+                <div class="form-group flex-column">
+                    <label>
+                        <input type="password" name="password" placeholder=" ">
+                        <p>New Password <span class="text-gold">*</span></p>
+                    </label>
+                    <label>
+                        <input type="password" name="confirm_password" placeholder=" ">
+                        <p>Confirm Password <span class="text-gold">*</span></p>
+                    </label>
+                </div>
+
+                <div class="form-group" style="">
+                    <button class="w-100 btn btn--secondary" type="submit">Reset Password</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="bg"></div>
+    </div>
+<?php } ?>
+
+<?php if (isset($data["reset_password"]) && $data["reset_password"] == 2) { ?>
+    <div class="fixed-overlay-model fixed-model reset-password-model" style="display: flex;">
+        <div class="container auth__section">
+            <div class="close-btn close-model-btn">
+                <i class='bx bx-x'></i>
+            </div>
+
+            <form class="form" id="reset-password-save" action="" method="post">
+                <div class="title">Invalid Password Reset Link</div>
+                <div class="form-desc mb-1-5">
+                    The password reset link is invalid or expired. Please request a new password reset link.
+                </div>
+
+                <div class="form-group" style="">
+                    <button class="w-100 btn btn--secondary close-model-btn" type="submit">Okay</button>
+                </div>
+            </form>
+        </div>
+        <div class="bg"></div>
+    </div>
+<?php } ?>
+
+
+
 <style>
     .fixed-overlay-model {
         position: fixed;
@@ -442,10 +500,19 @@ $HTMLFooter = new HTMLFooter();
             if (formId == "registration-form")
                 action = "register";
             else if (formId == "reset-password")
-                action = "reset-password";
+                action = "reset_password";
+            else if (formId == "reset-password-save")
+                action = "reset_password";
 
             // var url = getBaseURL() + "/" + action;
             var url = BASE_URL_ALT + "/auth/" + action;
+
+            if (formId == "reset-password-save") {
+                action = "reset_password_save";
+                let token = window.location.href.split("/").pop();
+                url += "/" + token;
+            }
+
             // console.log(baseURL);
             console.log(values);
             // return;
@@ -461,8 +528,18 @@ $HTMLFooter = new HTMLFooter();
                 success: function(response) {
                     if (response['status'] == 200) {
 
-                        // check if response['register'] is set
                         alertUser("success", response['desc'])
+
+                        if (formId == "reset-password") {
+                            return;
+                        }
+
+                        if (formId == "reset-password-save") {
+                            $('.fixed-model').fadeOut();
+                            $('body').css('overflow', 'auto');
+                            return;
+                        }
+
                         if (response['register'] == 1) {
                             // open modal
                             $('.fixed-model.notice-model .form-desc')

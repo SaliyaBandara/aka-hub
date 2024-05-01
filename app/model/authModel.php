@@ -137,4 +137,81 @@ class authModel extends Model
         }
         return false;
     }
+
+    // reset_password
+    // CREATE TABLE forget_password (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     token VARCHAR(128) NOT NULL,
+    //     expiry DATETIME NOT NULL,
+    //     status INT NOT NULL DEFAULT 1,
+    //     `created_at` DATETIME default current_timestamp,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+    public function reset_password($email)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
+        if (count($result) > 0) {
+            // expire all previous tokens
+            $user = $result[0];
+            $result = $this->db_handle->insert("UPDATE forget_password SET status = 0 WHERE user_id = ?", "i", [$user["id"]]);
+            if (!$result)
+                return false;
+
+            $token = $this->getToken(50);
+
+
+            // expire token in 30 minutes
+            $expiry = date("Y-m-d H:i:s", strtotime("+30 minutes"));
+            $data = [
+                "user_id" => [$user["id"], "i"],
+                "token" => [$token, "s"],
+                "expiry" => [$expiry, "s"]
+            ];
+
+            $result = $this->insert_db("forget_password", $data);
+            if (!$result)
+                return false;
+
+            $return_data = [
+                "email" => $user["email"],
+                "name" => $user["name"],
+                "token" => $token
+            ];
+
+            return $return_data;
+        }
+        return false;
+    }
+
+    // reset_password_change($token, $data["password"]);
+    public function reset_password_change($token, $password)
+    {
+        // echo "$token, $password";
+        // die;
+        $result = $this->db_handle->runQuery("SELECT * FROM forget_password WHERE token = ? AND status = 1", "s", [$token]);
+        if (count($result) > 0) {
+            $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$result[0]["user_id"]]);
+            if (count($result) > 0) {
+                $data = [
+                    "password" => [$this->hashPassword($password), "s"]
+                ];
+                $result = $this->db_handle->insert("UPDATE user SET password = ? WHERE id = ?", "si", [$data["password"][0], $result[0]["id"]]);
+                if (!$result)
+                    return false;
+
+                $this->db_handle->insert("UPDATE forget_password SET status = 0 WHERE token = ?", "s", [$token]);
+                return $result;
+            }
+        }
+        return false;
+    }
+
+    public function check_valid_token($token)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM forget_password WHERE token = ? AND status = 1", "s", [$token]);
+        if (count($result) > 0)
+            return true;
+        return false;
+    }
 }

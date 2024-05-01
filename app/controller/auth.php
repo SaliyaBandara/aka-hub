@@ -190,7 +190,6 @@ class Auth extends Controller
             die(json_encode(array("status" => "400", "desc" => "Please fill all the input fields")));
     }
 
-    // /verify_email/rpUMz3opGEiiTSacNqll3wyPr6nwmfv5zNlTrDsWxZinQ7uOSK
     public function verify_email($code)
     {
         $result = $this->model('authModel')->verify_email($code);
@@ -221,5 +220,98 @@ class Auth extends Controller
             $data["email_verified"] = 2;
             $this->view->render('auth/index', $data);
         }
+    }
+
+    public function reset_password($token = "")
+    {
+        $required_vars = [
+            "email" => "string"
+        ];
+
+        if (isset($_POST['action']) && $_POST['action'] == "reset_password") {
+            $data = $_POST["data"];
+            $this->validate($data, $required_vars);
+
+            $result = $this->model('authModel')->reset_password($data["email"]);
+            if ($result) {
+                // $return_data = [
+                //     "email" => $email,
+                //     "name" => $result[0]["name"],
+                //     "token" => $token
+                // ];
+
+                // send email verification code
+                $subject = "Reset Your Password | Aka Hub";
+                $message = file_get_contents('../public/email_templates/reset_password.htm');
+                $message = str_replace('{{name}}', $result["name"], $message);
+                $email_link = BASE_URL . "/auth/reset_password/" . $result["token"];
+                $message = str_replace('{{email_link}}', $email_link, $message);
+
+                //log Entry
+                $action = "User requested to reset password with email";
+                $status = "602";
+                $this->model("createModel")->createLogEntry($action, $status);
+
+                ob_start();
+
+                echo (json_encode(array("status" => "200", "desc" => "Reset Password Email Sent")));
+
+                $this->model("createModel")->close_connection();
+
+                // sendEmail($to, $name, $subject, $message)
+                $this->model("createModel")->sendEmail($result["email"], $result["name"], $subject, $message);
+            }
+
+            //log Entry
+            $action = "User tried to reset password with invalid email";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+
+            die(json_encode(array("status" => "400", "desc" => "Invalid email")));
+        }
+
+        if (isset($_POST['action']) && $_POST['action'] == "reset_password_save" && $token != "") {
+            $data = $_POST["data"];
+            $required_vars = [
+                "password" => "string",
+                "confirm_password" => "string"
+            ];
+
+            $this->validate($data, $required_vars);
+
+            if ($data["password"] != $data["confirm_password"])
+                die(json_encode(array("status" => "400", "desc" => "Passwords do not match")));
+
+            $result = $this->model('authModel')->reset_password_change($token, $data["password"]);
+            if ($result) {
+                //log Entry
+                $action = "User reset password with email";
+                $status = "602";
+                $this->model("createModel")->createLogEntry($action, $status);
+
+                die(json_encode(array("status" => "200", "desc" => "Password Reset Successfully, Please login using your new password")));
+            }
+
+            //log Entry
+            $action = "User tried to reset password with invalid token";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+
+            die(json_encode(array("status" => "400", "desc" => "Invalid Reset Password Token")));
+        }
+
+        $data = [
+            'title' => 'Reset Password',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["reset_password"] = 2;
+        if ($token != "") {
+            // check_valid_token
+            $result = $this->model('authModel')->check_valid_token($token);
+            if ($result)
+                $data["reset_password"] = 1;
+        }
+        $this->view->render('auth/index', $data);
     }
 }
