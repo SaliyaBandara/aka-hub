@@ -21,7 +21,7 @@ $sidebar = new Sidebar("courses");
                 <h3 class="h3-CounselorFeed"><?= $data["topic"] ?></h3>
                 <div class="flex flex-column">
                     <div class="flex flex-row mb-1" style="align-items: last baseline ">
-                        <?php if (($data["teaching_student"] == 1) || ($data["student_rep"])) { ?>
+                        <?php if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1)) { ?>
                             <div class="mb-1 form-group me-1">
                                 <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
                                     <i class='bx bx-plus'></i> Add Course
@@ -102,20 +102,20 @@ $sidebar = new Sidebar("courses");
                             }
                     ?>
 
-                            <div href="<?= $link ?><?= $course["id"] ?>" class="js-link todo_item flex align-center">
+                            <div href="#" class="js-link todo_item flex align-center" data-id="<?= $course["id"] ?>">
                                 <div>
                                     <div class="todo_item_date flex align-center justify-center">
                                         <img src="<?= $img_src ?>" alt="">
                                     </div>
                                 </div>
-                                <div class="todo_item_text">
+                                <div class="todo_item_text" data-id = <?= $link?>>
                                     <div class="font-1-25 font-semibold"><?= $course["name"] ?></div>
                                     <div class="font-1 font-medium text-muted"><?= $course["code"] ?></div>
                                     <div class="font-0-8 text-muted">Year <?= $course["year"] ?> Semester <?= $course["semester"] ?></div>
                                 </div>
 
                                 <?php
-                                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                                if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1) && $data["student"][0]["year"] == $course["year"]) {
                                 ?>
 
                                     <div class="todo_item_actions">
@@ -398,6 +398,27 @@ $sidebar = new Sidebar("courses");
                         // Handle empty or invalid response
                         alertUser("warning", "No courses found for this semester.");
                     }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+        $(document).on("click", ".todo_item", function(event) {
+            event.preventDefault();
+
+            let course_id = $(this).attr("data-id");
+            let link = $('.todo_item_text').attr("data-id");
+
+            $.ajax({
+                url: `${BASE_URL}/courses/recentCourses`,
+                type: 'post',
+                data: {
+                    course_id: course_id
+                },
+                success: function(data) {
+                    window.location.href = '<?= $link ?>' + course_id;
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong");
