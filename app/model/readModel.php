@@ -1476,10 +1476,10 @@ class readModel extends Model
             AND p.posted_by = u.id
             AND p.posted_by = cr.user_id
             AND cr.club_id = c.id
-            AND c.name LIKE ?
+            AND (c.name LIKE ? OR p.description LIKE ?)
             ORDER BY p.created_datetime DESC
         ";
-        $result = $this->db_handle->runQuery($sql, "s", ["%$searchValue%"]);
+        $result = $this->db_handle->runQuery($sql, "ss", ["%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -2935,7 +2935,7 @@ class readModel extends Model
             "updated_datetime" => [
                 "label" => "Updated Date Time",
                 "type" => "datetime-local",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
         ];
@@ -3240,8 +3240,8 @@ class readModel extends Model
             ],
             "recent_courses" => [
                 "label" => "Recent Courses",
-                "type" => "text",
-                "validation" => "required",
+                "type" => "array",
+                "validation" => "",
                 "skip" => true
             ]
 

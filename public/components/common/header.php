@@ -85,12 +85,12 @@ class Header
                 </div>
             </div>
 
-            <div class="mobile__menu">
+            <!-- <div class="mobile__menu">
                 <a class="active" href="<?= BASE_URL ?>/">Home</a>
                 <a href="<?= BASE_URL ?>/profile">Profile</a>
                 <a href="<?= BASE_URL ?>/contact">Contact Us</a>
                 <a class="text--primary" href="<?= BASE_URL ?>/auth">+ Sign In</a>
-            </div>
+            </div> -->
         </header>
 
         <div class="sidebar__mask m--only"></div>
