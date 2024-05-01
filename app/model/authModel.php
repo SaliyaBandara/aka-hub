@@ -191,6 +191,13 @@ class authModel extends Model
         // die;
         $result = $this->db_handle->runQuery("SELECT * FROM forget_password WHERE token = ? AND status = 1", "s", [$token]);
         if (count($result) > 0) {
+
+            // check if expired
+            $expiry = $result[0]["expiry"];
+            $current = date("Y-m-d H:i:s");
+            if ($current > $expiry)
+                die(json_encode(array("status" => "400", "desc" => "Token Expired, Please Request a new Password Reset")));
+
             $result = $this->db_handle->runQuery("SELECT * FROM user WHERE id = ?", "i", [$result[0]["user_id"]]);
             if (count($result) > 0) {
                 $data = [
@@ -210,8 +217,16 @@ class authModel extends Model
     public function check_valid_token($token)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM forget_password WHERE token = ? AND status = 1", "s", [$token]);
-        if (count($result) > 0)
+        if (count($result) > 0) {
+
+            // check if expired
+            $expiry = $result[0]["expiry"];
+            $current = date("Y-m-d H:i:s");
+            if ($current > $expiry)
+                return false;
+
             return true;
+        }
         return false;
     }
 }
