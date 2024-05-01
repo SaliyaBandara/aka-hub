@@ -66,7 +66,7 @@ $sidebar = new Sidebar("existingCounselors");
                     <div class = "font-1 text-muted ms-1 mt-0-5">You can now talk with the professional counselors to reserve a date for your appointment</div>
                     <div class="flex flex-row">
                         <div href="#" class = "me-1 mt-1 ms-1">
-                            <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center">
+                            <div class = "btn btn-primary mb-1 form form-group chatButton justify-center align-center load-chat" user-id="<?= $counselor['id'] ?>">
                                 Chat Now
                             </div>
                         </div>
@@ -262,5 +262,26 @@ $sidebar = new Sidebar("existingCounselors");
                 xhr.send();
             });
         });
-    });     
+    });   
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var BookApoinment = document.querySelectorAll('.load-chat');
+
+        BookApoinment.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var user_id = button.getAttribute('user-id');
+                console.log(user_id);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', BASE_URL + '/counselorView/chatWithCounselor/' + user_id, true);
+                //xhr.open('GET', BASE_URL + '/counselorView/chatMessages/' + user_id, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        window.location.href = BASE_URL + '/counselorView/chatWithCounselor/' + user_id;
+                    }
+                };
+                xhr.send();
+            });
+        });
+    });
 </script>

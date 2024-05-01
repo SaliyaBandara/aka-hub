@@ -19,7 +19,7 @@ $calendar = new CalendarComponent();
                     <h1>Manage Time Slots</h1>
                 </div>
                 <div class="date-range">
-                    <p class="p2">From<input type="date" value=""> to <input type="date"><a href="#" class="button-select">Show</a></p>
+                    <p class="p2">From<input type="date" class="start_date" value="<?php echo $data["start_date"]?>"> to <input type="date" class="end_date" value="<?php echo $data["end_date"]?>"><a href="#" class="button-select filter-dates">Show</a></p>
                     <p class="p1">Please add your available time slots here</p>
                 </div>
                 <div class="custom-button-div">
@@ -32,6 +32,21 @@ $calendar = new CalendarComponent();
                     if (empty($data["timeslots"])) {
                         echo "<p>NO TIME SLOTS AVAILABLE</p>";
                     } else {
+
+                            function sortByDateTime($a, $b) {
+                                // Compare reservation dates
+                                $dateComparison = strcmp($a["date"], $b["date"]);
+                                if ($dateComparison != 0) {
+                                    return $dateComparison;
+                                }
+                                
+                                // If reservation dates are equal, compare start times
+                                return strcmp($a["start_time"], $b["start_time"]);
+                            }
+            
+                            // Sort the reservation requests array using the custom sorting function
+                            usort($data["timeslots"], 'sortByDateTime');
+
                             foreach ($data["timeslots"] as $timeslot) {
                                 $class = "card-not-added";
                                 $buttonClass = "button-add";
@@ -510,7 +525,7 @@ $calendar = new CalendarComponent();
 
                 $.ajax({
                     // url: url,
-                    // url: `${BASE_URL}/counselorManageTimeSlots/addtimeslots`,
+                    url: `${BASE_URL}/counselorManageTimeSlots/addtimeslots`,
                     type: 'post',
                     data: {
                         addtimeslots: values 
@@ -631,7 +646,25 @@ $calendar = new CalendarComponent();
                     alertUser("danger", "Something Went Wrong")       
                 }
             });
-        });        
+        });    
+        
+        $(document).on("click", ".filter-dates", function() {
+        let startDate = $(".start_date").val();
+        let endDate = $(".end_date").val();
+
+        if (startDate === "" || endDate === "") {
+            alertUser("warning", "Please select both start and end dates");
+            return;
+        }
+
+        if (startDate > endDate ) {
+            alertUser("warning", "Start Date must be before End Date.");
+            return;
+        }
+
+        // window.location.href = `${BASE_URL}/counselorManageTimeSlots/filterDates/${startDate}/${endDate}`;
+        window.location.href = `${BASE_URL}/counselorManageTimeSlots/filterDates/${startDate}/${endDate}`;
+    });
       
 </script>
 

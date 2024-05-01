@@ -47,9 +47,10 @@ class counselorReservationRequests extends Controller
             $this->redirect();
       
         if ($id != 0) {
-            $data["user"] = $this->model('readModel')->getOne("user", $id);
-            // if (!$data["user"])
-            //     $this->redirect();
+            $student_id = $this->model('readModel')->getStudentIdByReservation($id);
+            $data["user"] = $this->model('readModel')->getOne("user", $student_id);
+            if (!$data["user"])
+                $this->redirect();
         }
 
         $this->view->render('counselor/reservationRequests/custom_email_popup', $data); 

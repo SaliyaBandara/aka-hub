@@ -8,11 +8,13 @@
     <a href="" class="close">&times;</a>
     <div class="content">
         <div class="container">
-            
             <form class="form-1">
+                <?php
+                    $user = $data["user"];
+                ?>
                 <div class="label-container">
                     <form action="" class="contact-left">
-                        <label for="email">Sends to: </label>
+                        <label for="email">Sends to: <?= $user["email"] ?></label>
                         <textarea name="message" placeholder="Enter message" class="contact-textarea" required></textarea>
                         <div class="input-buttons">
                             <a href="#" class="email send-email">Send Email <i class='bx bx-envelope'></i></a>

@@ -24,12 +24,15 @@ class AddCounselors extends Controller
 
         $data["user_template"] = $this->model('readModel')->getEmptyUser();
         $data["counselor_template"] = $this->model('readModel')->getEmptyCounselor();
+        $data["chatUser_template"] = $this->model('readModel')->getEmptyChatUser();
 
         $data["user"] = $data["user_template"]["empty"];
         $data["counselor"] = $data["counselor_template"]["empty"];
+        $data["chatUser"] = $data["chatUser_template"]["empty"];
 
         $data["user_template"] = $data["user_template"]["template"];
         $data["counselor_template"] = $data["counselor_template"]["template"];
+        $data["chatUser_template"] = $data["chatUser_template"]["template"];
 
         $data["id"] = $id;
 
@@ -47,15 +50,20 @@ class AddCounselors extends Controller
 
             $this->validate_template($values, $data["user_template"]);
             $this->validate_template($values, $data["counselor_template"]);
+            $this->validate_template($values, $data["chatUser_template"]);
 
             if ($id == 0) {
                 $result = false;
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
                     $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
+                    $values["unique_id"] = $this->model('readModel')->lastInsertedId("user", "id");
                     // print_r($values["id"]);
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
+                    $result3 = $this->model('createModel')->insert_db("chat_users", $values, $data["chatUser_template"]);
                     $result = $result1 && $result2;
+                    // $result = $result4 && $result3;
+
                 }
                 if ($result) {
                     if ($result) {

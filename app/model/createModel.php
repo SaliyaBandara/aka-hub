@@ -48,6 +48,24 @@ class createModel extends Model
         return $last_id;
     }
 
+    public function insertChatMessage($outgoingId, $incomingId, $message, $template = [])
+    {
+        // print_r($outgoingId);
+        // print_r($incomingId);
+        // print_r($message);
+        // die;
+
+        $types = "";
+        $params = [];
+
+        $query = "INSERT INTO messages (incoming_msg_id, outgoing_msg_id, msg) VALUES ({$incomingId}, {$outgoingId}, '{$message}')";
+        $result = $this->db_handle->insert($query, $types, $params);
+        // get last inserted id
+        // $last_id = $this->db_handle->getLastInsertedID();
+        // return $last_id;
+    }
+
+
     // CREATE TABLE election_votes (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     election_id INT NOT NULL,
