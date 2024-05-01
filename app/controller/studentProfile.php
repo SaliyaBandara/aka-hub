@@ -191,14 +191,11 @@ class StudentProfile extends Controller
         $data["user"] = $data["user_template"]["empty"];
         $data["user_template"] = $data["user_template"]["template"];
 
-
-
         if (isset($_POST['changePassword'])) {
 
             $oldPassword = $_POST["oldPassword"];
             $newPassword = $_POST["newPassword"];
             
-
             // trim
             $oldPassword = trim($oldPassword);
             $newPassword = trim($newPassword);
