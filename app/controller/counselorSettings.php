@@ -80,7 +80,7 @@ class counselorSettings extends Controller
         }
         $this->view->render('counselor/settings/add_edit', $data);
     }
-    
+
     public function changePassword()
     {
 
@@ -105,23 +105,20 @@ class counselorSettings extends Controller
             $oldPassword = $_POST["oldPassword"];
             $newPassword = $_POST["newPassword"];
 
-
             // trim
             $oldPassword = trim($oldPassword);
             $newPassword = trim($newPassword);
-
+          
             // $hashedOldPassword = $this->model('authModel')->hashPassword($oldPassword);
             $hashedNewPassword = $this->model('authModel')->hashPassword($newPassword);
             // echo "$hashedOldPassword\n$password";
             // die;
-
             if ($newPassword == "") {
                 die(json_encode(array("status" => "400", "desc" => "New password cannot be blank!")));
             }
             if ($oldPassword == "") {
                 die(json_encode(array("status" => "400", "desc" => "Old password cannot be blank!")));
             }
-
 
             if (password_verify($oldPassword, $password)) {
                 // if($hashedOldPassword == $password){

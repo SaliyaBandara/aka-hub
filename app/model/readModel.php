@@ -1190,6 +1190,14 @@ class readModel extends Model
             return $result;
     }
 
+    // public function getRecentCourses($id)
+    // {
+    //     $sql = "SELECT * from student WHERE id = ? ";
+    //     $result = $this->db_handle->runQuery($sql, "i", [$id]);
+    //     if (count($result) > 0)
+    //         return $result;
+    // }
+
     public function getUserDetails($id)
     {
         $sql = "SELECT * from user u, student s WHERE u.id = s.id AND s.id = ?";
@@ -3085,6 +3093,7 @@ class readModel extends Model
             "faculty" => "",
             "degree" => "",
             "year" => "",
+            "recent_courses" => "",
         ];
 
         $template = [
@@ -3114,6 +3123,12 @@ class readModel extends Model
                 "label" => "Year",
                 "type" => "number",
                 "validation" => "required"
+            ],
+            "recent_courses" => [
+                "label" => "Recent Courses",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
             ]
 
 

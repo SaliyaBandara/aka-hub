@@ -16,6 +16,21 @@ class Dashboard extends Controller
         $year = $student["year"];
 
         $data["main_events"] = $this->model('readModel')->getAllEvents($year);
+        $data["student"] = $this->model('readModel')->getOne("student",$user_id);
+
+        $data["recent_courses"] = json_decode($data["student"]["recent_courses"],true);
+        // print_r($data["recent_courses"]);
+
+        $data["courses"] = [];
+
+        foreach($data["recent_courses"] as $recent){
+            $course = $this->model('readModel')->getOne("courses",$recent[0]);
+            // print_r($course);
+            $data["courses"][] = $course;
+        }
+
+        // print_r($data["courses"]);
+        // die();
 
         // if(empty($data["main_events"])){
         //     echo "<div class='font-medium text-muted'>You don't have any upcoming tasks!</div>";

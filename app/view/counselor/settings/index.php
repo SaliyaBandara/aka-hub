@@ -59,6 +59,11 @@ $sidebar = new Sidebar("counselorSettings");
             </div>
             <div class="flex notificationSettings">
                 <div>
+                    <a href="" class="btn btn-danger me-1" id = "changePasswordBtn">
+                        Change Password
+                    </a>
+                </div>
+                <div>
                     <a href="<?= BASE_URL ?>/counselorSettings/add_edit/<?= $userDetails["id"] ?>" class="btn btn-primary">
                         Edit Details
                     </a>
@@ -103,6 +108,42 @@ $sidebar = new Sidebar("counselorSettings");
         </div>
         <span class="closeButton">&times;</span>
     </div>
+
+    <div class="popupBackground"></div>
+
+<div class="popup flex flex-column">
+    <div class="popupHeader mb-2 text-secondary">Change Password</div>
+    <div class="popupForm mt-2">
+        <form action="" method="post" class="form">
+            <div class="mb-1 form-group">
+                <label for="name" class="form-label">Old Password</label>
+                <div class="flex flex-row passwordBox">
+                    <input type="password" id="password" name="password" class="" value="">
+                    <div class="showIcon" style="display: inline;">
+                        <i class='bx bx-show feather-eye' style="cursor: pointer;"></i>
+                        <i class='bx bx-hide feather-eye-off' style="display: none; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-1 form-group">
+                <label for="name" class="form-label">New Password</label>
+                <div class="flex flex-row passwordBox">
+                    <input type="password" id="passwordNew" name="passwordNew" class="" value="">
+                    <div class="showIcon" style="display: inline;">
+                        <i class='bx bx-show feather-eye-new' style="cursor: pointer;"></i>
+                        <i class='bx bx-hide feather-eye-off-new' style="display: none; cursor: pointer;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-1-5 form-group">
+                <button class="btn btn-primary" id="changePassword">Change Password</button>
+            </div>
+
+        </form>
+    </div>
+    <span class="closeButton">&times;</span>
+</div>
 
     <style>
         .main-grid {}
@@ -238,8 +279,7 @@ $sidebar = new Sidebar("counselorSettings");
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Semi-transparent black background */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
             z-index: 9998;
             display: none;
         }
@@ -320,7 +360,6 @@ $sidebar = new Sidebar("counselorSettings");
                             history.go(-1);
                             window.close();
                         }, 2000);
-
                     } else if (response['status'] == 403)
                         alertUser("danger", response['desc'])
                     else
