@@ -723,3 +723,19 @@ samanbandara@gmail.com	127.0.0.1	05/01/24 12:16AM	Course material updated succes
 
 samanbandara@gmail.com	127.0.0.1	05/01/24 12:38AM	Admin successfully updated profile details samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/add_edit/121url=adminProfileAndSettings/add_edit/121	601
 
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 07:42AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 07:42AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
