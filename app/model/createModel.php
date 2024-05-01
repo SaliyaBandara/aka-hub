@@ -196,6 +196,17 @@ class createModel extends Model
 
     public function notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
     {
+        /*
+        Sample Function Calls
+
+        $this->model("createModel")->notification(7, 0, $id, "Student Representative Permissions Revoked","Sorry , Your Student Representative Permissions and Features Revoked", 0);
+
+        $this->model("createModel")->notification(7, 0, $id, "Promoted to Club Representative","You Have Been Promoted to Club Representative Role and Features", 0);
+
+        $this->model("createModel")->notification(7, $values["id"], $id, "Counselor Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 0);
+
+        */
+
 
         /*
         Type
@@ -228,7 +239,7 @@ class createModel extends Model
         // --      2 - Student - 2nd Year
         // --      3 - Student - 3rd Year
         // --      4 - Student - 4th Year
-        // --    6 - Counsellor
+        // --      6 - Counsellor
 
         // CREATE TABLE notifications (
         //     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -466,7 +477,7 @@ class createModel extends Model
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
-
+        
         $ip = $_SERVER['REMOTE_ADDR'];
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'];

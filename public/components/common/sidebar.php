@@ -37,7 +37,8 @@ class Sidebar
                     'forum' => ['Forum', 'bxs-chat'],
                     'viewlogs' => ['User Logs', 'bxs-dashboard'],
                     'viewUserDistribution' => ['User Details', 'bxs-user-circle'],
-                    'adminProfileAndSettings' => ['Admin Settings', 'bxs-cog'],
+                    'calendarAdminView' => ['Calendar', 'bxs-calendar-star'],
+
                 ];
                 $pages = array_merge($pages, $adminPages);
             }
@@ -47,7 +48,7 @@ class Sidebar
                     'adminpanel' => ['Dashboard', 'bxs-dashboard'],
                     'adminAccount' => ['Admin Account', 'bxs-home'],
                     'viewlogs' => ['User Logs', 'bxs-dashboard'],
-                    'superAdminProfileAndSettings' => ['Settings', 'bxs-cog'],
+                    'calendarAdminView' => ['Calendar', 'bxs-calendar-star'],
                 ];
                 $pages = array_merge($pages, $superAdminPages);
             }
@@ -77,6 +78,7 @@ class Sidebar
 
             if ($club_rep == 1) { //ClubRep
                 $clubrepPages = [
+                    'calendar' => ['Calendar', 'bxs-calendar-star'],
                 ];
                 $pages = array_merge($pages, $clubrepPages);
             }
@@ -149,8 +151,8 @@ class Sidebar
             <div class="spacer">
 
             </div>
-            <?php 
-                if($_SESSION["user_role"] == 0){
+            <?php
+            if ($_SESSION["user_role"] == 0) {
             ?>
                 <div class="fixed__bottom font-medium">
                     Do you need counselor support?
@@ -158,7 +160,7 @@ class Sidebar
                     to talk with a counselor.
                 </div>
             <?php
-                }
+            }
             ?>
 
             <!-- <div class="fixed__bottom">

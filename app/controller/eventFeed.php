@@ -548,9 +548,6 @@ class eventFeed extends Controller
             if ($id == 0) {
                 $values["posted_by"] = $_SESSION["user_id"];
             }
-
-            $values["post_image"] = $values["post_image"];
-
             // if (isset($values["kuppi_video"])){
             //     $values["link"] = json_encode($values["kuppi_video"]);
             //     print_r($values["link"]);
@@ -633,7 +630,7 @@ class eventFeed extends Controller
             $task = "User deleted a post in event feed";
             $state = "200";
             $this->model("createModel")->createLogEntry($task, $state);
-            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            die(json_encode(array("status" => "200", "desc" => "Post Deleted Successfully")));
         }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting post")));
     }
@@ -693,12 +690,19 @@ class eventFeed extends Controller
         $data["alreadyRequested"] = $this->model('readModel')->getClubRepByUser($_SESSION["user_id"], 0);
         $data["alreadyGiven"] = $this->model('readModel')->getClubRepByUser($_SESSION["user_id"], 1);
 
+
+        if($club_id == ""){
+            die(json_encode(array("status" => "400", "desc" => "Please select a club first!")));
+        }
+
         if ($_SESSION["club_rep"] == 1 || (!empty($data["alreadyGiven"]))) {
 
             die(json_encode(array("status" => "400", "desc" => "You are already a Club Representative")));
+
         } else if ($_SESSION["club_rep"] == 2 || (!empty($data["alreadyRequested"]))) {
 
-            die(json_encode(array("status" => "400", "desc" => "Already requested")));
+            die(json_encode(array("status" => "400", "desc" => "Already requested for Club Representative")));
+
         } else if ($_SESSION["club_rep"] == 0 || (empty($data["alreadyGiven"]))) {
 
             $resultUpdate = $this->model('updateModel')->to_get_role(
@@ -741,7 +745,9 @@ class eventFeed extends Controller
         $values['user_id'] = $_SESSION["user_id"];
         $values['comment'] = $comment;
 
-        if($comment != " "){
+        if($comment == ""){
+            die(json_encode(array("status" => "400", "desc" => "Comment cannont be blank")));
+        }else{
             $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
         }
 

@@ -268,13 +268,13 @@ class Calendar extends Controller
         if (strtotime($date) === false)
             $this->redirect();
 
+        // print_r($date);
+
         // Wednesday, 10 April 2024
         $date = date("l, j F Y", strtotime($date));
         $data["date"] = $date;
 
         $data["items"] = $this->model('readModel')->getUserCalendarEvents($unixTimestamp);
-        // print_r($data["items"]);
-        // die;
 
         $this->view->render('calendar/view', $data);
     }
@@ -299,7 +299,7 @@ class Calendar extends Controller
         if ($id == 0)
             $this->redirect();
 
-        $result = $this->model('deleteModel')->delete_one("calendar", "id", $id, "i");
+        $result = $this->model('deleteModel')->deleteOne("calendar", $id);
 
         if ($result)
             die(json_encode(array("status" => "200", "desc" => "Calendar Event Deleted Successfully")));

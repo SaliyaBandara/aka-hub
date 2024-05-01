@@ -8,7 +8,7 @@ $calendar = new CalendarComponent();
 <style>
     /* css quiery for print */
     @page {
-        size: A4 portrait;
+        size: A3 landscape;
         margin: 1%;
         margin: 50px 0% 0 0%;
         margin-top: 50px;
@@ -16,6 +16,11 @@ $calendar = new CalendarComponent();
 
 
     @media print {
+
+        .btn-download {
+            display: none !important;
+        }
+
         .noprint {
             display: none !important;
         }
@@ -54,6 +59,11 @@ $calendar = new CalendarComponent();
 
     <div class="main-grid flex">
         <div class="left">
+            <div class="printDiv">
+                <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" href="javascript:window.print()">
+                    Export
+                </a>
+            </div>
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <?php if ($data["count_total_users"] !== null) : ?>
@@ -78,12 +88,7 @@ $calendar = new CalendarComponent();
                 </div>
             </div>
             <div class="fourGraphsContainor">
-                <div class="printDiv">
-                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" href="javascript:window.print()">
-                        Export
-                    </a>
 
-                </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
                         <p class="mb-1"><b>User Registration For the System</b></p>
@@ -114,35 +119,29 @@ $calendar = new CalendarComponent();
         </div>
         <!-- <div class="right">
             <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
+                <?= $calendar->render(); ?>
             </div>
         </div> -->
     </div>
 
     <style>
-        /* .printDiv {
-            width: 100%;
-            height: 2rem;
+        .printDiv {
             display: flex;
+            justify-content: flex-end;
+            margin-right: 50px;
+            margin-top: 20px;
         }
 
-        .printInnerDiv {
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        .main-grid {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 5px;
-            border-radius: 5px;
-            background-color: white;
+            height: auto;
+            width: 100%;
         }
 
-        .printDiv img {
-            width: 1.5rem;
-            height: 1.5rem;
-        } */
-
-        .main-grid .left {
-            width: 100%;
+        .left {
+            width: 100% !important;
             height: 150vh;
             padding-bottom: 50px;
         }
@@ -150,6 +149,7 @@ $calendar = new CalendarComponent();
         .main-grid .right {
             flex-grow: 1;
             height: 150vh;
+            border: 1px solid red;
         }
 
         .threeCardDiv {

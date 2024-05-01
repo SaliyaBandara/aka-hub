@@ -25,9 +25,12 @@ class counselorReservations extends Controller
     public function sendEmail($id=0)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $action = "Unauthorized user tried to access send email function for counselor.";
+            $status = "401";
+            $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-     
+        }
         if ($id != 0) {
             $data["user"] = $this->model('readModel')->getOne("user", $id);
             // if (!$data["user"])
@@ -71,6 +74,8 @@ class counselorReservations extends Controller
         $result = $this->model('updateModel')->update_one("reservation_requests", $data["values"], $data["reservation_template"], "id", $id, "i");
 
         if ($result) {
+            $task = "Counselor completed a reservation.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(["status" => 200, "desc" => "Reservation Completed."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error completing Reservation."]));
@@ -80,9 +85,11 @@ class counselorReservations extends Controller
     public function cancelledReservation($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access cancel reservation function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+        }
         $data["reservation_data"] = $this->model('readModel')->getEmptyReservation();
         $data["reservation"] = $data["reservation_data"]["empty"];
         $data["reservation_template"] = $data["reservation_data"]["template"];
@@ -102,6 +109,8 @@ class counselorReservations extends Controller
 
         $result = $this->model('updateModel')->update_one("reservation_requests", $data["values"], $data["reservation_template"], "id", $id, "i");
         if ($result) {
+            $task = "Counselor cancelled a reservation.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(["status" => 200, "desc" => "Reservation Cancelled."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error cancelling Reservation."]));

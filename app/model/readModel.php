@@ -40,6 +40,15 @@ class readModel extends Model
         return 0;
     }
 
+    public function getSystemDetails()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM system_variables WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAll($table)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE ?", "i", [1]);
@@ -68,9 +77,42 @@ class readModel extends Model
         return false;
     }
 
+    public function isEmailExist($email)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
+        if (count($result) > 0)
+            return $result;
+        return false;
+    }
+
+    public function isCodeExist($code)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
+        if (count($result) > 0)
+            return $result[0];
+        return false;
+    }
+
+    public function isCourseExist($course_name)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE name = ?", "s", [$course_name]);
+        if (count($result) > 0)
+            return $result[0];
+        return false;
+    }
+
     public function getAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPassword($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT password FROM user WHERE id = ?", "i", [$id]);
         if (count($result) > 0)
             return $result;
 
@@ -81,6 +123,16 @@ class readModel extends Model
     {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ?", "i", [$year]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesByCode($code)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
         if (count($result) > 0)
             return $result;
 
@@ -143,6 +195,15 @@ class readModel extends Model
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE semester = ? ", "i", [$semester]);
         if (count($result) > 0)
             return $result;
+
+        return false;
+    }
+
+    public function getAllCalendarEventsById($id)
+    {
+        $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE id = ?", "i", [$id]);
+        if (count($events) > 0)
+            return $events;
 
         return false;
     }
@@ -1453,12 +1514,27 @@ class readModel extends Model
         return false;
     }
 
+    
 
-    public function getAllEvents($table)
+    // public function getAllEvents($table)
+    // {
+
+    //     $sql = "SELECT * from main_events m, courses c where course_id = c.id AND m.end_date >= NOW() AND ? ORDER BY m.end_date ASC";
+    //     $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+    //     // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
+
+    public function getAllEvents($year)
     {
 
-        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND m.end_date >= NOW() AND ? ORDER BY m.end_date ASC";
-        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        $sql = "SELECT * from calendar c where c.date >= NOW() AND (c.type = 1 OR c.type = 2) AND (c.target = ? OR c.target = 5) ORDER BY c.date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [$year]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
 
@@ -2019,6 +2095,53 @@ class readModel extends Model
     //     PRIMARY KEY (`id`),
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE
     //   );    
+
+    public function getEmptyCourseMaterialForAdmin(){
+        $empty = [
+            "course_id" => "",
+            "video_links" => "",
+            "reference_links" => "",
+            "short_notes" => "",
+            "description" => ""
+        ];
+
+        $template = [
+            "course_id" => [
+                "label" => "Course",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "video_links" => [
+                "label" => "Video Links",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "reference_links" => [
+                "label" => "Reference Links",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "short_notes" => [
+                "label" => "Short Notes",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => ""
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     public function getEmptyCourseMaterial()
     {
@@ -2696,7 +2819,7 @@ class readModel extends Model
             "title" => [
                 "label" => "Post Title",
                 "type" => "text",
-                "validation" => ""
+                "validation" => "required"
             ],
             "description" => [
                 "label" => "Description",
@@ -2973,7 +3096,7 @@ class readModel extends Model
             ],
             "index_number" => [
                 "label" => "Index Number",
-                "type" => "text",
+                "type" => "number",
                 "validation" => "",
                 "skip" => true
             ],

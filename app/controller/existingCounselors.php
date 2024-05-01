@@ -24,23 +24,25 @@ class ExistingCounselors extends Controller
     public function delete($id = 0)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 1){
-            $action = "deleted a specific counselor";
-            $state = 200;
+        if ($_SESSION["user_role"] != 1) {
+            $action = "Unauthorized user tried to delete a specific counselor";
+            $state = 401;
             $this->model("createModel")->createLogEntry($action, $state);
             $this->redirect();
         }
         if ($id == 0)
             $this->redirect();
 
-        $result = $this->model('deleteModel')->deleteOne("user", $id);
-        if ($result){
-            $action = "deleted a specific counselor";
-            $state = 200;
+        $resultOne = $this->model('deleteModel')->deleteOne("counselor", $id);
+        $resultTwo = $this->model('deleteModel')->deleteOne("user", $id);
+
+
+        if ($resultOne && $resultTwo) {
+            $action = "deleted a specific counselor : " . $id;
+            $state = 602;
             $this->model("createModel")->createLogEntry($action, $state);
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
         }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
-    
 }

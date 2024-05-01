@@ -4,7 +4,49 @@ $HTMLHead = new HTMLHead($data['title']);
 $sidebar = new Sidebar("viewlogs");
 $calendar = new CalendarComponent();
 ?>
+<style>
+    /* css quiery for print */
+    @page {
+        size: A3 landscape;
+        margin: 1%;
+        margin: 50px 0% 0 0%;
+        margin-top: 50px;
+    }
 
+
+    @media print {
+        .noprint {
+            display: none !important;
+        }
+
+        #sidebar {
+            display: none !important;
+        }
+
+        /* show background colors */
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+
+        #sidebar-active {
+            width: 100vw;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            /* display: none !important; */
+        }
+
+        .main-grid .left {
+            width: 100% !important;
+        }
+
+        .main-grid .right {
+            flex-grow: 1;
+            /* height: 100vh; */
+        }
+
+    }
+</style>
 <div id="sidebar-active" class="hideScrollbar">
 
     <?php $welcomeSearch = new WelcomeSearch(); ?>
@@ -16,9 +58,9 @@ $calendar = new CalendarComponent();
                     <i class='bx bxs-calendar-check me-0-5'></i> User Logs and Analytics
                 </div>
                 <div class="mb-1 form-group right_side">
-                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info">Back
+                    <a href="<?= BASE_URL ?>/viewlogs" class="btn btn-info noprint">Back
                     </a>
-                    <a href="javascript:window.print()" class="btn btn-info">
+                    <a href="javascript:window.print()" class="btn btn-info noprint">
                         Export
                     </a>
                 </div>

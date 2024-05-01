@@ -38,14 +38,34 @@ class WelcomeSearch
 
                                 <ul class="pointer" id="notification-list">
                                     <li>
-                                        <a href="<?= BASE_URL ?>/dashboard">
-                                            <span class="notif-icon">
-                                                <i class='bx bx-calendar'></i>
-                                            </span>
-                                            You have 3 upcoming events
-                                        </a>
+                                        <?php
+                                        if (($_SESSION["user_role"] == 1)||($_SESSION["user_role"] == 3)) {
+                                        ?>
+                                            <a href="<?= BASE_URL ?>/calendarAdminView">
+                                            <?php
+                                        } else {
+                                            ?>
+                                                <a href="<?= BASE_URL ?>/dashboard">
+                                                <?php
+                                            }
+                                                ?>
+                                                <span class="notif-icon">
+                                                    <i class='bx bx-calendar'></i>
+                                                </span>
+                                                You have 3 upcoming events
+                                                </a>
                                     </li>
-                                    <li><a href="<?= BASE_URL ?>/dashboard">PDC01: LSEG Tech Talk Session: "Market Surveillance in Financial Markets and AI applications in the domain</a></li>
+                                    <?php
+                                    if (($_SESSION["user_role"] == 1)||($_SESSION["user_role"] == 3)) {
+                                    ?>
+                                        <li><a href="<?= BASE_URL ?>/calendarAdminView">PDC01: LSEG Tech Talk Session: "Market Surveillance in Financial Markets and AI applications in the domain</a></li>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <li><a href="<?= BASE_URL ?>/dashboard">PDC01: LSEG Tech Talk Session: "Market Surveillance in Financial Markets and AI applications in the domain</a></li>
+                                    <?php
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </div>

@@ -43,7 +43,7 @@ if ($_SESSION["user_role"] == 1) {
                         if (empty($data["clubs"])) {
                             echo "<option value = '' class='font-medium text-muted'> There are no excisting clubs </option>";
                         } else {
-                            echo "<option selected value=''> Select your club/society </option>";
+                            echo "<option selected value = 0 > All </option>";
                             foreach ($data["clubs"] as $club) {
                                 echo "<option value='{$club['id']}'>{$club['name']}</option>";
                             }
@@ -261,7 +261,7 @@ if ($_SESSION["user_role"] == 1) {
                                         if (empty($data["clubs"])) {
                                             echo "<option value='' class='font-medium text-muted'>No clubs available</option>";
                                         } else {
-                                            echo "<option selected value=''> Select your club/society </option>";
+                                            echo "<option selected value=' '> Select your club/society </option>";
                                             foreach ($data["clubs"] as $club) {
                                                 echo "<option value='{$club['id']}'>{$club['name']}</option>";
                                             }
@@ -611,6 +611,11 @@ if ($_SESSION["user_role"] == 1) {
         $(document).on("click", ".clubRequestButton", function() {
 
             let selectedValue = $("#name").val();
+
+            if(selectedValue == ""){
+                alertUser("warning", "Please select a club first!");
+                return;
+            }
 
             if (!confirm("Are you sure you want to request this role?"))
                 return;

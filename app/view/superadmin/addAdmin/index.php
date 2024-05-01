@@ -25,7 +25,8 @@ $sidebar = new Sidebar("adminAccount");
                             <?= $value["label"] ?>
                             <?= $key == "password" ? "<span class='text-small text-muted'>(Leave blank if you don't want to change)</span>" : "" ?>
                         </label>
-                        <input <?= $id != 0 && $key == "password" ? "disabled" : "" ?> class="form-control" type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="<?= $id != 0 && $key == "password" ? "Password Edit Disabled" : "Enter " . $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?>>
+                        <input <?= ($id != 0 && $key == "password") ? "disabled" : "" ?> <?= ($key == "email") ? "disabled" : "" ?>
+                        class="form-control" type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="<?= $id != 0 && $key == "password" ? "Password Edit Disabled" : "Enter " . $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?>>
                     </div>
                 <?php
                 }
@@ -50,7 +51,7 @@ $sidebar = new Sidebar("adminAccount");
                     <a href="<?= BASE_URL ?>/adminAccount" class="btn btn-info">Back</a>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
-                
+
             </form>
         </div>
     </div>
@@ -294,17 +295,19 @@ $sidebar = new Sidebar("adminAccount");
                 },
                 dataType: 'json',
                 success: function(response) {
-                    if (response['status'] == 200) {
+                    if (response['status'] == "200") {
                         alertUser("success", response['desc'])
                         setTimeout(function() {
                             history.go(-1);
                             window.close();
                         }, 2000);
 
-                    } else if (response['status'] == 403)
+                    } else if (response['status'] == "400")
+                        alertUser("warning", response['desc'])
+                    else if (response['status'] == "403")
                         alertUser("danger", response['desc'])
                     else
-                        alertUser("warning", response['desc'])
+                        alertUser("danger", "Something Went Wrong")
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong")
