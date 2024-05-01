@@ -322,7 +322,7 @@ class readModel extends Model
             4 => "Materials",
             5 => "Election"
         ];
-        
+
         $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE date > NOW() AND ? ORDER BY date ASC", "i", [1]);
         if (count($events) > 0) {
             foreach ($events as $event) {
@@ -346,7 +346,7 @@ class readModel extends Model
                                 // get unix timestamp for the event date
                                 $unix_timestamp = strtotime($event['date']);
                                 $unix_timestamp = $unix_timestamp * 1000;
-                                
+
                                 $description = "You have an upcoming " . $even_types[$event_type] . " titled " . $event['title'] . " on " . date("d M Y", strtotime($event['date'])) . " at " . date("H:i", strtotime($event['date']));
 
                                 // send notification
@@ -379,7 +379,7 @@ class readModel extends Model
 
                                 $unix_timestamp = strtotime($event['date']) * 1000;
                                 $description = "You have an upcoming " . $even_types[$event_type] . " titled " . $event['title'] . " on " . date("d M Y", strtotime($event['date'])) . " at " . date("H:i", strtotime($event['date']));
-                                
+
                                 // send notification
                                 $this->db_handle->insert(
                                     "INSERT INTO notifications (is_broadcast, target, user_id, parent_id, title, description, link, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -503,6 +503,29 @@ class readModel extends Model
             }
 
             // print_r($notifications);
+        } else if ($role == "counselor") {
+            // get all reservation requests for this counselor in reservation_requests.timeslot_id = timeslots.id 
+            // $notifications = $this->db_handle->runQuery(
+            //     "SELECT * FROM reservation_requests r, timeslots t WHERE
+            //      r.timeslot_id = t.id AND t.counselor_id = ? ORDER BY r.created_at DESC",
+            //     "i",
+            //     [$user_id]
+            // );
+
+            // if (count($notifications) > 0) {
+            //     foreach ($notifications as $key => $notification) {
+            //         $url = "";
+            //         if ($notification['link'] != "")
+            //             $url = BASE_URL . $notification['link'];
+
+            //         $notifications[$key] = [
+            //             "title" => $notification['title'],
+            //             "description" => $notification['description'],
+            //             "link" => $url,
+            //             "created_at" => $notification['created_at'],
+            //         ];
+            //     }
+            // }
         }
 
         return $notifications;
@@ -704,7 +727,42 @@ class readModel extends Model
             // TODO: get counsellor reservations as well
             // reservation_requests status == 1
 
+            $reservations = $this->db_handle->runQuery(
+                "SELECT 
+                r.id, r.student_id, r.timeslot_id, r.status, t.date, t.start_time, t.end_time, u.name, u.profile_img, s.year 
+                FROM reservation_requests r 
+                LEFT JOIN timeslots t ON r.timeslot_id = t.id 
+                LEFT JOIN user u ON r.student_id = u.id 
+                LEFT JOIN student s ON u.id = s.id 
+                WHERE t.counselor_id = ? AND r.status = ?",
+                "ii",
+                [$user_id, 1]
+            );
 
+            // $reservations = $this->db_handle->runQuery(
+            //     "SELECT * FROM reservation_requests r, timeslots t, user u
+            //      r.timeslot_id = t.id AND
+            //      r.student_id = u.id
+            //      AND t.counselor_id = ? ORDER BY t.date DESC",
+            //     "i",
+            //     [$user_id]
+            // );
+
+
+
+            // append reservations to events
+            if (count($reservations) > 0) {
+                foreach ($reservations as $reservation) {
+                    $events[] = [
+                        "id" => $reservation['id'],
+                        "title" => "Counselling Session",
+                        "module" => "Counselling",
+                        "description" => "Counselling session with " . $reservation['name'],
+                        "date" => $reservation['date'] . " " . $reservation['start_time'],
+                        "type" => 4
+                    ];
+                }
+            }
         } else if ($role == "admin") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
         }
