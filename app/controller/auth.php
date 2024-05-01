@@ -71,12 +71,23 @@ class Auth extends Controller
                     die(json_encode(array("status" => "200", "desc" => "Successfully logged in", "redirect" => "/aka-hub/dashboard")));
                 }
             }
-            //log Entry
-            $action = "User entered invalid email or password";
-            $status = "401";
-            $this->model("createModel")->createLogEntry($action, $status);
 
-            die(json_encode(array("status" => "400", "desc" => "Invalid email or password")));
+            $emailExists = $this->model('readModel')->isEmailExist($data["email"]);
+            if(!$emailExists){
+                //log Entry
+                $action = "User entered invalid email";
+                $status = "401";
+                $this->model("createModel")->createLogEntry($action, $status);
+
+                die(json_encode(array("status" => "400", "desc" => "Invalid email")));
+            }else{
+                //log Entry
+                $action = "User entered invalid password";
+                $status = "401";
+                $this->model("createModel")->createLogEntry($action, $status , $data["email"]);
+
+                die(json_encode(array("status" => "400", "desc" => "Invalid password")));
+            }
         } else
             die(json_encode(array("status" => "400", "desc" => "Please fill all the input fields")));
     }

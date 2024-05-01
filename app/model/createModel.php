@@ -424,42 +424,10 @@ class createModel extends Model
             return true;
     }
 
-    public function insert_db_return_id($table, $data, $template = []) //not working properly
-    {
-        $columns = "";
-        $values = "";
-        $types = "";
-        $params = [];
+    private static $unauthorizedCount = 0;
+    private static $lastIp = "";
 
-        foreach ($data as $key => $value) {
-            if ($value == "" || $value == null)
-                continue;
-
-            if (!isset($template[$key]) || !isset($template[$key]["type"]))
-                continue;
-
-            $columns .= $key . ",";
-            $values .= "?,";
-            // $types .= $value[1];
-            $types .= $template[$key]["type"] == "number" ? "i" : "s";
-
-            if (is_array($value))
-                $value = implode(",", $value);
-            array_push($params, $value);
-        }
-
-        $columns = rtrim($columns, ",");
-        $values = rtrim($values, ",");
-
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-
-        $whether_inserted = $this->db_handle->insert($query, $types, $params);
-        $returned_id = $this->db_handle->getLastInsertedID();
-
-        return array($whether_inserted, $returned_id);
-    }
-
-    public function createLogEntry($action, $status)
+    public function createLogEntry($action, $status, $tryEmail = "")
     {
         // 200 => "Success",
         // 201 => "Created",
@@ -477,7 +445,7 @@ class createModel extends Model
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
-        
+
         $ip = $_SERVER['REMOTE_ADDR'];
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'];
@@ -488,17 +456,38 @@ class createModel extends Model
 
         $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
 
+        if (($status == 401) && ($ip == self::$lastIp)) {
+            self::$unauthorizedCount++;
+        } else {
+            self::$unauthorizedCount = 0;
+        }
+
+        if (self::$unauthorizedCount > 10) {
+            if (isset($_SESSION["user_id"])) {
+                $this->restrictUser($_SESSION["user_id"]);
+                $this->sendNotificationEmail($_SESSION["user_id"], "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
+                $this->notifyAdmins("User Account Restricted", "User account with email " . $_SESSION["user_email"] . " has been restricted due to series of unauthorized attempts.");
+                session_destroy();
+            } else {
+                $this->restrictUserByEMail($tryEmail);
+                $this->sendNotificationEmail($tryEmail, "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
+                $this->notifyAdmins("User Account Restricted", "User account with email " . $tryEmail . " has been restricted due to series of unauthorized attempts.");
+            }
+            self::$unauthorizedCount = 0;
+        }
+        self::$lastIp = $ip;
         file_put_contents("userlog.txt", $contents);
     }
-    public function createReport($webpage)
+
+    public function notifyAdmins($subject, $message)
     {
-        require("../../public/dompdf/autoload.inc.php");
-        $dompdf = new Dompdf\Dompdf();
-        $htmlContent = file_get_contents($webpage);
-        $dompdf->loadHtml($htmlContent);
-        $dompdf->setPaper('A4', 'landscape');
-        $dompdf->render();
-        $dompdf->stream("report.pdf", ['Attachment' => false]);
+        $superAdmins = $this->getAllByColumn("user", "role", "3", "i");
+        $admins = $this->getAllByColumn("user", "role", "1", "i");
+
+        $recipients = array_merge($superAdmins, $admins);
+        foreach ($recipients as $recipient) {
+            $this->sendNotificationEmail($recipient['id'], $subject, $message);
+        }
     }
 
     public function add_system_variable($name, $value)

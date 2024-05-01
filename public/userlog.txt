@@ -839,3 +839,35 @@ sada@gmail.com	127.0.0.1	05/01/24 03:33PM	User logged out	http://127.0.0.1/aka-h
 
 samanbandara@gmail.com	127.0.0.1	05/01/24 03:33PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:06PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:06PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:34PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 05:35PM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
