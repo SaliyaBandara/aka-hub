@@ -86,19 +86,21 @@ class Courses extends Controller
         }
 
         $BASE_URL =  BASE_URL;
+        $link = './courses/view/';
 
         if (empty($data["courses"])) {
             echo "<div class='font-medium text-muted'> No courses added! </div>";
         } else {
             foreach ($data["courses"] as $course) {
+
                 echo '
-                        <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                        <div href="" class="js-link todo_item flex align-center" data-link = '.$course["id"].'>
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
                                 </div>
                             </div>
-                            <div class="todo_item_text">
+                            <div class="todo_item_text flex flex-column" data-id = "./courses/view">
                                 <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
                                 <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
                                 <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
@@ -186,7 +188,73 @@ class Courses extends Controller
                 }
 
                 echo '</div>';
+            }
+        }
+    }
 
+
+    public function search()
+    {
+
+        $this->requireLogin();
+        $data = [
+            'title' => 'Event Feed',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["teaching_student"] = $_SESSION["teaching_student"];
+        $data["student_rep"] = $_SESSION["student_rep"];
+
+        $searchValue = $_POST['searchValue'];
+        $page = $_POST['page'];
+
+        $data["student"] = $this->model('readModel')->getUserDetails($_SESSION["user_id"]);
+        $year = $data["student"][0]["year"];
+
+        if ($searchValue == "") {
+            if ($page == 1)
+                $data["courses"] = $this->model('readModel')->getCoursesByYear($year);
+            else
+                $data["courses"] = $this->model('readModel')->getCoursesBelowYear($year);
+        } else if ($page == 1) {
+
+            $data["courses"] = $this->model('readModel')->getCoursesBySearch($year, $searchValue);
+        } else {
+            $data["courses"] = $this->model('readModel')->getCoursesBelowYearSearch($year, $searchValue);
+        }
+
+        $BASE_URL =  BASE_URL;
+
+        if (empty($data["courses"])) {
+            echo "<div class='font-medium text-muted'> No results found! </div>";
+        } else {
+            foreach ($data["courses"] as $course) {
+                echo '
+                        <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                            <div>
+                                <div class="todo_item_date flex align-center justify-center">
+                                    <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
+                                </div>
+                            </div>
+                            <div class="todo_item_text">
+                                <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
+                                <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
+                                <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
+                            </div>
+                ';
+
+                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                    echo '
+                            <div class="todo_item_actions">
+                                <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
+                                <div class="btn delete-item" data-id= ' . $course["id"] . '>
+                                    <i class="bx bx-trash text-danger"></i>
+                                </div>
+                            </div>
+                        ';
+                }
+
+                echo '</div>';
             }
         }
     }
@@ -243,6 +311,7 @@ class Courses extends Controller
         ];
 
         $data["course"] = $this->model('readModel')->getOne("courses", $course_id);
+        $target = $data["course"]["year"];
         if (!$data["course"])
             $this->redirect();
 
@@ -256,8 +325,9 @@ class Courses extends Controller
             $values["course_id"] = $course_id;
             $values["user_id"] = $_SESSION["user_id"];
             // $values["reference_links"] = json_encode($values["reference_links"]);
-            if (isset($values["kuppi_video"]))
+            if (isset($values["kuppi_video"])) {
                 $values["video_links"] = json_encode($values["kuppi_video"]);
+            }
             if (isset($values["course_materials"]))
                 $values["short_notes"] = json_encode($values["course_materials"]);
 
@@ -274,8 +344,17 @@ class Courses extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("course_materials", $values, $data["data_template"], "id", $id, "i");
             }
-            if ($result)
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    $course_name = $data["course"]["name"];
+                    $notif_message = "A new material has been added to the course $course_name";
+                    $this->model('createModel')->notification(4, $id, 0, $values["description"], $notif_message, $target, "/courses/view/$id");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
@@ -343,6 +422,28 @@ class Courses extends Controller
             $year = $data["student"][0]["year"];
             $values["year"] = $year;
 
+            if ($action == "create") {
+                $result = $this->model('readModel')->isCodeExist($values["code"]);
+                if ($result) {
+                    die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
+                }
+
+                $result = $this->model('readModel')->isCourseExist($values["name"]);
+                if ($result) {
+                    die(json_encode(array("status" => "400", "desc" => "Course name already exists")));
+                }
+            } else {
+                $result = $this->model('readModel')->isCodeExist($values["code"]);
+                if ($result && $result["id"] != $id) {
+                    die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
+                }
+
+                $result = $this->model('readModel')->isCourseExist($values["name"]);
+                if ($result && $result["id"] != $id) {
+                    die(json_encode(array("status" => "400", "desc" => "Course name already exists")));
+                }
+            }
+
             $this->validate_template($values, $data["course_template"]);
 
             if ($id == 0) {
@@ -356,8 +457,25 @@ class Courses extends Controller
                 $this->model("createModel")->createLogEntry($task, $state);
                 $result = $this->model('updateModel')->update_one("courses", $values, $data["course_template"], "id", $id, "i");
             }
-            if ($result)
+
+            $existingCourse = $this->model('readModel')->getCoursesByCode($values["code"]);
+            // if(empty($existingCourse))
+            //     print_r("empty");
+            // print_r($existingCourse);
+            // die();
+
+            if ($result) {
+                if ($id == 0) {
+                    $id = $result;
+
+                    $course_name = $values["name"];
+                    $notif_message = "A new course : $course_name is added to your year";
+                    $this->model('createModel')->notification(4, $id, 0, $course_name, $notif_message, $values["year"], "/courses/index");
+                }
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+            } else if ($existingCourse) {
+                die(json_encode(array("status" => "400", "desc" => "Course code already exists")));
+            }
 
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));
         }
@@ -434,5 +552,58 @@ class Courses extends Controller
                 die(json_encode(array("status" => "400", "desc" => "Requested unsuccessfull")));
             }
         }
+    }
+
+    public function recentCourses()
+    {
+        $this->requireLogin();
+        if ($_SESSION["user_role"] !== 0) {
+            $task = "Unauthorized User tried to be a role without permission";
+            $state = "401";
+            $this->model("createModel")->createLogEntry($task, $state);
+            $this->redirect();
+        }
+
+        // print_r("came here\n");
+
+
+        $course_id = $_POST["course_id"];
+        $user_id = $_SESSION["user_id"];
+        $newCourseId = [$course_id];
+
+        $data["student_template"] = $this->model('readModel')->getEmptyStudent();
+        $data["student"] = $data["student_template"]["empty"];
+        $data["student_template"] = $data["student_template"]["template"];
+
+        $data["student"] = $this->model('readModel')->getOne("student",$user_id);
+
+        $data["recent_courses"] = $data["student"]["recent_courses"];
+
+        $recent_courses = json_decode($data['recent_courses'], true);
+
+        if(!in_array($newCourseId, $recent_courses)){
+            if((count($recent_courses) == 4)){
+                array_pop($recent_courses);
+                array_unshift($recent_courses, $newCourseId);
+            }else{
+                array_unshift($recent_courses, $newCourseId);
+            }
+        }
+
+        $values = $data["student"];
+        $values["recent_courses"] = json_encode($recent_courses);
+
+        // print_r($values);
+        // print_r($values["recent_courses"]);
+        // die();
+
+        $this->validate_template($values, $data["student_template"]);
+        $result = $this->model('updateModel')->update_one("student", $values, $data["student_template"], "id", $user_id, "i");
+
+        if($result){
+            die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+        }
+        die(json_encode(array("status" => "400", "desc" => "Error while adding course")));
+
     }
 }

@@ -41,6 +41,7 @@ class AddCounselors extends Controller
 
             $values["role"] = 5;
             $values["status"] = 1;
+
             if (isset($values["password"]) && $values["password"] != "")
                 $values["password"] = password_hash($values["password"], PASSWORD_DEFAULT);
 
@@ -48,17 +49,41 @@ class AddCounselors extends Controller
             if (!filter_var($values["email"], FILTER_VALIDATE_EMAIL))
                 die(json_encode(array("status" => "400", "desc" => "Please enter a valid email")));
 
+            // check if valid alt email
+            if (!filter_var($values["alt_email"], FILTER_VALIDATE_EMAIL))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid alt email")));
+
+            // check if email already exists
+            if ($id == 0) {
+                $result = $this->model('readModel')->isEmailExist($values["email"]);
+                if ($result)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+            } else {
+                $result = $this->model('readModel')->isEmailExist($values["email"]);
+                if ($result && $result[0]["id"] != $id)
+                    die(json_encode(array("status" => "400", "desc" => "Email already exists")));
+            }
+
+            //check if valid phone number
+            if (!preg_match("/^[0-9]{9}$/", $values["contact"]))
+                die(json_encode(array("status" => "400", "desc" => "Please enter a valid phone number")));
+
+
             $this->validate_template($values, $data["user_template"]);
             $this->validate_template($values, $data["counselor_template"]);
             $this->validate_template($values, $data["chatUser_template"]);
 
             if ($id == 0) {
-                $result = false;
+                $result = 0;
                 $result1 = $this->model('createModel')->insert_db("user", $values, $data["user_template"]);
                 if ($result1) {
+
                     $values["id"] = $this->model('readModel')->lastInsertedId("user", "id");
                     $values["unique_id"] = $this->model('readModel')->lastInsertedId("user", "id");
                     // print_r($values["id"]);
+
+                    $values["id"] = $result1;
+
                     $result2 = $this->model('createModel')->insert_db("counselor", $values, $data["counselor_template"]);
                     $result3 = $this->model('createModel')->insert_db("chat_users", $values, $data["chatUser_template"]);
                     $result = $result1 && $result2;
@@ -71,10 +96,13 @@ class AddCounselors extends Controller
                         $action = "Counselor Account Created for email : " . $values["email"];
                         $status = "600";
                         $this->model("createModel")->createLogEntry($action, $status);
+
+                        //send email
+                        $this->model("createModel")->notification(7, $values["id"], $_SESSION["user_id"], "Counselor Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 0);
                     }
                 }
             } else {
-                $result = false;
+                $result = 0;
                 $result1 = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
                 if ($result1) {
                     $values["id"] = $id;

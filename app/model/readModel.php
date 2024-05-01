@@ -51,9 +51,28 @@ class readModel extends Model
         return 0;
     }
 
+    public function getSystemDetails()
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM system_variables WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getAll($table)
     {
         $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    // public function getAllSort("forum_posts", "created_at", "DESC")
+    public function getAllSort($table, $column, $order)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM $table WHERE ? ORDER BY $column $order", "i", [1]);
         if (count($result) > 0)
             return $result;
 
@@ -69,9 +88,42 @@ class readModel extends Model
         return false;
     }
 
+    public function isEmailExist($email)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ?", "s", [$email]);
+        if (count($result) > 0)
+            return $result;
+        return false;
+    }
+
+    public function isCodeExist($code)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
+        if (count($result) > 0)
+            return $result[0];
+        return false;
+    }
+
+    public function isCourseExist($course_name)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE name = ?", "s", [$course_name]);
+        if (count($result) > 0)
+            return $result[0];
+        return false;
+    }
+
     public function getAllUsers()
     {
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getPassword($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT password FROM user WHERE id = ?", "i", [$id]);
         if (count($result) > 0)
             return $result;
 
@@ -88,10 +140,30 @@ class readModel extends Model
         return false;
     }
 
+    public function getCoursesByCode($code)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE code = ?", "s", [$code]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getCoursesBySemester($year, $semester)
     {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND semester = ?", "ii", [$year, $semester]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+    public function getCoursesBySearch($year, $searchValue)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year = ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year, "%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -118,12 +190,31 @@ class readModel extends Model
         return false;
     }
 
+    public function getCoursesBelowYearSearch($year, $searchValue)
+    {
+
+        $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE year <= ? AND (name LIKE ? OR code LIKE ?)", "iss", [$year, "%$searchValue%", "%$searchValue%"]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getCoursesByOnlySemester($semester)
     {
 
         $result = $this->db_handle->runQuery("SELECT * FROM courses WHERE semester = ? ", "i", [$semester]);
         if (count($result) > 0)
             return $result;
+
+        return false;
+    }
+
+    public function getAllCalendarEventsById($id)
+    {
+        $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE id = ?", "i", [$id]);
+        if (count($events) > 0)
+            return $events;
 
         return false;
     }
@@ -220,6 +311,126 @@ class readModel extends Model
         return $notifications;
     }
 
+    // get forum posts
+    public function getForumPosts()
+    {
+        // get all forum posts with user details
+        $posts = $this->db_handle->runQuery("SELECT * FROM forum_posts WHERE ? ORDER BY created_at DESC", "i", [1]);
+        if (count($posts) > 0) {
+            foreach ($posts as $key => $post) {
+
+                // select user name profile img and year from user and student tables
+                $user = $this->db_handle->runQuery(
+                    "SELECT u.name, u.profile_img, s.year FROM user u 
+                    LEFT JOIN student s ON u.id = s.id 
+                    WHERE u.id = ?",
+                    "i",
+                    [$post['user_id']]
+                )[0];
+
+                // get the number of comments for this post
+                $comments = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM forum_comments WHERE post_id = ?", "i", [$post['id']])[0]['count'];
+
+                $posts[$key] = [
+                    "id" => $post['id'],
+                    "title" => $post['title'],
+                    "content" => $post['content'],
+                    "image" => $post['cover_img'],
+                    "created_at" => $post['created_at'],
+                    "user" => $user,
+                    "num_comments" => $comments
+                ];
+            }
+
+            return $posts;
+        }
+
+        return [];
+    }
+
+    // get one forum post with user details and comments
+    public function getForumPost($id)
+    {
+        // get the forum post with user details
+        $post = $this->db_handle->runQuery("SELECT * FROM forum_posts WHERE id = ?", "i", [$id]);
+        if (count($post) > 0) {
+            $post = $post[0];
+
+            // select user name profile img and year from user and student tables
+            $user = $this->db_handle->runQuery(
+                "SELECT u.name, u.profile_img, s.year FROM user u 
+                LEFT JOIN student s ON u.id = s.id 
+                WHERE u.id = ?",
+                "i",
+                [$post['user_id']]
+            )[0];
+
+            // CREATE TABLE forum_comments (
+            //     id INT AUTO_INCREMENT PRIMARY KEY,
+            //     user_id INT NOT NULL,
+            //     post_id INT NOT NULL,
+            //     parent_id INT DEFAULT NULL,
+            //     content TEXT NOT NULL,
+            //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            //     FOREIGN KEY (user_id) REFERENCES user(id),
+            //     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
+            //     FOREIGN KEY (parent_id) REFERENCES forum_comments(id)
+            // );
+
+            $comments = $this->db_handle->runQuery(
+                "SELECT c.id, c.content, c.created_at, c.parent_id, u.name, u.profile_img, s.year 
+                FROM forum_comments c
+                LEFT JOIN user u ON c.user_id = u.id
+                LEFT JOIN student s ON u.id = s.id
+                WHERE c.post_id = ?",
+                "i",
+                [$id]
+            );
+
+            $num_comments = 0;
+            if (count($comments) > 0)
+                $num_comments = count($comments);
+
+            // recursively build threaded comments
+            function buildThreadedComments($comments, $parent_id = null)
+            {
+                $threaded = [];
+                foreach ($comments as $comment) {
+                    if ($comment['parent_id'] == $parent_id) {
+                        $replies = buildThreadedComments($comments, $comment['id']);
+                        $comment['user'] = [
+                            "name" => $comment['name'],
+                            "profile_img" => $comment['profile_img'],
+                            "year" => $comment['year']
+                        ];
+                        $comment['replies'] = $replies;
+                        $threaded[] = $comment;
+                    }
+                }
+                return $threaded;
+            }
+
+            $threaded_comments = buildThreadedComments($comments);
+
+            $post = [
+                "id" => $post['id'],
+                "title" => $post['title'],
+                "content" => $post['content'],
+                "image" => $post['cover_img'],
+                "created_at" => $post['created_at'],
+                "user" => $user,
+                // "comments" => $comments,
+                "comments" => $threaded_comments,
+                "num_comments" => $num_comments
+            ];
+
+            return $post;
+        }
+
+        return false;
+    }
+
     // get calendar events
     public function getAllPublicEvents()
     {
@@ -276,6 +487,8 @@ class readModel extends Model
             $role = "counselor";
         else if ($user_role != 1 && $user_role != 3)
             $role = "student";
+        else if ($user_role == 1 || $user_role == 3)
+            $role = "admin";
 
         $events = [];
         if ($role == "student") {
@@ -292,14 +505,22 @@ class readModel extends Model
         } else if ($role == "counselor") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE user_id = ? AND is_broadcast = ?", "ii", [$user_id, 0]);
             // TODO: get counsellor reservations as well
+            // reservation_requests status == 1
+
+            
+        } else if ($role == "admin") {
+            $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
+
         }
 
         if (count($events) > 0) {
             foreach ($events as $key => $event) {
                 $events[$key] = [
                     "title" => $event['title'],
-                    // "description" => $event['description'],
+                    "description" => $event['description'],
+                    "module" => $event['module'],
                     "date" => $event['date'],
+                    "type" => $event['type'],
                 ];
             }
         }
@@ -789,7 +1010,7 @@ class readModel extends Model
         return false;
     }
 
-    public function getReservationRequestsByStatus($status,$id)
+    public function getReservationRequestsByStatus($status, $id)
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM reservation_requests WHERE accepted = ? AND cancelled = ? AND completed = ?", "iii", [1, 0, 0]);
         $result = $this->db_handle->runQuery("
@@ -1016,6 +1237,14 @@ class readModel extends Model
             return $result;
     }
 
+    // public function getRecentCourses($id)
+    // {
+    //     $sql = "SELECT * from student WHERE id = ? ";
+    //     $result = $this->db_handle->runQuery($sql, "i", [$id]);
+    //     if (count($result) > 0)
+    //         return $result;
+    // }
+
     public function getUserDetails($id)
     {
         $sql = "SELECT * from user u, student s WHERE u.id = s.id AND s.id = ?";
@@ -1233,10 +1462,34 @@ class readModel extends Model
         return false;
     }
 
+    public function getPostsOfClubsBySearch($searchValue)
+    {
+        $sql = "
+        SELECT p.*,u.profile_img, u.name,
+            (SELECT COUNT(l.id) 
+            FROM post_likes l 
+            WHERE l.post_id = p.id
+            GROUP BY l.post_id) AS likesCount 
+
+            FROM posts p , user u , club_representative as cr, clubs as c
+            WHERE p.type = 2 
+            AND p.posted_by = u.id
+            AND p.posted_by = cr.user_id
+            AND cr.club_id = c.id
+            AND c.name LIKE ?
+            ORDER BY p.created_datetime DESC
+        ";
+        $result = $this->db_handle->runQuery($sql, "s", ["%$searchValue%"]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
     public function getOnePost($post_id)
     {
         $result = $this->db_handle->runQuery("
-        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name,
+        SELECT p.title as title, p.id as post_id, p.posted_by as posted_by, p.description as description, p.post_image as post_image, u.id as id, u.name as name, p.link as link,
             (SELECT COUNT(l.id) 
             FROM post_likes l 
             WHERE l.post_id = p.id
@@ -1316,12 +1569,27 @@ class readModel extends Model
         return false;
     }
 
+    
 
-    public function getAllEvents($table)
+    // public function getAllEvents($table)
+    // {
+
+    //     $sql = "SELECT * from main_events m, courses c where course_id = c.id AND m.end_date >= NOW() AND ? ORDER BY m.end_date ASC";
+    //     $result = $this->db_handle->runQuery($sql, "i", [1]);
+
+    //     // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
+
+    //     if (count($result) > 0)
+    //         return $result;
+
+    //     return false;
+    // }
+
+    public function getAllEvents($year)
     {
 
-        $sql = "SELECT * from main_events m, courses c where course_id = c.id AND m.end_date >= NOW() AND ? ORDER BY m.end_date ASC";
-        $result = $this->db_handle->runQuery($sql, "i", [1]);
+        $sql = "SELECT * from calendar c where c.date >= NOW() AND (c.type = 1 OR c.type = 2) AND (c.target = ? OR c.target = 5) ORDER BY c.date ASC";
+        $result = $this->db_handle->runQuery($sql, "i", [$year]);
 
         // $result = $this->db_handle->runQuery("SELECT $table.*, courses.name AS course_name FROM $table LEFT OUTER JOIN courses ON $table.course_id = courses.id", "i", [1]);
 
@@ -1837,6 +2105,34 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyAcademinEndDateStartDate()
+    {
+        $empty = [
+            "academic_start_date" => "",
+            "academic_end_date" => ""
+        ];
+
+        $template = [
+            "start_date" => [
+                "label" => "Start Date",
+                "type" => "date",
+                "validation" => "required"
+            ],
+            "end_date" => [
+                "label" => "End Date",
+                "type" => "date",
+                "validation" => "required"
+            ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+
+
     /**
      * Course Material Model
      */
@@ -1854,6 +2150,53 @@ class readModel extends Model
     //     PRIMARY KEY (`id`),
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE
     //   );    
+
+    public function getEmptyCourseMaterialForAdmin(){
+        $empty = [
+            "course_id" => "",
+            "video_links" => "",
+            "reference_links" => "",
+            "short_notes" => "",
+            "description" => ""
+        ];
+
+        $template = [
+            "course_id" => [
+                "label" => "Course",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "video_links" => [
+                "label" => "Video Links",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "reference_links" => [
+                "label" => "Reference Links",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "short_notes" => [
+                "label" => "Short Notes",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+            "description" => [
+                "label" => "Description",
+                "type" => "text",
+                "validation" => ""
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
 
     public function getEmptyCourseMaterial()
     {
@@ -1966,6 +2309,130 @@ class readModel extends Model
         ];
     }
 
+    // -- forum post
+    // CREATE TABLE forum_posts (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     title VARCHAR(255) NOT NULL,
+    //     content TEXT NOT NULL,
+    //     image VARCHAR(255) DEFAULT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id)
+    // );
+
+    // -- forum comments
+    // -- thread style
+    // CREATE TABLE forum_comments (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     post_id INT NOT NULL,
+    //     parent_id INT DEFAULT NULL,
+    //     content TEXT NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
+    //     FOREIGN KEY (parent_id) REFERENCES forum_comments(id)
+    // );
+
+
+    public function getEmptyForumPost()
+    {
+        $empty = [
+            "user_id" => "",
+            "title" => "",
+            "content" => "",
+            "cover_img" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "title" => [
+                "label" => "Title",
+                "type" => "text",
+                "validation" => "required"
+            ],
+            "content" => [
+                "label" => "Content",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "cover_img" => [
+                "label" => "Image",
+                "type" => "text",
+                "validation" => "",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    // CREATE TABLE forum_comments (
+    //     id INT AUTO_INCREMENT PRIMARY KEY,
+    //     user_id INT NOT NULL,
+    //     post_id INT NOT NULL,
+    //     parent_id INT DEFAULT NULL,
+    //     content TEXT NOT NULL,
+    //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (user_id) REFERENCES user(id),
+    //     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
+    //     FOREIGN KEY (parent_id) REFERENCES forum_comments(id)
+    // );
+
+    public function getEmptyForumComment()
+    {
+        $empty = [
+            "user_id" => "",
+            "post_id" => "",
+            "parent_id" => "",
+            "content" => ""
+        ];
+
+        $template = [
+            "user_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "post_id" => [
+                "label" => "Post",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "parent_id" => [
+                "label" => "Parent",
+                "type" => "number",
+                "validation" => "",
+                "skip" => true
+            ],
+            "content" => [
+                "label" => "Content",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     // -- is_broadcast
     // --     0 - Personal
     // --     1 - Broadcast
@@ -1988,6 +2455,7 @@ class readModel extends Model
     //     title VARCHAR(255) NOT NULL,
     //     module VARCHAR(255) DEFAULT NULL,
     //     description TEXT DEFAULT NULL,
+    //     type TINYINT(1) NOT NULL DEFAULT 1,
     //     date DATETIME NOT NULL,
     //     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     //     FOREIGN KEY (user_id) REFERENCES user(id)
@@ -2002,7 +2470,8 @@ class readModel extends Model
             "title" => "",
             "module" => "",
             "description" => "",
-            "date" => ""
+            "date" => "",
+            "type" => ""
         ];
 
         $template = [
@@ -2044,6 +2513,12 @@ class readModel extends Model
                 "label" => "Date",
                 "type" => "datetime-local",
                 "validation" => "required"
+            ],
+            "type" => [
+                "label" => "Type",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
             ],
         ];
 
@@ -2293,7 +2768,8 @@ class readModel extends Model
             "description" => [
                 "label" => "Description",
                 "type" => "text",
-                "validation" => ""
+                "validation" => "required",
+                "skip" => true
             ],
             "start_date" => [
                 "label" => "Start Date",
@@ -2413,21 +2889,29 @@ class readModel extends Model
         $empty = [
             "title" => "",
             "description" => "",
+            "link" => "",
             "post_image" => "",
             "posted_by" => "",
             "type" => "",
+            "updated_datetime" => ""
         ];
 
         $template = [
             "title" => [
                 "label" => "Post Title",
                 "type" => "text",
-                "validation" => ""
+                "validation" => "required"
             ],
             "description" => [
                 "label" => "Description",
                 "type" => "text",
                 "validation" => "required",
+                "skip" => true
+            ],
+            "link" => [
+                "label" => "Link",
+                "type" => "text",
+                "validation" => "",
                 "skip" => true
             ],
             "post_image" => [
@@ -2439,12 +2923,18 @@ class readModel extends Model
             "posted_by" => [
                 "label" => "User",
                 "type" => "number",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
             "type" => [
                 "label" => "Type",
                 "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "updated_datetime" => [
+                "label" => "Updated Date Time",
+                "type" => "datetime-local",
                 "validation" => "required",
                 "skip" => true
             ],
@@ -2469,7 +2959,7 @@ class readModel extends Model
             "comment" => [
                 "label" => "Comment",
                 "type" => "text",
-                "validation" => "",
+                "validation" => "required",
                 "skip" => true
             ],
             "post_id" => [
@@ -2717,6 +3207,7 @@ class readModel extends Model
             "faculty" => "",
             "degree" => "",
             "year" => "",
+            "recent_courses" => "",
         ];
 
         $template = [
@@ -2728,7 +3219,7 @@ class readModel extends Model
             ],
             "index_number" => [
                 "label" => "Index Number",
-                "type" => "text",
+                "type" => "number",
                 "validation" => "",
                 "skip" => true
             ],
@@ -2746,6 +3237,12 @@ class readModel extends Model
                 "label" => "Year",
                 "type" => "number",
                 "validation" => "required"
+            ],
+            "recent_courses" => [
+                "label" => "Recent Courses",
+                "type" => "text",
+                "validation" => "required",
+                "skip" => true
             ]
 
 
@@ -2887,7 +3384,7 @@ class readModel extends Model
 
             "updated_datetime" => [
                 "label" => "Post Updated Time",
-                "type" => "timestamp",
+                "type" => "text",
                 "validation" => "",
                 "skip" => true
             ],

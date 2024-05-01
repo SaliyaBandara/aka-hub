@@ -172,4 +172,66 @@ class StudentProfile extends Controller
 
         $this->view->render('student/studentProfile/add_edit_settings', $data);
     }
+
+    public function changePassword()
+    {
+
+        $this->requireLogin();
+        $id = $_SESSION["user_id"];
+        
+        $user = $this->model('readModel')->getOne("user",$id);
+        $password = $user["password"];
+
+        $data = [
+            'title' => 'Edit Profile',
+            'message' => 'Welcome to Aka Hub!'
+        ];
+
+        $data["user_template"] = $this->model('readModel')->getEmptyUser();
+        $data["user"] = $data["user_template"]["empty"];
+        $data["user_template"] = $data["user_template"]["template"];
+
+
+
+        if (isset($_POST['changePassword'])) {
+
+            $oldPassword = $_POST["oldPassword"];
+            $newPassword = $_POST["newPassword"];
+            
+
+            // trim
+            $oldPassword = trim($oldPassword);
+            $newPassword = trim($newPassword);
+            
+            // $hashedOldPassword = $this->model('authModel')->hashPassword($oldPassword);
+            $hashedNewPassword = $this->model('authModel')->hashPassword($newPassword);
+            // echo "$hashedOldPassword\n$password";
+            // die;
+
+            if($newPassword == ""){
+                die(json_encode(array("status" => "400", "desc" => "New password cannot be blank!")));
+            }
+            if($oldPassword == ""){
+                die(json_encode(array("status" => "400", "desc" => "Old password cannot be blank!")));
+            }
+
+
+            if(password_verify($oldPassword, $password)){
+            // if($hashedOldPassword == $password){
+                $values["password"] = $hashedNewPassword;
+                $result = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
+
+                if($result){
+                    $task = "Student changed his password";
+                    $this->model("createModel")->createLogEntry($task, 605);
+                    die(json_encode(array("status" => "200", "desc" => "Operation successful")));
+                }
+            }
+            $task = "Student tried to change his password but entered wrong old password";
+            $this->model("createModel")->createLogEntry($task, 401);
+            die(json_encode(array("status" => "403", "desc" => "Incorrect Old Password")));
+        }
+
+        $this->view->render('student/studentProfile/changePassword', $data);
+    }
 }

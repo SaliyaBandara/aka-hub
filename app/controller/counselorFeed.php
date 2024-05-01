@@ -25,20 +25,23 @@ class CounselorFeed extends Controller
         $data["comments"] = [];
         $data["liked"] = [];
 
-        foreach ($data["posts"] as $post) {
+        if(!empty($date["posts"])){
+            foreach ($data["posts"] as $post) {
 
-            $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
-            $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
-
-            if (!empty($commentsForPost)) {
-                // print_r($commentsForPost);
-                $data['comments'] = array_merge($data['comments'], $commentsForPost);
-            }
-
-            if (!empty($liked)) {
-                $data['liked'] = array_merge($data['liked'], $liked);
+                $commentsForPost = $this->model('readModel')->getPostComments($post['id']);
+                $liked = $this->model('readModel')->getPostLikes($post['id'], $_SESSION['user_id']);
+    
+                if (!empty($commentsForPost)) {
+                    // print_r($commentsForPost);
+                    $data['comments'] = array_merge($data['comments'], $commentsForPost);
+                }
+    
+                if (!empty($liked)) {
+                    $data['liked'] = array_merge($data['liked'], $liked);
+                }
             }
         }
+
 
         // print_r($data["comments"]);
         // $data["user"] = $this->model('readModel')->getOne("user", $_SESSION["user_id"]);
@@ -70,7 +73,6 @@ class CounselorFeed extends Controller
             $values = $_POST["add_edit"];
 
             $values["posted_by"] = $_SESSION["user_id"];
-            $values["post_image"] = $values["post_image"];
             $values["type"] = '1';
 
             $this->validate_template($values, $data["post_template"]);
@@ -196,8 +198,11 @@ class CounselorFeed extends Controller
         $values['comment'] = $comment;
 
         // print_r($comment);
-
-        $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+        if($comment == ""){
+            die(json_encode(array("status" => "400", "desc" => "Comment cannont be blank")));
+        }else{
+            $result = $this->model('createModel')->insert_db("post_comments", $values, $data["comment_template"]);
+        }
 
         if ($result){
             $action = "Comment posted";

@@ -54,6 +54,7 @@ class ApproveTeachingStudents extends Controller
             $action = "Teaching Student Role accepted";
             $status = "606";
             $this->model("createModel")->createLogEntry($action, $status);
+            $this->model("createModel")->notification(7, 0, $id, "Promoted to Teaching Student", "You Have Been Promoted to Teaching Student and Features", 0);
             die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
         } else {
             die(json_encode(array("status" => "400", "desc" => "Accepting Unsuccessfull")));
@@ -78,6 +79,7 @@ class ApproveTeachingStudents extends Controller
             $action = "Teaching Student Role declined";
             $status = "200";
             $this->model("createModel")->createLogEntry($action, $status);
+            $this->model("createModel")->notification(7, 0, $id, "Promotion to Teaching Student Rejected", "You Have Been Promoted to Club Representative Role and Features", 0);
             die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
         } else {
             die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));
@@ -122,6 +124,7 @@ class ApproveTeachingStudents extends Controller
             $action = "Student Rep successfully removed access";
             $status = "607";
             $this->model("createModel")->createLogEntry($action, $status);
+            $this->model("createModel")->notification(7, 0, $id, "Teaching Student Permissions Revoked", "Sorry , Your Teaching Student Permissions and Features Revoked", 0);
             die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
         } else {
             die(json_encode(array("status" => "400", "desc" => "Denying unsuccessfull")));

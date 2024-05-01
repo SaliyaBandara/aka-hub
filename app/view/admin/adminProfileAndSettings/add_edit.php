@@ -17,7 +17,7 @@ $sidebar = new Sidebar("adminProfileAndSettings");
             </div>
             <div class="mb-1 form-group">
                 <label for="name" class="form-label">Email Address</label>
-                <input type="text" id="email" name="email" class="form-control" value="<?= $data["user"]["email"] ?>" disabled placeholder="Enter Email">
+                <input type="text" id="email" name="email" class="form-control" value="<?= $data["user"]["email"] ?>" placeholder="Enter Email">
             </div>
             <div class="mb-1 form-group">
                 <label for="name" class="form-label">Alternative Email Address</label>

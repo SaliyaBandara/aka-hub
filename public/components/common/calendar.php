@@ -12,13 +12,13 @@ class CalendarComponent
                 <p class="current-date"></p>
                 <div class="icons">
                     <span id="prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
                             <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
                         </svg>
                     </span>
 
                     <span id="next">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
                             <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                         </svg>
                     </span>
@@ -48,16 +48,23 @@ class CalendarComponent
                 box-sizing: border-box;
             }
 
+            .prev{
+                cursor: pointer;
+                background-color: #e6e6e6!important;
+            }
+
             .wrapper {
                 margin-top: 25px;
                 width: 380px !important;
                 height: 385px;
+                height: auto;
                 width: 100%;
                 min-height: 275px;
                 background: #fff;
                 border-radius: 10px;
                 -webkit-box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+                border: 1px solid #3d3d3d59;
             }
 
             .wrapper header {
@@ -71,13 +78,13 @@ class CalendarComponent
                 -webkit-box-pack: justify;
                 -ms-flex-pack: justify;
                 justify-content: space-between;
-                background: #2684FF;
+                background: #1264ab;
                 border-radius: 10px 10px 0 0;
                 z-index: auto;
             }
 
             .wrapper header p {
-                color: #fff;
+                color: #000;
                 font-size: 1.3rem;
                 font-weight: 500;
             }
@@ -114,6 +121,7 @@ class CalendarComponent
             .calendar-wrapper header .current-date {
                 font-size: 15px;
                 font-weight: 500;
+                color: #fff;
             }
 
             .calendar {

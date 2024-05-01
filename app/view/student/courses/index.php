@@ -21,7 +21,7 @@ $sidebar = new Sidebar("courses");
                 <h3 class="h3-CounselorFeed"><?= $data["topic"] ?></h3>
                 <div class="flex flex-column">
                     <div class="flex flex-row mb-1" style="align-items: last baseline ">
-                        <?php if (($data["teaching_student"] == 1) || ($data["student_rep"])) { ?>
+                        <?php if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1)) { ?>
                             <div class="mb-1 form-group me-1">
                                 <a href="<?= BASE_URL ?>/courses/add_edit/0/create" class="btn btn-primary">
                                     <i class='bx bx-plus'></i> Add Course
@@ -34,17 +34,26 @@ $sidebar = new Sidebar("courses");
                                 <i class='bx <?= $data["iClass"] ?>'></i> <?= $data["buttonValue"] ?>
                             </a>
                         </div>
+                        <div>
+                            <div class="mb-1 form-group me-1 flex flex-row text-center" style = "min-width: 300px !important;" id = "<?=$data["filter"] ?>">
+                                <label for="name" class="form-label text-center justify-center mt-0-5 me-1"><i class='bx bx-search-alt-2' style = "font-size: 22px; color : black;"></i></label>
+                                <input type="text" id="searchBar" name="searchBar" value="" class="form-control" placeholder="Search by Course Name or Code">
+                            </div>
+                        </div>
                     </div>
 
                     <?php
                     if ($data["filter"] == 1) {
                     ?>
-                    <div class="flex flex-row mb-1" style="align-items: last baseline ">
-                        <select id="semester" name="semester" style="width: 20%; " data-validation="required" class="form-control ">
-                            <option value=0>All</option>
-                            <option value=1>Semester 1</option>
-                            <option value=2>Semester 2</option>
-                        </select>
+                    <div class="flex flex-row">
+                        <label for="name" class="form-label text-center justify-center mt-0-5 me-1"><i class='bx bx-filter-alt' style = "font-size: 22px;"></i></label>
+                        <div class="flex flex-row mb-1" style="align-items: last baseline ">
+                            <select id="semester" name="semester"  data-validation="required" class="form-control ">
+                                <option value=0>All</option>
+                                <option value=1>Semester 1</option>
+                                <option value=2>Semester 2</option>
+                            </select>
+                        </div>
                     </div>
                 
 
@@ -93,20 +102,20 @@ $sidebar = new Sidebar("courses");
                             }
                     ?>
 
-                            <div href="<?= $link ?><?= $course["id"] ?>" class="js-link todo_item flex align-center">
+                            <div href="#" class="js-link todo_item flex align-center" data-id="<?= $course["id"] ?>">
                                 <div>
                                     <div class="todo_item_date flex align-center justify-center">
                                         <img src="<?= $img_src ?>" alt="">
                                     </div>
                                 </div>
-                                <div class="todo_item_text">
+                                <div class="todo_item_text" data-id = <?= $link?>>
                                     <div class="font-1-25 font-semibold"><?= $course["name"] ?></div>
                                     <div class="font-1 font-medium text-muted"><?= $course["code"] ?></div>
                                     <div class="font-0-8 text-muted">Year <?= $course["year"] ?> Semester <?= $course["semester"] ?></div>
                                 </div>
 
                                 <?php
-                                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                                if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1) && $data["student"][0]["year"] == $course["year"]) {
                                 ?>
 
                                     <div class="todo_item_actions">
@@ -344,6 +353,32 @@ $sidebar = new Sidebar("courses");
             });
         });
 
+        $(document).on("keyup", "#searchBar", function() {
+
+            let selectedValue = $("#searchBar").val();
+            var page = $('#searchBar').closest('div').attr('id');
+
+            $.ajax({
+                url: `${BASE_URL}/courses/search`,
+                type: 'post',
+                data: {
+                    searchValue: selectedValue,
+                    page: page
+                },
+                success: function(data) {
+                    if (data) {
+                        $('#courses').html(data); // Update the content of .feedContainer
+                    } else {
+                        // Handle empty or invalid response
+                        alertUser("warning", "No courses found.");
+                    }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
         $(document).on("click", ".filterButton", function() {
 
             var year = $('#year').val();
@@ -363,6 +398,27 @@ $sidebar = new Sidebar("courses");
                         // Handle empty or invalid response
                         alertUser("warning", "No courses found for this semester.");
                     }
+                },
+                error: function(ajaxContext) {
+                    alertUser("danger", "Something Went Wrong");
+                }
+            });
+        });
+
+        $(document).on("click", ".todo_item", function(event) {
+            event.preventDefault();
+
+            let course_id = $(this).attr("data-id");
+            let link = $('.todo_item_text').attr("data-id");
+
+            $.ajax({
+                url: `${BASE_URL}/courses/recentCourses`,
+                type: 'post',
+                data: {
+                    course_id: course_id
+                },
+                success: function(data) {
+                    window.location.href = '<?= $link ?>' + course_id;
                 },
                 error: function(ajaxContext) {
                     alertUser("danger", "Something Went Wrong");

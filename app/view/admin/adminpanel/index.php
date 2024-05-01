@@ -5,12 +5,65 @@ $sidebar = new Sidebar("adminpanel");
 $calendar = new CalendarComponent();
 ?>
 
+<style>
+    /* css quiery for print */
+    @page {
+        size: A3 landscape;
+        margin: 1%;
+        margin: 50px 0% 0 0%;
+        margin-top: 50px;
+    }
+
+
+    @media print {
+
+        .btn-download {
+            display: none !important;
+        }
+
+        .noprint {
+            display: none !important;
+        }
+
+        #sidebar {
+            display: none;
+        }
+
+        /* show background colors */
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+
+        #sidebar-active {
+            width: 100vw;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .main-grid .left {
+            width: 100% !important;
+        }
+
+        .main-grid .right {
+            flex-grow: 1;
+            /* height: 100vh; */
+        }
+
+    }
+</style>
+
 <div id="sidebar-active" class="hideScrollbar">
 
     <?php $welcomeSearch = new WelcomeSearch(); ?>
 
     <div class="main-grid flex">
         <div class="left">
+            <div class="printDiv">
+                <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" href="javascript:window.print()">
+                    Export
+                </a>
+            </div>
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
                     <?php if ($data["count_total_users"] !== null) : ?>
@@ -35,12 +88,7 @@ $calendar = new CalendarComponent();
                 </div>
             </div>
             <div class="fourGraphsContainor">
-                <div class="printDiv">
-                    <a class="btn btn-info btn-download" style="color:white; text-decoration:none;" onclick="downloadPDF()">
-                        Export
-                    </a>
 
-                </div>
                 <div class="graphLineContainor">
                     <div class="graphContainor">
                         <p class="mb-1"><b>User Registration For the System</b></p>
@@ -71,35 +119,29 @@ $calendar = new CalendarComponent();
         </div>
         <!-- <div class="right">
             <div class="calendarContainor">
-                <?php echo $calendar->render(); ?>
+                <?= $calendar->render(); ?>
             </div>
         </div> -->
     </div>
 
     <style>
-        /* .printDiv {
-            width: 100%;
-            height: 2rem;
+        .printDiv {
             display: flex;
+            justify-content: flex-end;
+            margin-right: 50px;
+            margin-top: 20px;
         }
 
-        .printInnerDiv {
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        .main-grid {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 5px;
-            border-radius: 5px;
-            background-color: white;
+            height: auto;
+            width: 100%;
         }
 
-        .printDiv img {
-            width: 1.5rem;
-            height: 1.5rem;
-        } */
-
-        .main-grid .left {
-            width: 100%;
+        .left {
+            width: 100% !important;
             height: 150vh;
             padding-bottom: 50px;
         }
@@ -107,6 +149,7 @@ $calendar = new CalendarComponent();
         .main-grid .right {
             flex-grow: 1;
             height: 150vh;
+            border: 1px solid red;
         }
 
         .threeCardDiv {
@@ -351,34 +394,34 @@ $calendar = new CalendarComponent();
 <script>
     function downloadPDF() {
         // Capture the entire webpage body
-        html2canvas(document.body, {
-            useCORS: true
-        }).then(canvas => {
-            downloadCanvasAsPDF(canvas, 'webpage.pdf');
-        });
+        // html2canvas(document.body, {
+        //     useCORS: true
+        // }).then(canvas => {
+        //     downloadCanvasAsPDF(canvas, 'webpage.pdf');
+        // });
     }
 
-    function downloadCanvasAsPDF(canvas, filename) {
-        const dpi = window.devicePixelRatio || 1;
-        const pdfWidth = canvas.width * 25.4 / dpi / 96; // 1 inch = 96 pixels
-        const pdfHeight = canvas.height * 25.4 / dpi / 96;
-        const scale = 1;
+    // function downloadCanvasAsPDF(canvas, filename) {
+    //     const dpi = window.devicePixelRatio || 1;
+    //     const pdfWidth = canvas.width * 25.4 / dpi / 96; // 1 inch = 96 pixels
+    //     const pdfHeight = canvas.height * 25.4 / dpi / 96;
+    //     const scale = 1;
 
-        const pdf = new window.jspdf.jsPDF({
-            orientation: 'portrait', // Adjust orientation as needed
-            unit: 'mm',
-            format: [pdfWidth * scale, pdfHeight * scale],
-        });
+    //     const pdf = new window.jspdf.jsPDF({
+    //         orientation: 'portrait', // Adjust orientation as needed
+    //         unit: 'mm',
+    //         format: [pdfWidth * scale, pdfHeight * scale],
+    //     });
 
-        pdf.addImage(
-            canvas.toDataURL('image/png'),
-            'PNG',
-            0,
-            0,
-            pdfWidth * scale,
-            pdfHeight * scale
-        );
+    //     pdf.addImage(
+    //         canvas.toDataURL('image/png'),
+    //         'PNG',
+    //         0,
+    //         0,
+    //         pdfWidth * scale,
+    //         pdfHeight * scale
+    //     );
 
-        pdf.save(filename);
-    }
+    //     pdf.save(filename);
+    // }
 </script>

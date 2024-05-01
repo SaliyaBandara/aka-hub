@@ -16,9 +16,11 @@ class CounselorChat extends Controller
     public function chat_users()
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access chat_users page for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+        }
         
         // $chat_users = $this->model('readModel')->getAllChatUsers("chat_users");
         $chat_users = $this->model('readModel')->getAllStudentChatUsers();
@@ -72,6 +74,8 @@ class CounselorChat extends Controller
     {
         $this->requireLogin();
         if ($_SESSION["user_role"] != 5) {
+            $task="Unauthorized user tried to access chat_messages page for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
         }
 

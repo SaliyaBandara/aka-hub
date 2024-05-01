@@ -15,9 +15,11 @@ class counselorManageTimeSlots extends Controller
     public function addtimeslots($id = 0, $action = "create")
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access addtimeslots page for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+          
         $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
         $data["timeSlot"] = $data["timeSlot_data"]["empty"];
         $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
@@ -58,13 +60,29 @@ class counselorManageTimeSlots extends Controller
             if ($id == 0)
                 $result = $this->model('createModel')->insert_db("timeslots", $values, $data["timeSlot_template"]);
 
-            if ($result)
+            if ($result){
+                $task = "Counselor added a new time slot.";
+                $this->model("createModel")->createLogEntry($task, "201");
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+            }
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing timeSlot")));
         }
     }
 
+    public function loadData()
+    {
+        $this->requireLogin();
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access loadData function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
+            $this->redirect();
+        }
+        $user_id = $_SESSION["user_id"];    
+
+        $data["timeslots"] = $this->model('readModel')->getTimeSlotsByCounselorId($user_id); 
+
+        $this->view->render('counselor/manageTimeSlots/addTimeSlots', $data);
+    }
 
 
 
@@ -72,25 +90,31 @@ class counselorManageTimeSlots extends Controller
     {
 
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access delete function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+        }
         if ($id == 0)
             die(json_encode(array("status" => "400", "desc" => "Please provide a valid time slot id")));
 
         $result = $this->model('deleteModel')->deleteOne("timeslots", $id);
-        if ($result)
+        if ($result){
+            $task = "Counselor deleted a time slot.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(array("status" => "200", "desc" => "Operation successful")));
-
+        }
         die(json_encode(array("status" => "400", "desc" => "Error while deleting course")));
     }
 
     public function addToTimeslot($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access addToTimeslot function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+        }
         $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
         $data["timeSlot"] = $data["timeSlot_data"]["empty"];
         $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
@@ -112,6 +136,8 @@ class counselorManageTimeSlots extends Controller
         $result = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
 
         if ($result) {
+            $task = "Counselor added a time slot.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(["status" => 200, "desc" => "Time slot successfully Added."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error adding time slot."]));
@@ -121,9 +147,11 @@ class counselorManageTimeSlots extends Controller
     public function removeTimeslot($id)
     {
         $this->requireLogin();
-        if (($_SESSION["user_role"] != 5))
+        if (($_SESSION["user_role"] != 5)){
+            $task="Unauthorized user tried to access removeTimeslot function for counselor.";
+            $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-
+        }
         $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
         $data["timeSlot"] = $data["timeSlot_data"]["empty"];
         $data["timeSlot_template"] = $data["timeSlot_data"]["template"];
@@ -148,6 +176,8 @@ class counselorManageTimeSlots extends Controller
         $result = $this->model('updateModel')->update_one("timeslots", $data["values"], $data["timeSlot_template"], "id", $id, "i");
 
         if ($result) {
+            $task = "Counselor removed a time slot.";
+            $this->model("createModel")->createLogEntry($task, "200");
             die(json_encode(["status" => 200, "desc" => "Time slot successfully Removed."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error removing time slot."]));

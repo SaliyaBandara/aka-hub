@@ -66,6 +66,60 @@ class createModel extends Model
     }
 
 
+    // insert_multiple("calendar", $cleaned_timetable, $data["item_template"]);
+    public function insert_multiple($table, $data, $template = [])
+    {
+        $columns = "";
+        $values = "";
+        $types = "";
+        $params = [];
+
+        // start transaction
+        $this->start_transaction();
+
+        $success = true;
+        foreach ($data as $key => $value) {
+            $columns = "";
+            $values = "";
+            $types = "";
+            $params = [];
+
+            foreach ($value as $key => $val) {
+                if ($val == "" || $val == null)
+                    continue;
+
+                if (!isset($template[$key]) || !isset($template[$key]["type"]))
+                    continue;
+
+                $columns .= $key . ",";
+                $values .= "?, ";
+                $types .= $template[$key]["type"] == "number" ? "i" : "s";
+
+                if (is_array($val))
+                    $val = implode(",", $val);
+                array_push($params, $val);
+            }
+
+            $columns = rtrim($columns, ",");
+            $values = rtrim($values, ", ");
+
+            $query = "INSERT INTO $table ($columns) VALUES ($values)";
+            $result = $this->db_handle->insert($query, $types, $params);
+            if (!$result) {
+                $success = false;
+                break;
+            }
+        }
+
+        if ($success) {
+            $this->commit_transaction();
+            return true;
+        }
+
+        $this->rollback_transaction();
+        return false;
+    }
+
     // CREATE TABLE election_votes (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     election_id INT NOT NULL,
@@ -106,11 +160,11 @@ class createModel extends Model
         $id_arr = [57, 2, 3, 4, 22, 58, 6, 5, 24, 23];
         $user_id = $_SESSION["user_id"];
 
-        if (!isset($_SESSION["count_dummy"]))
-            $_SESSION["count_dummy"] = 0;
+        // if (!isset($_SESSION["count_dummy"]))
+        //     $_SESSION["count_dummy"] = 0;
 
-        $user_id = $id_arr[$_SESSION["count_dummy"]];
-        $_SESSION["count_dummy"]++;
+        // $user_id = $id_arr[$_SESSION["count_dummy"]];
+        // $_SESSION["count_dummy"]++;
 
         // insert to election_votes
         $result = $this->insert_db("election_votes", [
@@ -160,6 +214,17 @@ class createModel extends Model
 
     public function notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
     {
+        /*
+        Sample Function Calls
+
+        $this->model("createModel")->notification(7, 0, $id, "Student Representative Permissions Revoked","Sorry , Your Student Representative Permissions and Features Revoked", 0);
+
+        $this->model("createModel")->notification(7, 0, $id, "Promoted to Club Representative","You Have Been Promoted to Club Representative Role and Features", 0);
+
+        $this->model("createModel")->notification(7, $values["id"], $id, "Counselor Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 0);
+
+        */
+
 
         /*
         Type
@@ -169,9 +234,7 @@ class createModel extends Model
             4 - Materials
             5 - Election
             6 - Counsellor Reservations - High Priority (Ignore Preference)
-            7 - Promotion in Role
-            8 - Demotion in Role
-            9 - 401 Unauthorized Attempt
+            7 - misc - target only single user
         */
 
         // -- notifications table
@@ -194,7 +257,7 @@ class createModel extends Model
         // --      2 - Student - 2nd Year
         // --      3 - Student - 3rd Year
         // --      4 - Student - 4th Year
-        // --    6 - Counsellor
+        // --      6 - Counsellor
 
         // CREATE TABLE notifications (
         //     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -213,8 +276,52 @@ class createModel extends Model
         // );
 
 
+        $template = [
+            "is_broadcast" => ["type" => "number"],
+            "target" => ["type" => "number"],
+            "user_id" => ["type" => "number"],
+            "parent_id" => ["type" => "number"],
+            "title" => ["type" => "string"],
+            "description" => ["type" => "string"],
+            "link" => ["type" => "string"],
+            "type" => ["type" => "number"]
+        ];
+
         // if election
         if ($type == 5) {
+            $this->insert_db("notifications", [
+                "is_broadcast" => 1,
+                "target" => $target,
+                "user_id" => $user_id,
+                "parent_id" => $id,
+                "title" => $title,
+                "description" => $message,
+                "link" => $link,
+                "type" => $type
+            ], $template);
+
+            return true;
+        }
+
+        // Counsellor Reservations
+        else if ($type == 6) {
+
+            $this->insert_db("notifications", [
+                "is_broadcast" => 0,
+                "target" => 0,
+                "user_id" => $user_id,
+                "parent_id" => $id,
+                "title" => $title,
+                "description" => $message,
+                "link" => $link,
+                "type" => $type
+            ], $template);
+
+            $this->sendNotificationEmail($user_id, $title, $message, $link);
+        }
+
+        // exam
+        else if ($type == 1) {
             $this->insert_db("notifications", [
                 "is_broadcast" => 1,
                 "target" => $target,
@@ -234,10 +341,6 @@ class createModel extends Model
                 "link" => ["type" => "string"],
                 "type" => ["type" => "number"]
             ]);
-
-            // TODO: Send emails to eligible users
-
-            return true;
         }
 
         // TODO: 
@@ -266,7 +369,7 @@ class createModel extends Model
 <?php
     }
 
-    public function sendNotificationEmail($user_id, $title, $message, $link)
+    public function sendNotificationEmail($user_id, $title, $message_str, $link = "")
     {
         $user = $this->getAllByColumn("user", "id", $user_id, "i")[0];
         $email = $user["email"];
@@ -276,8 +379,10 @@ class createModel extends Model
         $message = file_get_contents('../public/email_templates/notification_email.htm');
         $message = str_replace('{{name}}', $name, $message);
         $message = str_replace('{{title}}', $title, $message);
-        $message = str_replace('{{message}}', $message, $message);
-        $message = str_replace('{{link}}', $link, $message);
+        $message = str_replace('{{message}}', $message_str, $message);
+
+        if ($link != "")
+            $message = str_replace('{{link}}', $link, $message);
 
         $this->close_connection();
         $sendEmail = $this->sendEmail($email, $name, $subject, $message);
@@ -390,7 +495,7 @@ class createModel extends Model
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
-
+        
         $ip = $_SERVER['REMOTE_ADDR'];
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'];
@@ -412,5 +517,18 @@ class createModel extends Model
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
         $dompdf->stream("report.pdf", ['Attachment' => false]);
+    }
+
+    public function add_system_variable($name, $value)
+    {
+        $result = $this->insert_db("system_variables", [
+            "name" => $name,
+            "value" => $value
+        ], [
+            "name" => ["type" => "string"],
+            "value" => ["type" => "string"]
+        ]);
+
+        return $result;
     }
 }

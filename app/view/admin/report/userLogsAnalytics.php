@@ -226,8 +226,11 @@ $HTMLHead = new HTMLHead($data['title']);
     }
 </style>
 
+<?php $HTMLFooter = new HTMLFooter(); ?>
 
-
+<script>
+    let BASE_URL = "<?= BASE_URL ?>";
+</script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
@@ -244,7 +247,7 @@ $HTMLHead = new HTMLHead($data['title']);
                 // showInLegend: "true",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
+                indexLabel: "{label}",
                 yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]
@@ -266,7 +269,7 @@ $HTMLHead = new HTMLHead($data['title']);
                 // showInLegend: "true",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
+                indexLabel: "{label}",
                 yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]
@@ -309,7 +312,7 @@ $HTMLHead = new HTMLHead($data['title']);
                 // showInLegend: "true",
                 legendText: "{label}",
                 indexLabelFontSize: 10,
-                indexLabel: "{label} - #percent%",
+                indexLabel: "{label}",
                 yValueFormatString: "฿#,##0",
                 dataPoints: dataPoints
             }]

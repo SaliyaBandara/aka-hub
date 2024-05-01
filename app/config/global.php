@@ -13,3 +13,6 @@ define("BASE_URL", "http://" . $_SERVER['SERVER_NAME'] . "/aka-hub");
 define("ASSETS_PATH", BASE_URL . "/public/assets/");
 define("USER_IMG_PATH", BASE_URL . "/public/assets/user_uploads/img/");
 define("USER_PDF_PATH", BASE_URL . "/public/assets/user_uploads/pdf/");
+
+// working directory
+define("ROOT", dirname(__DIR__));
