@@ -76,7 +76,7 @@ $calendar = new CalendarComponent();
                             else if ($item["type"] == 3)
                                 $type = "Club Event";
                             else if ($item["type"] == 4)
-                                $type = "Counsellor Event";
+                                $type = "Counselling session";
 
                         ?>
 
