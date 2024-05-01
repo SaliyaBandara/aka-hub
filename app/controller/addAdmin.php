@@ -90,7 +90,7 @@ class AddAdmin extends Controller
                     $status = "600";
                     $this->model("createModel")->createLogEntry($action, $status);
 
-                    $this->model("createModel")->notification(7, $values["id"], $_SESSION["user_id"], "Admin Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 7);
+                    $this->model("createModel")->notification(7, $values["id"], $_SESSION["user_id"], "Admin Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 0);
 
                     die(json_encode(array("status" => "200", "desc" => "Operation successful")));
                 } else {

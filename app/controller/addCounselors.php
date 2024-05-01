@@ -85,7 +85,7 @@ class AddCounselors extends Controller
                         $this->model("createModel")->createLogEntry($action, $status);
 
                         //send email
-                        $this->model("createModel")->notification(7, $values["id"], $_SESSION["user_id"], "Counselor Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 7);
+                        $this->model("createModel")->notification(7, $values["id"], $_SESSION["user_id"], "Counselor Account Created for  mail " . $values["email"], "Counselor Account Created for email " . $values["email"] . " . Your Password will be " . $values["password"] . " . Please login to the system and change your password. ", 0);
                     }
                 }
             } else {
