@@ -19,7 +19,8 @@ class counselorManageTimeSlots extends Controller
             $task="Unauthorized user tried to access addtimeslots page for counselor.";
             $this->model("createModel")->createLogEntry($task, "401");
             $this->redirect();
-          
+        } 
+            
         $data["timeSlot_data"] = $this->model('readModel')->getEmptyTimeSlot();
         $data["timeSlot"] = $data["timeSlot_data"]["empty"];
         $data["timeSlot_template"] = $data["timeSlot_data"]["template"];

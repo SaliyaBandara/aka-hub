@@ -579,12 +579,15 @@ $calendar = new CalendarComponent();
         });
     });
 
+    let id = 0;
+
     function loadPopupForm(reservationId) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', BASE_URL + '/counselorReservations/sendEmail/' + reservationId, true);
+        xhr.open('GET', BASE_URL + '/counselorReservations/loadEmailPopUp/' + reservationId, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = xhr.responseText;
+                id = reservationId;
                 // Load popup form with email input
                 document.getElementById('divone').innerHTML = response; 
                 // set opacity to default
@@ -595,4 +598,37 @@ $calendar = new CalendarComponent();
         };
         xhr.send();
     }
+
+    $(document).on("click", ".send-email", function(event) {
+        event.preventDefault();
+        let message = $(".contact-textarea").val();
+        // console.log(id);
+        // console.log(message);
+
+        $.ajax({
+            url: `${BASE_URL}/counselorReservations/sendEmail`,
+            type: 'POST',
+            data: {
+                id : id,
+                message: message                
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 200) {
+                    // console.log("hello11", response);
+                    // Display success message
+                    alertUser("success", response['desc']);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    // console.log("hello2552", response.status);
+                    alertUser("warning", response['desc']);
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong");
+            }
+        });
+    });
 </script>
