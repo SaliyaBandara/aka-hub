@@ -212,6 +212,14 @@ class StudentProfile extends Controller
                 die(json_encode(array("status" => "400", "desc" => "Old password cannot be blank!")));
             }
 
+            if (strlen($newPassword) < 6)
+                die(json_encode(array("status" => "400", "desc" => "Password must be at least 6 characters long")));
+
+        // Check if password contains at least one special character
+            if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $newPassword))
+                die(json_encode(array("status" => "400", "desc" => "Password must contain at least one special character")));
+
+
 
             if(password_verify($oldPassword, $password)){
             // if($hashedOldPassword == $password){
