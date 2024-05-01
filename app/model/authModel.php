@@ -14,6 +14,36 @@ class authModel extends Model
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
+    public function getToken($length)
+    {
+        $token = "";
+        $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
+        $codeAlphabet .= "0123456789";
+        $max = strlen($codeAlphabet) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $token .= $codeAlphabet[$this->cryptoRandSecure(0, $max)];
+        }
+        return $token;
+    }
+
+    public function cryptoRandSecure($min, $max)
+    {
+        $range = $max - $min;
+        if ($range < 1) {
+            return $min; // not so random...
+        }
+        $log = ceil(log($range, 2));
+        $bytes = (int) ($log / 8) + 1; // length in bytes
+        $bits = (int) $log + 1; // length in bits
+        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+        do {
+            $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
+            $rnd = $rnd & $filter; // discard irrelevant bits
+        } while ($rnd >= $range);
+        return $min + $rnd;
+    }
+
     public function register($data)
     {
         $data["password"] = $this->hashPassword($data["password"]);
@@ -23,12 +53,15 @@ class authModel extends Model
         if (count($result) > 0)
             return false;
 
+
         $data = [
             "student_id" => [$data["student_id"], "s"],
             "password" => [$data["password"], "s"],
             "email" => [$data["email"], "s"],
             "name" => [$data["fname"] . " " . $data["lname"], "s"],
-            "profile_img" => ["avatar.png", "s"]
+            "profile_img" => ["avatar.png", "s"],
+            "email_verified" => [0, "i"],
+            "email_verification_code" => [$this->getToken(50), "s"],
         ];
 
         // print_r($data);
@@ -92,6 +125,16 @@ class authModel extends Model
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ? AND status = ?", "si", [$email, 1]);
         if (count($result) > 0 && password_verify($password, $result[0]["password"]))
             return $result[0];
+        return false;
+    }
+
+    public function verify_email($code)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email_verification_code = ?", "s", [$code]);
+        if (count($result) > 0) {
+            $this->db_handle->insert("UPDATE user SET email_verified = 1 WHERE email_verification_code = ?", "s", [$code]);
+            return $result[0];
+        }
         return false;
     }
 }

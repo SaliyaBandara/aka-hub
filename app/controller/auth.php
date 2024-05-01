@@ -26,6 +26,17 @@ class Auth extends Controller
 
             $result = $this->model('authModel')->login($data["email"], $data["password"]);
             if ($result) {
+
+                // check if email is verified
+                if ($result["email_verified"] == 0) {
+                    //log Entry
+                    $action = "User tried to login with unverified email";
+                    $status = "401";
+                    $this->model("createModel")->createLogEntry($action, $status, $data["email"]);
+                    die(json_encode(array("status" => "400", "desc" => "Please verify your email, We have sent you a verification email to your email address")));
+                }
+
+
                 // set session variables
                 $_SESSION["logged_in"] = true;
                 $_SESSION["user_id"] = $result["id"];
@@ -73,18 +84,18 @@ class Auth extends Controller
             }
 
             $emailExists = $this->model('readModel')->isEmailExist($data["email"]);
-            if(!$emailExists){
+            if (!$emailExists) {
                 //log Entry
                 $action = "User entered invalid email";
                 $status = "400";
                 $this->model("createModel")->createLogEntry($action, $status);
 
                 die(json_encode(array("status" => "400", "desc" => "Invalid email")));
-            }else{
+            } else {
                 //log Entry
                 $action = "User entered invalid password";
                 $status = "401";
-                $this->model("createModel")->createLogEntry($action, $status , $data["email"]);
+                $this->model("createModel")->createLogEntry($action, $status, $data["email"]);
 
                 die(json_encode(array("status" => "400", "desc" => "Invalid password")));
             }
@@ -136,7 +147,12 @@ class Auth extends Controller
 
             $result = $this->model('authModel')->register($data);
             if ($result) {
-                // TODO send email verification
+                // send email verification code
+                $subject = "Confirm Your Email Address | Aka Hub";
+                $message = file_get_contents('../public/email_templates/register_email.htm');
+                $message = str_replace('{{name}}', $result["name"], $message);
+                $email_link = BASE_URL . "/auth/verify_email/" . $result["email_verification_code"];
+                $message = str_replace('{{email_link}}', $email_link, $message);
 
                 // set session variables
                 $_SESSION["logged_in"] = true;
@@ -153,7 +169,15 @@ class Auth extends Controller
                 $action = "User Registered with email";
                 $status = "600";
                 $this->model("createModel")->createLogEntry($action, $status);
-                die(json_encode(array("status" => "200", "desc" => "Successfully Registered", "redirect" => "/aka-hub/dashboard")));
+
+                ob_start();
+
+                echo (json_encode(array("status" => "200", "desc" => "Successfully Registered", "register" => 1)));
+
+                $this->model("createModel")->close_connection();
+
+                // sendEmail($to, $name, $subject, $message)
+                $this->model("createModel")->sendEmail($result["email"], $result["name"], $subject, $message);
             }
 
             //log Entry
@@ -164,5 +188,38 @@ class Auth extends Controller
             die(json_encode(array("status" => "400", "desc" => "Email already exists")));
         } else
             die(json_encode(array("status" => "400", "desc" => "Please fill all the input fields")));
+    }
+
+    // /verify_email/rpUMz3opGEiiTSacNqll3wyPr6nwmfv5zNlTrDsWxZinQ7uOSK
+    public function verify_email($code)
+    {
+        $result = $this->model('authModel')->verify_email($code);
+        if ($result) {
+            //log Entry
+            $action = "User verified email with email";
+            $status = "601";
+            $this->model("createModel")->createLogEntry($action, $status);
+
+            $data = [
+                'title' => 'Email Verified',
+                'message' => 'Welcome to Aka Hub!'
+            ];
+
+            $data["email_verified"] = 1;
+            $this->view->render('auth/index', $data);
+        } else {
+            //log Entry
+            $action = "User tried to verify email with invalid code";
+            $status = "400";
+            $this->model("createModel")->createLogEntry($action, $status);
+
+            $data = [
+                'title' => 'Email Verification Failed',
+                'message' => 'Welcome to Aka Hub!'
+            ];
+
+            $data["email_verified"] = 2;
+            $this->view->render('auth/index', $data);
+        }
     }
 }
