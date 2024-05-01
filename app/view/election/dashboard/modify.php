@@ -116,7 +116,7 @@ $sidebar = new Sidebar("elections");
                             <div class="mb-1 form-group">
                                 <label for="name" class="form-label">Question Type</label>
                                 <select name="question_type" id="question_type" class="form-control" data-validation="required">
-                                    <option value="0" disabled>Select Question Type</option>
+                                    <option value="0">Select Question Type</option>
                                     <!-- <option value="1" <?= $question["question_type"] == 1 ? "selected" : "" ?>>Short Answer</option> -->
                                     <option value="2" <?= $question["question_type"] == 2 ? "selected" : "" ?>>Multiple Choice</option>
                                     <option value="3" <?= $question["question_type"] == 3 ? "selected" : "" ?>>Checkboxes</option>

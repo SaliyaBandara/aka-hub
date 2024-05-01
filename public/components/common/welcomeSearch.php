@@ -19,9 +19,101 @@ class WelcomeSearch
                         <button class="btn" type="submit">
                             <i class='bx bx-search'></i>
                         </button>
-                        <input class="form-group" type="text" name="q" id="" placeholder="Search" />
+                        <input class="form-group" type="text" name="q" id="global-search" placeholder="Search" autocomplete="new-password" />
+                        <div class="resultBox" id="global-search-results">
+                            <li><i class='bx bx-chat'></i> Blogger</li>
+                            <li><i class='bx bxs-graduation'></i> Blogger</li>
+                            <li><i class='bx bxs-calendar-star'></i> Blogger</li>
+                            <li><i class='bx bxs-book'></i> Blogger</li>
+                        </div>
                     </form>
                 </div>
+
+                <style>
+                    .welcome-back .flex_item.search_flex {
+                        overflow: unset;
+                    }
+
+                    .search_flex form {
+                        position: relative;
+                    }
+
+                    .search_flex form .resultBox {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        width: 100%;
+                        background: #ffffff;
+                        border-radius: 5px;
+                        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                        display: none;
+                        z-index: 1000;
+
+                        /* display: block; */
+                        margin-top: 0.5rem;
+                    }
+
+                    .search_flex form .resultBox.active {
+                        display: block;
+                    }
+
+                    /* .search_flex .resultBox {
+                        padding: 0;
+                        opacity: 0;
+                        pointer-events: none;
+                        max-height: 280px;
+                        overflow-y: auto;
+                    } */
+
+                    /* .search_flex.active .resultBox {
+                        padding: 10px 8px;
+                        opacity: 1;
+                        pointer-events: auto;
+                    } */
+
+                    .resultBox li {
+                        list-style: none;
+                        padding: 0.75em 1rem;
+                        font-size: var(--rv-1);
+                        /* display: none; */
+                        width: 100%;
+                        cursor: default;
+                        border-radius: 3px;
+                        cursor: pointer;
+
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .resultBox li i {
+                        margin-right: 0.75rem;
+                        color: var(--secondary-color-faded);
+                        opacity: 0.8;
+                    }
+
+                    .search_flex.active .resultBox li {
+                        display: block;
+                    }
+
+                    .resultBox li:hover {
+                        background: #efefef;
+                    }
+
+                    .search_flex .icon {
+                        position: absolute;
+                        right: 0px;
+                        top: 0px;
+                        height: 55px;
+                        width: 55px;
+                        text-align: center;
+                        line-height: 55px;
+                        font-size: 20px;
+                        color: #644bff;
+                        cursor: pointer;
+                    }
+                </style>
+
+
                 <div class="flex_item">
                     <div class="flex justify-center items-center">
                         <div class="notification-bell">
@@ -39,7 +131,7 @@ class WelcomeSearch
                                 <ul class="pointer" id="notification-list">
                                     <li>
                                         <?php
-                                        if (($_SESSION["user_role"] == 1)||($_SESSION["user_role"] == 3)) {
+                                        if (($_SESSION["user_role"] == 1) || ($_SESSION["user_role"] == 3)) {
                                         ?>
                                             <a href="<?= BASE_URL ?>/calendarAdminView">
                                             <?php
@@ -56,7 +148,7 @@ class WelcomeSearch
                                                 </a>
                                     </li>
                                     <?php
-                                    if (($_SESSION["user_role"] == 1)||($_SESSION["user_role"] == 3)) {
+                                    if (($_SESSION["user_role"] == 1) || ($_SESSION["user_role"] == 3)) {
                                     ?>
                                         <li><a href="<?= BASE_URL ?>/calendarAdminView">PDC01: LSEG Tech Talk Session: "Market Surveillance in Financial Markets and AI applications in the domain</a></li>
                                     <?php
