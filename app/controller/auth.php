@@ -76,7 +76,7 @@ class Auth extends Controller
             if(!$emailExists){
                 //log Entry
                 $action = "User entered invalid email";
-                $status = "401";
+                $status = "400";
                 $this->model("createModel")->createLogEntry($action, $status);
 
                 die(json_encode(array("status" => "400", "desc" => "Invalid email")));
