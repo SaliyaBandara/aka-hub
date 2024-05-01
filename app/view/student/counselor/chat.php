@@ -529,13 +529,12 @@ $sidebar = new Sidebar("counselorChat");
 
         function sendChatMessage(userId, message) {
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", `counselorView/insertChatMessages/${userId}`, true);
+            xhr.open("POST", `${BASE_URL}/counselorView/insertChatMessages/${userId}`, true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onload = () => {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         console.log("Message sent successfully");
-                        updateChatMessages();
                     } else {
                         console.error("Error sending message: " + xhr.status);
                     }
