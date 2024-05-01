@@ -18,6 +18,17 @@ class readModel extends Model
         return false;
     }
 
+    //temp
+    public function getOneChatUser($id)
+    {
+        $result = $this->db_handle->runQuery("SELECT * FROM chat_users WHERE unique_id = ?", "i", [$id]);
+        if (count($result) > 0)
+            return $result[0];
+
+        return false;
+    }
+
+
     public function getOneByColumns($table, $columns, $values, $types)
     {
         $query = "SELECT * FROM $table WHERE ";
@@ -805,6 +816,21 @@ class readModel extends Model
         return false;
     }
 
+    public function getAllStudentChatUsers()
+    {
+        $sql = "SELECT cu.*, u.name, u.profile_img 
+                FROM chat_users cu 
+                INNER JOIN user u ON cu.unique_id = u.id 
+                WHERE cu.role = ?";
+
+        $result = $this->db_handle->runQuery($sql, "i", [5]); //change 5 to 0
+
+        if (!empty($result))
+            return $result;
+
+        return false;
+    }
+
     public function getAllTimeSlotsByDateRange($id, $startDate, $endDate)
     {
         // $result = $this->db_handle->runQuery("SELECT * FROM timeslots WHERE date >= ? AND date <= ?", "ss", [$startDate, $endDate]);4
@@ -841,9 +867,19 @@ class readModel extends Model
 
     public function getAllChatMessagesById($outgoing_id, $incoming_id)
     {
+        // $sql = "
+        // SELECT * FROM messages 
+        // LEFT JOIN chat_users ON chat_users.unique_id = messages.outgoing_msg_id
+        // WHERE (outgoing_msg_id = ? AND incoming_msg_id = ?) 
+        // OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
+        // ORDER BY msg_id
+        // ";
+
         $sql = "
-        SELECT * FROM messages 
+        SELECT messages.*, chat_users.*, user.profile_img 
+        FROM messages 
         LEFT JOIN chat_users ON chat_users.unique_id = messages.outgoing_msg_id
+        LEFT JOIN user ON user.id = chat_users.unique_id
         WHERE (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         ORDER BY msg_id
@@ -915,6 +951,17 @@ class readModel extends Model
 
         return false;
     }
+
+    public function getStudentIdByReservation($reservation_id)
+    {
+        $result = $this->db_handle->runQuery("SELECT student_id FROM reservation_requests WHERE id = ?", "i", [$reservation_id]);
+        if (count($result) > 0)
+            return $result;
+
+        return false;
+    }
+
+
 
     public function getReservationsByStatus($status, $user_id, $counselor_id)
     {
@@ -2667,6 +2714,32 @@ class readModel extends Model
         ];
     }
 
+    public function getEmptyChatUser()
+    {
+        $empty = [
+            "unique_id" => "",
+            "role" => "",
+        ];
+
+        $template = [
+            "unique_id" => [
+                "label" => "User",
+                "type" => "number",
+                "validation" => ""
+            ],
+            "role" => [
+                "label" => "Contact Number",
+                "type" => "text",
+                "validation" => ""
+            ],
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
     public function getEmptyElection()
     {
 
@@ -2901,6 +2974,47 @@ class readModel extends Model
                 "validation" => "",
                 "skip" => true
             ]
+        ];
+
+        return [
+            "empty" => $empty,
+            "template" => $template
+        ];
+    }
+
+    public function getEmptyMessage()
+    {
+
+        $empty = [
+            // "msg_id" => "",
+            "incoming_msg_id" => "",
+            "outgoing_msg_id" => "",
+            "msg" => "",
+        ];
+
+        $template = [
+            // "msg_id" => [
+            //     "label" => "Message ID",
+            //     "type" => "number",
+            //     "validation" => "",
+            // ],
+            "incoming_msg_id" => [
+                "label" => "Incoming Message ID",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "outgoing_msg_id" => [
+                "label" => "Outgoing Message ID",
+                "type" => "number",
+                "validation" => "required",
+                "skip" => true
+            ],
+            "msg" => [
+                "label" => "Message",
+                "type" => "text",
+                "validation" => "required"
+            ],
         ];
 
         return [

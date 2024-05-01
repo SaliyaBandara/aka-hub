@@ -28,107 +28,37 @@ $calendar = new CalendarComponent();
 
                 </div>
                 <div class=" wrapper-chat">
-                    <section class="chat-area" id="chat-area">
-                        <header>
-                            <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                            <div class="details">
-                                <span>Virajith Dissanayaka</span>
-                                <p>Active Now</p>
-                            </div>
-                        </header>
+                    <section class="chat-area" id="chat-area" style="opacity: 0">
+                        <div class="header">
+                            <!-- <header>
+                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
+                                <div class="details">
+                                    <span>Virajith Dissanayaka</span>
+                                    <p>Active Now</p>
+                                </div>
+                            </header> -->
+                        </div>
                         <div class="chat-box">
                             <!-- <div class="chat outgoing">
                                 <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                    <p>Hello, How can I help you today?</p>
                                 </div>
                             </div>
                             <div class="chat incoming">
                                 <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
                                 <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                    <p>Hello, I need help with my assignment</p>
                                 </div>
                             </div>
                             <div class="chat outgoing">
                                 <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat outgoing">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                            <div class="chat incoming">
-                                <img src="https://www.davidchang.ca/wp-content/uploads/2020/09/David-Chang-Photography-Headshots-Toronto-61-1024x1024.jpg" alt="">
-                                <div class="details">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                    <p>Okay, I can help you with that. Please provide me with the details</p>
                                 </div>
                             </div> -->
                         </div>
                         <form action="#" class="typing-area">
-                            <input type="text" placeholder="Type a message here...">
-                            <button><i class='bx bxl-telegram'></i></button>
+                            <input type="text" id="messageInput" placeholder="Type a message here...">
+                            <button type="submit"><i class='bx bxl-telegram'></i></button>
                         </form>
                     </section>
                 </div>
@@ -293,6 +223,8 @@ $calendar = new CalendarComponent();
 
         .wrapper-chat {
             width: 60%;
+            background: #f3f3f3;
+            border-radius: 16px;
         }
 
         /* SignUp form CSS code */
@@ -579,7 +511,7 @@ $calendar = new CalendarComponent();
         .chat-box {
             height: 550px;
             overflow-y: auto;
-            background: #f0f0f0;
+            background: #d9d9d9;
             padding: 10px 30px 20px 30px;
             box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
                 inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
@@ -665,8 +597,8 @@ $calendar = new CalendarComponent();
 
 </div>
 
+<?php $HTMLFooter = new HTMLFooter(); ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 <script>
@@ -674,15 +606,15 @@ $calendar = new CalendarComponent();
 </script>
 <script>
     const searchBar = document.querySelector(".users .search input"),
-        searchBtn = document.querySelector(".users .search button"),
-        usersList = document.querySelector(".users-list"),
-        chatArea = document.querySelector('.chat-area'),
-        form = document.querySelector('.typing-area'),
-        chatBox = document.querySelector('.chat-box');
-        
-        inputField = form.querySelector('.input-field'),
-        sendBtn =  form.querySelector('button'),
-        chatBox = document.querySelector('.chat-box');
+    searchBtn = document.querySelector(".users .search button"),
+    usersList = document.querySelector(".users-list"),
+    chatArea = document.querySelector('.chat-area'),
+    form = document.querySelector('.typing-area'),
+    chatBox = document.querySelector('.chat-box');
+    chatHeader = document.querySelector('.header');
+
+    inputField = form.querySelector('.input-field'),
+    sendBtn =  form.querySelector('button'),
 
     // searchBtn.onclick = ()=>{
     //     searchBar.classList.toggle("active");
@@ -690,36 +622,36 @@ $calendar = new CalendarComponent();
     //     searchBtn.classList.toggle("active");
     //     searchBar.value = "";
     // }
+    
+    // sendBtn.onclick = () => {
+    //     // Strating of the Ajax part
+    //     let xhr = new XMLHttpRequest(); //Creating XML object
+    //     xhr.open("POST", "counselorChat/insertChatMessages/", true);
+    //     xhr.onload = ()=>{
+    //         if(xhr.readyState === XMLHttpRequest.DONE){
+    //             if(xhr.status === 200){
+    //                 inputField.value = ""; //once message inserted into database then leave the input field blank
+    //                 scrollToBottom();
+    //             }
+    //         }
+    //     }    
+    //     //we have to send the form data through ajax to php
+    //     let formData = new FormData(form); //Creating new formData object
+    //     xhr.send(formData); //Sending the form data to php
+    // }
 
-    sendBtn.onclick = () => {
-        // Strating of the Ajax part
-        let xhr = new XMLHttpRequest(); //Creating XML object
-        xhr.open("POST", "counselorChat/chat_messages", true);
-        xhr.onload = ()=>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if(xhr.status === 200){
-                    inputField.value = ""; //once message inserted into database then leave the input field blank
-                    scrollToBottom();
-                }
-            }
-        }    
-        //we have to send the form data through ajax to php
-        let formData = new FormData(form); //Creating new formData object
-        xhr.send(formData); //Sending the form data to php
-    }
-
-    searchBar.onkeyup = () => {
+    searchBar.onkeyup = ()=>{
         let searchTerm = searchBar.value;
-        if (searchTerm != "") {
+        if(searchTerm != ""){
             searchBar.classList.add("active");
-        } else {
+        }else{
             searchBar.classList.remove("active");
         }
         let xhr = new XMLHttpRequest(); //Creating XML object
         xhr.open("POST", "php/search.php", true);
-        xhr.onload = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
+        xhr.onload = ()=>{
+            if(xhr.readyState === XMLHttpRequest.DONE){
+                if(xhr.status === 200){
                     let data = xhr.response;
                     usersList.innerHTML = data;
                 }
@@ -737,74 +669,51 @@ $calendar = new CalendarComponent();
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    let data = JSON.parse(xhr.responseText); // Parse JSON response
-                    // let data = xhr.response;
+                    let data = xhr.response;
                     // console.log(data);
-                    if (!searchBar.classList.contains("active")) {
-                        let userListHTML = '';
-                        if (data.length === 0) {
-                            // Display a message if no users are available
-                            userListHTML = '<div class="details"><p>No Users Available</p></div>';
-                        } else {
-                            data.forEach(user => {
-                                let img_src = "http://<?php echo $_SERVER['SERVER_NAME']; ?>/aka-hub/public/assets/user_uploads/img/" + user.image;
-                                console.log(img_src);
-                                userListHTML += `
-                            <a href="#" class="user-card" id="${user.unique_id}" userId="${user.unique_id}">
-                                <div class="content">
-                                    <img src="${img_src}" alt="">
-                                    <div class="details">
-                                        <span>${user.fname} ${user.lname}</span>
-                                        <p>${user.user_role}</p>
-                                    </div>
-                                </div>
-                            </a>   
-                            `;
-                            });
-                        }
-                        usersList.innerHTML = userListHTML;
-                    }
+                    usersList.innerHTML = data;
                 } else {
-                    console.error("Error fetching chat users: " + xhr.status);
+                    console.error("Error fetching chat messages: " + xhr.status);
                 }
             }
         }
         xhr.send();
     }, 500); //this function will run frequently after 500ms
 
-    // setInterval(() => {
-    //     // console.log("hello world!");
-    //     // Strating of the Ajax part
-    //     let xhr = new XMLHttpRequest(); //Creating XML object
-    //     xhr.open("POST", "counselorChat/chat_messages", true);
-    //     xhr.onload = () => {
-    //         if (xhr.readyState === XMLHttpRequest.DONE) {
-    //             if (xhr.status === 200) {
-    //                 let data = xhr.response;
-    //                 chatBox.innerHTML = data;
-    //                 if (!chatBox.classList.contains("active")) { //if active class is not in chat box then scroll to bottom
-    //                     scrollToBottom();
-    //                 }
-    //             }
-    //         }
-    //     }
 
-    //     //we have to send the form data through ajax to php
-    //     let formData = new FormData(form); //Creating new formData object
-    //     xhr.send(formData); //Sending the form data to php
-    // }, 500); //this function will run frequently after 500ms
+     function loadChatMessages(userId) {
+        setInterval(() => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `counselorChat/chat_messages/${userId}`, true);
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        // Populate the chat-box with the retrieved messages
+                        chatBox.innerHTML = data;
+                        loadChatHeader(userId)
+                        // Scroll to the bottom of the chat-box
+                        scrollToBottom();
+                    } else {
+                        console.error("Error fetching chat messages: " + xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }, 500);
+    }
 
-    // Function to load chat messages for a specific user
-    function loadChatMessages(userId) {
-        // Make an AJAX request to fetch chat messages for the selected user
+    function loadChatHeader(userId){
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", `counselorChat/chat_messages/${userId}`, true);
+        xhr.open("GET", `counselorChat/chat_header/${userId}`, true);
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     // Populate the chat-box with the retrieved messages
-                    chatBox.innerHTML = data;
+                    // console.log(data);
+                    chatHeader.innerHTML = data;
+                    // $('#reservations').html(data); // Update the content of .feedContainer
                     // Scroll to the bottom of the chat-box
                     scrollToBottom();
                 } else {
@@ -815,43 +724,67 @@ $calendar = new CalendarComponent();
         xhr.send();
     }
 
-
-    // var chat_data = document.querySelectorAll(".users-list .user-card");
-
-    // console.log(chat_data);
+    let selectedUserId = null;
 
     setInterval(() => {
-        // Attach click event listener to each user in the users list
         document.querySelectorAll(".users-list .user-card").forEach(user => {
 
-            
             console.log(user);
             user.addEventListener('click', function(event) {
                 // user.on("click", ".decline-request", function(event) {    
                 event.preventDefault();
-                let userId = user.getAttribute('userId');
+                selectedUserId = user.getAttribute('userid');
                 // let userId = $(this).attr("userId");
-                console.log("Selected user ID: " + userId);
+                console.log("Selected user ID: " + selectedUserId);
                 // Load chat messages for the selected user
-                loadChatMessages(userId);
+                loadChatMessages(selectedUserId);
+
+                $(".chat-area").css("opacity", "1");
             });
 
         });
-    }, 500);
+    }, 600);
 
 
     // Function to periodically update chat messages
     function updateChatMessages() {
-        // Get the user ID of the currently selected user (if any)
-        let selectedUserId = document.querySelector('.users-list a.active').getAttribute('user-id');
-        // Load chat messages for the selected user
+        let selectedUserId = document.querySelector('.users-list a.active').getAttribute('userid');
         loadChatMessages(selectedUserId);
     }
 
-    // Set interval to update chat messages every 5 seconds (adjust as needed)
-    setInterval(updateChatMessages, 5000);
+    setInterval(updateChatMessages, 500);
 
-    function scrollToBottom() {
+
+    function sendChatMessage(userId, message) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", `counselorChat/insertChatMessages/${userId}`, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Message sent successfully");
+                    updateChatMessages(); 
+                } else {
+                    console.error("Error sending message: " + xhr.status);
+                }
+            }
+        };
+        let data = `message=${encodeURIComponent(message)}`;
+        xhr.send(data);
+    }
+
+    document.querySelector(".typing-area").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let messageInput = document.querySelector(".typing-area input[type='text']");
+        // console.log(messageInput);
+        let message = messageInput.value.trim();
+        if (message !== "" && selectedUserId !== null) {
+            sendChatMessage(selectedUserId, message);
+            messageInput.value = "";
+        }
+    });
+
+    function scrollToBottom(){
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>

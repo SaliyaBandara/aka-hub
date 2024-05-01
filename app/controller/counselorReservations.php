@@ -12,7 +12,7 @@ class counselorReservations extends Controller
             $this->redirect();
         }
         $data = [
-            'title' => 'upcomingReservations',
+            'title' => 'Reservations',
             'message' => 'Welcome to Aka Hub!'
         ];
 
@@ -30,11 +30,17 @@ class counselorReservations extends Controller
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
+
+        // print_r($id); 
+        // die();   
+     
         }
+      
         if ($id != 0) {
-            $data["user"] = $this->model('readModel')->getOne("user", $id);
-            // if (!$data["user"])
-            //     $this->redirect();
+            $student_id = $this->model('readModel')->getStudentIdByReservation($id);
+            $data["user"] = $this->model('readModel')->getOne("user", $student_id);
+            if (!$data["user"])
+                $this->redirect();
         }
 
         $this->view->render('counselor/Reservations/custom_email_popup', $data); 
@@ -153,8 +159,6 @@ class counselorReservations extends Controller
             foreach ($data["reservation_requests"] as $reservation) {    
                         
                 $img_src = USER_IMG_PATH . $reservation["profile_img"]; 
-                $class1 = 'bx bxs-user-check';
-                $class2 = "bx bxs-user-x";
 
                        echo '<div class="card-content">
                                 <div class="card">
