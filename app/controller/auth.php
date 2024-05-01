@@ -126,6 +126,15 @@ class Auth extends Controller
             if (!preg_match($pattern, $data["email"]))
                 die(json_encode(array("status" => "400", "desc" => "Please enter a valid UCSC email")));
 
+            if (strlen($data["password"]) < 6)
+                die(json_encode(array("status" => "400", "desc" => "Password must be at least 6 characters long")));
+
+            if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $data["password"]))
+                die(json_encode(array("status" => "400", "desc" => "Password must contain at least one special character")));
+    
+
+            
+
             // check if student id is valid
             $student_id = $data["student_id"];
             $email = $data["email"];
