@@ -723,3 +723,119 @@ samanbandara@gmail.com	127.0.0.1	05/01/24 12:16AM	Course material updated succes
 
 samanbandara@gmail.com	127.0.0.1	05/01/24 12:38AM	Admin successfully updated profile details samanbandara@gmail.com	http://127.0.0.1/aka-hub/adminProfileAndSettings/add_edit/121url=adminProfileAndSettings/add_edit/121	601
 
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:14AM	Unauthorized user tried to edit Student settings	http://127.0.0.1/aka-hub/studentProfile/add_edit_settings/60url=studentProfile/add_edit_settings/60	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 07:42AM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 07:42AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:10PM	Admin successfully removed Access	http://127.0.0.1/aka-hub/approveRepresentatives/removeAccess/3/club_repurl=approveRepresentatives/removeAccess/3/club_rep	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:29PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:29PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:29PM	User requested to be a role	http://127.0.0.1/aka-hub/Courses/clickToBeRole/student_repurl=Courses/clickToBeRole/student_rep	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:30PM	User requested to be a role	http://127.0.0.1/aka-hub/Courses/clickToBeRole/teaching_studenturl=Courses/clickToBeRole/teaching_student	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:30PM	User requested to be a club rep	http://127.0.0.1/aka-hub/eventFeed/clickToBeClubRep/8url=eventFeed/clickToBeClubRep/8	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:30PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:30PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:39PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/3/student_repurl=approveRepresentatives/acceptRole/3/student_rep	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:40PM	Admin successfully removed Access	http://127.0.0.1/aka-hub/approveRepresentatives/removeAccess/60/club_repurl=approveRepresentatives/removeAccess/60/club_rep	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:41PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:41PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:41PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:47PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:57PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:57PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:03PM	Admin successfully accepted role of Club Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/3/club_repurl=approveRepresentatives/acceptRole/3/club_rep	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:05PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:05PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:05PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:30PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:47PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 02:47PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs020@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 02:50PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:50PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 03:13PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:13PM	User logged in as Super Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:16PM	SuperAdmin changed his password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	605
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:17PM	SuperAdmin changed his password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	605
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:17PM	SuperAdmin tried to change his password but entered wrong old password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	401
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:17PM	SuperAdmin changed his password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	605
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:18PM	SuperAdmin tried to change his password but entered wrong old password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	401
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:18PM	SuperAdmin tried to change his password but entered wrong old password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	401
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:18PM	SuperAdmin changed his password	http://127.0.0.1/aka-hub/superAdminProfileAndSettings/changePasswordurl=superAdminProfileAndSettings/changePassword	605
+
+2021cs200@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 03:30PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+Not logged in	127.0.0.1	05/01/24 03:30PM	User entered invalid email or password	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	401
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 03:30PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 03:30PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+sada@gmail.com	127.0.0.1	05/01/24 03:31PM	User logged in as Counselor with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+sada@gmail.com	127.0.0.1	05/01/24 03:32PM	Counselor changed his password	http://127.0.0.1/aka-hub/counselorSettings/changePasswordurl=counselorSettings/changePassword	605
+
+sada@gmail.com	127.0.0.1	05/01/24 03:32PM	Counselor changed his password	http://127.0.0.1/aka-hub/counselorSettings/changePasswordurl=counselorSettings/changePassword	605
+
+sada@gmail.com	127.0.0.1	05/01/24 03:33PM	Counselor tried to change his password but entered wrong old password	http://127.0.0.1/aka-hub/counselorSettings/changePasswordurl=counselorSettings/changePassword	401
+
+sada@gmail.com	127.0.0.1	05/01/24 03:33PM	Counselor changed his password	http://127.0.0.1/aka-hub/counselorSettings/changePasswordurl=counselorSettings/changePassword	605
+
+sada@gmail.com	127.0.0.1	05/01/24 03:33PM	Counselor changed his password	http://127.0.0.1/aka-hub/counselorSettings/changePasswordurl=counselorSettings/changePassword	605
+
+sada@gmail.com	127.0.0.1	05/01/24 03:33PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 03:33PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+

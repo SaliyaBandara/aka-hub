@@ -32,7 +32,7 @@ class AdminAccount extends Controller
         }
         if ($id == 0)
             $this->redirect();
-
+        
         $resultOne = $this->model('deleteModel')->deleteOne("administrator", $id);
         $resultTwo = $this->model('deleteModel')->deleteOne("user", $id);
 

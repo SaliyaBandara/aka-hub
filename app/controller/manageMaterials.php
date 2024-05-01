@@ -83,6 +83,7 @@ class ManageMaterials extends Controller
                 $task1 = "Course material updated successfully";
                 $state = 200;
                 $this->model("createModel")->createLogEntry($task1, $state);
+
                 die(json_encode(array("status" => "200", "desc" => "Operation successful")));
             }
             die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing course")));

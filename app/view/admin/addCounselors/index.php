@@ -27,7 +27,7 @@ $sidebar = new Sidebar("existingCounselors");
                             <?= $value["label"] ?>
                             <?= $key == "password" ? "<span class='text-small text-muted'></span>" : "" ?>
                         </label>
-                        <input <?= $id != 0 && $key == "password" ? "disabled" : "" ?> class="form-control" type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="<?= $id != 0 && $key == "password" ? "Password Edit Disabled" : "Enter " . $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?>>
+                        <input <?= ($id != 0 && $key == "password") ? "disabled" : "" ?> <?= ($id != 0 && $key == "email") ? "disabled" : "" ?> class="form-control" type="<?= $value["type"] ?>" id="<?= $key ?>" name="<?= $key ?>" placeholder="<?= $id != 0 && $key == "password" ? "Password Edit Disabled" : "Enter " . $value["label"] ?>" value="<?= $data["user"][$key] ?>" <?= $value["validation"] == "required" ? "data-validation='required'" : "" ?>>
                     </div>
                 <?php
                 }

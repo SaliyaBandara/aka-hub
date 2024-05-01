@@ -85,9 +85,10 @@ class counselorSettings extends Controller
     {
 
         $this->requireLogin();
+
         $id = $_SESSION["user_id"];
-        
-        $user = $this->model('readModel')->getOne("user",$id);
+
+        $user = $this->model('readModel')->getOne("user", $id);
         $password = $user["password"];
 
         $data = [
@@ -99,43 +100,42 @@ class counselorSettings extends Controller
         $data["user"] = $data["user_template"]["empty"];
         $data["user_template"] = $data["user_template"]["template"];
 
-
-
         if (isset($_POST['changePassword'])) {
 
             $oldPassword = $_POST["oldPassword"];
             $newPassword = $_POST["newPassword"];
-            
 
             // trim
             $oldPassword = trim($oldPassword);
             $newPassword = trim($newPassword);
-            
+          
             // $hashedOldPassword = $this->model('authModel')->hashPassword($oldPassword);
             $hashedNewPassword = $this->model('authModel')->hashPassword($newPassword);
             // echo "$hashedOldPassword\n$password";
             // die;
-
-            if($newPassword == ""){
+            if ($newPassword == "") {
                 die(json_encode(array("status" => "400", "desc" => "New password cannot be blank!")));
             }
-            if($oldPassword == ""){
+            if ($oldPassword == "") {
                 die(json_encode(array("status" => "400", "desc" => "Old password cannot be blank!")));
             }
 
-
-            if(password_verify($oldPassword, $password)){
-            // if($hashedOldPassword == $password){
+            if (password_verify($oldPassword, $password)) {
+                // if($hashedOldPassword == $password){
                 $values["password"] = $hashedNewPassword;
                 $result = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
-                if($result){
+                if ($result) {
+                    $task = "Counselor changed his password";
+                    $this->model("createModel")->createLogEntry($task, "605");
                     die(json_encode(array("status" => "200", "desc" => "Operation successful")));
                 }
             }
-
+            $task = "Counselor tried to change his password but entered wrong old password";
+            $this->model("createModel")->createLogEntry($task, "401");
             die(json_encode(array("status" => "403", "desc" => "Incorrect Old Password")));
         }
 
+        $this->view->render('counselor/settings/changePassword', $data);
     }
 }
