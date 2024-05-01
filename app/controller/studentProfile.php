@@ -222,10 +222,13 @@ class StudentProfile extends Controller
                 $result = $this->model('updateModel')->update_one("user", $values, $data["user_template"], "id", $id, "i");
 
                 if($result){
+                    $task = "Student changed his password";
+                    $this->model("createModel")->createLogEntry($task, 605);
                     die(json_encode(array("status" => "200", "desc" => "Operation successful")));
                 }
             }
-
+            $task = "Student tried to change his password but entered wrong old password";
+            $this->model("createModel")->createLogEntry($task, 401);
             die(json_encode(array("status" => "403", "desc" => "Incorrect Old Password")));
         }
 
