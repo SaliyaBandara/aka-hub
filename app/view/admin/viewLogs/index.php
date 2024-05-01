@@ -23,7 +23,7 @@ $calendar = new CalendarComponent();
                                 <i class='bx bxs-search-alt-2'></i> UserLog Analytics
                             </a>
                             <select id="statusFilter" class="form-control filterDropDown">
-                                <option value="">All Statuses</option>
+                                <option value="">All</option>
                                 <option value="200">Success</option>
                                 <option value="201">Created</option>
                                 <option value="400">Bad Request</option>
