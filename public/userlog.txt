@@ -739,3 +739,51 @@ samanbandara@gmail.com	127.0.0.1	05/01/24 07:42AM	User logged out	http://127.0.0
 
 samanbandara@gmail.com	127.0.0.1	05/01/24 07:42AM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
 
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:10PM	Admin successfully removed Access	http://127.0.0.1/aka-hub/approveRepresentatives/removeAccess/3/club_repurl=approveRepresentatives/removeAccess/3/club_rep	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:13PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:29PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:29PM	User logged in as Student with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:29PM	User requested to be a role	http://127.0.0.1/aka-hub/Courses/clickToBeRole/student_repurl=Courses/clickToBeRole/student_rep	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:30PM	User requested to be a role	http://127.0.0.1/aka-hub/Courses/clickToBeRole/teaching_studenturl=Courses/clickToBeRole/teaching_student	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:30PM	User requested to be a club rep	http://127.0.0.1/aka-hub/eventFeed/clickToBeClubRep/8url=eventFeed/clickToBeClubRep/8	200
+
+2021cs138@stu.ucsc.cmb.ac.lk	127.0.0.1	05/01/24 01:30PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:30PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:39PM	Admin successfully accepted role of Student Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/3/student_repurl=approveRepresentatives/acceptRole/3/student_rep	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:40PM	Admin successfully removed Access	http://127.0.0.1/aka-hub/approveRepresentatives/removeAccess/60/club_repurl=approveRepresentatives/removeAccess/60/club_rep	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:41PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:41PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:41PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:47PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:57PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 01:57PM	User logged in as Admin with email	http://127.0.0.1/aka-hub/auth/loginurl=auth/login	603
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:03PM	Admin successfully accepted role of Club Representative	http://127.0.0.1/aka-hub/approveRepresentatives/acceptRole/3/club_repurl=approveRepresentatives/acceptRole/3/club_rep	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:05PM	User with ID: 3 has been restricted	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	607
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:05PM	User with ID: 3restriction has been removed	http://127.0.0.1/aka-hub/viewUserDistribution/restrictUser/3url=viewUserDistribution/restrictUser/3	606
+
+samanbandara@gmail.com	127.0.0.1	05/01/24 02:05PM	User logged out	http://127.0.0.1/aka-hub/logouturl=logout	604
+
