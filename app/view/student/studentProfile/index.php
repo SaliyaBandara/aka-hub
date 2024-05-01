@@ -472,8 +472,8 @@ $sidebar = new Sidebar("studentProfile");
     });
 
     $(document).on("click", "#changePassword", function(event) {
-
         event.preventDefault();
+
         var oldPassword = $('#password').val();
         var newPassword = $('#passwordNew').val();
 
