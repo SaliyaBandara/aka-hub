@@ -219,6 +219,203 @@ class readModel extends Model
         return false;
     }
 
+    // global search function search($search_key)
+    public function search($search_key)
+    {
+        $search_key = "%" . $search_key . "%";
+        $results = [];
+
+        $user_year = 5;
+        if (isset($_SESSION["year"]))
+            $user_year = $_SESSION["year"];
+
+        // search in courses
+        $courses = $this->db_handle->runQuery("SELECT * FROM courses WHERE (name LIKE ? OR code LIKE ?) AND year = ? LIMIT 5", "ssi", [$search_key, $search_key, $user_year]);
+        if (count($courses) > 0)
+            $results["courses"] = $courses;
+
+        // search in forum posts
+        $forum_posts = $this->db_handle->runQuery("SELECT * FROM forum_posts WHERE title LIKE ? OR content LIKE ? LIMIT 5", "ss", [$search_key, $search_key]);
+        if (count($forum_posts) > 0)
+            $results["forum_posts"] = $forum_posts;
+
+        // search in calendar
+        $calendar = $this->db_handle->runQuery("SELECT * FROM calendar WHERE (title LIKE ? OR description LIKE ?) AND target = ? LIMIT 5", "ssi", [$search_key, $search_key, $user_year]);
+        if (count($calendar) > 0)
+            $results["calendar"] = $calendar;
+
+        // search in elections
+        $elections = $this->db_handle->runQuery("SELECT * FROM elections WHERE (name LIKE ? OR description LIKE ?) AND target = ? LIMIT 5", "ssi", [$search_key, $search_key, $user_year]);
+        if (count($elections) > 0)
+            $results["elections"] = $elections;
+
+        return $results;
+    }
+
+    public function getNotifPref($notif_settings)
+    {
+        $outputArray = [];
+        foreach ($notif_settings as $item) {
+            $key = strtolower($item[0]); // Convert the key to lowercase
+            $value = $item[1];
+            $outputArray[$key] = $value;
+        }
+        return $outputArray;
+    }
+
+    // cron();
+    // to automatically send notifications and emails for upcoming events for all users
+    public function cron()
+    {
+        // get all upcoming events
+        $users = $this->db_handle->runQuery("SELECT * FROM user WHERE ?", "i", [1]);
+        // foreach user if student get year from student table
+        if (count($users) > 0) {
+            $index = 0;
+            foreach ($users as $user) {
+                $user_year = 5;
+                $user_id = $user['id'];
+                if ($user['role'] != 1 && $user['role'] != 3 && $user['role'] != 5)
+                    $student_details = $this->db_handle->runQuery("SELECT year FROM student WHERE id = ?", "i", [$user_id]);
+                if (isset($student_details[0]))
+                    $user_year = $student_details[0]['year'];
+
+                //-- Type
+                // --     1 - Exam
+                // --     2 - Reminder
+                // --     3 - Events
+                // --     4 - Materials
+                // --     5 - Election
+
+                // get notification_settings for this user
+                $notification_settings = $this->db_handle->runQuery("SELECT * FROM notification_settings WHERE id = ?", "i", [$user_id]);
+                if (count($notification_settings) > 0) {
+                    $notification_settings = $notification_settings[0];
+                    $users[$index]["notification_settings"][1] = $this->getNotifPref(json_decode($notification_settings['exam_notify'], true));
+                    $users[$index]["notification_settings"][2] = $this->getNotifPref(json_decode($notification_settings['reminder_notify'], true));
+                    $users[$index]["notification_settings"][3] = $this->getNotifPref(json_decode($notification_settings['events_notify'], true));
+                    $users[$index]["notification_settings"][4] = $this->getNotifPref(json_decode($notification_settings['materials_notify'], true));
+                } else {
+                    $users[$index]["notification_settings"] = [
+                        "onsite" => 1,
+                        "email" => 1,
+                    ];
+                }
+
+                // print_r($users[$index]["notification_settings"][3]["email"]);
+
+                $users[$index]["year"] = $user_year;
+                $index++;
+            }
+        }
+
+        // print_r($users);
+        // die;
+
+
+        $notifications = [];
+        $broadcast_ids = [];
+        $even_types = [
+            1 => "Exam",
+            2 => "Reminder",
+            3 => "Events",
+            4 => "Materials",
+            5 => "Election"
+        ];
+        
+        $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE date > NOW() AND ? ORDER BY date ASC", "i", [1]);
+        if (count($events) > 0) {
+            foreach ($events as $event) {
+                // print_r($event);
+                // die;
+                if (count($users) > 0) {
+                    foreach ($users as $user) {
+                        // check if event is for all students or for a specific year
+                        $event_type = $event['type'];
+                        if ($event["is_broadcast"] == 1 && ($event['target'] == 0 || $event['target'] == 5 || $event['target'] == $user['year'])) {
+
+                            // check if user has notifications enabled for this type
+                            if (isset($user["notification_settings"][$event_type]["onsite"]) && $user["notification_settings"][$event_type]["onsite"] == 1) {
+
+                                // check if already in broadcast_ids then skip this event
+                                if (in_array($event['id'], $broadcast_ids))
+                                    goto end;
+
+                                $broadcast_ids[] = $event['id'];
+
+                                // get unix timestamp for the event date
+                                $unix_timestamp = strtotime($event['date']);
+                                $unix_timestamp = $unix_timestamp * 1000;
+                                
+                                $description = "You have an upcoming " . $even_types[$event_type] . " titled " . $event['title'] . " on " . date("d M Y", strtotime($event['date'])) . " at " . date("H:i", strtotime($event['date']));
+
+                                // send notification
+                                $this->db_handle->insert(
+                                    "INSERT INTO notifications (is_broadcast, target, user_id, parent_id, title, description, link, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                                    "iiissssi",
+                                    [1, $event['target'], $event['user_id'], $event['id'], $event['title'], $description, "/calendar/view/" . $unix_timestamp, $event['type']]
+                                );
+
+                                $notifications[] = [
+                                    "user_id" => $user['id'],
+                                    "event_id" => $event['id'],
+                                    "title" => $event['title'],
+                                    "description" => $event['description'],
+                                    "link" => "/calendar/view/" . $event['id'],
+                                    "type" => $event['type'],
+                                    "user_year" => $user['year'],
+                                    "date" => $unix_timestamp,
+                                    "event_type" => $event_type
+                                ];
+                            }
+
+                            // check if user has email notifications enabled for this type
+                            if (isset($user["notification_settings"][$event_type]["email"]) && $user["notification_settings"][$event_type]["email"] == 1) {
+                                // TODO: send email
+                            }
+                        } else if ($event["is_broadcast"] == 0 && $event['user_id'] == $user['id']) {
+                            // check if user has notifications enabled for this type
+                            if (isset($user["notification_settings"][$event_type]["onsite"]) && $user["notification_settings"][$event_type]["onsite"] == 1) {
+
+                                $unix_timestamp = strtotime($event['date']) * 1000;
+                                $description = "You have an upcoming " . $even_types[$event_type] . " titled " . $event['title'] . " on " . date("d M Y", strtotime($event['date'])) . " at " . date("H:i", strtotime($event['date']));
+                                
+                                // send notification
+                                $this->db_handle->insert(
+                                    "INSERT INTO notifications (is_broadcast, target, user_id, parent_id, title, description, link, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                                    "iiissssi",
+                                    [0, 0, $event['user_id'], $event['id'], $event['title'], $description, "/calendar/view/" . $unix_timestamp, $event['type']]
+                                );
+
+                                $notifications[] = [
+                                    "user_id" => $user['id'],
+                                    "event_id" => $event['id'],
+                                    "title" => $event['title'],
+                                    "description" => $event['description'],
+                                    "link" => "calendar/view/" . $event['id'],
+                                    "type" => $event['type']
+                                ];
+                            }
+
+                            // check if user has email notifications enabled for this type
+                            if (isset($user["notification_settings"][$event_type]["email"]) && $user["notification_settings"][$event_type]["email"] == 1) {
+                                // TODO: send email
+                            }
+                        }
+                    }
+
+                    end:
+                }
+            }
+        }
+
+        // print_r($notifications);
+        // print_r($broadcast_ids);
+        // die(json_encode(array("status" => "200", "desc" => "Success", "notifications" => $notifications)));
+    }
+
+
+
     public function getNotifications()
     {
         // -- Type
@@ -507,10 +704,9 @@ class readModel extends Model
             // TODO: get counsellor reservations as well
             // reservation_requests status == 1
 
-            
+
         } else if ($role == "admin") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
-
         }
 
         if (count($events) > 0) {
@@ -549,10 +745,21 @@ class readModel extends Model
         return $events;
     }
 
-    // CREATE TABLE elections (
+
+    // -- elections table
+    // -- type
+    // -- 0 - general/club elections
+    // -- 1 - student union elections
+    // -- target
+    // --    5 - All Students
+    // --      1 - Student - 1st Year
+    // --      2 - Student - 2nd Year
+    // --      3 - Student - 3rd Year
+    // --      4 - Student - 4th Year
     // CREATE TABLE elections (
     //     id INT AUTO_INCREMENT PRIMARY KEY,
     //     user_id INT NOT NULL,
+    //     target TINYINT(1) NOT NULL DEFAULT 5,
     //     name VARCHAR(255) NOT NULL,
     //     description TEXT DEFAULT NULL,
     //     start_date DATETIME NOT NULL,
@@ -641,14 +848,6 @@ class readModel extends Model
                         $vote_times[] = $response['created_at'];
                     }
 
-                    // sort the vote times to groups of 2 hours
-                    $vote_times = array_map(function ($time) {
-                        return date("Y-m-d H:00:00", strtotime($time));
-                    }, $vote_times);
-
-                    // print_r($vote_times);
-                    // die;
-
                     // set the counts for each option
                     $option_index = 1;
                     $images = [];
@@ -680,8 +879,82 @@ class readModel extends Model
             }
         }
 
-        // print_r($analytics);
-        // die;
+        // get votes
+        $votes = $this->getAllByColumn("election_votes", "election_id", $election_id, "i");
+        $vote_count = 0;
+        if ($votes)
+            $vote_count = count($votes);
+        $vote_times = [];
+        $interval_counts = [];
+        $interval_labels = [];
+        if ($votes) {
+            foreach ($votes as $vote)
+                $vote_times[] = $vote['created_at'];
+
+
+
+            // sort vote_times in ascending order
+            sort($vote_times);
+
+            // get first and last vote time
+            $start_time = $vote_times[0];
+            $end_time = $vote_times[count($vote_times) - 1];
+
+            // count no of 2 hour intervals between start and end time
+            $interval = 2 * 60 * 60; // 2 hours
+            $no_of_intervals = ceil((strtotime($end_time) - strtotime($start_time)) / $interval);
+
+            // get the counts for each interval and insert with label
+
+            for ($i = 0; $i < $no_of_intervals; $i++) {
+                $interval_start = date("Y-m-d H:i:s", strtotime($start_time) + $i * $interval);
+                $interval_end = date("Y-m-d H:i:s", strtotime($start_time) + ($i + 1) * $interval);
+
+                $count = 0;
+                foreach ($vote_times as $time) {
+                    if (strtotime($time) >= strtotime($interval_start) && strtotime($time) < strtotime($interval_end))
+                        $count++;
+                }
+
+                $interval_counts[] = $count;
+
+                // format label to 02PM - 04PM
+                $interval_labels[] = date("h:i A", strtotime($interval_start));
+
+
+                // $interval_labels[] = $interval_start . " - " . $interval_end;
+                // $interval_labels[] = $interval_start;
+            }
+
+            // if only one interval, set the label to the start time
+            if ($no_of_intervals == 1) {
+                $interval_labels = [$interval_labels[0]];
+                $interval_counts = [$interval_counts[0]];
+            }
+
+            if ($no_of_intervals == 0 && $vote_count > 0) {
+                $interval_labels = [date("h:i A", strtotime($start_time))];
+                $interval_counts = [$vote_count];
+            }
+        }
+
+
+        // get total number of eligible voters using target and student table
+        $election = $this->getOne("elections", $election_id);
+        $target = $election['target'];
+        $eligible_voters = 0;
+        if ($target > 5 || $target < 0)
+            $target = 5;
+
+        if ($target == 5 || $target == 0)
+            $eligible_voters = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE ?", "i", [1])[0]['count'];
+        else
+            $eligible_voters = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM student WHERE year = ?", "i", [$target])[0]['count'];
+
+        // $vote_count
+        $percent_voted = 0;
+        if ($eligible_voters > 0)
+            $percent_voted = round(($vote_count / $eligible_voters) * 100, 1) . "%";
 
         // format the counts for chartjs
         $chart_data = [];
@@ -690,7 +963,8 @@ class readModel extends Model
                 "labels" => [],
                 "count" => [],
                 "has_images" => $question['has_images'],
-                "images" => $question['images']
+                "images" => $question['images'],
+                "question" => $question['question'],
             ];
             // $question_data = [
             //     "question" => $question['question'],
@@ -714,6 +988,19 @@ class readModel extends Model
 
         $analytics["all"] = $analytics;
         $analytics["chart_data"] = $chart_data;
+        $analytics["vote_count"] = $vote_count;
+
+        $analytics["intervals"] = [
+            "labels" => $interval_labels,
+            "count" => $interval_counts
+        ];
+
+        $analytics["percent_voted"] = $percent_voted;
+        $analytics["eligible_voters"] = $eligible_voters;
+
+
+        // print_r($analytics);
+        // die;
 
         return $analytics;
     }
@@ -1569,7 +1856,7 @@ class readModel extends Model
         return false;
     }
 
-    
+
 
     // public function getAllEvents($table)
     // {
@@ -2151,7 +2438,8 @@ class readModel extends Model
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE
     //   );    
 
-    public function getEmptyCourseMaterialForAdmin(){
+    public function getEmptyCourseMaterialForAdmin()
+    {
         $empty = [
             "course_id" => "",
             "video_links" => "",

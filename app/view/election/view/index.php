@@ -49,6 +49,10 @@ $calendar = new CalendarComponent();
                         $time_until_end = strtotime($election["end_date"]) - time();
                         $time_until_end = floor($time_until_end / (60 * 60 * 24)) . " Days " . floor(($time_until_end % (60 * 60 * 24)) / (60 * 60)) . " Hours ";
 
+                        // if less than 0
+                        if ($time_until_end < 0)
+                            $time_until_end = "Concluded";
+
                         $category = "Club";
                         if ($election["type"] == 1)
                             $category = "Student Union";

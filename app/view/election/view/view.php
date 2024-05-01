@@ -11,15 +11,15 @@ $sidebar = new Sidebar("elections");
 
             <div class="election-main">
                 <div class="tab-selector">
-                    <div class="selector active" data-tab="results">
+                    <div class="selector <?= $data["already_voted"] ? "active" : "" ?>" data-tab="results">
                         <i class='bx bx-show'></i> View Results
                     </div>
-                    <div class="selector" data-tab="vote">
+                    <div class="selector <?= $data["already_voted"] ? "" : "active" ?>" data-tab="vote">
                         <i class='bx bx-selection'></i> Cast Vote
                     </div>
                 </div>
                 <div class="tabs">
-                    <div class="tab active" id="results">
+                    <div class="tab <?= $data["already_voted"] ? "active" : "" ?>" id="results">
                         <div class="general-stats flex">
 
                             <div class="stats-left">
@@ -27,21 +27,22 @@ $sidebar = new Sidebar("elections");
                                     <div class="title">
                                         <div class="icon"> <i class='bx bx-user'></i> </div>
                                         <div class="title">Total Votes</div>
-                                        <div class="value"><?= isset($data["analytics"]["total_votes"]) ? $data["analytics"]["total_votes"] : 20 ?></div>
+                                        <div class="value"><?= $data["analytics"]["vote_count"] ?></div>
                                     </div>
                                 </div>
                                 <div class="stat-card">
                                     <div class="title">
-                                        <div class="icon"> <i class='bx bx-user'></i> </div>
-                                        <div class="title">Total Votes</div>
-                                        <div class="value"><?= isset($data["analytics"]["total_votes"]) ? $data["analytics"]["total_votes"] : 20 ?></div>
+                                        <div class="icon"> <i class='bx bx-objects-horizontal-left'></i> </div>
+                                        <div class="title">Eligible Voters</div>
+                                        <div class="value"><?= $data["analytics"]["eligible_voters"] ?></div>
                                     </div>
                                 </div>
                                 <div class="stat-card">
                                     <div class="title">
-                                        <div class="icon"> <i class='bx bx-user'></i> </div>
-                                        <div class="title">Total Votes</div>
-                                        <div class="value"><?= isset($data["analytics"]["total_votes"]) ? $data["analytics"]["total_votes"] : 20 ?></div>
+                                        <!-- icon for turnout -->
+                                        <div class="icon"> <i class='bx bxs-pie-chart-alt-2'></i> </div>
+                                        <div class="title">Voter Turnout</div>
+                                        <div class="value"><?= $data["analytics"]["percent_voted"] ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +69,7 @@ $sidebar = new Sidebar("elections");
                                     justify-content: center;
                                 }
 
-                                #vote-timeline{
+                                #vote-timeline {
                                     width: 60%;
                                     /* margin: 0 auto; */
                                 }
@@ -129,7 +130,7 @@ $sidebar = new Sidebar("elections");
                             // foreach question print canvas
                             $chart_no = 1;
                             foreach ($data["analytics"]["chart_data"] as $chart_data) {
-                                echo '<div>';
+                                echo '<div><div class="chart-title">' . $chart_data["question"] . '</div>';
                                 echo '<div class="election_chart" id="election_chart_' . $chart_no . '"></div>';
                                 echo '</div>';
 
@@ -156,14 +157,23 @@ $sidebar = new Sidebar("elections");
                                 /* background-color: whitesmoke; */
                             }
 
+                            .chart-title {
+                                font-size: var(--rv-1);
+                                font-weight: 500;
+                                margin-bottom: 1rem;
+                                text-align: center;
+                                width: 100%;
+                            }
+
                             .chart-container {
                                 display: flex;
                                 flex-wrap: wrap;
                                 gap: 1rem;
+                                margin-top: 1rem;
                             }
                         </style>
                     </div>
-                    <div class="tab active" id="vote">
+                    <div class="tab <?= $data["already_voted"] ? "" : "active" ?>" id="vote">
 
                         <div class="questions">
 
@@ -515,6 +525,10 @@ $sidebar = new Sidebar("elections");
                             <button type="submit" class="btn btn-primary vote-btn">Cast Vote</button>
                         </div>
 
+                        <div class="already-voted <?= $data["already_voted"] ? "active" : "" ?>">
+                            <div class="alert alert-info">You have already voted for this election.</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -570,12 +584,39 @@ $sidebar = new Sidebar("elections");
                     display: none;
                     padding: 1rem;
                     margin-top: 1rem;
+                    position: relative;
                 }
 
                 .tab.active {
                     /* background: red; */
                     /* height: 50vh; */
                     display: block;
+                }
+
+                .tab .already-voted {
+                    display: none;
+                }
+
+                .tab .already-voted.active {
+                    display: block;
+                    position: absolute;
+                    inset: 1rem;
+                    background: var(--off-white);
+                    z-index: 100;
+                    /* display: flex;
+                    justify-content: center;
+                    align-items: center; */
+                }
+
+                .tab .already-voted.active .alert {
+                    margin: 0;
+                    padding: 1rem;
+                    color: #856404;
+                    background: #fff3cd;
+                    border: 1px solid #ffeeba;
+                    border-radius: 0.25rem;
+                    width: 30%;
+                    text-align: center;
                 }
             </style>
 
@@ -643,6 +684,14 @@ $sidebar = new Sidebar("elections");
 
         var lastWeek = ["0", "0", "0", "0", "0", "0", "0"];
         var thisWeek = [37, "0", 10, 20, "0", "0", "0"];
+
+        var last_election = <?= json_encode($data["analytics"]["intervals"]["count"]) ?>;
+        var this_election = <?= json_encode($data["analytics"]["intervals"]["count"]) ?>;
+
+        var labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        labels = <?= json_encode($data["analytics"]["intervals"]["labels"]) ?>
+
+
         var e = ["#727cf5", "#0acf97", "#fa5c7c", "#ffbc00"];
         var r = {
             chart: {
@@ -663,13 +712,23 @@ $sidebar = new Sidebar("elections");
                 curve: "smooth",
                 width: 4
             },
-            series: [{
-                    name: "Last Vote Turnout",
-                    data: thisWeek
-                },
+            title: {
+                text: 'Voter Turnout Over Time',
+                align: 'left',
+                style: {
+                    fontSize: '16px',
+                    color: '#666',
+                    fontWeight: 500
+                }
+            },
+            series: [
+                // {
+                //     name: "Last Vote Turnout",
+                //     data: last_election
+                // },
                 {
-                    name: "Current Voter Turnout",
-                    data: lastWeek
+                    name: "Voter Turnout",
+                    data: this_election
                 },
             ],
             colors: e,
@@ -681,7 +740,7 @@ $sidebar = new Sidebar("elections");
             },
             xaxis: {
                 type: "string",
-                categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                categories: labels,
                 tooltip: {
                     enabled: !1
                 },
@@ -693,10 +752,12 @@ $sidebar = new Sidebar("elections");
                 labels: {
                     formatter: function(e) {
                         return e;
-                        return e + " LKR";
                     },
                     offsetX: -15,
                 },
+                stepSize: 1,
+                // tickAmount: "dataPoints",
+                // tickAmount: 1
             },
         };
 
@@ -906,6 +967,16 @@ $sidebar = new Sidebar("elections");
         });
 
 
+        // on click tab-selector selector
+        $(document).on("click", ".selector", function() {
+            let tab = $(this).data("tab");
+            $(".selector").removeClass("active");
+            $(this).addClass("active");
+
+            $(".tab").removeClass("active");
+            $("#" + tab).addClass("active");
+        });
+
         $(document).on("click", ".vote-btn", function(event) {
             event.preventDefault();
 
@@ -978,9 +1049,8 @@ $sidebar = new Sidebar("elections");
                 success: function(response) {
                     if (response['status'] == 200) {
                         alertUser("success", response['desc'])
-                        setTimeout(function() {
-                            history.go(-1);
-                            window.close();
+                        setTimeout(() => {
+                            location.reload();
                         }, 2000);
 
                     } else if (response['status'] == 403)

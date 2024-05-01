@@ -45,7 +45,8 @@ class Elections extends Controller
         if ($_SESSION["student_rep"] == 1 || $_SESSION["club_rep"] == 1 || $_SESSION["user_role"] == 1)
             $data["edit_access"] = true;
 
-        $data["items"] = $this->model('readModel')->getAll("elections");
+        // getAllSort($table, $column, $order)
+        $data["items"] = $this->model('readModel')->getAllSort("elections", "start_date", "DESC");
         $this->view->render('election/view/index', $data);
     }
 
@@ -203,6 +204,13 @@ class Elections extends Controller
         $data["analytics"] = $this->model('readModel')->getElectionAnalytics($id);
         // print_r($data["analytics"]);
         // die;
+
+        $election_id = $id;
+        $user_id = $_SESSION["user_id"];
+        $already_voted = $this->model('readModel')->getOneByColumns("election_votes", ["election_id", "user_id"], [$election_id, $user_id], ["i", "i"]);
+        $data["already_voted"] = false;
+        if ($already_voted)
+            $data["already_voted"] = true;
 
         $this->view->render('election/view/view', $data);
     }

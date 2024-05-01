@@ -333,6 +333,7 @@ class createModel extends Model
             ], $template);
 
             $this->sendNotificationEmail($user_id, $title, $message, $link);
+            return true;    
         }
 
         // exam
