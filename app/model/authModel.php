@@ -92,7 +92,6 @@ class authModel extends Model
         $result = $this->db_handle->runQuery("SELECT * FROM user WHERE email = ? AND status = ?", "si", [$email, 1]);
         if (count($result) > 0 && password_verify($password, $result[0]["password"]))
             return $result[0];
-
         return false;
     }
 }

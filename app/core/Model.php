@@ -208,4 +208,27 @@ class Model extends Database
         list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
         return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
     }
+
+
+    public function restrictUser($id)
+    {
+        $query = "UPDATE user SET status = 0 WHERE id = ?";
+        $values = [$id];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
+
+    public function restrictUserByEMail($email)
+    {
+        $query = "UPDATE user SET status = 0 WHERE email = ?";
+        $values = [$email];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
 }
