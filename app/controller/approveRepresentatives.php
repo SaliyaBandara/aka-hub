@@ -76,7 +76,7 @@ class ApproveRepresentatives extends Controller
                 $status = "606";
                 $this->model("createModel")->createLogEntry($action, $status);
 
-                $this->model("createModel")->notification(7, 0, $id, "Promoted to Club Representative","You Have Been Promoted to Club Representative Role and Features", 7);
+                $this->model("createModel")->notification(7, 0, $id, "Promoted to Club Representative","You Have Been Promoted to Club Representative Role and Features", 0);
 
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
             } else {
@@ -95,7 +95,7 @@ class ApproveRepresentatives extends Controller
                 $status = "606";
                 $this->model("createModel")->createLogEntry($action, $status);
 
-                $this->model("createModel")->notification(7, 0, $id, "Promoted to Student Representative","You Have Been Promoted to Student Representative Role and Features", 7);
+                $this->model("createModel")->notification(7, 0, $id, "Promoted to Student Representative","You Have Been Promoted to Student Representative Role and Features", 0);
 
                 die(json_encode(array("status" => "200", "desc" => "Accepting Successfull")));
             } else {
@@ -127,7 +127,7 @@ class ApproveRepresentatives extends Controller
                 $status = "200";
                 $this->model("createModel")->createLogEntry($action, $status);
 
-                $this->model("createModel")->notification(7, 0, $id, "Promotion Request to Club Rep Rejected","Sorry , You are not Promoted to Club Representative Role and Features", 7);
+                $this->model("createModel")->notification(7, 0, $id, "Promotion Request to Club Rep Rejected","Sorry , You are not Promoted to Club Representative Role and Features", 0);
 
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
@@ -139,7 +139,7 @@ class ApproveRepresentatives extends Controller
                 $status = "200";
                 $this->model("createModel")->createLogEntry($action, $status);
 
-                $this->model("createModel")->notification(7, 0, $id,"Promotion Request to Student Rep Rejected", "Sorry , You are not Promoted to Student Representative Role and Features", 7);
+                $this->model("createModel")->notification(7, 0, $id,"Promotion Request to Student Rep Rejected", "Sorry , You are not Promoted to Student Representative Role and Features", 0);
 
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
@@ -190,7 +190,7 @@ class ApproveRepresentatives extends Controller
                 $status = "607";
                 $this->model("createModel")->createLogEntry($action, $status);
 
-                $this->model("createModel")->notification(7, 0, $id, "Club Rep Permissions Revoked","Sorry , Your Club Representative Permissions and Features Revoked", 7);
+                $this->model("createModel")->notification(7, 0, $id, "Club Rep Permissions Revoked","Sorry , Your Club Representative Permissions and Features Revoked", 0);
 
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
@@ -202,7 +202,7 @@ class ApproveRepresentatives extends Controller
                 $status = "607";
                 $this->model("createModel")->createLogEntry($action, $status);
 
-                $this->model("createModel")->notification(7, 0, $id,"Student Rep Permissions Revoked", "Sorry , Your Student Representative Permissions and Features Revoked", 7);
+                $this->model("createModel")->notification(7, 0, $id,"Student Rep Permissions Revoked", "Sorry , Your Student Representative Permissions and Features Revoked", 0);
 
                 die(json_encode(array("status" => "200", "desc" => "Denying Successfull")));
             } else {
