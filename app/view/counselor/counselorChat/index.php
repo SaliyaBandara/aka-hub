@@ -700,13 +700,14 @@ $calendar = new CalendarComponent();
 
     function sendChatMessage(userId, message) {
         let xhr = new XMLHttpRequest();
+        console.log(message);
+        console.log(userId);
         xhr.open("POST", `counselorChat/insertChatMessages/${userId}`, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     console.log("Message sent successfully");
-                    updateChatMessages();
                 } else {
                     console.error("Error sending message: " + xhr.status);
                 }

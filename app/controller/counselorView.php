@@ -111,6 +111,24 @@ class CounselorView extends Controller
 
         $user_id = $_SESSION["user_id"];
 
+        
+        $chatuser = $this->model('readModel')->getOneChatUser($user_id);
+        if($chatuser == null){
+            $data["chatuser_data"] = $this->model('readModel')->getEmptyChatUser();
+            $data["chatuser"] = $data["chatuser_data"]["empty"];
+            $data["chatuser_template"] = $data["chatuser_data"]["template"];
+
+            $values["unique_id"] = $user_id;
+            $values["role"] = 0;
+
+            // $values["outgoing_msg_id"] = $outgoingId;
+            // $values["incoming_msg_id"] = $incomingId;
+            // $values["msg"] = $message;
+
+            // $this->model('createModel')->insert_db("messages", $values, $data["message_template"]);
+            $this->model('createModel')->insert_db("chat_users", $values, $data["chatuser_template"]);
+        }
+
         $data["user"] = $this->model('readModel')->getOne("user", $id);
 
         $this->view->render('student/counselor/chat', $data);
@@ -135,6 +153,7 @@ class CounselorView extends Controller
         $user_id = $_SESSION["user_id"];
         $outgoing_id = $user_id;
         $incoming_id = $id;
+
 
         $data["user"] = $this->model('readModel')->getOne("user", $id);
         $messages = $this->model('readModel')->getAllChatMessagesById($outgoing_id, $incoming_id);
@@ -219,6 +238,10 @@ class CounselorView extends Controller
         $message = $_POST['message'];
         $message = $this->model('readModel')->encrypt($message);
 
+        // print_r($message );
+        // print_r($incomingId );
+        // die();
+
         $data["message_template"] = $this->model('readModel')->getEmptyMessage();
         $data["message"] = $data["message_template"]["empty"];
         $data["message_template"] = $data["message_template"]["template"];
@@ -228,7 +251,7 @@ class CounselorView extends Controller
             $values["incoming_msg_id"] = $incomingId;
             $values["msg"] = $message;
 
-            // print_r($values);
+            print_r($values);
 
             $this->validate_template($values, $data["message_template"]);
             // print_r($this->validate_template($values, $data["message_template"]));
