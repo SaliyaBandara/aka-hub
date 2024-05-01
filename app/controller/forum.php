@@ -34,7 +34,7 @@ class Forum extends Controller
         $this->requireLogin();
 
         $data = [
-            'title' => 'Elections',
+            'title' => 'Public Forum',
             'message' => 'Welcome to Aka Hub!'
         ];
 
@@ -83,6 +83,11 @@ class Forum extends Controller
     public function add_edit($id = 0, $action = "create")
     {
         $this->requireLogin();
+
+        if($_SESSION["user_role"] == 1 || $_SESSION["user_role"] == 3)
+            $this->redirect();
+
+
         if ($id != 0) {
             $post = $this->model('readModel')->getOne("forum_posts", $id);
             // check if valid post and user is the owner
@@ -117,7 +122,7 @@ class Forum extends Controller
                 die(json_encode(array("status" => "200", "desc" => "Post Updated Successfully", "redirect" => "/forum/view/$id")));
             }
 
-            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing election")));
+            die(json_encode(array("status" => "400", "desc" => "Error while " . $action . "ing post")));
         }
 
         $data["id"] = $id;
@@ -178,18 +183,18 @@ class Forum extends Controller
             $values["parent_id"] = $values["parent_id"] ?? null;
             $values["content"] = $values["content"] ?? "";
 
-            if($values["parent_id"] == 0)
+            if ($values["parent_id"] == 0)
                 $values["parent_id"] = null;
 
-            
+
             $this->validate_template($values, $data["comment_template"]);
             $result = $this->model('createModel')->insert_db("forum_comments", $values, $data["comment_template"]);
-            if ($result) 
+            if ($result)
                 die(json_encode(array("status" => "200", "desc" => "Comment Added to the Post Successfully", "id" => $result)));
-            
+
             die(json_encode(array("status" => "400", "desc" => "Error while adding comment")));
         }
-        
+
         die(json_encode(array("status" => "400", "desc" => "Error while adding comment")));
     }
 }
