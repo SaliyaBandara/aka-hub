@@ -507,10 +507,9 @@ class readModel extends Model
             // TODO: get counsellor reservations as well
             // reservation_requests status == 1
 
-            
+
         } else if ($role == "admin") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
-
         }
 
         if (count($events) > 0) {
@@ -823,7 +822,7 @@ class readModel extends Model
                 INNER JOIN user u ON cu.unique_id = u.id 
                 WHERE cu.role = ?";
 
-        $result = $this->db_handle->runQuery($sql, "i", [5]); //change 5 to 0
+        $result = $this->db_handle->runQuery($sql, "i", [0]); //change 5 to 0
 
         if (!empty($result))
             return $result;
@@ -884,9 +883,19 @@ class readModel extends Model
         OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         ORDER BY msg_id
         ";
+
         $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id, $incoming_id, $incoming_id, $outgoing_id]);
-        if (count($result) > 0)
+        if (count($result) > 0) {
+
+            // for each message decrypt msg
+            foreach ($result as $key => $message) {
+                // check if base64 encoded message
+                if (base64_encode(base64_decode($message['msg'], true)) === $message['msg'])
+                    $result[$key]['msg'] = $this->decrypt($result[$key]['msg']);
+            }
+
             return $result;
+        }
 
         return "$outgoing_id $incoming_id";
 
@@ -1569,7 +1578,7 @@ class readModel extends Model
         return false;
     }
 
-    
+
 
     // public function getAllEvents($table)
     // {
@@ -2151,7 +2160,8 @@ class readModel extends Model
     //     FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE
     //   );    
 
-    public function getEmptyCourseMaterialForAdmin(){
+    public function getEmptyCourseMaterialForAdmin()
+    {
         $empty = [
             "course_id" => "",
             "video_links" => "",

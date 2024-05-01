@@ -273,7 +273,7 @@ $sidebar = new Sidebar("existingCounselors");
                 var user_id = button.getAttribute('user-id');
                 console.log(user_id);
                 var xhr = new XMLHttpRequest();
-                xhr.open('GET', BASE_URL + '/counselorView/chatWithCounselor/' + user_id, true);
+                xhr.open('GET', BASE_URL + '/counselorView/chatWigetChatHTMLthCounselor/' + user_id, true);
                 //xhr.open('GET', BASE_URL + '/counselorView/chatMessages/' + user_id, true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {

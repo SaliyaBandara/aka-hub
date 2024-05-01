@@ -22,7 +22,7 @@ class counselorReservations extends Controller
         $this->view->render('counselor/Reservations/index', $data);
     }
 
-    public function sendEmail($id=0)
+    public function loadEmailPopUp($id=0)
     {
         $this->requireLogin();
         if (($_SESSION["user_role"] != 5)){
@@ -30,12 +30,8 @@ class counselorReservations extends Controller
             $status = "401";
             $this->model("createModel")->createLogEntry($action, $status);
             $this->redirect();
-
-        // print_r($id); 
-        // die();   
-     
         }
-      
+
         if ($id != 0) {
             $student_id = $this->model('readModel')->getStudentIdByReservation($id);
             $data["user"] = $this->model('readModel')->getOne("user", $student_id);
@@ -44,6 +40,32 @@ class counselorReservations extends Controller
         }
 
         $this->view->render('counselor/Reservations/custom_email_popup', $data); 
+    }
+
+    public function sendEmail()
+    {
+
+        $message = $_POST["message"];
+        $reservation_id = $_POST["id"];
+
+        if ($message != "") {
+            die(json_encode(["status" => 200, "desc" => "Email Sent"]));
+        } else {
+            die(json_encode(["status" => 400, "desc" => "Error Declining Reservation."]));
+        }
+    
+        $counselor_id = $_SESSION["user_id"];
+        
+        $data["reservationRequest"] = $this->model('readModel')->getOneReservationRequest($counselor_id, $reservation_id); 
+        $user_id = $data["reservationRequest"]["student_id"];
+        // print_r($_POST['id']);
+        // print_r($message);
+        // die;
+
+        $full_message = "Unfortunately your counselor is not available for your Booked reservation. Please book another timeslot.<br/><br/>";
+        $full_message = $full_message . $message;
+        $link = "/counselorView/bookReservation/$counselor_id";
+        $this->model('createModel')->notification(7, $counselor_id, $user_id, "Counsellor Unavailable for Reservation", $message, 0, $link);
     }
 
     public function completedReservation($id)

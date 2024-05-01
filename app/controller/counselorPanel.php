@@ -16,6 +16,16 @@ class CounselorPanel extends Controller
             'message' => 'Welcome to Aka Hub!'
         ];
 
+        $data["count_total_users"] = $this->model('readModel')->getCountAllUsers();
+        $data["count_role_users"] = $this->model('readModel')->getCountRoleUsers();
+        $data["count_new_users"] = $this->model('readModel')->getCountNewUsers();
+        $data["chartOne"] = $this->model('readModel')->getChartOne();
+        $data["chartTwo"] = $this->model('readModel')->getChartTwo();
+        $data["chartThree"] = $this->model('readModel')->getChartThree();
+        $data["chartFour"] = $this->model('readModel')->getChartFour();
+        $data["chartFive"] = $this->model('readModel')->getChartFive();
+
+
         $this->view->render('counselor/counselorpanel/index', $data);
     }
 }
