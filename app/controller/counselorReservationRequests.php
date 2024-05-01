@@ -19,7 +19,7 @@ class counselorReservationRequests extends Controller
         $this->view->render('counselor/reservationRequests/index', $data);
     }
 
-    public function view($id=0)
+    public function view($id = 0)
     {
         $this->requireLogin();
         if (($_SESSION["user_role"] != 5))
@@ -30,32 +30,32 @@ class counselorReservationRequests extends Controller
         $data["reservationRequest_template"] = $data["reservationRequest_data"]["template"];
 
         $counselor_id = $_SESSION["user_id"];
-     
+
         if ($id != 0) {
             $data["reservationRequest"] = $this->model('readModel')->getOneReservationRequest($counselor_id, $id);
             if (!$data["reservationRequest"])
                 $this->redirect();
         }
 
-        $this->view->render('counselor/reservationRequests/accept_decline_popup', $data); 
+        $this->view->render('counselor/reservationRequests/accept_decline_popup', $data);
     }
 
-    public function sendEmail($id=0)
+    public function sendEmail($id = 0)
     {
         $this->requireLogin();
         if (($_SESSION["user_role"] != 5))
             $this->redirect();
-      
+
         if ($id != 0) {
             $data["user"] = $this->model('readModel')->getOne("user", $id);
             // if (!$data["user"])
             //     $this->redirect();
         }
 
-        $this->view->render('counselor/reservationRequests/custom_email_popup', $data); 
+        $this->view->render('counselor/reservationRequests/custom_email_popup', $data);
     }
 
-    public function acceptReservation($id=0)
+    public function acceptReservation($id = 0)
     {
         $this->requireLogin();
         if (($_SESSION["user_role"] != 5))
@@ -66,7 +66,7 @@ class counselorReservationRequests extends Controller
         $data["reservation_template"] = $data["reservation_data"]["template"];
 
         $data["values"] = $this->model('readModel')->getOne("reservation_requests", $id);
-        if($data["values"] == null) 
+        if ($data["values"] == null)
             die(json_encode(["status" => 400, "desc" => "Time slot not found."]));
 
         // print_r($data["values"]);
@@ -86,13 +86,30 @@ class counselorReservationRequests extends Controller
         // die;
 
         if ($result) {
+
+            // get the counselor id
+            $counselor_id = $_SESSION["user_id"];
+            $user_id = $data["values"]["student_id"];
+            $timeslot_id = $data["values"]["timeslot_id"];
+            $timeslot = $this->model('readModel')->getOne("timeslots", $timeslot_id);
+
+            // format Wednesday, 10th March 2021, 10:00 AM
+            $slot_date = date("l, jS F Y", strtotime($timeslot["date"]));
+            $slot_start_time = date("h:i A", strtotime($timeslot["start_time"]));
+            $date_time = $slot_date . ", " . $slot_start_time;
+
+            $message = "Your counselor has accepted your reservation request for the date and time: $date_time. Make sure to be present at the specified time.";
+            $link = "/counselorView/viewBookings/$counselor_id";
+
+            // notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
+            $this->model('createModel')->notification(6, $counselor_id, $user_id, "Counsellor Reservation Accepted", $message, 0, $link);
             die(json_encode(["status" => 200, "desc" => "Reservation Accepted."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error accepting Reservation."]));
-        } 
+        }
     }
 
-    public function declineReservation($id=0)
+    public function declineReservation($id = 0)
     {
         $this->requireLogin();
         if (($_SESSION["user_role"] != 5))
@@ -103,7 +120,7 @@ class counselorReservationRequests extends Controller
         $data["reservation_template"] = $data["reservation_data"]["template"];
 
         $data["values"] = $this->model('readModel')->getOne("reservation_requests", $id);
-        if($data["values"] == null) 
+        if ($data["values"] == null)
             die(json_encode(["status" => 400, "desc" => "Time slot not found."]));
 
         // print_r($data["values"]);
@@ -126,7 +143,6 @@ class counselorReservationRequests extends Controller
             die(json_encode(["status" => 200, "desc" => "Reservation Declined."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error Declining Reservation."]));
-        } 
+        }
     }
-
 }

@@ -256,13 +256,17 @@ class readModel extends Model
                     [$post['user_id']]
                 )[0];
 
+                // get the number of comments for this post
+                $comments = $this->db_handle->runQuery("SELECT COUNT(*) as count FROM forum_comments WHERE post_id = ?", "i", [$post['id']])[0]['count'];
+
                 $posts[$key] = [
                     "id" => $post['id'],
                     "title" => $post['title'],
                     "content" => $post['content'],
                     "image" => $post['cover_img'],
                     "created_at" => $post['created_at'],
-                    "user" => $user
+                    "user" => $user,
+                    "num_comments" => $comments
                 ];
             }
 
@@ -312,8 +316,13 @@ class readModel extends Model
                 [$id]
             );
 
+            $num_comments = 0;
+            if (count($comments) > 0)
+                $num_comments = count($comments);
+
             // recursively build threaded comments
-            function buildThreadedComments($comments, $parent_id = null) {
+            function buildThreadedComments($comments, $parent_id = null)
+            {
                 $threaded = [];
                 foreach ($comments as $comment) {
                     if ($comment['parent_id'] == $parent_id) {
@@ -340,7 +349,8 @@ class readModel extends Model
                 "created_at" => $post['created_at'],
                 "user" => $user,
                 // "comments" => $comments,
-                "comments" => $threaded_comments
+                "comments" => $threaded_comments,
+                "num_comments" => $num_comments
             ];
 
             return $post;
@@ -423,8 +433,12 @@ class readModel extends Model
         } else if ($role == "counselor") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE user_id = ? AND is_broadcast = ?", "ii", [$user_id, 0]);
             // TODO: get counsellor reservations as well
+            // reservation_requests status == 1
+
+            
         } else if ($role == "admin") {
             $events = $this->db_handle->runQuery("SELECT * FROM calendar WHERE ?", "i", [1]);
+
         }
 
         if (count($events) > 0) {
