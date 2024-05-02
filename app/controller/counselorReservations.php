@@ -33,7 +33,7 @@ class counselorReservations extends Controller
         }
 
         if ($id != 0) {
-            $student_id = $this->model('readModel')->getStudentIdByReservation($id);
+            $student_id = $this->model('readModel')->getStudentIdByReservation($id)[0]["student_id"];
             $data["user"] = $this->model('readModel')->getOne("user", $student_id);
             if (!$data["user"])
                 $this->redirect();
