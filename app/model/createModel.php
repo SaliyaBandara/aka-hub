@@ -333,7 +333,7 @@ class createModel extends Model
             ], $template);
 
             $this->sendNotificationEmail($user_id, $title, $message, $link);
-            return true;    
+            return true;
         }
 
         // exam
@@ -486,18 +486,14 @@ class createModel extends Model
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
         $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
 
-
-
-
+        
         $lastIP = $this->getLastIP();
-        $unauthorizedCount=$this->getUnauthorizedCount();
-
-        if ((($status == 401) || ($status == "401")) && ($ip == $lastIP)) {
-            $this->update_system_variable("unauthorizedCount", ($unauthorizedCount + 1));
+        $unauthorizedCount = (int)$this->getUnauthorizedCount();
+        if ((($status === 401) || ($status === "401")) && ($ip === $lastIP)) {
+            $unauthorizedCount += 1;
         } else {
-            $this->update_system_variable("unauthorizedCount", 0);
+            $unauthorizedCount = 0;
         }
-        $unauthorizedCount=$this->getUnauthorizedCount();
         if ($unauthorizedCount > 10) {
             if (isset($_SESSION["user_id"])) {
                 $this->restrictUser($_SESSION["user_id"]);
@@ -509,14 +505,12 @@ class createModel extends Model
                 $this->sendNotificationEmail($tryEmail, "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
                 $this->notifyAdmins("User Account Restricted", "User account with email " . $tryEmail . " has been restricted due to series of unauthorized attempts.");
             }
-            $this->update_system_variable("unauthorizedCount", 0);
+            $unauthorizedCount = 0;
         }
-        $this->update_system_variable("last_ip", $ip);
+        $this->update_system_variable("unauthorizedCount", (string)$unauthorizedCount);
+        $this->update_system_variable("lastUnauthorizedIP", $ip);
 
 
-
-
-        
         file_put_contents("userlog.txt", $contents);
     }
 
