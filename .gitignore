@@ -17,6 +17,10 @@ gtihub_private.pub
 /hidden
 /vendor
 
+# ignore libraries
+/app/libraries/dompdf
+/public/dompdf
+
 secret.php
 /PHPMailer-master
 
