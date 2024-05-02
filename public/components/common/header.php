@@ -7,10 +7,10 @@ class Header
     {
 
         $pages = [
-            // 'home' => 'Home',
-            // 'profile' => 'Profile',
-            // 'about' => 'About Us',
-            // 'contact' => 'Contact Us',
+            'home' => 'Home',
+            'profile' => 'Profile',
+            'about' => 'About Us',
+            'contact' => 'Contact Us',
         ];
 
 ?>
