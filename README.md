@@ -43,3 +43,5 @@ Student Collaboration and Connection Platform
 - Python
 - MySQL
 - Apache | Nginx
+
+![Project Screenshot](public/assets/img/logo/readme/home-2.jpg)

@@ -14,7 +14,6 @@ gtihub_private.pub
 /public/assets/user_uploads/img/*
 /public/assets/user_uploads/pdf/*
 /public/userlog.txt
-/public/userlog.txt
 /hidden
 /vendor
 
