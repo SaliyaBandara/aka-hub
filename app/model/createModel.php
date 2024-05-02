@@ -486,7 +486,7 @@ class createModel extends Model
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
         $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
 
-        
+
         $lastIP = $this->getLastIP();
         $unauthorizedCount = (int)$this->getUnauthorizedCount();
         if ((($status === 401) || ($status === "401")) && ($ip === $lastIP)) {
@@ -497,12 +497,13 @@ class createModel extends Model
         if ($unauthorizedCount > 10) {
             if (isset($_SESSION["user_id"])) {
                 $this->restrictUser($_SESSION["user_id"]);
-                $this->sendNotificationEmail($_SESSION["user_id"], "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
+                $this->sendEmail($_SESSION["user_email"], $_SESSION["name"], "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
                 $this->notifyAdmins("User Account Restricted", "User account with email " . $_SESSION["user_email"] . " has been restricted due to series of unauthorized attempts.");
                 session_destroy();
             } else {
                 $this->restrictUserByEMail($tryEmail);
-                $this->sendNotificationEmail($tryEmail, "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
+                $tryName = $this->getNamesByEmail($tryEmail);
+                $this->sendEmail($tryEmail, $tryName, "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
                 $this->notifyAdmins("User Account Restricted", "User account with email " . $tryEmail . " has been restricted due to series of unauthorized attempts.");
             }
             $unauthorizedCount = 0;
@@ -516,12 +517,11 @@ class createModel extends Model
 
     public function notifyAdmins($subject, $message)
     {
-        $superAdmins = $this->getAllByColumn("user", "role", "3", "i");
-        $admins = $this->getAllByColumn("user", "role", "1", "i");
-
+        $superAdmins = $this->getAllUserWithRole(3);
+        $admins = $this->getAllUserWithRole(1);
         $recipients = array_merge($superAdmins, $admins);
         foreach ($recipients as $recipient) {
-            $this->sendNotificationEmail($recipient['id'], $subject, $message);
+            $this->sendEmail($recipient['email'], $recipient["name"], $subject, $message);
         }
     }
 
