@@ -65,10 +65,14 @@ class counselorReservationRequests extends Controller
 
         if ($id != 0) {
             $data["reservationRequest"] = $this->model('readModel')->getOneReservationRequest($counselor_id, $id);
-            $student_id = $this->model('readModel')->getStudentIdByReservation($id);
+
+            $student_id = $this->model('readModel')->getStudentIdByReservation($id)[0]["student_id"];
+            // print_r($student_id);
             $data["user"] = $this->model('readModel')->getOne("user", $student_id);
-            if (!$data["user"])
-                $this->redirect();
+            // print_r($data["user"]);
+            // die();
+            // if (!$data["user"])
+            //     $this->redirect();
         }
         // print_r($data["reservationRequest"]);
         // die();
@@ -140,22 +144,22 @@ class counselorReservationRequests extends Controller
             $task = "Counselor accepted a reservation.";
             $this->model("createModel")->createLogEntry($task, "200");
 
-            // get the counselor id
-            $counselor_id = $_SESSION["user_id"];
-            $user_id = $data["values"]["student_id"];
-            $timeslot_id = $data["values"]["timeslot_id"];
-            $timeslot = $this->model('readModel')->getOne("timeslots", $timeslot_id);
+            // // get the counselor id
+            // $counselor_id = $_SESSION["user_id"];
+            // $user_id = $data["values"]["student_id"];
+            // $timeslot_id = $data["values"]["timeslot_id"];
+            // $timeslot = $this->model('readModel')->getOne("timeslots", $timeslot_id);
 
-            // format Wednesday, 10th March 2021, 10:00 AM
-            $slot_date = date("l, jS F Y", strtotime($timeslot["date"]));
-            $slot_start_time = date("h:i A", strtotime($timeslot["start_time"]));
-            $date_time = $slot_date . ", " . $slot_start_time;
+            // // format Wednesday, 10th March 2021, 10:00 AM
+            // $slot_date = date("l, jS F Y", strtotime($timeslot["date"]));
+            // $slot_start_time = date("h:i A", strtotime($timeslot["start_time"]));
+            // $date_time = $slot_date . ", " . $slot_start_time;
 
-            $message = "Your counselor has accepted your reservation request for the date and time: $date_time. Make sure to be present at the specified time.";
-            $link = "/counselorView/viewBookings/$counselor_id";
+            // $message = "Your counselor has accepted your reservation request for the date and time: $date_time. Make sure to be present at the specified time.";
+            // $link = "/counselorView/viewBookings/$counselor_id";
 
-            // notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
-            $this->model('createModel')->notification(6, $counselor_id, $user_id, "Counsellor Reservation Accepted", $message, 0, $link);
+            // // notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
+            // $this->model('createModel')->notification(6, $counselor_id, $user_id, "Counsellor Reservation Accepted", $message, 0, $link);
             die(json_encode(["status" => 200, "desc" => "Reservation Accepted."]));
         } else {
             die(json_encode(["status" => 400, "desc" => "Error accepting Reservation."]));

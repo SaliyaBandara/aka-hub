@@ -228,9 +228,9 @@ class CounselorView extends Controller
     public function insertChatMessages($id)
     {
         $this->requireLogin();
-        if ($_SESSION["user_role"] != 5) {
-            $this->redirect();
-        }
+        // if ($_SESSION["user_role"] != 5) {
+        //     $this->redirect();
+        // }
 
         $outgoingId = $_SESSION["user_id"];
         $incomingId = $id;
@@ -261,7 +261,7 @@ class CounselorView extends Controller
 
         }
         // Send a response if needed
-        // echo json_encode(["success" => true]);
+        echo json_encode(["success" => true]);
         // Don't forget to exit to prevent further execution
         // exit();
     }
