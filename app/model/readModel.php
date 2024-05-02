@@ -759,7 +759,8 @@ class readModel extends Model
                         "module" => "Counselling",
                         "description" => "Counselling session with " . $reservation['name'],
                         "date" => $reservation['date'] . " " . $reservation['start_time'],
-                        "type" => 4
+                        "type" => 4,
+                        "location" => ""
                     ];
                 }
             }
@@ -775,6 +776,7 @@ class readModel extends Model
                     "module" => $event['module'],
                     "date" => $event['date'],
                     "type" => $event['type'],
+                    "location" => $event['location']
                 ];
             }
         }
@@ -2859,7 +2861,8 @@ class readModel extends Model
             "module" => "",
             "description" => "",
             "date" => "",
-            "type" => ""
+            "type" => "",
+            "location" => ""
         ];
 
         $template = [
@@ -2907,6 +2910,11 @@ class readModel extends Model
                 "type" => "number",
                 "validation" => "required",
                 "skip" => true
+            ],
+            "location" => [
+                "label" => "Event Location (Optional)",
+                "type" => "text",
+                "validation" => "",
             ],
         ];
 
