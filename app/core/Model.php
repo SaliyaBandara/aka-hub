@@ -236,18 +236,18 @@ class Model extends Database
     {
         $query = "UPDATE system_variables SET value = ? WHERE name = ?";
         $values = [$value, $name];
-        $valueTypes = ["s", "s"];
-        $valueTypesString = implode('', $valueTypes);
+        $paramTypes = "ss";
 
-        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        $result = $this->db_handle->update($query, $paramTypes, $values);
         return $result;
     }
+
 
     public function getLastIP()
     {
         $table = "system_variables";
         $columns = ["name"];
-        $values = ["last_ip"];
+        $values = ["lastUnauthorizedIP"];
         $types = ["s"];
 
         $query = "SELECT value FROM $table WHERE ";
@@ -256,8 +256,7 @@ class Model extends Database
 
         $result = $this->db_handle->runQuery($query, implode("", $types), $values);
         if (count($result) > 0) {
-            // print_r($result[0]);
-            return $result[0];
+            return $result[0]['value'];
         }
         return false;
     }
