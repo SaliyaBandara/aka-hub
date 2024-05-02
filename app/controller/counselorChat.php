@@ -193,6 +193,7 @@ class CounselorChat extends Controller
         // die();
 
         $message = $_POST['message'];
+        $message = $this->model('readModel')->encrypt($message);
 
         // print_r($message );
         // print_r($incomingId );
@@ -219,10 +220,6 @@ class CounselorChat extends Controller
             $this->model('createModel')->insert_db("messages", $values, $data["message_template"]);
 
         }
-        // Send a response if needed
-        // echo json_encode(["success" => true]);
-        // Don't forget to exit to prevent further execution
-        // exit();
     }
 
 

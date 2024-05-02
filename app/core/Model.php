@@ -183,6 +183,19 @@ class Model extends Database
         return false;
     }
 
+    public function getAllUserWithRole($r)
+    {
+        $query = "SELECT * FROM user WHERE ";
+        $query .= implode(" = ? AND ", ["role"]);
+        $query .= " = ?";
+        $result = $this->db_handle->runQuery($query, implode("", ["s"]), [$r]);
+
+        if ($result !== false) {
+            return $result;
+        }
+        return false;
+    }
+
 
     public function encrypt($data)
     {
@@ -214,7 +227,7 @@ class Model extends Database
     {
         $query = "UPDATE user SET status = 0 WHERE id = ?";
         $values = [$id];
-        $valueTypes = ["i"];
+        $valueTypes = ["s"];
         $valueTypesString = implode('', $valueTypes);
 
         $result = $this->db_handle->update($query, $valueTypesString, $values);
@@ -225,10 +238,76 @@ class Model extends Database
     {
         $query = "UPDATE user SET status = 0 WHERE email = ?";
         $values = [$email];
-        $valueTypes = ["i"];
+        $valueTypes = ["s"];
         $valueTypesString = implode('', $valueTypes);
 
         $result = $this->db_handle->update($query, $valueTypesString, $values);
         return $result;
+    }
+
+    public function update_system_variable($name, $value)
+    {
+        $query = "UPDATE system_variables SET value = ? WHERE name = ?";
+        $values = [$value, $name];
+        $paramTypes = "ss";
+
+        $result = $this->db_handle->update($query, $paramTypes, $values);
+        return $result;
+    }
+
+
+    public function getLastIP()
+    {
+        $table = "system_variables";
+        $columns = ["name"];
+        $values = ["lastUnauthorizedIP"];
+        $types = ["s"];
+
+        $query = "SELECT value FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0) {
+            return $result[0]['value'];
+        }
+        return false;
+    }
+
+    public function getUnauthorizedCount()
+    {
+        $table = "system_variables";
+        $columns = ["name"];
+        $values = ["unauthorizedCount"];
+        $types = ["s"];
+
+        $query = "SELECT value FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0) {
+            // print_r($result[0]["value"]);
+            return $result[0]["value"];
+        }
+        return false;
+    }
+
+    public function getNamesByEmail($email)
+    {
+        $table = "user";
+        $columns = ["email"];
+        $values = [$email];
+        $types = ["s"];
+
+        $query = "SELECT name FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0) {
+            return $result[0]["name"];
+        }
+        return false;
     }
 }

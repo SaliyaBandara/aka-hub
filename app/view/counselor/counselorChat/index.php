@@ -16,11 +16,11 @@ $calendar = new CalendarComponent();
             <div class="main-container">
                 <div class="wrapper-user">
                     <section class="users">
-                        <div class="search">
+                        <!-- <div class="search">
                             <span class="text">Select an user to start chat</span>
                             <input type="text" placeholder="Enter name to search...">
                             <button><i class='bx bx-search-alt-2'></i></button>
-                        </div>
+                        </div> -->
                         <div class="users-list" id="userList">
 
                         </div>
@@ -606,64 +606,26 @@ $calendar = new CalendarComponent();
 </script>
 <script>
     const searchBar = document.querySelector(".users .search input"),
-    searchBtn = document.querySelector(".users .search button"),
-    usersList = document.querySelector(".users-list"),
-    chatArea = document.querySelector('.chat-area'),
-    form = document.querySelector('.typing-area'),
-    chatBox = document.querySelector('.chat-box');
-    chatHeader = document.querySelector('.header');
+        searchBtn = document.querySelector(".users .search button"),
+        usersList = document.querySelector(".users-list"),
+        chatArea = document.querySelector('.chat-area'),
+        form = document.querySelector('.typing-area'),
+        chatBox = document.querySelector('.chat-box');
+        chatHeader = document.querySelector('.header');
 
-    inputField = form.querySelector('.input-field'),
-    sendBtn =  form.querySelector('button'),
+        inputField = form.querySelector('.input-field'),
+        sendBtn = form.querySelector('button'),
 
-    // searchBtn.onclick = ()=>{
-    //     searchBar.classList.toggle("active");
-    //     searchBar.focus();
-    //     searchBtn.classList.toggle("active");
-    //     searchBar.value = "";
-    // }
-    
-    // sendBtn.onclick = () => {
-    //     // Strating of the Ajax part
-    //     let xhr = new XMLHttpRequest(); //Creating XML object
-    //     xhr.open("POST", "counselorChat/insertChatMessages/", true);
-    //     xhr.onload = ()=>{
-    //         if(xhr.readyState === XMLHttpRequest.DONE){
-    //             if(xhr.status === 200){
-    //                 inputField.value = ""; //once message inserted into database then leave the input field blank
-    //                 scrollToBottom();
-    //             }
-    //         }
-    //     }    
-    //     //we have to send the form data through ajax to php
-    //     let formData = new FormData(form); //Creating new formData object
-    //     xhr.send(formData); //Sending the form data to php
-    // }
-
-    searchBar.onkeyup = ()=>{
-        let searchTerm = searchBar.value;
-        if(searchTerm != ""){
-            searchBar.classList.add("active");
-        }else{
-            searchBar.classList.remove("active");
-        }
-        let xhr = new XMLHttpRequest(); //Creating XML object
-        xhr.open("POST", "php/search.php", true);
-        xhr.onload = ()=>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if(xhr.status === 200){
-                    let data = xhr.response;
-                    usersList.innerHTML = data;
-                }
-            }
-        }
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("searchTerm=" + searchTerm);
+    chatBox.onmouseenter = ()=>{
+        chatBox.classList.add("active");
     }
+    chatBox.onmouseleave = ()=>{
+        chatBox.classList.remove("active");
+    }
+
 
     setInterval(() => {
         // console.log("hello world!");
-        // Strating of the Ajax part
         let xhr = new XMLHttpRequest(); //Creating XML object
         xhr.open("GET", "counselorChat/chat_users", true);
         xhr.onload = () => {
@@ -678,11 +640,16 @@ $calendar = new CalendarComponent();
             }
         }
         xhr.send();
-    }, 500); //this function will run frequently after 500ms
+    }, 500); 
 
+    let user_id = null;
 
-     function loadChatMessages(userId) {
+    function loadChatMessages(userId) {
         setInterval(() => {
+
+            if (user_id != null)
+                userId = user_id
+
             let xhr = new XMLHttpRequest();
             xhr.open("GET", `counselorChat/chat_messages/${userId}`, true);
             xhr.onload = () => {
@@ -703,18 +670,14 @@ $calendar = new CalendarComponent();
         }, 500);
     }
 
-    function loadChatHeader(userId){
+    function loadChatHeader(userId) {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", `counselorChat/chat_header/${userId}`, true);
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     let data = xhr.response;
-                    // Populate the chat-box with the retrieved messages
-                    // console.log(data);
                     chatHeader.innerHTML = data;
-                    // $('#reservations').html(data); // Update the content of .feedContainer
-                    // Scroll to the bottom of the chat-box
                     scrollToBottom();
                 } else {
                     console.error("Error fetching chat messages: " + xhr.status);
@@ -724,46 +687,27 @@ $calendar = new CalendarComponent();
         xhr.send();
     }
 
-    let selectedUserId = null;
-
-    setInterval(() => {
-        document.querySelectorAll(".users-list .user-card").forEach(user => {
-
-            console.log(user);
-            user.addEventListener('click', function(event) {
-                // user.on("click", ".decline-request", function(event) {    
-                event.preventDefault();
-                selectedUserId = user.getAttribute('userid');
-                // let userId = $(this).attr("userId");
-                console.log("Selected user ID: " + selectedUserId);
-                // Load chat messages for the selected user
-                loadChatMessages(selectedUserId);
-
-                $(".chat-area").css("opacity", "1");
-            });
-
-        });
-    }, 600);
-
-
-    // Function to periodically update chat messages
-    function updateChatMessages() {
-        let selectedUserId = document.querySelector('.users-list a.active').getAttribute('userid');
+  
+    $(document).on("click", ".users-list .user-card", function() {
+        selectedUserId = $(this).attr("userid");
+        console.log("Selected user ID: " + selectedUserId);
+        // Load chat messages for the selected user
         loadChatMessages(selectedUserId);
-    }
-
-    setInterval(updateChatMessages, 500);
+        user_id = selectedUserId;
+        $(".chat-area").css("opacity", "1");
+    });
 
 
     function sendChatMessage(userId, message) {
         let xhr = new XMLHttpRequest();
+        console.log(message);
+        console.log(userId);
         xhr.open("POST", `counselorChat/insertChatMessages/${userId}`, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     console.log("Message sent successfully");
-                    updateChatMessages(); 
                 } else {
                     console.error("Error sending message: " + xhr.status);
                 }
@@ -784,7 +728,7 @@ $calendar = new CalendarComponent();
         }
     });
 
-    function scrollToBottom(){
+    function scrollToBottom() {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>

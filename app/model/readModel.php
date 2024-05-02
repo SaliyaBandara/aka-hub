@@ -759,7 +759,8 @@ class readModel extends Model
                         "module" => "Counselling",
                         "description" => "Counselling session with " . $reservation['name'],
                         "date" => $reservation['date'] . " " . $reservation['start_time'],
-                        "type" => 4
+                        "type" => 4,
+                        "location" => ""
                     ];
                 }
             }
@@ -775,6 +776,7 @@ class readModel extends Model
                     "module" => $event['module'],
                     "date" => $event['date'],
                     "type" => $event['type'],
+                    "location" => $event['location']
                 ];
             }
         }
@@ -1168,7 +1170,7 @@ class readModel extends Model
                 INNER JOIN user u ON cu.unique_id = u.id 
                 WHERE cu.role = ?";
 
-        $result = $this->db_handle->runQuery($sql, "i", [5]); //change 5 to 0
+        $result = $this->db_handle->runQuery($sql, "i", [0]); //change 5 to 0
 
         if (!empty($result))
             return $result;
@@ -1229,9 +1231,19 @@ class readModel extends Model
         OR (outgoing_msg_id = ? AND incoming_msg_id = ?) 
         ORDER BY msg_id
         ";
+
         $result = $this->db_handle->runQuery($sql, "iiii", [$outgoing_id, $incoming_id, $incoming_id, $outgoing_id]);
-        if (count($result) > 0)
+        if (count($result) > 0) {
+
+            // for each message decrypt msg
+            foreach ($result as $key => $message) {
+                // check if base64 encoded message
+                if (base64_encode(base64_decode($message['msg'], true)) === $message['msg'])
+                    $result[$key]['msg'] = $this->decrypt($result[$key]['msg']);
+            }
+
             return $result;
+        }
 
         return "$outgoing_id $incoming_id";
 
@@ -1410,6 +1422,32 @@ class readModel extends Model
         return false;
     }
 
+    public function getCountAcceptedReservations()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as accepted_reservations FROM reservation_requests WHERE status = ?", "i", [1]);
+        if ($result !== null && isset($result[0]['accepted_reservations'])) {
+            return $result[0]['accepted_reservations'];
+        }
+        return false;
+    }
+
+    public function getCountFreeTimeSlots()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as free_timeslots FROM timeslots WHERE status = ? OR status = ? ", "ii", [0,1]);
+        if ($result !== null && isset($result[0]['free_timeslots'])) {
+            return $result[0]['free_timeslots'];
+        }
+        return false;
+    }
+
+    public function getCountReservationRequests()
+    {
+        $result = $this->db_handle->runQuery("SELECT COUNT(*) as requests FROM reservation_requests WHERE status = ?", "i", [0]);
+        if ($result !== null && isset($result[0]['requests'])) {
+            return $result[0]['requests'];
+        }
+        return false;
+    }
 
 
     public function getCountRoleUsers()
@@ -1448,14 +1486,21 @@ class readModel extends Model
             $endOfMonth = strtotime('last day of', $timestamp);
             $startDate = date('Y-m-d', $startOfMonth);
             $endDate = date('Y-m-d', $endOfMonth);
-            $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM user WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            // $result = $this->db_handle->runQuery("SELECT COUNT(*) as user_count FROM reservation_requests WHERE created_at >= ? AND created_at <= ?", "ss", [$startDate, $endDate]);
+            $sql = "SELECT t.id as timeslot_id, COUNT(r.id) as reservation_count
+                    FROM timeslots t
+                    LEFT JOIN reservation_requests r ON r.timeslot_id = t.id
+                    WHERE t.date >= ? AND t.date <= ?";
+            
+            $result = $this->db_handle->runQuery($sql, "ss", [$startDate, $endDate]);
+
             if ($result === false) {
                 error_log("Error executing SQL query for period: $startDate to $endDate");
                 continue;
             }
             if (count($result) > 0) {
-                $userCount = (int) $result[0]['user_count'];
-                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $userCount);
+                $reservationCount = (int) $result[0]['reservation_count'];
+                $dataPoints[] = array("x" => $timestamp * 1000, "y" => $reservationCount);
             } else {
                 error_log("No user creation records found for period: $startDate to $endDate");
             }
@@ -1717,8 +1762,7 @@ class readModel extends Model
 
         return false;
     }
-
-
+    
     public function getOneAdmin($id)
     {
         $sql = "SELECT * from user u , administrator a where u.id = a.id AND role = ? AND u.id = ?";
@@ -1821,10 +1865,10 @@ class readModel extends Model
             AND p.posted_by = u.id
             AND p.posted_by = cr.user_id
             AND cr.club_id = c.id
-            AND c.name LIKE ?
+            AND (c.name LIKE ? OR p.description LIKE ?)
             ORDER BY p.created_datetime DESC
         ";
-        $result = $this->db_handle->runQuery($sql, "s", ["%$searchValue%"]);
+        $result = $this->db_handle->runQuery($sql, "ss", ["%$searchValue%", "%$searchValue%"]);
         if (count($result) > 0)
             return $result;
 
@@ -2817,7 +2861,8 @@ class readModel extends Model
             "module" => "",
             "description" => "",
             "date" => "",
-            "type" => ""
+            "type" => "",
+            "location" => ""
         ];
 
         $template = [
@@ -2865,6 +2910,11 @@ class readModel extends Model
                 "type" => "number",
                 "validation" => "required",
                 "skip" => true
+            ],
+            "location" => [
+                "label" => "Event Location (Optional)",
+                "type" => "text",
+                "validation" => "",
             ],
         ];
 
@@ -3281,7 +3331,7 @@ class readModel extends Model
             "updated_datetime" => [
                 "label" => "Updated Date Time",
                 "type" => "datetime-local",
-                "validation" => "required",
+                "validation" => "",
                 "skip" => true
             ],
         ];
@@ -3586,8 +3636,8 @@ class readModel extends Model
             ],
             "recent_courses" => [
                 "label" => "Recent Courses",
-                "type" => "text",
-                "validation" => "required",
+                "type" => "array",
+                "validation" => "",
                 "skip" => true
             ]
 

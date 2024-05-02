@@ -11,19 +11,25 @@ $calendar = new CalendarComponent();
         <div class="left">
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        5 Accepted Reservations in this week
-                    </div>
+                    <?php if ($data["count_accepted_reservations"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_accepted_reservations"] ?> Total Accepted Reservations
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
+                    <?php if ($data["count_free_timeslots"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_free_timeslots"] ?> Free Time Slots
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        8 Total Requests in this week
-                    </div>
+                    <?php if ($data["count_requests"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_requests"] ?> Total Requests
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -32,12 +38,14 @@ $calendar = new CalendarComponent();
             <div class="fourGraphsContainor">
                 <div class="graphLineContainor">
                     <div class="graphContainor">
-                        <p class="mb-1"><b>User Registration For the System</b></p>
+                        <p class="mb-1"><b>Monthly Reservation Requests</b></p>
                         <div id="chartContainer1" style="height: 220px; width: 100%;"></div>
                     </div>
-                    <div class="graphContainor">
-                        <p class="mb-1"><b>Distribution of Users with Roles</b></p>
-                        <div id="chartContainer2" style="height: 220px; width: 100%;"></div>
+                </div>
+                <div class="graphLineContainor">
+                    <div class="graphContainorFive">
+                        <p class="mb-1"><b>Counselor Resevations</b></p>
+                        <div id="chartContainer5" style="height: 220px; width: 100%; padding:20px"></div>
                     </div>
                 </div>
             </div>
@@ -188,4 +196,55 @@ $calendar = new CalendarComponent();
 <?php $HTMLFooter = new HTMLFooter(); ?>
 <script>
     let BASE_URL = "<?= BASE_URL ?>";
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartOne"], JSON_NUMERIC_CHECK); ?>;
+        var chart1 = new CanvasJS.Chart("chartContainer1", {
+            backgroundColor: "transparent",
+            animationEnabled: true,
+            exportEnabled: true,
+            axisY: {
+                title: "Reservation Requests",
+            },
+            data: [{
+                type: "spline",
+                markerSize: 5,
+                xValueFormatString: "DD",
+                xValueType: "dateTime",
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart1.render();
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dataPoints = <?php echo json_encode($data["chartFive"], JSON_NUMERIC_CHECK); ?>;
+        var chart5 = new CanvasJS.Chart("chartContainer5", {
+            backgroundColor: "transparent",
+            animationEnabled: true,
+            exportEnabled: true,
+            theme: "light2",
+            subtitles: [{
+                backgroundColor: "#2eacd1",
+                fontSize: 16,
+                fontColor: "white",
+                padding: 5
+            }],
+            legend: {
+                fontFamily: "calibri",
+                fontSize: 14,
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 90,
+                dataPoints: dataPoints
+            }]
+        });
+
+        chart5.render();
+    });
 </script>

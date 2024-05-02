@@ -13,19 +13,25 @@ $calendar = new CalendarComponent();
         <div class="left">
             <div class="threeCardDiv">
                 <div class="cardTotalUsers">
-                    <div class="divUsersContainor">
-                        6 Received Requests in this Week
-                    </div>
+                    <?php if ($data["count_accepted_reservations"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_accepted_reservations"] ?> Total Accepted Reservations
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardActiveUsers">
-                    <div class="divUsersContainor">
-                        2 Free Time Slots in this week
-                    </div>
+                    <?php if ($data["count_free_timeslots"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_free_timeslots"] ?> Free Time Slots
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="cardNewUsers">
-                    <div class="divUsersContainor">
-                        2 Accepted Reservations in this Week
-                    </div>
+                    <?php if ($data["count_requests"] !== null) : ?>
+                        <div class="divUsersContainor">
+                            <?= $data["count_requests"] ?> Total Requests
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -499,7 +505,7 @@ $calendar = new CalendarComponent();
     $(document).on("click", ".decline-request", function(event) {
         event.preventDefault();
         let id = $(this).attr("data-id");
-        console.log(id);
+        // console.log(id);
 
         if (!confirm("Are you sure you want to Decline this Request?"))
             return;
@@ -527,12 +533,17 @@ $calendar = new CalendarComponent();
         });
     });
 
+    let id = 0;
+
     function loadPopupForm(reservationId) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', BASE_URL + '/counselorReservationRequests/sendEmail/' + reservationId, true);
+        // console.log("reservationId", reservationId);
+        xhr.open('GET', BASE_URL + '/counselorReservationRequests/emailPopup/' + reservationId, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = xhr.responseText;
+                // console.log("Hello",response);
+                id = reservationId;
                 // set opacity to default
                 document.getElementById('divone').style.opacity = 0;
                 //set divone form visibility to hidden
@@ -547,5 +558,39 @@ $calendar = new CalendarComponent();
         };
         xhr.send();
     }
+
+    $(document).on("click", ".send-email", function(event) {
+        event.preventDefault();
+        // console.log(id);
+        let message = $(".contact-textarea").val();
+        console.log(id);
+
+        $.ajax({
+            url: `${BASE_URL}/counselorReservationRequests/sendEmail`,
+            type: 'POST',
+            data: {
+                id: id,
+                message: message                
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 200) {
+                    // console.log("hello11", response);
+                    // Display success message
+                    alertUser("success", response['desc']);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    // console.log("hello2552", response.status);
+                    alertUser("warning", response['desc']);
+                }
+            },
+            error: function(ajaxContext) {
+                alertUser("danger", "Something Went Wrong");
+            }
+        });
+    });
+    
 </script>
 </div>

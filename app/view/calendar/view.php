@@ -84,9 +84,10 @@ $calendar = new CalendarComponent();
                                 <div class="event-title font-semibold mb-1"><i class="bx bxs-bookmarks me-0-5"></i>
                                     <?= $item["title"] ?></div>
                                 <div><i class="bx bx-time me-0-5"></i> <?= $date ?></div>
-                                <div><i class="bx bx-calendar me-0-5"></i> <?= $item["module"] ?></div>
-                                <div><i class="bx bxs-graduation me-0-5"></i> <?= $item["description"] ?></div>
+                                <div class="<?= $item["module"] == "" ? "d-none" : "" ?>"><i class="bx bx-calendar me-0-5"></i> <?= $item["module"] ?></div>
+                                <div class="<?= $item["description"] == "" ? "d-none" : "" ?>"><i class="bx bxs-graduation me-0-5"></i> <?= $item["description"] ?></div>
                                 <div><i class="bx bx-sitemap me-0-5"></i> <?= $type ?></div>
+                                <div class="<?= $item["location"] == "" ? "d-none" : "" ?>"><i class="bx bx-pin me-0-5"></i> <?= $item["location"] ?></div>
                             </div>
 
                         <?php

@@ -45,7 +45,7 @@ $calendar = new CalendarComponent();
                             $date = date_format($date, "l, d F, h:i A");
                         ?>
 
-                            <div class="event <?= $item["type"] == 1 ? 'academicEvent' : 'clubEvent' ?>">
+                            <div class="event <?= $item["type"] == 2 ? 'academicEvent' : 'clubEvent' ?>">
                                 <div class="event-title font-semibold mb-1"><i class="bx bxs-bookmarks me-0-5"></i>
                                     <?= $item["title"] ?></div>
                                 <div><i class="bx bx-time me-0-5"></i> <?= $date ?></div>

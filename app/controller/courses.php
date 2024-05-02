@@ -94,20 +94,20 @@ class Courses extends Controller
             foreach ($data["courses"] as $course) {
 
                 echo '
-                        <div href="" class="js-link todo_item flex align-center" data-link = '.$course["id"].'>
+                        <div href="" class="js-link todo_item flex align-center" data-id = '.$course["id"].'>
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
                                 </div>
                             </div>
-                            <div class="todo_item_text flex flex-column" data-id = "./courses/view">
+                            <div class="todo_item_text flex flex-column" data-id = "./courses/view/">
                                 <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
                                 <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
                                 <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
                             </div>
                 ';
 
-                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1) && $data["student"][0]["year"] == $course["year"]) {
                     echo '
                             <div class="todo_item_actions">
                                 <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
@@ -163,20 +163,20 @@ class Courses extends Controller
             foreach ($data["courses"] as $course) {
 
                 echo '
-                        <div href="./view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                        <div href="" class="js-link todo_item flex align-center" data-id = '.$course["id"].'>
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
                                 </div>
                             </div>
-                            <div class="todo_item_text">
+                            <div class="todo_item_text" data-id = "./view/">
                                 <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
                                 <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
                                 <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
                             </div>
                 ';
 
-                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1) && $data["student"][0]["year"] == $course["year"]) {
                     echo '
                             <div class="todo_item_actions">
                                 <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
@@ -230,20 +230,20 @@ class Courses extends Controller
         } else {
             foreach ($data["courses"] as $course) {
                 echo '
-                        <div href="./courses/view/' . $course["id"] . '" class="js-link todo_item flex align-center">
+                        <div href="" class="js-link todo_item flex align-center" data-id = '.$course["id"].'>
                             <div>
                                 <div class="todo_item_date flex align-center justify-center">
                                     <img src= ' . USER_IMG_PATH . $course["cover_img"] . ' alt="">
                                 </div>
                             </div>
-                            <div class="todo_item_text">
+                            <div class="todo_item_text" data-id = "./courses/view/">
                                 <div class="font-1-25 font-semibold"> ' . $course["name"] . '</div>
                                 <div class="font-1 font-medium text-muted"> ' . $course["code"] . '</div>
                                 <div class="font-0-8 text-muted">Year ' . $course["year"] . ' Semester ' . $course["semester"] . '</div>
                             </div>
                 ';
 
-                if (($data["teaching_student"] == 1) || ($data["student_rep"]) && $data["student"][0]["year"] == $course["year"]) {
+                if (($data["teaching_student"] == 1) || ($data["student_rep"] == 1) && $data["student"][0]["year"] == $course["year"]) {
                     echo '
                             <div class="todo_item_actions">
                                 <a href="' . $BASE_URL . '/courses/add_edit/' . $course["id"] . '/edit" class="btn d-block m-1"> <i class="bx bx-edit"></i></a>
@@ -564,7 +564,7 @@ class Courses extends Controller
             $this->redirect();
         }
 
-        // print_r("came here\n");
+        print_r("came here\n");
 
 
         $course_id = $_POST["course_id"];

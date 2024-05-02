@@ -436,7 +436,7 @@ if ($_SESSION["user_role"] == 1) {
         border: 1px solid red; */
     }
 
-    .userImage {
+    /* .userImage {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -445,12 +445,15 @@ if ($_SESSION["user_role"] == 1) {
         width: 3rem;
         height: 3rem;
         overflow: hidden;
-    }
+    } */
 
     .userImage img {
-        width: 6rem;
-        height: 6rem;
-        display: block;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        margin-right: 0.8rem;
+        object-fit: cover;
+        border: 2px solid #bdd2f1;
     }
 
     .userImageComment {

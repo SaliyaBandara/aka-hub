@@ -10,6 +10,7 @@
         <div class="container">
             <?php
                 $user = $data["user"];
+                $reservation_request = $data["reservationRequest"];
             ?>
             
             <form class="form-1">
@@ -18,7 +19,7 @@
                         <label for="email">Sends to: <?= $user["email"] ?></label>
                         <textarea name="message" placeholder="Enter message" class="contact-textarea" required></textarea>
                         <div class="input-buttons">
-                            <a href="#" class="email send-email">Send Email <i class='bx bx-envelope'></i></a>
+                            <a href="#" class="email send-email"> Send Email <i class='bx bx-envelope'></i></a>
                         </div>
                     </form>
                     
