@@ -23,11 +23,15 @@ class Dashboard extends Controller
 
         $data["courses"] = [];
 
-        foreach($data["recent_courses"] as $recent){
-            $course = $this->model('readModel')->getOne("courses",$recent[0]);
-            // print_r($course);
-            $data["courses"][] = $course;
+        if(!empty($data["recent_courses"])){
+            foreach($data["recent_courses"] as $recent){
+                $course = $this->model('readModel')->getOne("courses",$recent[0]);
+                // print_r($course);
+                $data["courses"][] = $course;
+            }
         }
+
+
 
         // print_r($data["courses"]);
         // die();

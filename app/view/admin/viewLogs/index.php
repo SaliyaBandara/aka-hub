@@ -18,10 +18,25 @@ $calendar = new CalendarComponent();
                         <i class='bx bxs-calendar-check me-0-5'></i> Manage User Logs
                     </div>
                     <div class="approveRepresentativesButtonsLine">
-                        <div class="mb-1 form-group right_side">
+                        <div class="mb-1 form-group right_side userLogAnalyticsButtonAndFilterDiv">
                             <a href="<?= BASE_URL ?>/viewlogs/userlogsAnalytics" class="btn btn-primary">
                                 <i class='bx bxs-search-alt-2'></i> UserLog Analytics
                             </a>
+                            <select id="statusFilter" class="form-control filterDropDown">
+                                <option value="">All</option>
+                                <option value="200">Success</option>
+                                <option value="201">Created</option>
+                                <option value="400">Bad Request</option>
+                                <option value="401">Unauthorized</option>
+                                <option value="600">User Created</option>
+                                <option value="601">User Updated</option>
+                                <option value="602">User Deleted</option>
+                                <option value="603">User Logged In</option>
+                                <option value="604">User Logged Out</option>
+                                <option value="605">User Password Changed</option>
+                                <option value="606">User Permission Granted</option>
+                                <option value="607">User Permission Revoked</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -71,11 +86,22 @@ $calendar = new CalendarComponent();
                         justify-content: space-between;
                     }
 
+                    .userLogAnalyticsButtonAndFilterDiv {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                    }
+
                     .approveRepresentativesButtonsLine {
                         display: flex;
-                        justify-content: right;
+                        justify-content: space-between;
                         align-items: center;
-                        width: 350px;
+                        width: 400px;
+                    }
+
+                    .filterDropDown {
+                        width: 200px;
+                        margin-left: 10px;
                     }
 
                     .btn-blue {
@@ -133,7 +159,7 @@ $calendar = new CalendarComponent();
         $(document).ready(function() {
 
             let col_count = $("#products-datatable thead th").length;
-            $("#products-datatable").DataTable({
+            let table = $("#products-datatable").DataTable({
                 language: {
                     paginate: {
                         previous: "<i class='mdi mdi-chevron-left'>",
@@ -157,6 +183,10 @@ $calendar = new CalendarComponent();
                     $(".dataTables_paginate > .pagination").addClass("pagination-rounded"),
                         $("#products-datatable_length label").addClass("form-label");
                 },
+            });
+            $("#statusFilter").on("change", function() {
+                let status = this.value;
+                table.columns(6).search(status).draw();
             });
         });
     </script>

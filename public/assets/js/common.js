@@ -279,8 +279,8 @@ const checkEvent = (date, isActive) => {
     if (popovers != "") {
         let date_str = new Date(date);
         let formattedDate = date_str.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
-        popover_wrapper  = popover_wrapper_template.replace("{{date}}", Date.parse(date_str));
-        popover_wrapper  = popover_wrapper.replace("{{date}}", formattedDate);
+        popover_wrapper = popover_wrapper_template.replace("{{date}}", Date.parse(date_str));
+        popover_wrapper = popover_wrapper.replace("{{date}}", formattedDate);
         return [return_class, popover_wrapper.replace("{{popovers_list}}", popovers)];
     }
 
@@ -362,6 +362,95 @@ $(document).ready(function () {
     $(document).on("click", ".popover-wrapper", function () {
         let date = $(this).attr("data-link");
         window.location.href = BASE_URL + "/calendar/view/" + date;
+    });
+
+    // input#global-search
+
+    function globalSearch() {
+        let search = $("#global-search").val();
+        $.ajax({
+            url: BASE_URL + `/search/go/${search}`,
+            type: 'post',
+            data: {
+                "search": search
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response['status'] == 200) {
+                    // console.log(response['results']);
+                    let results = response['results'];
+
+                    let result_types = ["calendar", "courses", "elections", "forum_posts"];
+                    let result_icons = ["bx-calendar", "bx-book", "bxs-chat", "bx-message-square-dots"];
+                    let result_titles = ["Calendar", "Courses", "Elections", "Forum Posts"];
+                    let result_links = ["calendar/view/", "courses/view/", "elections/view/", "forum/post/"];
+                    let result_template = `<li data-link='{{link}}'><i class='bx {{icon}}'></i> {{title}}</li>`;
+                    if (Object.values(results).length > 0) {
+                        // add class active to global-search-results
+                        $("#global-search-results").addClass("active");
+                        $("#global-search-results").empty();
+
+                        let count_results = 0;
+                        Object.keys(results).forEach(function (result_type, index) {
+                            let result = results[result_type];
+                            let index_type = result_types.indexOf(result_type);
+                            
+                            if (result.length > 0) {
+                                let result_html = `<div class='search-result-type'>${result_titles[index_type]}</div>`;
+                                result.forEach(function (result) {
+                                    if(++count_results > 15)
+                                        return;
+
+                                    let result_id = result['id'];
+                                    // if calendar, get unix timestamp of date
+                                    if (result_type == "calendar")
+                                        result_id = Date.parse(result['date']);
+
+                                    let result_link = result_links[index_type] + result_id;
+                                    let result_icon = result_icons[index_type];
+                                    let result_title = result['name'] || result['title'];
+                                    let result_html = result_template;
+                                    result_html = result_html.replace("{{link}}", result_link);
+                                    result_html = result_html.replace("{{icon}}", result_icon);
+                                    result_html = result_html.replace("{{title}}", result_title);
+                                    $("#global-search-results").append(result_html);
+                                });
+                            }
+                        });
+
+
+                        $("#global-search-results").fadeIn(200);
+                    } else {
+                        $("#global-search-results").removeClass("active");
+                        $("#global-search-results").empty();
+                    }
+
+
+                } else if (response['status'] == 403)
+                    alertUser("danger", response['desc'])
+                else
+                    alertUser("warning", response['desc'])
+            },
+            error: function (ajaxContext) {
+                alertUser("danger", "Error on searching")
+            }
+        });
+    }
+
+    $(function () {
+        //debounce function for search
+        var timer;
+        $("#global-search").on("keyup", function () {
+            clearTimeout(timer);
+            timer = setTimeout(globalSearch, 500);
+        });
+    });
+
+    
+    // onclick #global-search-results li
+    $(document).on("click", "#global-search-results li", function () {
+        let link = $(this).attr("data-link");
+        window.location.href = BASE_URL + "/" + link;
     });
 
     // sidebar menu

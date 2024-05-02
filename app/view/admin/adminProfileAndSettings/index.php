@@ -160,9 +160,10 @@ $sidebar = new Sidebar("adminProfileAndSettings");
             }
 
             .profileImage img {
-                display: block;
-                width: 30rem;
-                height: 30rem;
+            /* display: block; */
+            /* object-fit: cover; */
+            width: 16rem;
+            height: 16rem;
             }
 
             .profileImageArea {

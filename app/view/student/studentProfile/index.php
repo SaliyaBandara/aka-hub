@@ -260,9 +260,10 @@ $sidebar = new Sidebar("studentProfile");
         }
 
         .profileImage img {
-            display: block;
-            width: 30rem;
-            height: 30rem;
+            /* display: block; */
+            /* object-fit: cover; */
+            width: 16rem;
+            height: 16rem;
         }
 
         .profileImageArea {
@@ -472,8 +473,8 @@ $sidebar = new Sidebar("studentProfile");
     });
 
     $(document).on("click", "#changePassword", function(event) {
-
         event.preventDefault();
+
         var oldPassword = $('#password').val();
         var newPassword = $('#passwordNew').val();
 

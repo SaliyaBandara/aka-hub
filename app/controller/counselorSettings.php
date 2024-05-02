@@ -105,6 +105,10 @@ class counselorSettings extends Controller
             $oldPassword = $_POST["oldPassword"];
             $newPassword = $_POST["newPassword"];
 
+            // print_r($oldPassword);
+            // print_r($newPassword);
+            // die();    
+
             // trim
             $oldPassword = trim($oldPassword);
             $newPassword = trim($newPassword);
@@ -135,7 +139,5 @@ class counselorSettings extends Controller
             $this->model("createModel")->createLogEntry($task, "401");
             die(json_encode(array("status" => "403", "desc" => "Incorrect Old Password")));
         }
-
-        $this->view->render('counselor/settings/changePassword', $data);
     }
 }

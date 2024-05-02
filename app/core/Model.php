@@ -208,4 +208,76 @@ class Model extends Database
         list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
         return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
     }
+
+
+    public function restrictUser($id)
+    {
+        $query = "UPDATE user SET status = 0 WHERE id = ?";
+        $values = [$id];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
+
+    public function restrictUserByEMail($email)
+    {
+        $query = "UPDATE user SET status = 0 WHERE email = ?";
+        $values = [$email];
+        $valueTypes = ["i"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
+
+    public function update_system_variable($name, $value)
+    {
+        $query = "UPDATE system_variables SET value = ? WHERE name = ?";
+        $values = [$value, $name];
+        $valueTypes = ["s", "s"];
+        $valueTypesString = implode('', $valueTypes);
+
+        $result = $this->db_handle->update($query, $valueTypesString, $values);
+        return $result;
+    }
+
+    public function getLastIP()
+    {
+        $table = "system_variables";
+        $columns = ["name"];
+        $values = ["last_ip"];
+        $types = ["s"];
+
+        $query = "SELECT value FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0) {
+            // print_r($result[0]);
+            return $result[0];
+        }
+        return false;
+    }
+
+    public function getUnauthorizedCount()
+    {
+        $table = "system_variables";
+        $columns = ["name"];
+        $values = ["unauthorizedCount"];
+        $types = ["s"];
+
+        $query = "SELECT value FROM $table WHERE ";
+        $query .= implode(" = ? AND ", $columns);
+        $query .= " = ?";
+
+        $result = $this->db_handle->runQuery($query, implode("", $types), $values);
+        if (count($result) > 0) {
+            // print_r($result[0]["value"]);
+            return $result[0]["value"];
+        }
+        return false;
+    }
 }

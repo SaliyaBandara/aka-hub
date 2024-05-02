@@ -191,14 +191,11 @@ class StudentProfile extends Controller
         $data["user"] = $data["user_template"]["empty"];
         $data["user_template"] = $data["user_template"]["template"];
 
-
-
         if (isset($_POST['changePassword'])) {
 
             $oldPassword = $_POST["oldPassword"];
             $newPassword = $_POST["newPassword"];
             
-
             // trim
             $oldPassword = trim($oldPassword);
             $newPassword = trim($newPassword);
@@ -214,6 +211,14 @@ class StudentProfile extends Controller
             if($oldPassword == ""){
                 die(json_encode(array("status" => "400", "desc" => "Old password cannot be blank!")));
             }
+
+            if (strlen($newPassword) < 6)
+                die(json_encode(array("status" => "400", "desc" => "Password must be at least 6 characters long")));
+
+        // Check if password contains at least one special character
+            if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $newPassword))
+                die(json_encode(array("status" => "400", "desc" => "Password must contain at least one special character")));
+
 
 
             if(password_verify($oldPassword, $password)){

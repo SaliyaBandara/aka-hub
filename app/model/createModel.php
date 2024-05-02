@@ -210,6 +210,21 @@ class createModel extends Model
         // flush();
         // fastcgi_finish_request();
         // if (session_id()) session_write_close();
+
+        // ob_start();
+
+        $size = ob_get_length();
+
+        header("Content-Encoding: none");
+        header("Content-Length: {$size}");
+
+        header("Connection: close");
+        ob_end_flush();
+        ob_flush();
+        flush();
+        if (session_id()) {
+            session_write_close();
+        }
     }
 
     public function notification($type, $id, $user_id, $title, $message, $target = 0, $link = "")
@@ -318,6 +333,7 @@ class createModel extends Model
             ], $template);
 
             $this->sendNotificationEmail($user_id, $title, $message, $link);
+            return true;    
         }
 
         // exam
@@ -442,42 +458,7 @@ class createModel extends Model
             return true;
     }
 
-    public function insert_db_return_id($table, $data, $template = []) //not working properly
-    {
-        $columns = "";
-        $values = "";
-        $types = "";
-        $params = [];
-
-        foreach ($data as $key => $value) {
-            if ($value == "" || $value == null)
-                continue;
-
-            if (!isset($template[$key]) || !isset($template[$key]["type"]))
-                continue;
-
-            $columns .= $key . ",";
-            $values .= "?,";
-            // $types .= $value[1];
-            $types .= $template[$key]["type"] == "number" ? "i" : "s";
-
-            if (is_array($value))
-                $value = implode(",", $value);
-            array_push($params, $value);
-        }
-
-        $columns = rtrim($columns, ",");
-        $values = rtrim($values, ",");
-
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-
-        $whether_inserted = $this->db_handle->insert($query, $types, $params);
-        $returned_id = $this->db_handle->getLastInsertedID();
-
-        return array($whether_inserted, $returned_id);
-    }
-
-    public function createLogEntry($action, $status)
+    public function createLogEntry($action, $status, $tryEmail = "")
     {
         // 200 => "Success",
         // 201 => "Created",
@@ -495,7 +476,7 @@ class createModel extends Model
         if (!file_exists("userlog.txt")) {
             file_put_contents("userlog.txt", "");
         }
-        
+
         $ip = $_SERVER['REMOTE_ADDR'];
         $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING'];
@@ -503,20 +484,51 @@ class createModel extends Model
         $time = date("m/d/y h:iA", time());
         $contents = file_get_contents("userlog.txt");
         $email = isset($_SESSION["user_email"]) ? $_SESSION["user_email"] : "Not logged in";
-
         $contents .= "$email\t$ip\t$time\t$action\t$url\t$status\n\n";
 
+
+
+
+        $lastIP = $this->getLastIP();
+        $unauthorizedCount=$this->getUnauthorizedCount();
+
+        if ((($status == 401) || ($status == "401")) && ($ip == $lastIP)) {
+            $this->update_system_variable("unauthorizedCount", ($unauthorizedCount + 1));
+        } else {
+            $this->update_system_variable("unauthorizedCount", 0);
+        }
+        $unauthorizedCount=$this->getUnauthorizedCount();
+        if ($unauthorizedCount > 10) {
+            if (isset($_SESSION["user_id"])) {
+                $this->restrictUser($_SESSION["user_id"]);
+                $this->sendNotificationEmail($_SESSION["user_id"], "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
+                $this->notifyAdmins("User Account Restricted", "User account with email " . $_SESSION["user_email"] . " has been restricted due to series of unauthorized attempts.");
+                session_destroy();
+            } else {
+                $this->restrictUserByEMail($tryEmail);
+                $this->sendNotificationEmail($tryEmail, "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
+                $this->notifyAdmins("User Account Restricted", "User account with email " . $tryEmail . " has been restricted due to series of unauthorized attempts.");
+            }
+            $this->update_system_variable("unauthorizedCount", 0);
+        }
+        $this->update_system_variable("last_ip", $ip);
+
+
+
+
+        
         file_put_contents("userlog.txt", $contents);
     }
-    public function createReport($webpage)
+
+    public function notifyAdmins($subject, $message)
     {
-        require("../../public/dompdf/autoload.inc.php");
-        $dompdf = new Dompdf\Dompdf();
-        $htmlContent = file_get_contents($webpage);
-        $dompdf->loadHtml($htmlContent);
-        $dompdf->setPaper('A4', 'landscape');
-        $dompdf->render();
-        $dompdf->stream("report.pdf", ['Attachment' => false]);
+        $superAdmins = $this->getAllByColumn("user", "role", "3", "i");
+        $admins = $this->getAllByColumn("user", "role", "1", "i");
+
+        $recipients = array_merge($superAdmins, $admins);
+        foreach ($recipients as $recipient) {
+            $this->sendNotificationEmail($recipient['id'], $subject, $message);
+        }
     }
 
     public function add_system_variable($name, $value)
