@@ -496,12 +496,12 @@ class createModel extends Model
         }
         if ($unauthorizedCount > 10) {
             if (isset($_SESSION["user_id"])) {
-                $this->restrictUser($_SESSION["user_id"]);
+                // $this->restrictUser($_SESSION["user_id"]);
                 $this->sendEmail($_SESSION["user_email"], $_SESSION["name"], "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
                 $this->notifyAdmins("User Account Restricted", "User account with email " . $_SESSION["user_email"] . " has been restricted due to series of unauthorized attempts.");
                 session_destroy();
             } else {
-                $this->restrictUserByEMail($tryEmail);
+                // $this->restrictUserByEMail($tryEmail);
                 $tryName = $this->getNamesByEmail($tryEmail);
                 $this->sendEmail($tryEmail, $tryName, "We recognized series of unauthorized attempts.", "We regonized series of unauthorized attempts. Your account has been restricted for security reasons. Please contact the administrator for further information.");
                 $this->notifyAdmins("User Account Restricted", "User account with email " . $tryEmail . " has been restricted due to series of unauthorized attempts.");
